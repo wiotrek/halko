@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: 'Saira';
+    src: url('./assets/fonts/Saira-Italic-VariableFont_wdth\,wght.ttf'),
+    url('./assets/fonts/Saira-VariableFont_wdth\,wght.ttf');
+}
+
+:root {
+    font: 18px 'Saira', sans-serif;
+}
+
+body {
+    background-color: #F7F8FC;
+}

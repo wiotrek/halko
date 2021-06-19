@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
 

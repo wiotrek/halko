@@ -1,3 +1,27 @@
 <div class="container">
-    <h1>Witaj w rodzinie Halko</h1>
+
+    <div class="greeting">
+
+        <h1 class="greeting__icon-hand">
+            <fa-icon [icon]="faHandPeace"></fa-icon>
+        </h1>
+
+        <h2 class="greeting__title">Witaj, zaloguj się</h2>
+    </div>
+
+    <form class="form">
+
+        <div class="form__login">
+            <label for="login">Wprowadź login</label>
+            <input type="text" id="login">
+        </div>
+
+        <div class="form__password">
+            <label for="password">Wprowadź hasło</label>
+            <input type="text" id="password">
+        </div>
+
+        <button type="button" class="btn btn-secondary">Secondary</button>
+    </form>
+
 </div>

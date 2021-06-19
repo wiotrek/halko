@@ -2,12 +2,45 @@
 
 @media (min-width: 0) {
     .container {
+        min-height: 500px;
         background-color: white;
         margin: 30px 20px;
+        padding: 20px;
+        border-radius: 15px;
 
-        h1 {
-            font-weight: 400;
+        .greeting {
+
+            &__icon-hand {
+                text-align: center;
+                font-size: 4rem;
+                margin: 0;
+            }
+            
+            &__title {
+                font-weight: 300;
+                font-size: 1.5rem;
+                text-align: center;
+            }
         }
+
+        .form {
+            &__login, &__password {
+                display: flex;
+                flex-direction: column;
+                margin-top: 20px;
+
+                label {
+                    color: $colorGrey;
+                }
+
+                input {
+                    height: 22px;
+                    border: 0;
+                    border-bottom: 1px solid $colorGrey;
+                }
+            }
+        }
+
     }
 }
 

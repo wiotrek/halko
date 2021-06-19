@@ -1,7 +1,13 @@
 @import '../../global-styles/variable.scss';
+@import '../../global-styles/components.scss';
 
-@media (min-width: 0) {
-    .container {
+body {
+    display: block;
+    background-color: red;
+}
+
+@media (min-width: 0) {    
+    .wrapper {
         min-height: 500px;
         background-color: white;
         margin: 30px 20px;
@@ -17,37 +23,49 @@
             }
             
             &__title {
+                margin-top: 15px;
                 font-weight: 300;
                 font-size: 1.5rem;
                 text-align: center;
             }
         }
 
-        .form {
-            &__login, &__password {
+        .logging {
+            margin-top: 50px;
+
+            &__login, &__password, &__setting-button {
                 display: flex;
                 flex-direction: column;
-                margin-top: 20px;
+                margin-top: 25px;
+            }
 
+            &__login, &__password {
                 label {
-                    color: $colorGrey;
+                    color: $primaryGrey;
                 }
-
+    
                 input {
-                    height: 22px;
+                    margin-top: 5px;
+                    height: 25px;
                     border: 0;
-                    border-bottom: 1px solid $colorGrey;
+                    border-bottom: 1px solid $primaryGrey;
+                }
+            }
+
+            &__setting-button {
+                .logging__button {
+                    @include firstlyBtn;
                 }
             }
         }
-
     }
 }
 
-@media (min-width: $minValueDesktop) {
-    .container {
-        background-color: white;
-        max-width: 600px;
+@media (min-width: $minValueTablet) {
+    .wrapper {
+        max-width: 450px;
+        margin: 200px auto;
+        padding: 20px 40px;
     }
 }
 

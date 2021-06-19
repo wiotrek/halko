@@ -1,0 +1,14 @@
+@mixin firstlyBtn {
+    background-color: #008B8B;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+
+    &:hover {
+        opacity: .9;
+    }
+
+    &:disabled {
+        opacity: .9;
+    }
+}

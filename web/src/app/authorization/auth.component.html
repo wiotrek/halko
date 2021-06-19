@@ -1,4 +1,4 @@
-<div class="container">
+<div class="wrapper">
 
     <div class="greeting">
 
@@ -6,22 +6,31 @@
             <fa-icon [icon]="faHandPeace"></fa-icon>
         </h1>
 
-        <h2 class="greeting__title">Witaj, zaloguj się</h2>
+        <h2 class="greeting__title">Logowanie</h2>
+
     </div>
 
-    <form class="form">
+    <form class="logging">
 
-        <div class="form__login">
+        <div class="logging__login">
             <label for="login">Wprowadź login</label>
-            <input type="text" id="login">
+            <input 
+            type="text"
+            id="login">
+
+            <div class="invalid-feedback">Dupa jkas</div>
+
         </div>
 
-        <div class="form__password">
+        <div class="logging__password">
             <label for="password">Wprowadź hasło</label>
             <input type="text" id="password">
         </div>
 
-        <button type="button" class="btn btn-secondary">Secondary</button>
+        <div class="logging__setting-button">
+            <button type="button" class="logging__button">Zaloguj się</button>
+        </div>
+
     </form>
 
 </div>

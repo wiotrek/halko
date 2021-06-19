@@ -10,25 +10,39 @@
 
     </div>
 
-    <form class="logging">
+    <form class="logging" #authForm="ngForm" (ngSubmit)="onSubmit(authForm)">
 
-        <div class="logging__login">
+        <div class="logging__login form-group">
             <label for="login">Wprowadź login</label>
             <input 
-            type="text"
-            id="login">
-
-            <div class="invalid-feedback">Dupa jkas</div>
-
+                type="text"
+                name="login"
+                id="login"
+                class="form-control"
+                required
+                minlength="3"
+                maxlength="64"
+                ngModel>
         </div>
 
-        <div class="logging__password">
+        <div class="logging__password form-group">
             <label for="password">Wprowadź hasło</label>
-            <input type="text" id="password">
+            <input
+                type="text"
+                id="password"
+                name="password"
+                class="form-control"
+                required
+                minlength="3"
+                maxlength="256"
+                ngModel>
         </div>
 
         <div class="logging__setting-button">
-            <button type="button" class="logging__button">Zaloguj się</button>
+            <button
+                type="submit"
+                class="btn logging__button"
+                [disabled]="!authForm.valid">Zaloguj się</button>
         </div>
 
     </form>

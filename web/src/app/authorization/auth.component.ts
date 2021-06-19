@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -14,6 +15,11 @@ export class AuthComponent implements OnInit{
 
     ngOnInit(): void {
         this.settingBgColor();
+    }
+
+    onSubmit(form: NgForm): void {
+        console.log(form.value);
+        
     }
 
     private settingBgColor = () => {

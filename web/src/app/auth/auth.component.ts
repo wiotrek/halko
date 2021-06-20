@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
+import { AuthService } from './auth.service';
 
 @Component({
     selector: 'app-auth',
@@ -11,6 +12,7 @@ export class AuthComponent implements OnInit{
     faHandPeace = faHandPeace;
 
     constructor(
+        private authService: AuthService,
         private elementRef: ElementRef) {}
 
     ngOnInit(): void {
@@ -20,6 +22,11 @@ export class AuthComponent implements OnInit{
     onSubmit(form: NgForm): void {
         console.log(form.value);
         form.reset();
+
+        this.authService.login(
+            form.value.login,
+            form.value.password
+        ).subscribe(res => console.log(res), err => console.log(err));
     }
 
     private settingBgColor = () => {

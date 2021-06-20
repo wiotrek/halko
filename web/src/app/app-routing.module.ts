@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main/main.component';
+import { SitesComponent } from './sites/sites.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/main', pathMatch: 'full'},
-  { path: 'main', component: MainComponent },
+  { path: '', redirectTo: '/zarzadzaj', pathMatch: 'full'},
+  { path: 'zarzadzaj', component: SitesComponent },
   { path: 'logowanie', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) }
 ];
 

@@ -1,8 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  template: '<router-outlet></router-outlet>'
 })
-export class AppComponent {}
+export class AppComponent implements OnInit{
+  isUserExist = true;
+
+  constructor(
+    private router: Router) {}
+
+  ngOnInit(): void {
+    this.checkUser();
+  }
+
+  private checkUser(): void {
+    if (!this.isUserExist) {
+      this.router.navigateByUrl('/logowanie');
+    }
+  }
+}

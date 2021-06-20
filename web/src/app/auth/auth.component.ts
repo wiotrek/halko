@@ -23,6 +23,6 @@ export class AuthComponent implements OnInit{
     }
 
     private settingBgColor = () => {
-        this.elementRef.nativeElement.ownerDocument.body.style.background = '#008B8B';
+        this.elementRef.nativeElement.ownerDocument.body.style.background = '#F5FFFA';
     }
 }

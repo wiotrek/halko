@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SitesComponent } from './sites/sites.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavComponent } from './sites/nav/nav.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [

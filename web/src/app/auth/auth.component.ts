@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
     styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent implements OnInit{
+    isLoadingSpinner = false;
     faHandPeace = faHandPeace;
     err: string = null;
 
@@ -23,13 +24,17 @@ export class AuthComponent implements OnInit{
     onSubmit(form: NgForm): void {
         if (!form.valid) { return; }
 
+        this.isLoadingSpinner = true;
+
         this.authService.login(
             form.value.email,
             form.value.password
         ).subscribe(() => {
             this.router.navigate(['']);
+            this.isLoadingSpinner = false;
         }, errMsg => {
             this.err = errMsg;
+            this.isLoadingSpinner = false;
         });
 
         form.reset();

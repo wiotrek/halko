@@ -1,5 +1,6 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
 import { AuthService } from './auth.service';
 
@@ -10,26 +11,27 @@ import { AuthService } from './auth.service';
 })
 export class AuthComponent implements OnInit{
     faHandPeace = faHandPeace;
+    err: string = null;
 
     constructor(
-        private authService: AuthService,
-        private elementRef: ElementRef) {}
+        private router: Router,
+        private authService: AuthService) {}
 
     ngOnInit(): void {
-        this.settingBgColor();
     }
 
     onSubmit(form: NgForm): void {
-        console.log(form.value);
-        form.reset();
+        if (!form.valid) { return; }
 
         this.authService.login(
-            form.value.login,
+            form.value.email,
             form.value.password
-        ).subscribe(res => console.log(res), err => console.log(err));
-    }
+        ).subscribe(() => {
+            this.router.navigate(['']);
+        }, errMsg => {
+            this.err = errMsg;
+        });
 
-    private settingBgColor = () => {
-        this.elementRef.nativeElement.ownerDocument.body.style.background = '#F5FFFA';
+        form.reset();
     }
 }

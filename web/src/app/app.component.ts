@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,15 +9,16 @@ export class AppComponent implements OnInit{
   isUserExist = true;
 
   constructor(
-    private router: Router) {}
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     this.checkUser();
   }
 
+
+  // setting current user if exist date on datastorage
+  // if user doesnt exist then auth.guard move user to urltree = /logowanie
   private checkUser(): void {
-    if (!this.isUserExist) {
-      this.router.navigateByUrl('/logowanie');
-    }
+    this.authService.autoLogin();
   }
 }

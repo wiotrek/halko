@@ -46,6 +46,7 @@
                 [disabled]="!authForm.valid">Zaloguj się</button>
         </div>
 
+        <div class="alert alert-danger" *ngIf="err">{{err}}</div>
     </form>
 
 </div>

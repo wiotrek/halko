@@ -85,18 +85,10 @@ export class AuthService {
     }
 
     private handleError(errRes: HttpErrorResponse): any {
-        let errorMessage = 'Pojawił się problem z serverem';
-        if (!errRes.error || !errRes.error.error) {
-            return throwError(errorMessage);
-        }
-        switch (errRes.error.error.message) {
-            case 'INVALID_EMAIL':
-                errorMessage = 'Nieznany email';
-                break;
-            case 'INVALID_PASSWORD':
-                errorMessage = 'Niepoprawne hasło';
-                break;
-        }
-        return throwError(errorMessage);
+        const errMsg = !errRes.error || !errRes.error.error
+        ? 'Pojawił się problem z serverem'
+        : 'Błędny login lub hasło';
+
+        return throwError(errMsg);
     }
 }

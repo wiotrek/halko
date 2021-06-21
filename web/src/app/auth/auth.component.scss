@@ -56,6 +56,13 @@
                     font-size: .9rem;
                 }
             }
+
+            .alert.alert-danger {
+                font-size: .8rem;
+                padding: 5px;
+                margin-top: 10px;
+                text-align: center;
+            }
         }
     }
 }

@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
     <app-nav></app-nav>
     `, styleUrls: ['./sites.component.scss']
 })
-export class SitesComponent {
-}
+export class SitesComponent {}

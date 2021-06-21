@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
     templateUrl: './auth.component.html',
     styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit{
+export class AuthComponent {
     isLoadingSpinner = false;
     faHandPeace = faHandPeace;
     err: string = null;
@@ -18,7 +18,8 @@ export class AuthComponent implements OnInit{
         private router: Router,
         private authService: AuthService) {}
 
-    ngOnInit(): void {
+    @HostListener('click') onClick(): void {
+        this.err = null;
     }
 
     onSubmit(form: NgForm): void {

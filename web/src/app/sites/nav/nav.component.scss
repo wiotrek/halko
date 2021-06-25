@@ -1,0 +1,31 @@
+@import url('../../../global-styles/variable.scss');
+@media (min-width: 0) {
+    .nav {
+        background-color: white;
+
+        &__left-side {
+
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+
+            &__logo {
+                width: 200px;
+                height: 40px;
+                margin: 10px 30px;
+            }
+
+            &__sites {
+                padding-bottom: 5px;
+
+                a {
+                    font-size: 1rem;
+                    font-weight: lighter;
+                    margin: 0 8px;
+                    color: $lightGrey;
+                }
+            }
+
+        }
+    }
+}

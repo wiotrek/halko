@@ -1,10 +1,11 @@
-@import url('../../../global-styles/variable.scss');
+@import '../../../global-styles/variable.scss';
 @media (min-width: 0) {
     .nav {
         background-color: white;
+        display: flex;
+        justify-content: space-between;
 
         &__left-side {
-
             display: flex;
             flex-direction: row;
             align-items: baseline;
@@ -18,14 +19,65 @@
             &__sites {
                 padding-bottom: 5px;
 
-                a {
+                &__link {
                     font-size: 1rem;
                     font-weight: lighter;
                     margin: 0 8px;
                     color: $lightGrey;
+                    
+                    &.active {
+                        color: $primaryGrey;
+                    }
                 }
             }
+        }
 
+        &__right-side {
+            display: flex;
+            align-self: center;
+            margin-right: 30px;
+            position: relative;
+
+            &__name {
+                font-size: 1.3rem;
+            }
+
+            &__dropdown {
+
+                &__bars {
+                    margin: auto 15px;
+                    font-size: 1.3rem;
+                    cursor: pointer;
+    
+                    &:hover, &.active {
+                        color: $prettyGreen;
+                    }
+                }
+
+                &__menu {
+                    position: absolute;
+                    background-color: $prettyGreen;
+                    color: white;
+                    top: 40px;
+                    right: 0;
+                    width: 100%;
+                    text-align: center;
+                    padding-bottom: 10px;
+                    border-radius: 2px;
+
+                    
+                    &__option {
+                        padding: 2px;
+                        
+                        &__a {
+                            color: white;
+                            cursor: pointer;
+                            font-size: .8rem;
+                        }
+                        
+                    }
+                }
+            }
         }
     }
 }

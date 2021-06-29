@@ -30,11 +30,25 @@
 
             <div class="nav__right-side__dropdown__menu" *ngIf="d.isOpen">
               <div class="nav__right-side__dropdown__menu__option">
+
+                <a class="nav__right-side__dropdown__menu__option__a"
+                routerLink="#" routerLinkActive="">Strona główna</a>
+                
+                <a class="nav__right-side__dropdown__menu__option__a"
+                routerLink="#" routerLinkActive="">Spis telefonów</a>
+
+                <a class="nav__right-side__dropdown__menu__option__a"
+                  routerLink="#" routerLinkActive="">Rozliczenia</a>
+
+                <a class="nav__right-side__dropdown__menu__option__a"
+                routerLink="#" routerLinkActive="">Serwis</a>
+
                 <a class="nav__right-side__dropdown__menu__option__a"
                 (click)="logout()">
                   Wyloguj się
                   <fa-icon [icon]="faSignInAlt"></fa-icon>
                 </a>
+
               </div>
             </div>
         </div>

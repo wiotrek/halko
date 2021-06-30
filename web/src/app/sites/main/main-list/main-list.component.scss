@@ -5,7 +5,7 @@
     background-color: transparent;
     border: 0;
     border-bottom: 2px solid $primaryGrey;
-    margin: auto 3px;
+    margin: auto 4px;
     color: $primaryGrey;
 }
 
@@ -31,6 +31,7 @@
 
             select, input {
                 @include elementInItem;
+                cursor: pointer;
             }
 
             &__category {
@@ -53,7 +54,9 @@
             &__confirm {
                 @include firstlyBtn;
                 border: 0;
-                width: 45px;
+                padding: 0;
+                min-width: 60px;
+                max-width: 100px;
                 height: 32px;
                 margin-left: 5px;
 
@@ -95,9 +98,76 @@
                 }
 
             }
+
+            &__wrap-up {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                div {
+                    display: inline-block;
+                }
+
+                &__change-site {
+
+                    a {
+                        margin: auto 5px;
+                        cursor: pointer;
+                    }
+                }
+
+                &__value {
+                    color: $successColor;
+                    border-bottom: 2px solid $successColor;
+                    padding: 0 5px;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .wrapper {
+        max-width: 500px;
+
+        .header {
+            font-size: 1.9rem;
+        }
+
+        .addition-item {
+            font-size: .9rem;
+
+            &__category {
+                width: auto;
+            }
+
+            &__price {
+                width: 40px;
+            }
+        }
+
+        .list {
+
+            &__item {
+                margin: 8px auto;
+                margin-left: 30px;
+                background-color: white;
+
+            }
+
+            &__wrap-up {
+                margin-top: 40px;
+
+                &__change-site {
+
+                    a {
+                        margin: auto 10px;
+                    }
+                }
+            }
         }
 
     }
-
 }
-

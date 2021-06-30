@@ -30,7 +30,6 @@ export class MainListComponent {
     faMobileAlt = faMobileAlt;
     faWrench = faWrench;
 
-
     dictionaryIcon: Dictionary<IconDefinition> = {
         akcesoria: faHeadphones,
         telefon: faMobileAlt,

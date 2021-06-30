@@ -3,29 +3,31 @@
 
     <div class="addition-item">
 
-        <form #authForm="ngForm" (ngSubmit)="authForm">
-            <select 
+        <form #addItem="ngForm"
+          (ngSubmit)="addItem.valid && addElement(addItem)"
+        >
+            <select
                 name="initials"
                 class="addition-item__ini"
                 required
                 ngModel
             >
-                <option 
+                <option
                     *ngFor="let employee of employees"
                     [value]="employee.initials"
                 >
                     {{employee.initials}}
                 </option>
-            
+
             </select>
 
-            <select 
+            <select
                 name="category"
                 class="addition-item__category"
                 required
                 ngModel
             >
-                <option 
+                <option
                     *ngFor="let oneOfCategory of category"
                     [value]="oneOfCategory"
                 >
@@ -33,7 +35,7 @@
                 </option>
             </select>
 
-            <input 
+            <input
                 type="text"
                 class="addition-item__name"
                 placeholder="nazwa"
@@ -42,7 +44,7 @@
                 ngModel
             >
 
-            <input 
+            <input
                 type="text"
                 class="addition-item__price"
                 name="price"
@@ -52,19 +54,19 @@
             >
 
             <button class="addition-item__confirm" type="submit">
-                <fa-icon 
-                    class="addition-item__confirm__icon" 
+                <fa-icon
+                    class="addition-item__confirm__icon"
                     [icon]="faCheckCircle">
                 </fa-icon>
             </button>
 
         </form>
-        
+
     </div>
 
     <div class="list">
 
-        <div 
+        <div
             class="list__item"
             *ngFor="let element of testElements; index as i"
         >

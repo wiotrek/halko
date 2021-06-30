@@ -9,10 +9,10 @@
     color: $primaryGrey;
 }
 
-@media (min-width: 0) { 
+@media (min-width: 0) {
 
     .wrapper {
-        
+
         .header {
             border-left: 2px solid $primaryGrey;
             padding: 10px 30px;
@@ -133,11 +133,11 @@
         max-width: 500px;
 
         .header {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
         }
 
         .addition-item {
-            font-size: .9rem;
+            font-size: .8rem;
 
             &__category {
                 width: auto;
@@ -153,8 +153,8 @@
             &__item {
                 margin: 8px auto;
                 margin-left: 30px;
+                font-size: .7rem;
                 background-color: white;
-
             }
 
             &__wrap-up {

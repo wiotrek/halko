@@ -91,6 +91,7 @@ export class MainListComponent {
     ];
 
     addElement(form: NgForm): void {
-        console.log(form);
+        console.log(form.value);
+        form.reset();
     }
 }

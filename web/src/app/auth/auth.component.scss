@@ -1,7 +1,7 @@
 @import '../shared/global-styles/variable.scss';
 @import '../shared/global-styles/components.scss';
 
-@media (min-width: 0) {    
+@media (min-width: 0) {
     .wrapper {
         min-height: 500px;
         background-color: white;
@@ -17,7 +17,7 @@
                 font-size: 4rem;
                 margin: 0;
             }
-            
+
             &__title {
                 margin-top: 15px;
                 font-weight: 300;
@@ -40,7 +40,7 @@
                     color: $primaryGrey;
                     font-size: .8rem;
                 }
-    
+
                 input {
                     margin-top: 5px;
                     height: 25px;
@@ -70,7 +70,7 @@
 @media (min-width: $minValueTablet) {
     .wrapper {
         max-width: 500px;
-        margin: 7vw auto;
+        margin: 4vw auto;
         padding: 30px 50px;
 
         &::after {
@@ -95,7 +95,7 @@
             &__icon-hand {
                 font-size: 5rem;
             }
-            
+
             &__title {
                 margin-top: 15px;
                 font-weight: 300;
@@ -113,7 +113,7 @@
                 label {
                     font-size: 1rem;
                 }
-    
+
                 input {
                     font-size: 1rem;
                 }

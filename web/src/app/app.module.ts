@@ -9,13 +9,15 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavComponent } from './sites/nav/nav.component';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './sites/main/main.component';
+import { MainListComponent } from './sites/main/main-list/main-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SitesComponent,
     NavComponent,
-    MainComponent
+    MainComponent,
+    MainListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,60 @@
+@import '../../..//shared/global-styles/variable.scss';
+
+@media (min-width: 0) { 
+
+    .wrapper {
+        
+        .header {
+            border-left: 2px solid $primaryGrey;
+            padding: 10px 30px;
+            font-size: 1.7rem;
+        }
+
+        .addition-item {
+            display: block;
+            margin-top: 20px;
+            background-color: white;
+            min-height: 35px;
+            font-size: .8rem;
+            display: flex;
+            justify-content: space-evenly;
+
+            select, input {
+                background-color: transparent;
+                border: 0;
+                border-bottom: 2px solid $primaryGrey;
+                margin: auto 3px;
+                color: $primaryGrey;
+            }
+
+            &__accessories {
+                width: 3ch;
+            }
+
+            &__name, &__price {
+                text-align: center;
+            }
+
+            &__name {
+                width: 80px;
+            }
+
+            &__price {
+                width: 35px;
+            }
+
+            &__confirm {
+                background-color: transparent;
+                border: 0;
+
+                &__icon {
+                    font-size: 1.1rem;
+                }
+            }
+
+
+        }
+    }
+
+}
+

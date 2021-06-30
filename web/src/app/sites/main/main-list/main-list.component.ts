@@ -1,6 +1,21 @@
 import { Component } from '@angular/core';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import {
+    faCheck,
+    faHeadphones,
+    faEdit,
+    faMobileAlt,
+    faWrench,
+    IconDefinition
+} from '@fortawesome/free-solid-svg-icons';
+import { Dictionary } from 'src/app/shared/models/dictionary.model';
 
+
+interface ItemStructure {
+    initials: string;
+    category: string;
+    name: string;
+    price: number;
+}
 
 @Component({
     selector: 'app-main-list',
@@ -8,5 +23,55 @@ import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
     styleUrls: ['main-list.component.scss']
 })
 export class MainListComponent {
-    faCheckCircle = faCheckCircle;
+    faCheckCircle = faCheck;
+    faHeadphones = faHeadphones;
+    faEdit = faEdit;
+    faMobileAlt = faMobileAlt;
+    faWrench = faWrench;
+
+    dictionaryIcon: Dictionary<IconDefinition> = {
+        akcesoria: faHeadphones,
+        telefon: faMobileAlt,
+        serwis: faWrench
+    };
+
+    testElements: ItemStructure[] = [
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        },
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        },
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        },
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        },
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        },
+        {
+            initials: 'KB',
+            category: 'akcesoria',
+            name: 'szklo p9 lite',
+            price: 40
+        }
+    ];
+
 }

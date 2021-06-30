@@ -13,7 +13,7 @@
         <select 
             name="" 
             id=""
-            class="addition-item__accessories"
+            class="addition-item__category"
         >
             <option>akcesoria</option>
         </select>
@@ -36,6 +36,26 @@
                 [icon]="faCheckCircle">
             </fa-icon>
         </button>
+
+    </div>
+
+    <div class="list">
+
+        <div 
+            class="list__item"
+            *ngFor="let element of testElements; index as i"
+        >
+            <div class="list__item__index">{{i + 1}}.</div>
+            <div class="list__item__ini">{{element.initials}}</div>
+            <div class="list__item__category">
+                <fa-icon [icon]="dictionaryIcon[element.category]"></fa-icon>
+            </div>
+            <div class="list__item__name">{{element.name}}</div>
+            <div class="list__item__price">{{element.price}} zł</div>
+            <button class="list__item__edit">
+                <fa-icon class="list__item__edit__icon" [icon]="faEdit"></fa-icon>
+            </button>
+        </div>
 
     </div>
 

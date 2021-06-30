@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
@@ -9,11 +10,13 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
         DropdownDirective
     ],
     imports: [
-        CommonModule
+        CommonModule,
+        FormsModule,
     ],
     exports: [
         LoadingSpinnerComponent,
-        DropdownDirective
+        DropdownDirective,
+        FormsModule,
     ]
 })
 export class SharedModule {}

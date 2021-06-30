@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import {
     faCheck,
     faHeadphones,
@@ -34,6 +35,15 @@ export class MainListComponent {
         telefon: faMobileAlt,
         serwis: faWrench
     };
+
+
+    employees = [
+        {
+            name: 'Marek',
+            lastName: 'Konrad',
+            initials: 'MK'
+        }
+    ];
 
     testElements: ItemStructure[] = [
         {
@@ -74,4 +84,7 @@ export class MainListComponent {
         }
     ];
 
+    addElement(): void {
+
+    }
 }

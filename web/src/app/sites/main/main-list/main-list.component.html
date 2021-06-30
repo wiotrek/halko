@@ -2,41 +2,50 @@
     <h1 class="header">Sprzedaż</h1>
 
     <div class="addition-item">
-        <select 
-            name="" 
-            id=""
+
+        <form #authForm="ngForm">
+            <select 
+            name="initials"
             class="addition-item__ini"
-        >
-            <option value="">KB</option>
-        </select>
+            >
+                <option 
+                    *ngFor="let employee of employees"
+                    [value]="employee.initials"
+                >
+                    {{employee.initials}}
+                </option>
+            
+            </select>
 
-        <select 
-            name="" 
-            id=""
-            class="addition-item__category"
-        >
-            <option>akcesoria</option>
-        </select>
+            <select 
+                name="" 
+                id=""
+                class="addition-item__category"
+            >
+                <option>akcesoria</option>
+            </select>
 
-        <input 
-            type="text"
-            class="addition-item__name"
-            placeholder="nazwa"
-        >
+            <input 
+                type="text"
+                class="addition-item__name"
+                placeholder="nazwa"
+            >
 
-        <input 
-            type="text"
-            class="addition-item__price"
-            placeholder="cena"
-        >
+            <input 
+                type="text"
+                class="addition-item__price"
+                placeholder="cena"
+            >
 
-        <button class="addition-item__confirm">
-            <fa-icon 
-                class="addition-item__confirm__icon" 
-                [icon]="faCheckCircle">
-            </fa-icon>
-        </button>
+            <button class="addition-item__confirm">
+                <fa-icon 
+                    class="addition-item__confirm__icon" 
+                    [icon]="faCheckCircle">
+                </fa-icon>
+            </button>
 
+        </form>
+        
     </div>
 
     <div class="list">

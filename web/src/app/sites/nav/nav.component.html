@@ -6,17 +6,9 @@
 
         <div class="nav__left-side__sites">
             
-            <a class="nav__left-side__sites__link active" 
-            routerLink="#" routerLinkActive="active">Strona główna</a>
-            
-            <a class="nav__left-side__sites__link"
-            routerLink="#" routerLinkActive="">Spis telefonów</a>
-            
-            <a class="nav__left-side__sites__link"
-            routerLink="#" routerLinkActive="">Rozliczenia</a>
-            
-            <a class="nav__left-side__sites__link"
-            routerLink="#" routerLinkActive="">Serwis</a>
+            <a class="nav__left-side__sites__link" *ngFor="let site of links"
+            routerLink="{{site.path}}" routerLinkActive="active">{{site.displayName}}</a>
+
         </div>
 
     </div>
@@ -31,17 +23,8 @@
             <div class="nav__right-side__dropdown__menu" *ngIf="d.isOpen">
               <div class="nav__right-side__dropdown__menu__option">
 
-                <a class="nav__right-side__dropdown__menu__option__a"
-                routerLink="#" routerLinkActive="">Strona główna</a>
-                
-                <a class="nav__right-side__dropdown__menu__option__a"
-                routerLink="#" routerLinkActive="">Spis telefonów</a>
-
-                <a class="nav__right-side__dropdown__menu__option__a"
-                  routerLink="#" routerLinkActive="">Rozliczenia</a>
-
-                <a class="nav__right-side__dropdown__menu__option__a"
-                routerLink="#" routerLinkActive="">Serwis</a>
+                <a class="nav__right-side__dropdown__menu__option__a" *ngFor="let site of links"
+                routerLink="{{site.path}}">{{site.displayName}}</a>
 
                 <a class="nav__right-side__dropdown__menu__option__a"
                 (click)="logout()">

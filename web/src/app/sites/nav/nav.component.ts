@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
+interface Links {
+    displayName: string;
+    path: string;
+}
 
 @Component({
     selector: 'app-nav',
@@ -15,6 +19,13 @@ export class NavComponent {
     loged = {
         name: 'Karuzela Września'
     };
+
+    links: Links[] = [
+        { displayName: 'Strona główna', path: ''},
+        { displayName: 'Spis telefonów', path: 'spis-telefonów'},
+        { displayName: 'Rozliczenia', path: 'rozliczenia'},
+        { displayName: 'Serwis', path: 'serwis'},
+    ];
 
     constructor(
         private authService: AuthService) {}

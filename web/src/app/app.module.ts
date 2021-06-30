@@ -8,12 +8,14 @@ import { SitesComponent } from './sites/sites.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavComponent } from './sites/nav/nav.component';
 import { SharedModule } from './shared/shared.module';
+import { MainComponent } from './sites/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SitesComponent,
-    NavComponent
+    NavComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

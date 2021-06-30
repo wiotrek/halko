@@ -92,6 +92,7 @@ export class MainListComponent {
 
     addElement(form: NgForm): void {
         console.log(form.value);
-        form.reset();
+        form.controls.price.reset();
+        form.controls.name.reset();
     }
 }

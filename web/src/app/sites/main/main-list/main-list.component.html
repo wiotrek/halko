@@ -10,7 +10,7 @@
                 name="initials"
                 class="addition-item__ini"
                 required
-                ngModel
+                [ngModel]="employees[0].initials"
             >
                 <option
                     *ngFor="let employee of employees"
@@ -25,7 +25,7 @@
                 name="category"
                 class="addition-item__category"
                 required
-                ngModel
+                [ngModel]="category[0]"
             >
                 <option
                     *ngFor="let oneOfCategory of category"

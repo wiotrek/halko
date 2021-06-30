@@ -45,6 +45,12 @@ export class MainListComponent {
         }
     ];
 
+    category = [
+        'akcesoria',
+        'telefon',
+        'serwis'
+    ];
+
     testElements: ItemStructure[] = [
         {
             initials: 'KB',
@@ -84,7 +90,7 @@ export class MainListComponent {
         }
     ];
 
-    addElement(): void {
-
+    addElement(form: NgForm): void {
+        console.log(form);
     }
 }

@@ -3,10 +3,12 @@
 
     <div class="addition-item">
 
-        <form #authForm="ngForm">
+        <form #authForm="ngForm" (ngSubmit)="authForm">
             <select 
-            name="initials"
-            class="addition-item__ini"
+                name="initials"
+                class="addition-item__ini"
+                required
+                ngModel
             >
                 <option 
                     *ngFor="let employee of employees"
@@ -18,26 +20,38 @@
             </select>
 
             <select 
-                name="" 
-                id=""
+                name="category"
                 class="addition-item__category"
+                required
+                ngModel
             >
-                <option>akcesoria</option>
+                <option 
+                    *ngFor="let oneOfCategory of category"
+                    [value]="oneOfCategory"
+                >
+                    {{oneOfCategory}}
+                </option>
             </select>
 
             <input 
                 type="text"
-                class="addition-item__name dupa"
+                class="addition-item__name"
                 placeholder="nazwa"
+                name="name"
+                required
+                ngModel
             >
 
             <input 
                 type="text"
                 class="addition-item__price"
+                name="price"
                 placeholder="cena"
+                required
+                ngModel
             >
 
-            <button class="addition-item__confirm">
+            <button class="addition-item__confirm" type="submit">
                 <fa-icon 
                     class="addition-item__confirm__icon" 
                     [icon]="faCheckCircle">

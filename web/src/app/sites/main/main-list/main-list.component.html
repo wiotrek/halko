@@ -70,7 +70,10 @@
             <div class="list__item__index">{{i + 1}}.</div>
             <div class="list__item__ini">{{element.initials}}</div>
             <div class="list__item__category">
-                <fa-icon [icon]="dictionaryIcon[element.category]"></fa-icon>
+                <fa-icon 
+                    [icon]="categoryIcon[element.category]"
+                    [ngStyle]="{'color': categoryIconColor[element.category]}"
+                ></fa-icon>
             </div>
             <div class="list__item__name">{{element.name}}</div>
             <div class="list__item__price">{{element.price}} zł</div>
@@ -84,7 +87,7 @@
                 <a>poprzednia</a>
                 <a>następna</a>
             </div>
-            <div class="list__wrap-up__value">{{displaySum()}}</div>
+            <div class="list__wrap-up__value">{{displaySum()}} zł</div>
         </div>
 
     </div>

@@ -2,13 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {
     faCheck,
-    faHeadphones,
-    faEdit,
-    faMobileAlt,
-    faWrench,
-    IconDefinition
+    faEdit
 } from '@fortawesome/free-solid-svg-icons';
-import { Dictionary } from 'src/app/shared/models/dictionary.model';
+import { categoryIconColor } from '../dictionary/category-icon-color.dictionary';
+import { categoryIcon } from '../dictionary/category-icon.dictionary';
 import { MainService } from '../main.service';
 import { ItemStructure } from '../models/item-structure.model';
 
@@ -19,16 +16,11 @@ import { ItemStructure } from '../models/item-structure.model';
 })
 export class MainListComponent implements OnInit{
     faCheckCircle = faCheck;
-    faHeadphones = faHeadphones;
     faEdit = faEdit;
-    faMobileAlt = faMobileAlt;
-    faWrench = faWrench;
 
-    dictionaryIcon: Dictionary<IconDefinition> = {
-        akcesoria: faHeadphones,
-        telefon: faMobileAlt,
-        serwis: faWrench
-    };
+    // suplies from dictionary
+    categoryIcon = categoryIcon;
+    categoryIconColor = categoryIconColor;
 
     testElements = {} as ItemStructure[];
 
@@ -37,6 +29,11 @@ export class MainListComponent implements OnInit{
             name: 'Marek',
             lastName: 'Konrad',
             initials: 'MK'
+        },
+        {
+            name: 'Wojtek',
+            lastName: 'Kierzkowski',
+            initials: 'WK'
         }
     ];
 
@@ -64,7 +61,7 @@ export class MainListComponent implements OnInit{
 
     displaySum = () => {
         return this.testElements.reduce(
-            (acc: number, curr: ItemStructure) => acc + curr.price, 0
+            (acc: number, curr: ItemStructure) => acc + +curr.price, 0
         );
     }
 
@@ -72,9 +69,7 @@ export class MainListComponent implements OnInit{
         const elementsObservable = this.mainService.getElements();
         elementsObservable.subscribe(
             (elements: ItemStructure[]) => {
-                this.testElements = elements.sort(
-                    (a, b) => elements.indexOf(a) - elements.indexOf(b)
-                );
+                this.testElements = elements;
             }
         );
     }

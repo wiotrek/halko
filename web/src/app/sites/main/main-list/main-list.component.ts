@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm, Validators } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import {
     faCheck,
-    faEdit
+    faEdit,
+    faTrashAlt,
+    faUndoAlt,
+    faSave
 } from '@fortawesome/free-solid-svg-icons';
 import { categoryIconColor } from '../_dictionary/category-icon-color.dictionary';
 import { categoryIcon } from '../_dictionary/category-icon.dictionary';
@@ -17,6 +20,9 @@ import { ItemStructure } from '../_models/item-structure.model';
 export class MainListComponent implements OnInit{
     faCheckCircle = faCheck;
     faEdit = faEdit;
+    faTrashAlt = faTrashAlt;
+    faUndoAlt = faUndoAlt;
+    faSave = faSave;
 
     // suplies from dictionary
     categoryIcon = categoryIcon;
@@ -43,6 +49,9 @@ export class MainListComponent implements OnInit{
         'serwis'
     ];
 
+    // if element is -1 then none is editing
+    currentlyEditedElement = -1;
+
     // paginations
     readonly pageSize = 5;
     start = 0;
@@ -63,6 +72,17 @@ export class MainListComponent implements OnInit{
 
         f.controls.price.reset();
         f.controls.name.reset();
+    }
+
+    deleteElement(ind: number): void {
+        this.mainService.deleteElement(ind);
+    }
+
+    // assign index to currenlty edited element
+    editElementModeToggle = (ind: number) => {
+        this.currentlyEditedElement = ind === this.currentlyEditedElement
+        ? -1
+        : ind;
     }
 
     displaySum = () => {

@@ -29,4 +29,8 @@ export class MainService {
     postElement(el: ItemStructure): any {
         this.testElements.unshift(el);
     }
+
+    deleteElement(ind: number): any {
+        this.testElements.splice(ind, 1);
+    }
 }

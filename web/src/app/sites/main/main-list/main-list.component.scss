@@ -26,8 +26,9 @@
             min-height: 35px;
             font-size: .8rem;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-items: center;
+
 
             select, input {
                 @include elementInItem;
@@ -44,7 +45,7 @@
 
             &__name {
                 min-width: 80px;
-                max-width: 200px;
+                max-width: 140px;
             }
 
             &__price {
@@ -58,7 +59,7 @@
                 min-width: 60px;
                 max-width: 100px;
                 height: 32px;
-                margin-left: 5px;
+                margin: 0 5px;
 
                 &__icon {
                     color: white;
@@ -76,14 +77,30 @@
                 display: flex;
                 justify-content: space-evenly;
                 border-radius: 5px;
+                font-size: .8rem;
 
                 div {
                     display: inline-block;
                     @include elementInItem;
                 }
 
+                &__index, &__ini, &__category {
+                    width: 22px;
+                }
+
+                &__ini, &__category {
+                    text-align: center;
+                }
+
                 &__name {
                     width: 160px;
+                    text-align: center;
+                    overflow: hidden;
+                }
+
+                &__price {
+                    min-width: 45px;
+                    overflow: hidden;
                     text-align: center;
                 }
 
@@ -130,7 +147,7 @@
 
 @media (min-width: $minValueDesktop) {
     .wrapper {
-        max-width: 480px;
+        max-width: 490px;
 
         .header {
             font-size: 1.7rem;
@@ -144,7 +161,7 @@
             }
 
             &__price {
-                width: 40px;
+                width: 50px;
             }
         }
 
@@ -152,7 +169,6 @@
 
             &__item {
                 margin: 8px auto;
-                margin-left: 30px;
                 font-size: .7rem;
                 background-color: white;
             }

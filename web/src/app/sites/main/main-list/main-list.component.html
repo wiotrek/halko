@@ -69,9 +69,30 @@
             *ngFor="let item of items | slice:start:end"
         >
             <div class="list__item__index">{{items.indexOf(item) + 1}}.</div>
-            <div class="list__item__ini">{{item.initials}}</div>
+
+            <div
+              *ngIf="currentlyEditedElement !== items.indexOf(item) else editModeActiveIni"
+              class="list__item__ini"
+            >{{item.initials}}</div>
+
+            <ng-template #editModeActiveIni>
+
+              <select
+                [ngModel]="employees[0].initials"
+              >
+
+                <option
+                  *ngFor="let human of employees"
+                  [value]="human.initials"
+                >{{human.initials}}</option>
+
+              </select>
+
+            </ng-template>
+
+
             <div class="list__item__category">
-                <fa-icon 
+                <fa-icon
                     [icon]="categoryIcon[item.category]"
                     [ngStyle]="{'color': categoryIconColor[item.category]}"
                 ></fa-icon>
@@ -86,7 +107,7 @@
                     class="list__item__edit__suspend"
                     (click)="editElementModeToggle(items.indexOf(item))"
                 >
-                    <fa-icon 
+                    <fa-icon
                         class="list__item__edit__suspend__icon"
                         [icon]="faEdit"
                     ></fa-icon>
@@ -110,29 +131,29 @@
                         >
                             <fa-icon [icon]="faUndoAlt"></fa-icon>
                         </button>
-                        
+
                     </div>
                 </ng-template>
 
-                
+
 
             </div>
         </div>
 
         <div class="list__wrap-up">
-            
+
             <div class="list__wrap-up__change-site">
-                
+
                 <a class="list__wrap-up__change-site__rewind"
                     *ngIf="end - pageSize > 0"
                     (click)="start = start - pageSize; end = end - pageSize"
                 >poprzednia</a>
-                
+
                 <a class="list__wrap-up__change-site__rewind"
                     *ngIf="start + pageSize < items.length"
                     (click)="start = start + pageSize; end = end + pageSize"
                 >następna</a>
-            
+
             </div>
 
             <div class="list__wrap-up__value">{{displaySum()}} zł</div>

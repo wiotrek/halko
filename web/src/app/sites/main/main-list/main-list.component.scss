@@ -12,6 +12,7 @@
 @media (min-width: 0) {
 
     .wrapper {
+        max-width: 490px;
 
         .header {
             border-left: 2px solid $primaryGrey;
@@ -77,7 +78,7 @@
                 display: flex;
                 justify-content: space-evenly;
                 border-radius: 5px;
-                font-size: .8rem;
+                font-size: .7rem;
 
                 &__index, &__ini, &__category {
                     width: 22px;
@@ -90,6 +91,7 @@
                 }
 
                 &__name {
+                    min-width: 80px;
                     max-width: 160px;
                     overflow: hidden;
                 }
@@ -169,7 +171,7 @@
     }
 }
 
-@media (min-width: $minValueDesktop) {
+@media (min-width: $minValueTablet) {
     .wrapper {
         max-width: 490px;
 

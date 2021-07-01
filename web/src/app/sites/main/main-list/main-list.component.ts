@@ -76,6 +76,9 @@ export class MainListComponent implements OnInit{
 
     deleteElement(ind: number): void {
         this.mainService.deleteElement(ind);
+
+        // because next element inherit editmode
+        this.currentlyEditedElement = -1;
     }
 
     // assign index to currenlty edited element

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, Validators } from '@angular/forms';
 import {
     faCheck,
     faEdit
 } from '@fortawesome/free-solid-svg-icons';
-import { categoryIconColor } from '../dictionary/category-icon-color.dictionary';
-import { categoryIcon } from '../dictionary/category-icon.dictionary';
+import { categoryIconColor } from '../_dictionary/category-icon-color.dictionary';
+import { categoryIcon } from '../_dictionary/category-icon.dictionary';
 import { MainService } from '../main.service';
-import { ItemStructure } from '../models/item-structure.model';
+import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
     selector: 'app-main-list',
@@ -22,7 +22,7 @@ export class MainListComponent implements OnInit{
     categoryIcon = categoryIcon;
     categoryIconColor = categoryIconColor;
 
-    testElements = {} as ItemStructure[];
+    items = {} as ItemStructure[];
 
     employees = [
         {
@@ -43,6 +43,11 @@ export class MainListComponent implements OnInit{
         'serwis'
     ];
 
+    // paginations
+    readonly pageSize = 5;
+    start = 0;
+    end = 5;
+
     constructor(
         private mainService: MainService) {}
 
@@ -50,17 +55,18 @@ export class MainListComponent implements OnInit{
        this.getElements();
     }
 
-    addElement(form: NgForm): void {
-        const elementToAdd = form.value as ItemStructure;
+    addElement(f: NgForm): void {
+
+        const elementToAdd = f.value as ItemStructure;
 
         this.postElement(elementToAdd);
 
-        form.controls.price.reset();
-        form.controls.name.reset();
+        f.controls.price.reset();
+        f.controls.name.reset();
     }
 
     displaySum = () => {
-        return this.testElements.reduce(
+        return this.items.reduce(
             (acc: number, curr: ItemStructure) => acc + +curr.price, 0
         );
     }
@@ -69,7 +75,7 @@ export class MainListComponent implements OnInit{
         const elementsObservable = this.mainService.getElements();
         elementsObservable.subscribe(
             (elements: ItemStructure[]) => {
-                this.testElements = elements;
+                this.items = elements;
             }
         );
     }

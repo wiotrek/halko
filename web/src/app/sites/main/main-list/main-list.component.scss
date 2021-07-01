@@ -128,9 +128,14 @@
 
                 &__change-site {
 
-                    a {
+                    &__rewind {
                         margin: auto 5px;
                         cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                            color: $prettyGreen;
+                        }
                     }
                 }
 

@@ -47,6 +47,7 @@
             class="addition-item__price"
             name="price"
             placeholder="cena"
+            pattern="[0-9]*[.]?[0-9]+"
             required
             ngModel
         >
@@ -65,18 +66,18 @@
 
         <div
             class="list__item"
-            *ngFor="let element of testElements; index as i"
+            *ngFor="let item of items | slice:start:end"
         >
-            <div class="list__item__index">{{i + 1}}.</div>
-            <div class="list__item__ini">{{element.initials}}</div>
+            <div class="list__item__index">{{items.indexOf(item) + 1}}.</div>
+            <div class="list__item__ini">{{item.initials}}</div>
             <div class="list__item__category">
                 <fa-icon 
-                    [icon]="categoryIcon[element.category]"
-                    [ngStyle]="{'color': categoryIconColor[element.category]}"
+                    [icon]="categoryIcon[item.category]"
+                    [ngStyle]="{'color': categoryIconColor[item.category]}"
                 ></fa-icon>
             </div>
-            <div class="list__item__name">{{element.name}}</div>
-            <div class="list__item__price">{{element.price}} zł</div>
+            <div class="list__item__name">{{item.name}}</div>
+            <div class="list__item__price">{{item.price}} zł</div>
             <button class="list__item__edit">
                 <fa-icon class="list__item__edit__icon" [icon]="faEdit"></fa-icon>
             </button>
@@ -84,8 +85,14 @@
 
         <div class="list__wrap-up">
             <div class="list__wrap-up__change-site">
-                <a>poprzednia</a>
-                <a>następna</a>
+                <a class="list__wrap-up__change-site__rewind"
+                    *ngIf="end - pageSize > 0"
+                    (click)="start = start - pageSize; end = end - pageSize"
+                >poprzednia</a>
+                <a class="list__wrap-up__change-site__rewind"
+                    *ngIf="start + pageSize < items.length"
+                    (click)="start = start + pageSize; end = end + pageSize"
+                >następna</a>
             </div>
             <div class="list__wrap-up__value">{{displaySum()}} zł</div>
         </div>

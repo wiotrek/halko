@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ItemStructure } from './models/item-structure.model';
+import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
 export class MainService {

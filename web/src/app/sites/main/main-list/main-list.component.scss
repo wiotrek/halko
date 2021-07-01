@@ -4,14 +4,15 @@
 @mixin elementInItem {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px solid $primaryGrey;
     margin: auto 4px;
     color: $primaryGrey;
+    border-bottom: 2px solid $primaryGrey;
 }
 
 @media (min-width: 0) {
 
     .wrapper {
+        max-width: 490px;
 
         .header {
             border-left: 2px solid $primaryGrey;
@@ -26,8 +27,9 @@
             min-height: 35px;
             font-size: .8rem;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-items: center;
+
 
             select, input {
                 @include elementInItem;
@@ -44,7 +46,7 @@
 
             &__name {
                 min-width: 80px;
-                max-width: 200px;
+                max-width: 140px;
             }
 
             &__price {
@@ -58,7 +60,7 @@
                 min-width: 60px;
                 max-width: 100px;
                 height: 32px;
-                margin-left: 5px;
+                margin: 0 5px;
 
                 &__icon {
                     color: white;
@@ -76,27 +78,63 @@
                 display: flex;
                 justify-content: space-evenly;
                 border-radius: 5px;
+                font-size: .7rem;
 
-                div {
+                &__index, &__ini, &__category {
+                    width: 22px;
+                }
+
+                &__index, &__ini, &__category, &__name, &__price {
+                    text-align: center;
                     display: inline-block;
                     @include elementInItem;
                 }
 
                 &__name {
-                    width: 160px;
-                    text-align: center;
+                    min-width: 80px;
+                    max-width: 160px;
+                    overflow: hidden;
+                }
+
+                &__price {
+                    min-width: 45px;
+                    overflow: hidden;
                 }
 
                 &__edit {
-                    border: 0;
-                    background-color: transparent;
-                    margin-left: 5px;
+                    align-self: center;
 
-                    &__icon {
-                        color: $waringColor;
+                    &__suspend {
+                        @include elementInItem;
+                        border: 0;
+
+                        transition: transform 0s .2 ease-in-out;
+    
+                        &__icon {
+                            color: $waringColor;
+                        }
+
+                        &:hover {
+                            transform: translateY(-2px);
+                        }
+                    }
+
+                    &__active {
+                        display: flex;
+                        flex-direction: row;
+                        transition: transform 0s .2 ease-in-out;
+
+                        &__option {
+                            @include elementInItem;
+                            border: 0;
+
+                            &:hover {
+                                color:turquoise;
+                                transform: rotate(10deg);
+                            }
+                        }
                     }
                 }
-
             }
 
             &__wrap-up {
@@ -111,9 +149,14 @@
 
                 &__change-site {
 
-                    a {
+                    &__rewind {
                         margin: auto 5px;
                         cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                            color: $prettyGreen;
+                        }
                     }
                 }
 
@@ -128,9 +171,9 @@
     }
 }
 
-@media (min-width: $minValueDesktop) {
+@media (min-width: $minValueTablet) {
     .wrapper {
-        max-width: 480px;
+        max-width: 490px;
 
         .header {
             font-size: 1.7rem;
@@ -144,7 +187,7 @@
             }
 
             &__price {
-                width: 40px;
+                width: 50px;
             }
         }
 
@@ -152,9 +195,14 @@
 
             &__item {
                 margin: 8px auto;
-                margin-left: 30px;
                 font-size: .7rem;
                 background-color: white;
+
+                &__name {
+                    min-width: 200px;
+                    max-width: 230px;
+                    overflow: hidden;
+                }
             }
 
             &__wrap-up {

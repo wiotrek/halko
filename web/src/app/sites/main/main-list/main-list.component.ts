@@ -1,47 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {
     faCheck,
-    faHeadphones,
     faEdit,
-    faMobileAlt,
-    faWrench,
-    IconDefinition
+    faTrashAlt,
+    faUndoAlt,
+    faSave
 } from '@fortawesome/free-solid-svg-icons';
-import { Dictionary } from 'src/app/shared/models/dictionary.model';
-
-
-interface ItemStructure {
-    initials: string;
-    category: string;
-    name: string;
-    price: number;
-}
+import { categoryIconColor } from '../_dictionary/category-icon-color.dictionary';
+import { categoryIcon } from '../_dictionary/category-icon.dictionary';
+import { MainService } from '../main.service';
+import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
     selector: 'app-main-list',
     templateUrl: 'main-list.component.html',
     styleUrls: ['main-list.component.scss']
 })
-export class MainListComponent {
+export class MainListComponent implements OnInit{
     faCheckCircle = faCheck;
-    faHeadphones = faHeadphones;
     faEdit = faEdit;
-    faMobileAlt = faMobileAlt;
-    faWrench = faWrench;
+    faTrashAlt = faTrashAlt;
+    faUndoAlt = faUndoAlt;
+    faSave = faSave;
 
-    dictionaryIcon: Dictionary<IconDefinition> = {
-        akcesoria: faHeadphones,
-        telefon: faMobileAlt,
-        serwis: faWrench
-    };
+    // suplies from dictionary
+    categoryIcon = categoryIcon;
+    categoryIconColor = categoryIconColor;
 
+    items = {} as ItemStructure[];
 
     employees = [
         {
             name: 'Marek',
             lastName: 'Konrad',
             initials: 'MK'
+        },
+        {
+            name: 'Wojtek',
+            lastName: 'Kierzkowski',
+            initials: 'WK'
         }
     ];
 
@@ -51,48 +49,61 @@ export class MainListComponent {
         'serwis'
     ];
 
-    testElements: ItemStructure[] = [
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initials: 'KB',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        }
-    ];
+    // if element is -1 then none is editing
+    currentlyEditedElement = -1;
 
-    addElement(form: NgForm): void {
-        console.log(form.value);
-        form.controls.price.reset();
-        form.controls.name.reset();
+    // paginations
+    readonly pageSize = 5;
+    start = 0;
+    end = 5;
+
+    constructor(
+        private mainService: MainService) {}
+
+    ngOnInit(): void {
+       this.getElements();
+    }
+
+    addElement(f: NgForm): void {
+
+        const elementToAdd = f.value as ItemStructure;
+
+        this.postElement(elementToAdd);
+
+        f.controls.price.reset();
+        f.controls.name.reset();
+    }
+
+    deleteElement(ind: number): void {
+        this.mainService.deleteElement(ind);
+
+        // because next element inherit editmode
+        this.currentlyEditedElement = -1;
+    }
+
+    // assign index to currenlty edited element
+    editElementModeToggle = (ind: number) => {
+        this.currentlyEditedElement = ind === this.currentlyEditedElement
+        ? -1
+        : ind;
+    }
+
+    displaySum = () => {
+        return this.items.reduce(
+            (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+        );
+    }
+
+    private getElements(): void {
+        const elementsObservable = this.mainService.getElements();
+        elementsObservable.subscribe(
+            (elements: ItemStructure[]) => {
+                this.items = elements;
+            }
+        );
+    }
+
+    private postElement(element: ItemStructure): void {
+        this.mainService.postElement(element);
     }
 }

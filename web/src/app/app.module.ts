@@ -10,6 +10,9 @@ import { NavComponent } from './sites/nav/nav.component';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './sites/main/main.component';
 import { MainListComponent } from './sites/main/main-manage/main-list/main-list.component';
+import { ScratchHeaderComponent } from './sites/main/main-manage/sheet-scratch/scratch-header/scratch-header.component';
+import { MainExpensesComponent } from './sites/main/main-manage/main-expenses/main-expenses.component';
+import { ScratchAdderComponent } from './sites/main/main-manage/sheet-scratch/scratch-adder/scratch-adder.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { MainListComponent } from './sites/main/main-manage/main-list/main-list.
     SitesComponent,
     NavComponent,
     MainComponent,
-    MainListComponent
+    MainListComponent,
+    MainExpensesComponent,
+    ScratchHeaderComponent,
+    ScratchAdderComponent
   ],
   imports: [
     BrowserModule,

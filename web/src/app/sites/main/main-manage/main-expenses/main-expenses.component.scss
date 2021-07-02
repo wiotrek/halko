@@ -1,0 +1,6 @@
+@import 'src/app/shared/global-styles/variable.scss';
+@import 'src/app/shared/global-styles/components.scss';
+
+.wrapper {
+    @include wrapperInMain;
+}

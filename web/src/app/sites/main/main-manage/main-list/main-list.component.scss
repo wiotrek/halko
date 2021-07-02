@@ -1,27 +1,6 @@
 @import 'src/app/shared/global-styles/variable.scss';
 @import 'src/app/shared/global-styles/components.scss';
 
-@mixin oneOfElementsInItem {
-    background-color: transparent;
-    border: 0;
-    margin: auto 4px;
-    color: $primaryGrey;
-    border-bottom: 2px solid $primaryGrey;
-    text-align: center;
-}
-
-@mixin setElementsInItem {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 8px auto;
-    background-color: white;
-    min-height: 35px;
-    border-radius: 5px;
-    font-size: .7rem;
-    align-items: center;
-}
-
-
 @media (min-width: 0) {
 
     .wrapper {

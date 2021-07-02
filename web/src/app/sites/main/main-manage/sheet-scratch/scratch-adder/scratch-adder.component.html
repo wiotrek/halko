@@ -1,0 +1,54 @@
+<form class="addition-item" #addItem="ngForm"
+>
+    <select
+        name="initials"
+        class="addition-item__ini"
+        required
+
+    >
+        <option
+        >
+            dsad
+        </option>
+
+    </select>
+
+    <select
+        name="category"
+        class="addition-item__category"
+        required
+    >
+        <option
+            [value]=""
+        >
+            dsa
+        </option>
+    </select>
+
+    <input
+        type="text"
+        class="addition-item__name"
+        placeholder="nazwa"
+        name="name"
+        required
+        ngModel
+    >
+
+    <input
+        type="text"
+        class="addition-item__price"
+        name="price"
+        placeholder="cena"
+        pattern="[0-9]*[.]?[0-9]+"
+        required
+        ngModel
+    >
+
+    <button class="addition-item__confirm" type="submit">
+        <fa-icon
+            class="addition-item__confirm__icon"
+            [icon]="faCheckCircle">
+        </fa-icon>
+    </button>
+
+</form>

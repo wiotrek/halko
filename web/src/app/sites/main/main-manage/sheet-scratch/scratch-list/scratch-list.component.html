@@ -1,0 +1,138 @@
+<div class="list">
+
+    <div
+        class="list__item"
+        *ngFor="let item of (items | async) | slice:start:end"
+    >
+
+        <div 
+            class="list__item__view"
+            *ngIf=" this.currentlyEditedElement !== (items | async)?.indexOf(item) else editModeActive"
+        >
+
+            <div class="list__item__view__index">{{(items | async)?.indexOf(item) + 1}}.</div>
+
+            <div class="list__item__view__ini">{{item.initials}}</div>
+
+            <div class="list__item__view__category">
+                <fa-icon
+                    [icon]="categoryIcon[item.category]"
+                    [ngStyle]="{'color': categoryIconColor[item.category]}"
+                ></fa-icon>
+            </div>
+            <div class="list__item__view__name">{{item.name}}</div>
+            <div class="list__item__view__price">{{item.price}} zł</div>
+
+            <button class="list__item__view__edit"
+                (click)="editElementModeToggle(item)"
+            >
+                <fa-icon
+                    class="list__item__view__edit__icon"
+                    [icon]="faEdit"
+                ></fa-icon>
+            </button>
+
+        </div>
+
+        <ng-template #editModeActive>
+
+            <form 
+                #editElementForm="ngForm" 
+                class="list__item__editMode"
+            >
+
+                <div class="list__item__editMode__index">{{(items | async).indexOf(item) + 1}}.</div>
+
+                <select
+                    class="list__item__editMode__ini"
+                    name="initials"
+                    [ngModel]="item.initials"
+                 >
+                    <option
+                        *ngFor="let human of employees"
+                        [value]="human.initials"
+                    >{{human.initials}}</option>
+                </select>
+
+                <select
+                    class="list__item__editMode__category"
+                    name="category"
+                    [ngModel]="item.category"
+                >
+                    <option
+                        *ngFor="let oneOfCategory of category"
+                        [value]="oneOfCategory"
+                    >
+                        {{oneOfCategory}}
+                    </option>
+                </select>
+
+                <input
+                    type="text"
+                    class="list__item__editMode__name"
+                    name="name"
+                    [ngModel]="item.name"
+                >
+
+                <input
+                    type="text"
+                    class="list__item__editMode__price"
+                    name="price"
+                    pattern="[0-9]*[.]?[0-9]+"
+                    [ngModel]="item.price"
+                >
+
+                <div class="list__item__editMode__edit">
+
+                    <button class="list__item__editMode__edit__option"
+                        type="button"
+                        (click)="deleteElement($event, item)"
+                    >
+                        <fa-icon [icon]="faTrashAlt"></fa-icon>
+                    </button>
+
+                    <button
+                        class="list__item__editMode__edit__option"
+                        (click)="editElementForm.valid && editElement(editElementForm, item)"
+                    >
+                        <fa-icon [icon]="faSave"></fa-icon>
+                    </button>
+
+                    <button class="list__item__editMode__edit__option"
+                        type="button"
+                        (click)="editElementModeToggle(item)"
+                    >
+                        <fa-icon [icon]="faUndoAlt"></fa-icon>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </ng-template>
+
+    </div>
+
+    <div class="list__wrap-up">
+
+        <div class="list__wrap-up__change-site">
+
+            <a class="list__wrap-up__change-site__rewind"
+                *ngIf="end - pageSize > 0"
+                (click)="start = start - pageSize; end = end - pageSize"
+            >poprzednia</a>
+
+            <a class="list__wrap-up__change-site__rewind"
+                *ngIf="start + pageSize < (items | async).length"
+                (click)="start = start + pageSize; end = end + pageSize"
+            >następna</a>
+
+        </div>
+
+        <div
+            class="list__wrap-up__value"
+            *ngIf="(displaySum() | async) as sum"
+        >{{sum}} zł</div>
+    </div>
+
+</div>

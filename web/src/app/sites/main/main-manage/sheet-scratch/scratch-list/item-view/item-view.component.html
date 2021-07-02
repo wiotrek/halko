@@ -1,0 +1,27 @@
+<div class="view">
+
+    <div class="view__index">{{OurItem.id}}.</div>
+
+    <div class="view__ini">{{OurItem.initials}}</div>
+
+    <div class="view__category">
+        <fa-icon
+            [icon]="categoryIcon[OurItem.category]"
+            [ngStyle]="{'color': categoryIconColor[OurItem.category]}"
+        ></fa-icon>
+    </div>
+
+    <div class="view__name">{{OurItem.name}}</div>
+
+    <div class="view__price">{{OurItem.price}} zł</div>
+
+    <button class="view__edit"
+        (click)="editModeToggleFunc(OurItem)"
+    >
+        <fa-icon
+            class="view__edit__icon"
+            [icon]="faEdit"
+        ></fa-icon>
+    </button>
+
+</div>

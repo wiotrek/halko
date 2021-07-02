@@ -5,34 +5,11 @@
         *ngFor="let item of (items | async) | slice:start:end"
     >
 
-        <div 
-            class="list__item__view"
-            *ngIf=" this.currentlyEditedElement !== (items | async)?.indexOf(item) else editModeActive"
-        >
-
-            <div class="list__item__view__index">{{(items | async)?.indexOf(item) + 1}}.</div>
-
-            <div class="list__item__view__ini">{{item.initials}}</div>
-
-            <div class="list__item__view__category">
-                <fa-icon
-                    [icon]="categoryIcon[item.category]"
-                    [ngStyle]="{'color': categoryIconColor[item.category]}"
-                ></fa-icon>
-            </div>
-            <div class="list__item__view__name">{{item.name}}</div>
-            <div class="list__item__view__price">{{item.price}} zł</div>
-
-            <button class="list__item__view__edit"
-                (click)="editElementModeToggle(item)"
-            >
-                <fa-icon
-                    class="list__item__view__edit__icon"
-                    [icon]="faEdit"
-                ></fa-icon>
-            </button>
-
-        </div>
+        <app-item-view
+            *ngIf="this.currentlyEditedElement !== (items | async).indexOf(item)"
+            [OurItem]="item"
+            (editModeToggle)="editElementModeToggle(item)"
+        ></app-item-view>
 
         <ng-template #editModeActive>
 
@@ -86,7 +63,7 @@
 
                     <button class="list__item__editMode__edit__option"
                         type="button"
-                        (click)="deleteElement($event, item)"
+                        (click)="deleteElement(item)"
                     >
                         <fa-icon [icon]="faTrashAlt"></fa-icon>
                     </button>

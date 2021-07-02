@@ -7,43 +7,6 @@
 
         &__item {
             
-            &__view {
-                @include setElementsInItem;
-
-                &__index, &__ini, &__category {
-                    width: 22px;
-                }
-
-                &__index, &__ini, &__category, &__name, &__price {
-                    text-align: center;
-                    @include oneOfElementsInItem;
-                }
-
-                &__name {
-                    min-width: 80px;
-                    max-width: 160px;
-                    overflow: hidden;
-                }
-
-                &__price {
-                    min-width: 45px;
-                    overflow: hidden;
-                }
-
-                &__edit {
-                    @include oneOfElementsInItem;
-                    border: 0;
-                    transition: transform 0s .2 ease-in-out;
-
-                    &:hover {
-                        transform: translateY(-2px);
-                    }
-
-                    &__icon {
-                        color: $waringColor;
-                    }
-                }
-            }
 
             &__editMode {
                 @include setElementsInItem;
@@ -121,6 +84,25 @@
                 border-bottom: 2px solid $successColor;
                 padding: 0 5px;
                 margin-right: 10px;
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueTablet) {
+    .list {
+
+        &__item {
+        }
+
+        &__wrap-up {
+            margin-top: 40px;
+
+            &__change-site {
+
+                a {
+                    margin: auto 10px;
+                }
             }
         }
     }

@@ -7,12 +7,14 @@ export class MainService {
 
     private testElements: ItemStructure[] = [
         {
+            id: 0,
             initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
         },
         {
+            id: 1,
             initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',

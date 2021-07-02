@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ItemStructure } from '../../../_models/item-structure.model';
 import {
-    faCheck,
     faEdit,
     faTrashAlt,
     faUndoAlt,
@@ -59,7 +58,7 @@ export class ScratchListComponent implements OnInit {
         this.currentlyEditedElement = -1;
     }
 
-    deleteElement($event: any, item: ItemStructure): void {
+    deleteElement(item: ItemStructure): void {
         const ind = this.getElementIndex(item);
 
         this.mainService.deleteElement(ind);

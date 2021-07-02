@@ -1,0 +1,72 @@
+<form 
+#editElementForm="ngForm" 
+class="editMode"
+>
+
+    <div class="editMode__index">{{ourItem}}.</div>
+
+    <select
+        class="editMode__ini"
+        name="initials"
+        [ngModel]="ourItem.initials"
+    >
+        <option
+            *ngFor="let human of employees"
+            [value]="human.initials"
+        >{{human.initials}}</option>
+    </select>
+
+    <select
+        class="editMode__category"
+        name="category"
+        [ngModel]="ourItem.category"
+    >
+        <option
+            *ngFor="let oneOfCategory of category"
+            [value]="oneOfCategory"
+        >
+            {{oneOfCategory}}
+        </option>
+    </select>
+
+    <input
+        type="text"
+        class="editMode__name"
+        name="name"
+        [ngModel]="ourItem.name"
+    >
+
+    <input
+        type="text"
+        class="editMode__price"
+        name="price"
+        pattern="[0-9]*[.]?[0-9]+"
+        [ngModel]="ourItem.price"
+    >
+
+    <div class="editMode__edit">
+
+        <button class="editMode__edit__option"
+            type="button"
+            (click)="deleteElementFunc(ourItem)"
+        >
+            <fa-icon [icon]="faTrashAlt"></fa-icon>
+        </button>
+
+        <button
+            class="editMode__edit__option"
+            (click)="editElementForm.valid && editElementFunc(editElementForm)"
+        >
+            <fa-icon [icon]="faSave"></fa-icon>
+        </button>
+
+        <button class="editMode__edit__option"
+            type="button"
+            (click)="editElementModeToggleFunc(ourItem)"
+        >
+            <fa-icon [icon]="faUndoAlt"></fa-icon>
+        </button>
+
+    </div>
+
+</form>

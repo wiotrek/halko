@@ -93,6 +93,13 @@
     .list {
 
         &__item {
+
+            &__editMode {
+
+                &__category {
+                    width: auto;
+                }
+            }
         }
 
         &__wrap-up {

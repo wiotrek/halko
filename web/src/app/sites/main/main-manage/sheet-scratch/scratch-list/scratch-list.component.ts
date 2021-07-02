@@ -49,15 +49,6 @@ export class ScratchListComponent implements OnInit {
     }
 
 
-    editElement(f: NgForm, prevItem: ItemStructure): void {
-        const elementToEdit = f.value as ItemStructure;
-        console.log(f.value);
-
-        this.mainService.putElement(elementToEdit, prevItem);
-
-        this.currentlyEditedElement = -1;
-    }
-
     deleteElement(item: ItemStructure): void {
         const ind = this.getElementIndex(item);
 

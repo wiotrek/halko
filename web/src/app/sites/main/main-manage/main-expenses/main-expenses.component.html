@@ -1,5 +1,30 @@
 <div class="wrapper">
     <app-scratch-header [title]="title"></app-scratch-header>
+    
     <app-scratch-adder></app-scratch-adder>
-    <app-scratch-list></app-scratch-list>
+    
+    <div class="list">
+
+        <div 
+            class="list__item"
+            *ngFor="let item of (items | async) | slice:start:end"
+        >
+            <app-item-view
+                *ngIf="this.currentlyEditedElement !== (items | async).indexOf(item) else editModeActive"
+                [OurItem]="item"
+                (editModeToggle)="editElementModeToggle(item)"
+            ></app-item-view>
+
+            <ng-template #editModeActive>
+                <app-item-edit
+                    [ourItem]="item"
+                    [employees]="employees"
+                    [category]="category"
+                ></app-item-edit>
+            </ng-template>
+
+        </div>
+
+    </div>
+
 </div>

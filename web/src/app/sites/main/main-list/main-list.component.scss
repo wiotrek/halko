@@ -1,18 +1,32 @@
 @import 'src/app/shared/global-styles/variable.scss';
 @import 'src/app/shared/global-styles/components.scss';
 
-@mixin elementInItem {
+@mixin oneOfElementsInItem {
     background-color: transparent;
     border: 0;
-    border-bottom: 2px solid $primaryGrey;
     margin: auto 4px;
     color: $primaryGrey;
+    border-bottom: 2px solid $primaryGrey;
+    text-align: center;
 }
 
-@media (min-width: 0) { 
+@mixin setElementsInItem {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 8px auto;
+    background-color: white;
+    min-height: 35px;
+    border-radius: 5px;
+    font-size: .7rem;
+    align-items: center;
+}
+
+
+@media (min-width: 0) {
 
     .wrapper {
-        
+        max-width: 490px;
+
         .header {
             border-left: 2px solid $primaryGrey;
             padding: 10px 30px;
@@ -20,17 +34,14 @@
         }
 
         .addition-item {
-            display: block;
+            @include setElementsInItem;
             margin-top: 20px;
-            background-color: white;
-            min-height: 35px;
             font-size: .8rem;
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
+            justify-content: space-between;
+
 
             select, input {
-                @include elementInItem;
+                @include oneOfElementsInItem;
                 cursor: pointer;
             }
 
@@ -44,7 +55,7 @@
 
             &__name {
                 min-width: 80px;
-                max-width: 200px;
+                max-width: 140px;
             }
 
             &__price {
@@ -58,7 +69,7 @@
                 min-width: 60px;
                 max-width: 100px;
                 height: 32px;
-                margin-left: 5px;
+                margin: 0 5px;
 
                 &__icon {
                     color: white;
@@ -70,33 +81,87 @@
             margin-top: 30px;
 
             &__item {
-                margin: 8px auto;
-                background-color: white;
-                min-height: 35px;
-                display: flex;
-                justify-content: space-evenly;
-                border-radius: 5px;
+                
+                &__view {
+                    @include setElementsInItem;
 
-                div {
-                    display: inline-block;
-                    @include elementInItem;
-                }
+                    &__index, &__ini, &__category {
+                        width: 22px;
+                    }
+    
+                    &__index, &__ini, &__category, &__name, &__price {
+                        text-align: center;
+                        @include oneOfElementsInItem;
+                    }
+    
+                    &__name {
+                        min-width: 80px;
+                        max-width: 160px;
+                        overflow: hidden;
+                    }
+    
+                    &__price {
+                        min-width: 45px;
+                        overflow: hidden;
+                    }
 
-                &__name {
-                    width: 160px;
-                    text-align: center;
-                }
-
-                &__edit {
-                    border: 0;
-                    background-color: transparent;
-                    margin-left: 5px;
-
-                    &__icon {
-                        color: $waringColor;
+                    &__edit {
+                        @include oneOfElementsInItem;
+                        border: 0;
+                        transition: transform 0s .2 ease-in-out;
+    
+                        &:hover {
+                            transform: translateY(-2px);
+                        }
+    
+                        &__icon {
+                            color: $waringColor;
+                        }
                     }
                 }
 
+                &__editMode {
+                    @include setElementsInItem;
+
+                    &__index {
+                        width: 22px;
+                    }
+
+                    &__index, &__ini, &__category, &__name, &__price {
+                        @include oneOfElementsInItem;
+                    }
+
+                    &__category {
+                        width: 4ch;
+                    }
+
+                    &__name {
+                        min-width: 80px;
+                        max-width: 160px;
+                    }
+
+                    &__price {
+                        min-width: 25px;
+                        max-width: 35px;
+                        overflow: hidden;
+                    }
+
+                    &__edit {
+                        display: flex;
+                        flex-direction: row;
+                        transition: transform 0s .2 ease-in-out;
+
+                        &__option {
+                            @include oneOfElementsInItem;
+                            border: 0;
+
+                            &:hover {
+                                color:turquoise;
+                                transform: rotate(10deg);
+                            }
+                        }
+                    }
+                }     
             }
 
             &__wrap-up {
@@ -111,9 +176,14 @@
 
                 &__change-site {
 
-                    a {
+                    &__rewind {
                         margin: auto 5px;
                         cursor: pointer;
+
+                        &:hover {
+                            text-decoration: underline;
+                            color: $prettyGreen;
+                        }
                     }
                 }
 
@@ -128,33 +198,48 @@
     }
 }
 
-@media (min-width: $minValueDesktop) {
+@media (min-width: $minValueTablet) {
     .wrapper {
-        max-width: 500px;
+        max-width: 490px;
 
         .header {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
         }
 
         .addition-item {
-            font-size: .9rem;
+            font-size: .8rem;
 
             &__category {
                 width: auto;
             }
 
             &__price {
-                width: 40px;
+                width: 50px;
             }
         }
 
         .list {
 
             &__item {
-                margin: 8px auto;
-                margin-left: 30px;
-                background-color: white;
 
+                &__view {
+                    margin: 8px auto;
+                    font-size: .7rem;
+                    background-color: white;
+    
+                    &__name {
+                        min-width: 200px;
+                        max-width: 230px;
+                        overflow: hidden;
+                    }
+                }
+
+                &__editMode {
+
+                    &__category {
+                        width: auto;
+                    }
+                }
             }
 
             &__wrap-up {

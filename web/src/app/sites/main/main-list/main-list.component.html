@@ -1,77 +1,202 @@
 <div class="wrapper">
     <h1 class="header">Sprzedaż</h1>
 
-    <div class="addition-item">
-
-        <form #authForm="ngForm">
-            <select 
+    <form class="addition-item" #addItem="ngForm"
+        (ngSubmit)="addItem.valid && addElement(addItem)"
+    >
+        <select
             name="initials"
             class="addition-item__ini"
+            required
+            [ngModel]="employees[0].initials"
+        >
+            <option
+                *ngFor="let employee of employees"
+                [value]="employee.initials"
             >
-                <option 
-                    *ngFor="let employee of employees"
-                    [value]="employee.initials"
-                >
-                    {{employee.initials}}
-                </option>
-            
-            </select>
+                {{employee.initials}}
+            </option>
 
-            <select 
-                name="" 
-                id=""
-                class="addition-item__category"
+        </select>
+
+        <select
+            name="category"
+            class="addition-item__category"
+            required
+            [ngModel]="category[0]"
+        >
+            <option
+                *ngFor="let oneOfCategory of category"
+                [value]="oneOfCategory"
             >
-                <option>akcesoria</option>
-            </select>
+                {{oneOfCategory}}
+            </option>
+        </select>
 
-            <input 
-                type="text"
-                class="addition-item__name dupa"
-                placeholder="nazwa"
-            >
+        <input
+            type="text"
+            class="addition-item__name"
+            placeholder="nazwa"
+            name="name"
+            required
+            ngModel
+        >
 
-            <input 
-                type="text"
-                class="addition-item__price"
-                placeholder="cena"
-            >
+        <input
+            type="text"
+            class="addition-item__price"
+            name="price"
+            placeholder="cena"
+            pattern="[0-9]*[.]?[0-9]+"
+            required
+            ngModel
+        >
 
-            <button class="addition-item__confirm">
-                <fa-icon 
-                    class="addition-item__confirm__icon" 
-                    [icon]="faCheckCircle">
-                </fa-icon>
-            </button>
+        <button class="addition-item__confirm" type="submit">
+            <fa-icon
+                class="addition-item__confirm__icon"
+                [icon]="faCheckCircle">
+            </fa-icon>
+        </button>
 
-        </form>
-        
-    </div>
+    </form>
+
 
     <div class="list">
 
-        <div 
+        <div
             class="list__item"
-            *ngFor="let element of testElements; index as i"
+            *ngFor="let item of (items | async) | slice:start:end"
         >
-            <div class="list__item__index">{{i + 1}}.</div>
-            <div class="list__item__ini">{{element.initials}}</div>
-            <div class="list__item__category">
-                <fa-icon [icon]="dictionaryIcon[element.category]"></fa-icon>
+
+            <div 
+                class="list__item__view"
+                *ngIf=" this.currentlyEditedElement !== (items | async)?.indexOf(item) else editModeActive"
+            >
+
+                <div class="list__item__view__index">{{(items | async)?.indexOf(item) + 1}}.</div>
+
+                <div class="list__item__view__ini">{{item.initials}}</div>
+
+                <div class="list__item__view__category">
+                    <fa-icon
+                        [icon]="categoryIcon[item.category]"
+                        [ngStyle]="{'color': categoryIconColor[item.category]}"
+                    ></fa-icon>
+                </div>
+                <div class="list__item__view__name">{{item.name}}</div>
+                <div class="list__item__view__price">{{item.price}} zł</div>
+
+                <button class="list__item__view__edit"
+                    (click)="editElementModeToggle(item)"
+                >
+                    <fa-icon
+                        class="list__item__view__edit__icon"
+                        [icon]="faEdit"
+                    ></fa-icon>
+                </button>
+
             </div>
-            <div class="list__item__name">{{element.name}}</div>
-            <div class="list__item__price">{{element.price}} zł</div>
-            <button class="list__item__edit">
-                <fa-icon class="list__item__edit__icon" [icon]="faEdit"></fa-icon>
-            </button>
+
+            <ng-template #editModeActive>
+
+                <form 
+                    #editElementForm="ngForm" 
+                    class="list__item__editMode"
+                >
+
+                    <div class="list__item__editMode__index">{{(items | async).indexOf(item) + 1}}.</div>
+
+                    <select
+                        class="list__item__editMode__ini"
+                        name="initials"
+                        [ngModel]="item.initials"
+                     >
+                        <option
+                            *ngFor="let human of employees"
+                            [value]="human.initials"
+                        >{{human.initials}}</option>
+                    </select>
+
+                    <select
+                        class="list__item__editMode__category"
+                        name="category"
+                        [ngModel]="item.category"
+                    >
+                        <option
+                            *ngFor="let oneOfCategory of category"
+                            [value]="oneOfCategory"
+                        >
+                            {{oneOfCategory}}
+                        </option>
+                    </select>
+
+                    <input
+                        type="text"
+                        class="list__item__editMode__name"
+                        name="name"
+                        [ngModel]="item.name"
+                    >
+
+                    <input
+                        type="text"
+                        class="list__item__editMode__price"
+                        name="price"
+                        pattern="[0-9]*[.]?[0-9]+"
+                        [ngModel]="item.price"
+                    >
+
+                    <div class="list__item__editMode__edit">
+
+                        <button class="list__item__editMode__edit__option"
+                            type="button"
+                            (click)="deleteElement($event, item)"
+                        >
+                            <fa-icon [icon]="faTrashAlt"></fa-icon>
+                        </button>
+    
+                        <button
+                            class="list__item__editMode__edit__option"
+                            (click)="editElementForm.valid && editElement(editElementForm, item)"
+                        >
+                            <fa-icon [icon]="faSave"></fa-icon>
+                        </button>
+    
+                        <button class="list__item__editMode__edit__option"
+                            type="button"
+                            (click)="editElementModeToggle(item)"
+                        >
+                            <fa-icon [icon]="faUndoAlt"></fa-icon>
+                        </button>
+    
+                    </div>
+
+                </form>
+
+            </ng-template>
+
         </div>
 
         <div class="list__wrap-up">
+
             <div class="list__wrap-up__change-site">
-                <a>poprzednia</a>
-                <a>następna</a>
+
+                <a class="list__wrap-up__change-site__rewind"
+                    *ngIf="end - pageSize > 0"
+                    (click)="start = start - pageSize; end = end - pageSize"
+                >poprzednia</a>
+
+                <a class="list__wrap-up__change-site__rewind"
+                    *ngIf="start + pageSize < (items | async).length"
+                    (click)="start = start + pageSize; end = end + pageSize"
+                >następna</a>
+
             </div>
-            <div class="list__wrap-up__value">120</div>
+
+            <div
+                class="list__wrap-up__value"
+                *ngIf="(displaySum() | async) as sum"
+            >{{sum}} zł</div>
         </div>
 
     </div>

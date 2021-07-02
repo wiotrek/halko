@@ -43,6 +43,10 @@
             select, input {
                 @include oneOfElementsInItem;
                 cursor: pointer;
+                
+                &:hover {
+                    border-bottom: 2px solid $prettyGreen;
+                }
             }
 
             &__category {
@@ -129,6 +133,10 @@
 
                     &__index, &__ini, &__category, &__name, &__price {
                         @include oneOfElementsInItem;
+
+                        &:hover {
+                            border-bottom: 2px solid $prettyGreen;
+                        }
                     }
 
                     &__category {

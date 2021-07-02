@@ -7,10 +7,10 @@ import {
     faUndoAlt,
     faSave
 } from '@fortawesome/free-solid-svg-icons';
-import { categoryIconColor } from '../_dictionary/category-icon-color.dictionary';
-import { categoryIcon } from '../_dictionary/category-icon.dictionary';
-import { MainService } from '../main.service';
-import { ItemStructure } from '../_models/item-structure.model';
+import { categoryIconColor } from '../../_dictionary/category-icon-color.dictionary';
+import { categoryIcon } from '../../_dictionary/category-icon.dictionary';
+import { MainService } from '../../main.service';
+import { ItemStructure } from '../../_models/item-structure.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

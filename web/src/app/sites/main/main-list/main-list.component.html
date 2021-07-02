@@ -66,78 +66,115 @@
 
         <div
             class="list__item"
-            *ngFor="let item of items | slice:start:end"
+            *ngFor="let item of (items | async) | slice:start:end"
         >
-            <div class="list__item__index">{{items.indexOf(item) + 1}}.</div>
 
-            <div
-              *ngIf="currentlyEditedElement !== items.indexOf(item) else editModeActiveIni"
-              class="list__item__ini"
-            >{{item.initials}}</div>
+            <div 
+                class="list__item__view"
+                *ngIf=" this.currentlyEditedElement !== (items | async)?.indexOf(item) else editModeActive"
+            >
 
-            <ng-template #editModeActiveIni>
+                <div class="list__item__view__index">{{(items | async)?.indexOf(item) + 1}}.</div>
 
-              <select
-                [ngModel]="employees[0].initials"
-              >
+                <div class="list__item__view__ini">{{item.initials}}</div>
 
-                <option
-                  *ngFor="let human of employees"
-                  [value]="human.initials"
-                >{{human.initials}}</option>
+                <div class="list__item__view__category">
+                    <fa-icon
+                        [icon]="categoryIcon[item.category]"
+                        [ngStyle]="{'color': categoryIconColor[item.category]}"
+                    ></fa-icon>
+                </div>
+                <div class="list__item__view__name">{{item.name}}</div>
+                <div class="list__item__view__price">{{item.price}} zł</div>
 
-              </select>
-
-            </ng-template>
-
-
-            <div class="list__item__category">
-                <fa-icon
-                    [icon]="categoryIcon[item.category]"
-                    [ngStyle]="{'color': categoryIconColor[item.category]}"
-                ></fa-icon>
-            </div>
-            <div class="list__item__name">{{item.name}}</div>
-            <div class="list__item__price">{{item.price}} zł</div>
-
-            <div class="list__item__edit">
-
-                <button
-                    *ngIf="currentlyEditedElement !== items.indexOf(item) else editModeActive"
-                    class="list__item__edit__suspend"
-                    (click)="editElementModeToggle(items.indexOf(item))"
+                <button class="list__item__view__edit"
+                    (click)="editElementModeToggle(item)"
                 >
                     <fa-icon
-                        class="list__item__edit__suspend__icon"
+                        class="list__item__view__edit__icon"
                         [icon]="faEdit"
                     ></fa-icon>
                 </button>
 
-                <ng-template #editModeActive>
-                    <div class="list__item__edit__active">
+            </div>
 
-                        <button class="list__item__edit__active__option"
-                            (click)="deleteElement(items.indexOf(item))"
+            <ng-template #editModeActive>
+
+                <form 
+                    #editElementForm="ngForm" 
+                    class="list__item__editMode"
+                >
+
+                    <div class="list__item__editMode__index">{{(items | async).indexOf(item) + 1}}.</div>
+
+                    <select
+                        class="list__item__editMode__ini"
+                        name="initials"
+                        [ngModel]="item.initials"
+                     >
+                        <option
+                            *ngFor="let human of employees"
+                            [value]="human.initials"
+                        >{{human.initials}}</option>
+                    </select>
+
+                    <select
+                        class="list__item__editMode__category"
+                        name="category"
+                        [ngModel]="item.category"
+                    >
+                        <option
+                            *ngFor="let oneOfCategory of category"
+                            [value]="oneOfCategory"
+                        >
+                            {{oneOfCategory}}
+                        </option>
+                    </select>
+
+                    <input
+                        type="text"
+                        class="list__item__editMode__name"
+                        name="name"
+                        [ngModel]="item.name"
+                    >
+
+                    <input
+                        type="text"
+                        class="list__item__editMode__price"
+                        name="price"
+                        pattern="[0-9]*[.]?[0-9]+"
+                        [ngModel]="item.price"
+                    >
+
+                    <div class="list__item__editMode__edit">
+
+                        <button class="list__item__editMode__edit__option"
+                            type="button"
+                            (click)="deleteElement($event, item)"
                         >
                             <fa-icon [icon]="faTrashAlt"></fa-icon>
                         </button>
-
-                        <button class="list__item__edit__active__option">
+    
+                        <button
+                            class="list__item__editMode__edit__option"
+                            (click)="editElementForm.valid && editElement(editElementForm, item)"
+                        >
                             <fa-icon [icon]="faSave"></fa-icon>
                         </button>
-
-                        <button class="list__item__edit__active__option"
-                            (click)="editElementModeToggle(items.indexOf(item))"
+    
+                        <button class="list__item__editMode__edit__option"
+                            type="button"
+                            (click)="editElementModeToggle(item)"
                         >
                             <fa-icon [icon]="faUndoAlt"></fa-icon>
                         </button>
-
+    
                     </div>
-                </ng-template>
 
+                </form>
 
+            </ng-template>
 
-            </div>
         </div>
 
         <div class="list__wrap-up">
@@ -150,13 +187,16 @@
                 >poprzednia</a>
 
                 <a class="list__wrap-up__change-site__rewind"
-                    *ngIf="start + pageSize < items.length"
+                    *ngIf="start + pageSize < (items | async).length"
                     (click)="start = start + pageSize; end = end + pageSize"
                 >następna</a>
 
             </div>
 
-            <div class="list__wrap-up__value">{{displaySum()}} zł</div>
+            <div
+                class="list__wrap-up__value"
+                *ngIf="(displaySum() | async) as sum"
+            >{{sum}} zł</div>
         </div>
 
     </div>

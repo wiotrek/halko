@@ -11,6 +11,8 @@ import { categoryIconColor } from '../_dictionary/category-icon-color.dictionary
 import { categoryIcon } from '../_dictionary/category-icon.dictionary';
 import { MainService } from '../main.service';
 import { ItemStructure } from '../_models/item-structure.model';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     selector: 'app-main-list',
@@ -28,7 +30,7 @@ export class MainListComponent implements OnInit{
     categoryIcon = categoryIcon;
     categoryIconColor = categoryIconColor;
 
-    items = {} as ItemStructure[];
+    items: Observable<ItemStructure[]>;
 
     employees = [
         {
@@ -68,13 +70,24 @@ export class MainListComponent implements OnInit{
 
         const elementToAdd = f.value as ItemStructure;
 
-        this.postElement(elementToAdd);
+        this.mainService.postElement(elementToAdd);
 
         f.controls.price.reset();
         f.controls.name.reset();
     }
 
-    deleteElement(ind: number): void {
+    editElement(f: NgForm, prevItem: ItemStructure): void {
+        const elementToEdit = f.value as ItemStructure;
+        console.log(f.value);
+
+        this.mainService.putElement(elementToEdit, prevItem);
+
+        this.currentlyEditedElement = -1;
+    }
+
+    deleteElement($event: any, item: ItemStructure): void {
+        const ind = this.getElementIndex(item);
+
         this.mainService.deleteElement(ind);
 
         // because next element inherit editmode
@@ -82,28 +95,35 @@ export class MainListComponent implements OnInit{
     }
 
     // assign index to currenlty edited element
-    editElementModeToggle = (ind: number) => {
+    editElementModeToggle = (item: ItemStructure) => {
+        const ind = this.getElementIndex(item);
+
         this.currentlyEditedElement = ind === this.currentlyEditedElement
         ? -1
         : ind;
     }
 
     displaySum = () => {
-        return this.items.reduce(
-            (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+        return this.items.pipe(
+            map(
+                res => res.reduce(
+                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+                )
+            )
         );
+    }
+
+    private getElementIndex = (el: ItemStructure): number => {
+        let getIndexItem = 0;
+        const sub = this.items.subscribe(
+            res => getIndexItem = res.indexOf(el)
+        );
+        sub.unsubscribe();
+
+        return getIndexItem;
     }
 
     private getElements(): void {
-        const elementsObservable = this.mainService.getElements();
-        elementsObservable.subscribe(
-            (elements: ItemStructure[]) => {
-                this.items = elements;
-            }
-        );
-    }
-
-    private postElement(element: ItemStructure): void {
-        this.mainService.postElement(element);
+        this.items = this.mainService.getElements();
     }
 }

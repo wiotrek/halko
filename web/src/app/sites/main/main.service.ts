@@ -7,13 +7,13 @@ export class MainService {
 
     private testElements: ItemStructure[] = [
         {
-            initials: 'KB',
+            initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
         },
         {
-            initials: 'KB',
+            initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
@@ -28,6 +28,11 @@ export class MainService {
 
     postElement(el: ItemStructure): any {
         this.testElements.unshift(el);
+    }
+
+    putElement(el: ItemStructure, prevEl: ItemStructure): void {
+        const index = this.testElements.indexOf(prevEl);
+        this.testElements[index] = el;
     }
 
     deleteElement(ind: number): any {

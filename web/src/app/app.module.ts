@@ -9,11 +9,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NavComponent } from './sites/nav/nav.component';
 import { SharedModule } from './shared/shared.module';
 import { MainComponent } from './sites/main/main.component';
-import { MainListComponent } from './sites/main/main-manage/main-list/main-list.component';
 import { ScratchHeaderComponent } from './sites/main/main-manage/sheet-scratch/scratch-header/scratch-header.component';
 import { MainExpensesComponent } from './sites/main/main-manage/main-expenses/main-expenses.component';
 import { ScratchAdderComponent } from './sites/main/main-manage/sheet-scratch/scratch-adder/scratch-adder.component';
-import { ScratchListComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/scratch-list.component';
 import { ItemViewComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-view/item-view.component';
 import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-edit/item-edit.component';
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
@@ -24,11 +22,9 @@ import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratc
     SitesComponent,
     NavComponent,
     MainComponent,
-    MainListComponent,
     MainExpensesComponent,
     ScratchHeaderComponent,
     ScratchAdderComponent,
-    ScratchListComponent,
     ItemViewComponent,
     ItemEditComponent,
     ItemsSumComponent

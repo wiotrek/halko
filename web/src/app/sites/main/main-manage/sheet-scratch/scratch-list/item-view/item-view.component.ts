@@ -11,7 +11,8 @@ import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
 })
 
 export class ItemViewComponent {
-    @Input() OurItem: ItemStructure;
+    @Input() ourItem: ItemStructure;
+    @Input() indexOfElement: number;
     @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
 
     faEdit = faEdit;

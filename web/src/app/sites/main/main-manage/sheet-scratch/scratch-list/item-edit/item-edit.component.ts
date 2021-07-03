@@ -4,7 +4,6 @@ import { faTrashAlt, faUndoAlt, faSave } from '@fortawesome/free-solid-svg-icons
 import { Employees } from 'src/app/sites/main/_models/employees.model';
 import { NgForm } from '@angular/forms';
 
-
 @Component({
     selector: 'app-item-edit',
     templateUrl: 'item-edit.component.html',
@@ -13,11 +12,14 @@ import { NgForm } from '@angular/forms';
 
 export class ItemEditComponent {
     @Input() ourItem: ItemStructure;
+    @Input() indexOfElement: number;
     @Input() category: string[];
     @Input() employees: Employees[];
+
     @Output() deleteElement: EventEmitter<number> = new EventEmitter();
-    @Output() editElement: EventEmitter<ItemStructure> = new EventEmitter();
     @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
+    @Output() editElement: EventEmitter<{newElement: ItemStructure, ind: number}> = new EventEmitter();
+
 
     // icons
     faTrashAlt = faTrashAlt;
@@ -29,9 +31,11 @@ export class ItemEditComponent {
     }
 
     editElementFunc = (f: NgForm, ind: number) => {
-        const editedElement = f.value as ItemStructure;
-        editedElement.id = ind;
-        this.editElement.emit(editedElement);
+        const newElement = f.value as ItemStructure;
+
+        const editElementEmit = { newElement, ind };
+
+        this.editElement.emit(editElementEmit);
     }
 
     editElementModeToggleFunc = (ind: number) => {

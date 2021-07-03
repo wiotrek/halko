@@ -11,6 +11,7 @@ export class ItemsSumComponent {
     @Input() arrLength: number;
     @Input() sum: number;
 
+    // two way binding
     @Input() start: number;
     @Input() end: number;
     @Output() startChange: EventEmitter<number> = new EventEmitter();

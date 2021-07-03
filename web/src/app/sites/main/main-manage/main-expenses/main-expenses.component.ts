@@ -53,8 +53,12 @@ export class MainExpensesComponent implements OnInit {
         : ind;
     }
 
-    editElementFunc(item: ItemStructure): void {
-        this.mainService.putElement(item);
+    addNewElementFunc = (newElement: ItemStructure) => {
+        this.mainService.postElement(newElement);
+    }
+
+    editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
+        this.mainService.putElement(elementToEdit.newElement, +elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
 

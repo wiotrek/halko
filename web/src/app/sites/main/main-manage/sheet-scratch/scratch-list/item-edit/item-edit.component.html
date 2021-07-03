@@ -3,7 +3,7 @@
     class="editMode"
 >
 
-    <div class="editMode__index">{{ourItem.id + 1}}.</div>
+    <div class="editMode__index">{{indexOfElement + 1}}.</div>
 
     <select
         class="editMode__ini"
@@ -48,21 +48,21 @@
 
         <button class="editMode__edit__option"
             type="button"
-            (click)="deleteElementFunc(ourItem.id)"
+            (click)="deleteElementFunc(indexOfElement)"
         >
             <fa-icon [icon]="faTrashAlt"></fa-icon>
         </button>
 
         <button
             class="editMode__edit__option"
-            (click)="editElementForm.valid && editElementFunc(editElementForm, ourItem.id)"
+            (click)="editElementForm.valid && editElementFunc(editElementForm, indexOfElement)"
         >
             <fa-icon [icon]="faSave"></fa-icon>
         </button>
 
         <button class="editMode__edit__option"
             type="button"
-            (click)="editElementModeToggleFunc(ourItem.id)"
+            (click)="editElementModeToggleFunc(indexOfElement)"
         >
             <fa-icon [icon]="faUndoAlt"></fa-icon>
         </button>

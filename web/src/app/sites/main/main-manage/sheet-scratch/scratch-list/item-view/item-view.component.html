@@ -1,22 +1,22 @@
 <div class="view">
 
-    <div class="view__index">{{OurItem.id + 1}}.</div>
+    <div class="view__index">{{indexOfElement + 1}}.</div>
 
-    <div class="view__ini">{{OurItem.initials}}</div>
+    <div class="view__ini">{{ourItem.initials}}</div>
 
     <div class="view__category">
         <fa-icon
-            [icon]="categoryIcon[OurItem.category]"
-            [ngStyle]="{'color': categoryIconColor[OurItem.category]}"
+            [icon]="categoryIcon[ourItem.category]"
+            [ngStyle]="{'color': categoryIconColor[ourItem.category]}"
         ></fa-icon>
     </div>
 
-    <div class="view__name">{{OurItem.name}}</div>
+    <div class="view__name">{{ourItem.name}}</div>
 
-    <div class="view__price">{{OurItem.price}} zł</div>
+    <div class="view__price">{{ourItem.price}} zł</div>
 
     <button class="view__edit"
-        (click)="editModeToggleFunc(OurItem.id)"
+        (click)="editModeToggleFunc(indexOfElement)"
     >
         <fa-icon
             class="view__edit__icon"

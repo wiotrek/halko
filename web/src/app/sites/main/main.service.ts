@@ -7,14 +7,12 @@ export class MainService {
 
     private testElements: ItemStructure[] = [
         {
-            id: 0,
             initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
         },
         {
-            id: 1,
             initials: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
@@ -32,10 +30,8 @@ export class MainService {
         this.testElements.unshift(el);
     }
 
-    putElement(element: ItemStructure): void {
-        const prevInArr = this.testElements.find(el =>  el.id === element.id);
-        const indexInArr = this.testElements.indexOf(prevInArr);
-        this.testElements[indexInArr] = element;
+    putElement(editedElement: ItemStructure, indElement: number): void {
+        this.testElements[indElement] = editedElement;
     }
 
     deleteElement(ind: number): void {

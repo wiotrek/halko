@@ -1,15 +1,21 @@
-<form class="addition-item" #addItem="ngForm"
+<form 
+    class="addition-item"
+    #addItem="ngForm"
+    (ngSubmit)="addItem.valid && addElement(addItem)"
+    
 >
     <select
         name="initials"
         class="addition-item__ini"
         required
-
+        [ngModel]="employees[0].initials"
     >
-        <option
-        >
-            dsad
-        </option>
+    <option
+        *ngFor="let employee of employees"
+        [value]="employee.initials"
+    >
+        {{employee.initials}}
+    </option>
 
     </select>
 
@@ -17,11 +23,13 @@
         name="category"
         class="addition-item__category"
         required
+        [ngModel]="category[0]"
     >
         <option
-            [value]=""
+            *ngFor="let oneOfCategory of category"
+            [value]="oneOfCategory"
         >
-            dsa
+            {{oneOfCategory}}
         </option>
     </select>
 

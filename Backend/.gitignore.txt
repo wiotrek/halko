@@ -1,0 +1,6 @@
+/Api/obj/
+/Api/bin/
+/Core/obj/
+/Core/bin/
+/Infrastructure/obj/
+/Infrastructure/bin/

@@ -80,7 +80,7 @@ export class MainListComponent implements OnInit{
         const elementToEdit = f.value as ItemStructure;
         console.log(f.value);
 
-        this.mainService.putElement(elementToEdit, prevItem);
+        this.mainService.putElement(elementToEdit);
 
         this.currentlyEditedElement = -1;
     }

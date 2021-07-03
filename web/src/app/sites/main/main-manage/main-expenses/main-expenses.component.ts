@@ -46,10 +46,22 @@ export class MainExpensesComponent implements OnInit {
         this.getElements();
     }
 
-    editElementModeToggle = (ind: number) => {
+    editElementModeToggleFunc = (ind: number) => {
         this.currentlyEditedElement = ind === this.currentlyEditedElement
         ? -1
         : ind;
+    }
+
+    editElementFunc(item: ItemStructure): void {
+        this.mainService.putElement(item);
+        this.currentlyEditedElement = -1;
+    }
+
+    deleteElementFunc = (ind: number) => {
+        this.mainService.deleteElement(ind);
+
+        // because next element inherit editmode
+        this.currentlyEditedElement = -1;
     }
 
     private getElements(): void {

@@ -28,16 +28,17 @@ export class MainService {
         );
     }
 
-    postElement(el: ItemStructure): any {
+    postElement(el: ItemStructure): void {
         this.testElements.unshift(el);
     }
 
-    putElement(el: ItemStructure, prevEl: ItemStructure): void {
-        const index = this.testElements.indexOf(prevEl);
-        this.testElements[index] = el;
+    putElement(element: ItemStructure): void {
+        const prevInArr = this.testElements.find(el =>  el.id === element.id);
+        const indexInArr = this.testElements.indexOf(prevInArr);
+        this.testElements[indexInArr] = element;
     }
 
-    deleteElement(ind: number): any {
+    deleteElement(ind: number): void {
         this.testElements.splice(ind, 1);
     }
 }

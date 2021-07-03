@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
-import {
-    faTrashAlt,
-    faUndoAlt,
-    faSave
-} from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUndoAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Employees } from 'src/app/sites/main/_models/employees.model';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -18,23 +15,26 @@ export class ItemEditComponent {
     @Input() ourItem: ItemStructure;
     @Input() category: string[];
     @Input() employees: Employees[];
-    @Output() deleteElement: EventEmitter<ItemStructure> = new EventEmitter();
+    @Output() deleteElement: EventEmitter<number> = new EventEmitter();
     @Output() editElement: EventEmitter<ItemStructure> = new EventEmitter();
-    @Output() editModeToggle: EventEmitter<ItemStructure> = new EventEmitter();
+    @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
 
+    // icons
     faTrashAlt = faTrashAlt;
     faUndoAlt = faUndoAlt;
     faSave = faSave;
 
-    deleteElementFunc(item: ItemStructure): void {
-        this.deleteElement.emit(item);
+    deleteElementFunc = (ind: number) => {
+        this.deleteElement.emit(ind);
     }
 
-    editElementFunc(newItemEdited: ItemStructure): void {
-        console.log(newItemEdited);
+    editElementFunc = (f: NgForm, ind: number) => {
+        const editedElement = f.value as ItemStructure;
+        editedElement.id = ind;
+        this.editElement.emit(editedElement);
     }
 
-    editElementModeToggleFunc(item: ItemStructure): void {
-        this.editModeToggle.emit(item);
+    editElementModeToggleFunc = (ind: number) => {
+        this.editModeToggle.emit(ind);
     }
 }

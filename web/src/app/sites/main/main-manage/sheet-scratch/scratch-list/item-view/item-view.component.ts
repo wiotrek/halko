@@ -20,7 +20,7 @@ export class ItemViewComponent {
     categoryIcon = categoryIcon;
     categoryIconColor = categoryIconColor;
 
-    editModeToggleFunc(ind: number): void {
+    editModeToggleFunc = (ind: number) => {
         this.editModeToggle.emit(ind);
     }
 }

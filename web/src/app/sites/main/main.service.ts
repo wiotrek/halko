@@ -26,16 +26,15 @@ export class MainService {
         );
     }
 
-    postElement(el: ItemStructure): any {
+    postElement(el: ItemStructure): void {
         this.testElements.unshift(el);
     }
 
-    putElement(el: ItemStructure, prevEl: ItemStructure): void {
-        const index = this.testElements.indexOf(prevEl);
-        this.testElements[index] = el;
+    putElement(editedElement: ItemStructure, indElement: number): void {
+        this.testElements[indElement] = editedElement;
     }
 
-    deleteElement(ind: number): any {
+    deleteElement(ind: number): void {
         this.testElements.splice(ind, 1);
     }
 }

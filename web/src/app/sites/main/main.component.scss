@@ -1,3 +1,17 @@
-.wrapper {
-    margin-top: 30px;
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .wrapper {
+        margin-top: 30px;
+    }
+
+}
+
+@media (min-width: $minValueDesktop) {
+    .wrapper {
+        margin-top: 4vw;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: baseline;
+    }
 }

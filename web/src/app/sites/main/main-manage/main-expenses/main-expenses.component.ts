@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MainService } from '../../main.service';
 import { CategoryItemSolds } from '../../_dictionary/catogory-item-solds.dictionary';
 import { Employees } from '../../_models/employees.model';
@@ -62,6 +63,16 @@ export class MainExpensesComponent implements OnInit {
 
         // because next element inherit editmode
         this.currentlyEditedElement = -1;
+    }
+
+    displaySum = () => {
+        return this.items.pipe(
+            map(
+                res => res.reduce(
+                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+                )
+            )
+        );
     }
 
     private getElements(): void {

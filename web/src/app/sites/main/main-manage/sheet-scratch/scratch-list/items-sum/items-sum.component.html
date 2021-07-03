@@ -1,0 +1,19 @@
+<div class="wrap-up">
+
+    <div class="wrap-up__change-site">
+
+        <a class="wrap-up__change-site__rewind"
+            *ngIf="end - pageSize > 0"
+            (click)="previousSite()"
+        >poprzednia</a>
+
+        <a class="wrap-up__change-site__rewind"
+            *ngIf="start + pageSize < arrLength"
+            (click)="nextSite()"
+        >następna</a>
+
+    </div>
+
+    <div class="wrap-up__value" *ngIf="sum">{{sum}} zł</div>
+
+</div>

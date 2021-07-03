@@ -15,26 +15,6 @@
 
     </div>
 
-    <div class="list__wrap-up">
-
-        <div class="list__wrap-up__change-site">
-
-            <a class="list__wrap-up__change-site__rewind"
-                *ngIf="end - pageSize > 0"
-                (click)="start = start - pageSize; end = end - pageSize"
-            >poprzednia</a>
-
-            <a class="list__wrap-up__change-site__rewind"
-                *ngIf="start + pageSize < (items | async).length"
-                (click)="start = start + pageSize; end = end + pageSize"
-            >następna</a>
-
-        </div>
-
-        <div
-            class="list__wrap-up__value"
-            *ngIf="(displaySum() | async) as sum"
-        >{{sum}} zł</div>
-    </div>
+  
 
 </div>

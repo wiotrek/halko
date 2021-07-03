@@ -28,6 +28,14 @@
 
         </div>
 
+        <app-items-sum
+            [pageSize]="pageSize"
+            [arrLength]="(items | async).length"
+            [sum]="(displaySum() | async)"
+            [(start)]="start"
+            [(end)]="end"
+        ></app-items-sum>
+
     </div>
 
 </div>

@@ -1,18 +1,18 @@
 <div class="wrapper">
     <app-scratch-header [title]="title"></app-scratch-header>
-    
+
     <app-scratch-adder></app-scratch-adder>
-    
+
     <div class="list">
 
-        <div 
+        <div
             class="list__item"
             *ngFor="let item of (items | async) | slice:start:end"
         >
             <app-item-view
-                *ngIf="this.currentlyEditedElement !== (items | async).indexOf(item) else editModeActive"
+                *ngIf="this.currentlyEditedElement !== item.id else editModeActive"
                 [OurItem]="item"
-                (editModeToggle)="editElementModeToggle(item)"
+                (editModeToggle)="editElementModeToggle(ind)"
             ></app-item-view>
 
             <ng-template #editModeActive>

@@ -46,6 +46,12 @@ export class MainExpensesComponent implements OnInit {
         this.getElements();
     }
 
+    editElementModeToggle = (ind: number) => {
+        this.currentlyEditedElement = ind === this.currentlyEditedElement
+        ? -1
+        : ind;
+    }
+
     private getElements(): void {
         this.items = this.mainService.getElements();
     }

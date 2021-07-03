@@ -12,7 +12,7 @@ import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
 
 export class ItemViewComponent {
     @Input() OurItem: ItemStructure;
-    @Output() editModeToggle: EventEmitter<ItemStructure> = new EventEmitter();
+    @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
 
     faEdit = faEdit;
 
@@ -20,7 +20,7 @@ export class ItemViewComponent {
     categoryIcon = categoryIcon;
     categoryIconColor = categoryIconColor;
 
-    editModeToggleFunc(item: ItemStructure): void {
-        this.editModeToggle.emit(item);
+    editModeToggleFunc(ind: number): void {
+        this.editModeToggle.emit(ind);
     }
 }

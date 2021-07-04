@@ -6,7 +6,7 @@ import { ItemStructure } from './_models/item-structure.model';
 @Injectable({providedIn: 'root'})
 export class MainService {
 
-    private testElements: ItemStructure[] = [
+    private soldsItem: ItemStructure[] = [
         {
             initials: 'WK',
             category: 'akcesoria',
@@ -19,6 +19,15 @@ export class MainService {
             name: 'szklo p9 lite',
             price: 40
         }
+    ];
+
+    private expensesItems: ItemStructure[] = [
+        {
+            initials: 'WK',
+            category: 'telefon',
+            name: 'P20 lite',
+            price: 700
+        },
     ];
 
     private employees: Employees[] = [
@@ -40,21 +49,46 @@ export class MainService {
         );
     }
 
-    getElements(): Observable<ItemStructure[]> {
+
+    // for solds items
+
+    getSoldsItems(): Observable<ItemStructure[]> {
         return new Observable(
-            observer => observer.next(this.testElements)
+            observer => observer.next(this.soldsItem)
         );
     }
 
-    postElement(el: ItemStructure): void {
-        this.testElements.unshift(el);
+    addNewSoldItem(el: ItemStructure): void {
+        this.soldsItem.unshift(el);
     }
 
-    putElement(editedElement: ItemStructure, indElement: number): void {
-        this.testElements[indElement] = editedElement;
+    EditSoldItem(editedElement: ItemStructure, indElement: number): void {
+        this.soldsItem[indElement] = editedElement;
     }
 
-    deleteElement(ind: number): void {
-        this.testElements.splice(ind, 1);
+    removeSoldItem(ind: number): void {
+        this.soldsItem.splice(ind, 1);
+    }
+
+
+
+    // for expneses items
+
+    getExpensesItems(): Observable<ItemStructure[]> {
+        return new Observable(
+            observer => observer.next(this.expensesItems)
+        );
+    }
+
+    addNewExpenseItem(el: ItemStructure): void {
+        this.expensesItems.unshift(el);
+    }
+
+    EditExpenseItem(editedElement: ItemStructure, indElement: number): void {
+        this.expensesItems[indElement] = editedElement;
+    }
+
+    removeExpenseItem(ind: number): void {
+        this.expensesItems.splice(ind, 1);
     }
 }

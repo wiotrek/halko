@@ -1,0 +1,47 @@
+<div class="wrapper">
+    <app-scratch-header [title]="title"></app-scratch-header>
+
+    <app-scratch-adder
+        [category]="category"
+        [employees]="employees"
+        (newElement)="addNewElementFunc($event)"
+    ></app-scratch-adder>
+
+    <div class="list">
+
+        <div
+            class="item"
+            *ngFor="let item of (items | async) | slice:start:end"
+        >
+            <app-item-view
+                *ngIf="this.currentlyEditedElement !== (items | async).indexOf(item) else editModeActive"
+                [ourItem]="item"
+                [indexOfElement]="(items | async).indexOf(item)"
+                (editModeToggle)="editElementModeToggleFunc($event)"
+            ></app-item-view>
+
+            <ng-template #editModeActive>
+                <app-item-edit
+                    [ourItem]="item"
+                    [indexOfElement]="(items | async).indexOf(item)"
+                    [employees]="employees"
+                    [category]="category"
+                    (editModeToggle)="editElementModeToggleFunc($event)"
+                    (deleteElement)="deleteElementFunc($event)"
+                    (editElement)="editElementFunc($event)"
+                ></app-item-edit>
+            </ng-template>
+
+        </div>
+
+        <app-items-sum
+            [pageSize]="pageSize"
+            [arrLength]="(items | async).length"
+            [sum]="(displaySum() | async)"
+            [(start)]="start"
+            [(end)]="end"
+        ></app-items-sum>
+
+    </div>
+
+</div>

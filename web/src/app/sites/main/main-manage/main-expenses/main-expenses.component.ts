@@ -44,16 +44,16 @@ export class MainExpensesComponent implements OnInit {
     }
 
     addNewElementFunc = (newElement: ItemStructure) => {
-        this.mainService.postElement(newElement);
+        this.mainService.addNewExpenseItem(newElement);
     }
 
     editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
-        this.mainService.putElement(elementToEdit.newElement, elementToEdit.ind);
+        this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
 
     deleteElementFunc = (ind: number) => {
-        this.mainService.deleteElement(ind);
+        this.mainService.removeExpenseItem(ind);
 
         // because next element inherit editmode
         this.currentlyEditedElement = -1;
@@ -76,6 +76,6 @@ export class MainExpensesComponent implements OnInit {
     }
 
     private getElements(): void {
-        this.items = this.mainService.getElements();
+        this.items = this.mainService.getExpensesItems();
     }
 }

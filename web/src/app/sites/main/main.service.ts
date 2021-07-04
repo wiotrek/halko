@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
 export class MainService {
 
-    private testElements: ItemStructure[] = [
+    private soldsItem: ItemStructure[] = [
         {
             initials: 'WK',
             category: 'akcesoria',
@@ -20,21 +21,74 @@ export class MainService {
         }
     ];
 
-    getElements(): Observable<ItemStructure[]> {
+    private expensesItems: ItemStructure[] = [
+        {
+            initials: 'WK',
+            category: 'telefon',
+            name: 'P20 lite',
+            price: 700
+        },
+    ];
+
+    private employees: Employees[] = [
+        {
+            name: 'Marek',
+            lastName: 'Konrad',
+            initials: 'MK'
+        },
+        {
+            name: 'Wojtek',
+            lastName: 'Kierzkowski',
+            initials: 'WK'
+        }
+    ];
+
+    getEmplyees(): Observable<Employees[]> {
         return new Observable(
-            observer => observer.next(this.testElements)
+            observer => observer.next(this.employees)
         );
     }
 
-    postElement(el: ItemStructure): void {
-        this.testElements.unshift(el);
+
+    // for solds items
+
+    getSoldsItems(): Observable<ItemStructure[]> {
+        return new Observable(
+            observer => observer.next(this.soldsItem)
+        );
     }
 
-    putElement(editedElement: ItemStructure, indElement: number): void {
-        this.testElements[indElement] = editedElement;
+    addNewSoldItem(el: ItemStructure): void {
+        this.soldsItem.unshift(el);
     }
 
-    deleteElement(ind: number): void {
-        this.testElements.splice(ind, 1);
+    EditSoldItem(editedElement: ItemStructure, indElement: number): void {
+        this.soldsItem[indElement] = editedElement;
+    }
+
+    removeSoldItem(ind: number): void {
+        this.soldsItem.splice(ind, 1);
+    }
+
+
+
+    // for expneses items
+
+    getExpensesItems(): Observable<ItemStructure[]> {
+        return new Observable(
+            observer => observer.next(this.expensesItems)
+        );
+    }
+
+    addNewExpenseItem(el: ItemStructure): void {
+        this.expensesItems.unshift(el);
+    }
+
+    EditExpenseItem(editedElement: ItemStructure, indElement: number): void {
+        this.expensesItems[indElement] = editedElement;
+    }
+
+    removeExpenseItem(ind: number): void {
+        this.expensesItems.splice(ind, 1);
     }
 }

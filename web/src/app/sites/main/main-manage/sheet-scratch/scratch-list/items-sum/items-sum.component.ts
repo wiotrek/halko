@@ -7,6 +7,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class ItemsSumComponent {
+    @Input() setDanger?: boolean;
+
     @Input() pageSize: number;
     @Input() arrLength: number;
     @Input() sum: number;

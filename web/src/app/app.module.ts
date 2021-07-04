@@ -15,6 +15,7 @@ import { ScratchAdderComponent } from './sites/main/main-manage/sheet-scratch/sc
 import { ItemViewComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-view/item-view.component';
 import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-edit/item-edit.component';
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
+import { MainSalesComponent } from './sites/main/main-manage/main-sales/main-sales.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratc
     NavComponent,
     MainComponent,
     MainExpensesComponent,
+    MainSalesComponent,
     ScratchHeaderComponent,
     ScratchAdderComponent,
     ItemViewComponent,

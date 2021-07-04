@@ -31,6 +31,11 @@
             padding: 0 5px;
             margin-right: 10px;
         }
+
+        &__value--danger {
+            color: $dangerColor;
+            border-bottom: 2px solid $dangerColor;
+        }
     }
 }
 @media (min-width: $minValueTablet) {

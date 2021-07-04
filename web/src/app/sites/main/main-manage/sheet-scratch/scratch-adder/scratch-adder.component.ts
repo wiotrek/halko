@@ -11,6 +11,7 @@ import { ItemStructure } from '../../../_models/item-structure.model';
 })
 
 export class ScratchAdderComponent {
+    @Input() setDanger?: boolean;
     @Input() category: string[];
     @Input() employees: Employees[];
     @Output() newElement: EventEmitter<ItemStructure> = new EventEmitter();

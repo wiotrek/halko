@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MainService } from '../../main.service';
-import { CategoryItemSolds } from '../../_dictionary/catogory-item-solds.dictionary';
+import { CategoryItemExpenses } from '../../_dictionary/category-item-expenses.dictionary';
 import { Employees } from '../../_models/employees.model';
 import { ItemStructure } from '../../_models/item-structure.model';
 
@@ -17,20 +17,9 @@ export class MainExpensesComponent implements OnInit {
 
     items: Observable<ItemStructure[]>;
 
-    category = CategoryItemSolds;
+    category = CategoryItemExpenses;
 
-    employees: Employees[] = [
-        {
-            name: 'Marek',
-            lastName: 'Konrad',
-            initials: 'MK'
-        },
-        {
-            name: 'Wojtek',
-            lastName: 'Kierzkowski',
-            initials: 'WK'
-        }
-    ];
+    employees: Employees[];
 
     // if element is -1 then none is editing
     currentlyEditedElement = -1;
@@ -45,6 +34,7 @@ export class MainExpensesComponent implements OnInit {
 
     ngOnInit(): void {
         this.getElements();
+        this.getEmployees();
     }
 
     editElementModeToggleFunc = (ind: number) => {
@@ -58,7 +48,7 @@ export class MainExpensesComponent implements OnInit {
     }
 
     editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
-        this.mainService.putElement(elementToEdit.newElement, +elementToEdit.ind);
+        this.mainService.putElement(elementToEdit.newElement, elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
 
@@ -79,8 +69,13 @@ export class MainExpensesComponent implements OnInit {
         );
     }
 
+    private getEmployees(): void {
+        this.mainService.getEmplyees().subscribe(
+            (res: Employees[]) => this.employees = res
+        );
+    }
+
     private getElements(): void {
         this.items = this.mainService.getElements();
     }
-
 }

@@ -2,6 +2,7 @@
     <app-scratch-header [title]="title"></app-scratch-header>
 
     <app-scratch-adder
+        [setDanger]="true"
         [category]="category"
         [employees]="employees"
         (newElement)="addNewElementFunc($event)"
@@ -10,7 +11,7 @@
     <div class="list">
 
         <div
-            class="list__item"
+            class="item"
             *ngFor="let item of (items | async) | slice:start:end"
         >
             <app-item-view
@@ -35,6 +36,7 @@
         </div>
 
         <app-items-sum
+            [setDanger]="true"
             [pageSize]="pageSize"
             [arrLength]="(items | async).length"
             [sum]="(displaySum() | async)"

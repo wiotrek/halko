@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
@@ -19,6 +20,25 @@ export class MainService {
             price: 40
         }
     ];
+
+    private employees: Employees[] = [
+        {
+            name: 'Marek',
+            lastName: 'Konrad',
+            initials: 'MK'
+        },
+        {
+            name: 'Wojtek',
+            lastName: 'Kierzkowski',
+            initials: 'WK'
+        }
+    ];
+
+    getEmplyees(): Observable<Employees[]> {
+        return new Observable(
+            observer => observer.next(this.employees)
+        );
+    }
 
     getElements(): Observable<ItemStructure[]> {
         return new Observable(

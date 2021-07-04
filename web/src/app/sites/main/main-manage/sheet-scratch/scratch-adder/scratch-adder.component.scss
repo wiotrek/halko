@@ -49,6 +49,9 @@
                 color: white;
             }
         }
+        &__confirm--danger {
+            background-color: $dangerColor;
+        }
     }
 }
 

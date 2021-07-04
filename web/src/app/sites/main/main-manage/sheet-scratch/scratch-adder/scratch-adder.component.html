@@ -52,7 +52,11 @@
         ngModel
     >
 
-    <button class="addition-item__confirm" type="submit">
+    <button 
+        class="addition-item__confirm"
+        [ngClass]="{'addition-item__confirm--danger': setDanger}"
+        type="submit"
+    >
         <fa-icon
             class="addition-item__confirm__icon"
             [icon]="faCheckCircle">

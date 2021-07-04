@@ -2,6 +2,7 @@
     <app-scratch-header [title]="title"></app-scratch-header>
 
     <app-scratch-adder
+        [setDanger]="isSetDanger"
         [category]="category"
         [employees]="employees"
         (newElement)="addNewElementFunc($event)"
@@ -35,6 +36,7 @@
         </div>
 
         <app-items-sum
+            [setDanger]="isSetDanger"
             [pageSize]="pageSize"
             [arrLength]="(items | async).length"
             [sum]="(displaySum() | async)"

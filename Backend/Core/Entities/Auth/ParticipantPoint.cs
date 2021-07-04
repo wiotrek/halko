@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities.Auth
 {
     /// <summary>
     /// The member of specific point

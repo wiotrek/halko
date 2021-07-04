@@ -1,7 +1,7 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities.Auth
 {
     /// <summary>
-    /// How many points are assign to user
+    /// How many points are assing to user
     /// </summary>
     public class UserPoint : BaseEntity
     {

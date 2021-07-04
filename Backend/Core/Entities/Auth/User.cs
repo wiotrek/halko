@@ -1,4 +1,4 @@
-﻿namespace Core.Entities
+﻿namespace Core.Entities.Auth
 {
     /// <summary>
     /// The identity as point or admin having access to all points

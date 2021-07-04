@@ -20,4 +20,13 @@
       <None Remove="obj\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Data\Migrations" />
+    </ItemGroup>
+
 </Project>

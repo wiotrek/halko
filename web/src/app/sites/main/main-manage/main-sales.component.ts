@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { MainService } from '../../main.service';
-import { CategoryItemExpenses } from '../../_dictionary/category-item-expenses.dictionary';
-import { Employees } from '../../_models/employees.model';
-import { ItemStructure } from '../../_models/item-structure.model';
+import { MainService } from '../main.service';
+import { CategoryItemSolds } from '../_dictionary/catogory-item-solds.dictionary';
+import { Employees } from '../_models/employees.model';
+import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
-    selector: 'app-main-expenses',
-    templateUrl: 'main-expenses.component.html',
-    styleUrls: ['main-expenses.component.scss']
+    selector: 'app-main-sales',
+    templateUrl: 'sheet-scratch/sheet-template/sheet-template.html',
+    styleUrls: ['sheet-scratch/sheet-template/sheet-template.scss']
 })
-
-export class MainExpensesComponent implements OnInit {
-    title = 'Wydatki';
+export class MainSalesComponent implements OnInit {
+    title = 'Sprzedaż';
+    isSetDanger = false;
 
     items: Observable<ItemStructure[]>;
 
-    category = CategoryItemExpenses;
+    category = CategoryItemSolds;
 
     employees: Employees[];
 
@@ -44,16 +44,16 @@ export class MainExpensesComponent implements OnInit {
     }
 
     addNewElementFunc = (newElement: ItemStructure) => {
-        this.mainService.addNewExpenseItem(newElement);
+        this.mainService.addNewSoldItem(newElement);
     }
 
     editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
-        this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
+        this.mainService.EditSoldItem(elementToEdit.newElement, elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
 
     deleteElementFunc = (ind: number) => {
-        this.mainService.removeExpenseItem(ind);
+        this.mainService.removeSoldItem(ind);
 
         // because next element inherit editmode
         this.currentlyEditedElement = -1;
@@ -76,6 +76,7 @@ export class MainExpensesComponent implements OnInit {
     }
 
     private getElements(): void {
-        this.items = this.mainService.getExpensesItems();
+        this.items = this.mainService.getSoldsItems();
     }
+
 }

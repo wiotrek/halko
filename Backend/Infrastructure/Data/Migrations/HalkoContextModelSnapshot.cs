@@ -23,6 +23,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Initial")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("PointId")
@@ -42,6 +43,8 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -70,9 +73,11 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Login")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -126,7 +131,8 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.Auth.Point", null)
                         .WithMany("Participants")
-                        .HasForeignKey("PointId");
+                        .HasForeignKey("PointId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Core.Entities.Auth.UserPoint", b =>

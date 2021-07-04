@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HalkoContext))]
-    [Migration("20210704115222_InitialCreate")]
+    [Migration("20210704120729_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,7 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Initial")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("PointId")
@@ -44,6 +45,8 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -72,9 +75,11 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Login")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -128,7 +133,8 @@ namespace Infrastructure.Data.Migrations
                 {
                     b.HasOne("Core.Entities.Auth.Point", null)
                         .WithMany("Participants")
-                        .HasForeignKey("PointId");
+                        .HasForeignKey("PointId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Core.Entities.Auth.UserPoint", b =>

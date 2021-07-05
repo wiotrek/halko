@@ -124,6 +124,7 @@ p {
 
             &__confirm {
                 @include firstlyBtn;
+                font-weight: bold;
                 font-size: .7rem;
                 width: 100%;
             }

@@ -87,7 +87,7 @@
             
             <div
                 class="wrapper__summary__items__item"
-                *ngFor="let item of soldsItem"
+                *ngFor="let item of (categoriesAmount | async)"
             >
                 <fa-icon
                     class="wrapper__summary__items__item__icon"

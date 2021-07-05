@@ -6,30 +6,31 @@ p {
     padding: 0;
 }
 
-@mixin blockInList {
-    background-color: white;
-    margin-top: 10px;
-    font-size: .9rem;
-    padding: 15px 10px;
-    color: black;
-    font-weight: bold;
-    border-radius: 5px;
-}
 
 @media (min-width: 0) {
-    
+
+    @mixin blockInList {
+        background-color: white;
+        margin-top: 10px;
+        font-size: .8rem;
+        padding: 15px 10px;
+        color: black;
+        font-weight: bold;
+        border-radius: 5px;
+    }
+
     .wrapper {
-        width: 250px;
+        max-width: 480px;
 
         &__calendar {
             display: flex;
             justify-content: center;
-            height: 45px;
+            height: 40px;
 
             &__input {
                 border: 0;
-                width: 20em;
-                font-size: 1.1rem;
+                width: 100%;
+                font-size: 1rem;
                 text-align: center;
                 font-weight: bold;
                 cursor: pointer;
@@ -41,7 +42,7 @@ p {
 
             p:last-child {
                 color: $primaryGrey;
-                font-size: .8rem;
+                font-size: .7rem;
             }
         }
 
@@ -50,7 +51,7 @@ p {
 
             &__phoneToUp, &__power-up {
                 margin-top: 7px;
-                font-size: .7rem;
+                font-size: .6rem;
 
                 input {
                     display: inline;
@@ -62,11 +63,11 @@ p {
 
             &__summary {
                 margin-top: 15px;
-                font-size: .8rem;
+                font-size: .7rem;
 
                 p:last-child {
                     color: $primaryGrey;
-                    font-size: .7rem;
+                    font-size: .6rem;
                 }
             }
         }
@@ -76,7 +77,7 @@ p {
 
             &__cash, &__credit-card {
                 margin-top: 7px;
-                font-size: .7rem;
+                font-size: .6rem;
 
                 input {
                     display: inline;
@@ -88,11 +89,11 @@ p {
 
             &__summary {
                 margin-top: 15px;
-                font-size: .8rem;
+                font-size: .7rem;
 
                 p:last-child {
                     color: $primaryGrey;
-                    font-size: .7rem;
+                    font-size: .6rem;
                 }
             }
         }
@@ -106,7 +107,7 @@ p {
                 margin-top: 10px;
 
                 &__item {
-                    font-size: .8rem;
+                    font-size: .7rem;
                     color: $primaryGrey;
 
                     &__icon {
@@ -117,13 +118,95 @@ p {
         }
 
         &__save-day {
-            margin-top: 10px;
+            margin: 10px 0 15px 0;
+            
             display: flex;
 
             &__confirm {
                 @include firstlyBtn;
+                font-size: .7rem;
                 width: 100%;
             }
         }
+    }
+}
+@media (min-width: $minValueTablet) {
+
+    @mixin blockInList {
+        font-size: .9rem;
+    }
+
+    h3 {
+        display: none;
+    }
+
+    .wrapper {
+        width: 480px;
+
+        &__calendar {
+
+            &__input {
+                font-size: 1.1rem;
+            }
+        }
+
+        &__prev-day {
+            p:last-child {
+                font-size: .8rem;
+            }
+        }
+
+        &__balance-day {
+
+            &__phoneToUp, &__power-up {
+                font-size: .7rem;
+            }
+
+            &__summary {
+                font-size: .8rem;
+
+                p:last-child {
+                    font-size: .7rem;
+                }
+            }
+        }
+
+        &__state-cash {
+
+            &__cash, &__credit-card {
+                font-size: .7rem;
+            }
+
+            &__summary {
+                font-size: .8rem;
+
+                p:last-child {
+                    font-size: .7rem;
+                }
+            }
+        }
+
+        &__summary {
+
+            &__items {
+
+                &__item {
+                    font-size: .8rem;
+                }
+            }
+        }
+
+        &__save-day {
+
+            &__confirm {
+                font-size: .9rem;
+            }
+        }
+    }
+}
+
+@media (min-width: 1000px) {
+    .wrapper {
+        width: 280px;
     }
 }

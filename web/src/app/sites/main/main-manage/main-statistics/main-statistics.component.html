@@ -1,0 +1,110 @@
+<div class="wrapper">
+
+    <div class="wrapper__calendar">
+
+        <input 
+            class="wrapper__calendar__input"
+            type="date"
+        >
+
+    </div>
+
+    <div class="wrapper__prev-day">
+        <p>Stan kasy na start dnia</p>
+        <p>1200 zl</p>
+    </div>
+
+    <div class="wrapper__balance-day">
+        <p>Bilans dnia</p>
+
+        <div class="wrapper__balance-day__phoneToUp">
+
+            <input 
+                type="text"
+                id="phoneTopUp"
+                placeholder="0"
+            >
+            <label for="phoneTopUp">doładowania telefonu</label>
+
+        </div>
+
+        <div class="wrapper__balance-day__power-up">
+
+            <input 
+                type="text"
+                id="powerUpCash"
+                placeholder="0"
+            >
+            <label for="powerUpCash">zasilenie kasy</label>
+
+        </div>
+
+        <div class="wrapper__balance-day__summary">
+            <p>bilans końcowy</p>
+            <p>600 zł</p>
+        </div>
+
+    </div>
+
+    <div class="wrapper__state-cash">
+        <p>Stan kasy na koniec dnia</p>
+
+        <div class="wrapper__state-cash__cash">
+
+            <input 
+                type="text"
+                id="cash"
+                placeholder="0"
+            >
+            <label for="cash">gotówka</label>
+
+        </div>
+
+        <div class="wrapper__state-cash__credit-card">
+
+            <input 
+                type="text"
+                id="credit-card"
+                placeholder="0"
+            >
+            <label for="credit-card">płatności kartą</label>
+
+        </div>
+
+        <div class="wrapper__state-cash__summary">
+            <p>razem</p>
+            <p>2000 zł</p>
+        </div>
+        
+    </div>
+
+    <div class="wrapper__summary">
+        <p>Podsumowanie</p>
+
+        <div class="wrapper__summary__items">
+            
+            <div
+                class="wrapper__summary__items__item"
+                *ngFor="let item of soldsItem"
+            >
+                <fa-icon
+                    class="wrapper__summary__items__item__icon"
+                    [icon]="categoryIcon[item.item]"
+                    [ngStyle]="{'color': categoryIconColor[item.item]}"
+                ></fa-icon>
+                <span>{{item.sum}}</span>
+            </div>
+        
+        </div>
+        
+    </div>
+
+    <div class="wrapper__save-day">
+        <button
+            class="wrapper__save-day__confirm"
+        >
+            zamknij dzień
+        </button>
+    </div>
+
+</div>

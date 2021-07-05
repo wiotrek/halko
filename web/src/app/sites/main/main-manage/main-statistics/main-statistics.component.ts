@@ -29,8 +29,8 @@ export class MainStatisticsComponent implements OnInit{
         this.getCategoriesAmount();
     }
 
-    private getCategoriesAmount(): void {
-        this.categoriesAmount = this.mainService.getSoldsItems().pipe(
+    getCategoriesAmount(): Observable<CategoriesAmount[]> {
+        return this.mainService.getSoldsItems().pipe(
             map(
                 res => {
 

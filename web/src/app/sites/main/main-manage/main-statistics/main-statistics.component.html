@@ -87,7 +87,7 @@
             
             <div
                 class="wrapper__summary__items__item"
-                *ngFor="let item of (categoriesAmount | async)"
+                *ngFor="let item of (getCategoriesAmount() | async)"
             >
                 <fa-icon
                     class="wrapper__summary__items__item__icon"

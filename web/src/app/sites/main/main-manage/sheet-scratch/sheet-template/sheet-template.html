@@ -12,19 +12,19 @@
 
         <div
             class="item"
-            *ngFor="let item of (items | async) | slice:start:end"
+            *ngFor="let item of items | slice:start:end"
         >
             <app-item-view
-                *ngIf="this.currentlyEditedElement !== (items | async).indexOf(item) else editModeActive"
+                *ngIf="this.currentlyEditedElement !== items.indexOf(item) else editModeActive"
                 [ourItem]="item"
-                [indexOfElement]="(items | async).indexOf(item)"
+                [indexOfElement]="items.indexOf(item)"
                 (editModeToggle)="editElementModeToggleFunc($event)"
             ></app-item-view>
 
             <ng-template #editModeActive>
                 <app-item-edit
                     [ourItem]="item"
-                    [indexOfElement]="(items | async).indexOf(item)"
+                    [indexOfElement]="items.indexOf(item)"
                     [employees]="employees"
                     [category]="category"
                     (editModeToggle)="editElementModeToggleFunc($event)"
@@ -38,8 +38,8 @@
         <app-items-sum
             [setDanger]="isSetDanger"
             [pageSize]="pageSize"
-            [arrLength]="(items | async).length"
-            [sum]="(displaySum() | async)"
+            [arrLength]="items.length"
+            [sum]="sum"
             [(start)]="start"
             [(end)]="end"
         ></app-items-sum>

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { MainService } from '../../main.service';
 import { categoryIconColor } from '../../_dictionary/category-icon-color.dictionary';
 import { categoryIcon } from '../../_dictionary/category-icon.dictionary';
@@ -20,7 +19,7 @@ export class MainStatisticsComponent implements OnInit{
     categoryIconColor = categoryIconColor;
     categories = CategoryItemSolds;
 
-    categoriesAmount: Observable<CategoriesAmount[]>;
+    categoriesAmount: CategoriesAmount[];
 
     constructor(
         private mainService: MainService){}
@@ -29,42 +28,39 @@ export class MainStatisticsComponent implements OnInit{
         this.getCategoriesAmount();
     }
 
-    getCategoriesAmount(): Observable<CategoriesAmount[]> {
-        return this.mainService.getSoldsItems().pipe(
-            map(
-                res => {
+    getCategoriesAmount(): void {
 
-                    const ACCESORIERS = { item: 'akcesoria', sum: 0 };
-                    const PHONE = { item: 'telefon', sum: 0 };
-                    const SERVICE = { item: 'serwis', sum: 0 };
+        const ACCESORIERS = { item: 'akcesoria', sum: 0 };
+        const PHONE = { item: 'telefon', sum: 0 };
+        const SERVICE = { item: 'serwis', sum: 0 };
 
-                    const initialCategories = [
-                        ACCESORIERS,
-                        PHONE,
-                        SERVICE
-                    ];
+        const initialCategories = [
+            ACCESORIERS,
+            PHONE,
+            SERVICE
+        ];
 
-                    return res.reduce(
-                        (total: CategoriesAmount[], curr: ItemStructure): CategoriesAmount[] => {
+        this.mainService.getSoldsItems().pipe(
+            tap(
+                (res: ItemStructure[]) => this.categoriesAmount = res.reduce(
+                    (total: CategoriesAmount[], curr: ItemStructure): CategoriesAmount[] => {
 
-                            switch (curr.category) {
-                                case ACCESORIERS.item:
-                                    total[total.indexOf(ACCESORIERS)].sum++;
-                                    break;
+                        switch (curr.category) {
+                            case ACCESORIERS.item:
+                                total[0].sum++;
+                                break;
 
-                                case PHONE.item:
-                                    total[total.indexOf(PHONE)].sum++;
-                                    break;
+                            case PHONE.item:
+                                total[1].sum++;
+                                break;
 
-                                case SERVICE.item:
-                                    total[total.indexOf(SERVICE)].sum++;
-                                    break;
-                            }
+                            case SERVICE.item:
+                                total[2].sum++;
+                                break;
+                        }
 
-                            return total;
-                        }, initialCategories
-                    );
-                }
+                        return total;
+                    }, initialCategories)
             )
         );
     }

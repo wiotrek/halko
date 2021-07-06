@@ -4,7 +4,7 @@
 
     <div class="wrapper__calendar">
 
-        <input 
+        <input
             class="wrapper__calendar__input"
             type="date"
         >
@@ -21,7 +21,7 @@
 
         <div class="wrapper__balance-day__phoneToUp">
 
-            <input 
+            <input
                 type="text"
                 id="phoneTopUp"
                 placeholder="0"
@@ -32,7 +32,7 @@
 
         <div class="wrapper__balance-day__power-up">
 
-            <input 
+            <input
                 type="text"
                 id="powerUpCash"
                 placeholder="0"
@@ -53,7 +53,7 @@
 
         <div class="wrapper__state-cash__cash">
 
-            <input 
+            <input
                 type="text"
                 id="cash"
                 placeholder="0"
@@ -64,7 +64,7 @@
 
         <div class="wrapper__state-cash__credit-card">
 
-            <input 
+            <input
                 type="text"
                 id="credit-card"
                 placeholder="0"
@@ -77,17 +77,17 @@
             <p>razem</p>
             <p>2000 zł</p>
         </div>
-        
+
     </div>
 
     <div class="wrapper__summary">
         <p>Podsumowanie</p>
 
         <div class="wrapper__summary__items">
-            
+
             <div
                 class="wrapper__summary__items__item"
-                *ngFor="let item of (getCategoriesAmount() | async)"
+                *ngFor="let item of categoriesAmount"
             >
                 <fa-icon
                     class="wrapper__summary__items__item__icon"
@@ -96,9 +96,9 @@
                 ></fa-icon>
                 <span>{{item.sum}}</span>
             </div>
-        
+
         </div>
-        
+
     </div>
 
     <div class="wrapper__save-day">

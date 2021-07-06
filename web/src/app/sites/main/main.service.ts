@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { concatAll, map, observeOn, tap } from 'rxjs/operators';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
@@ -43,6 +43,12 @@ export class MainService {
             lastName: 'Kierzkowski',
             initials: 'WK'
         }
+    ];
+
+    categories = [
+        { item: 'akcesoria', sum: 0 },
+        { item: 'telefon', sum: 0 },
+        { item: 'serwis', sum: 0 }
     ];
 
     getEmplyees(): Observable<Employees[]> {
@@ -92,5 +98,56 @@ export class MainService {
 
     removeExpenseItem(ind: number): void {
         this.expensesItems.splice(ind, 1);
+    }
+
+
+    // for statistics
+
+
+    private getCategoriesAmountChange(): void {
+
+        // const ACCESORIERS = { item: 'akcesoria', sum: 0 };
+        // const PHONE = { item: 'telefon', sum: 0 };
+        // const SERVICE = { item: 'serwis', sum: 0 };
+
+        // const initialCategories = [
+        //     ACCESORIERS,
+        //     PHONE,
+        //     SERVICE
+        // ];
+
+
+        this.getSoldsItems().pipe(
+            map(
+                (res: ItemStructure[]) => res.reduce(
+                    (total: CategoriesAmount[], curr: ItemStructure): CategoriesAmount[] => {
+
+                        switch (curr.category) {
+                            case 'akcesoria':
+                                this.categories[0].sum++;
+                                break;
+
+                            case 'telefon':
+                                this.categories[1].sum++;
+                                break;
+
+                            case 'serwis':
+                                this.categories[2].sum++;
+                                break;
+                        }
+
+                        return total;
+                    }, []
+
+                )
+            )
+        );
+
+        // return new Observable(obs => obs.next(initialCategories));
+
+
+
+        // return new Observable<CategoriesAmount[]>(obs => obs.next(cat));
+
     }
 }

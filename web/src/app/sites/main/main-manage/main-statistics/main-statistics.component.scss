@@ -49,7 +49,7 @@ p {
         &__balance-day {
             @include blockInList;
 
-            &__phoneToUp, &__power-up {
+            &__phoneToUp {
                 margin-top: 7px;
                 font-size: .6rem;
 
@@ -124,6 +124,7 @@ p {
 
             &__confirm {
                 @include firstlyBtn;
+                font-weight: bold;
                 font-size: .7rem;
                 width: 100%;
             }
@@ -158,7 +159,7 @@ p {
 
         &__balance-day {
 
-            &__phoneToUp, &__power-up {
+            &__phoneToUp {
                 font-size: .7rem;
             }
 

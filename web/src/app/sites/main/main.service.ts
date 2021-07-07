@@ -44,6 +44,8 @@ export class MainService {
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
 
+    // for another
+
     private employees: Employees[] = [
         {
             name: 'Marek',

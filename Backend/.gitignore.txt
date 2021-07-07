@@ -4,3 +4,4 @@
 /Core/bin/
 /Infrastructure/obj/
 /Infrastructure/bin/
+/Api/appsettings.Development.json

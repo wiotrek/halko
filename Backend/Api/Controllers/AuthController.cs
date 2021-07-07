@@ -10,10 +10,14 @@ namespace Api.Controllers
     public class AuthController : BaseApiController
     {
         private readonly IGenericRepository<User> _userRepo;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IGenericRepository<User> userRepo)
+        public AuthController(
+            IGenericRepository<User> userRepo,
+            ITokenService tokenService)
         {
             _userRepo = userRepo;
+            _tokenService = tokenService;
         }
 
         //TODO: Create token service
@@ -31,7 +35,7 @@ namespace Api.Controllers
             {
                 Id = userToReturn.Id,
                 Login = userToReturn.Login,
-                Password = userToReturn.Password
+                Password = _tokenService.CreateToken ( userToReturn )
             };
         }
     }

@@ -7,6 +7,8 @@
         <input
             class="wrapper__calendar__input"
             type="date"
+            [ngModel]="choiceDay | date:'yyyy-MM-dd'"
+            [max]="today | date:'yyyy-MM-dd'"
         >
 
     </div>

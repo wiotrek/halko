@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { combineLatest, forkJoin, merge, Subscription } from 'rxjs';
-import { mergeMap, tap } from 'rxjs/operators';
+import { combineLatest, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { categoryIconColor } from '../../_dictionary/category-icon-color.dictionary';
 import { categoryIcon } from '../../_dictionary/category-icon.dictionary';
@@ -13,6 +12,8 @@ import { CategoriesAmount } from '../../_models/categories-amount.model';
     styleUrls: ['main-statistics.component.scss'],
 })
 export class MainStatisticsComponent implements OnInit, OnDestroy{
+    today: Date;
+    choiceDay: Date;
 
     // suplies from dictionary
     categoryIcon = categoryIcon;
@@ -28,6 +29,10 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
         private mainService: MainService){}
 
     ngOnInit(): void {
+
+        this.today = new Date();
+        this.choiceDay = new Date();
+
         this.getCategoriesAmount();
         this.getBalanaceDay();
     }

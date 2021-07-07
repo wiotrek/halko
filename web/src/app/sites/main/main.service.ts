@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, merge, Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
@@ -166,12 +166,4 @@ export class MainService {
             )
         );
     }
-
-    // getBalanceDay(): Observable<> {
-
-    //     return merge(
-    //         this.displayExpensesSum(),
-    //         this.displaySoldsSum()
-    //     );
-    // }
 }

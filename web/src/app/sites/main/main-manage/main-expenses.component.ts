@@ -78,10 +78,8 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private displaySum(): void {
-        const sub = this.mainService.expensesItem$.subscribe(
-            res => this.sum = res.reduce(
-                (acc: number, curr: ItemStructure) => acc + +curr.price, 0
-            )
+        const sub = this.mainService.displayExpensesSum().subscribe(
+            res => this.sum = res
         );
 
         this.subscription.add(sub);

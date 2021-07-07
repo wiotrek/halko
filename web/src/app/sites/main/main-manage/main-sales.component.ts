@@ -77,10 +77,8 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     }
 
     private displaySum(): void {
-        const sub = this.mainService.soldsItem$.subscribe(
-            res => this.sum = res.reduce(
-                (acc: number, curr: ItemStructure) => acc + +curr.price, 0
-            )
+        const sub = this.mainService.displaySoldsSum().subscribe(
+            res => this.sum = res
         );
 
         this.subscription.add(sub);

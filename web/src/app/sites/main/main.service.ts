@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, merge, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
@@ -86,6 +86,16 @@ export class MainService {
         this.soldsItemsChanged.next(this.soldsItem);
     }
 
+    displaySoldsSum(): Observable<number> {
+        return this.soldsItem$.pipe(
+            map(
+                res => res.reduce(
+                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+                )
+            )
+        );
+    }
+
 
     // for expneses items
 
@@ -107,6 +117,16 @@ export class MainService {
     removeExpenseItem(ind: number): void {
         this.expensesItems.splice(ind, 1);
         this.expensesItemsChanged.next(this.expensesItems);
+    }
+
+    displayExpensesSum(): Observable<number> {
+        return this.expensesItem$.pipe(
+            map(
+                res => res.reduce(
+                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+                )
+            )
+        );
     }
 
 
@@ -146,4 +166,12 @@ export class MainService {
             )
         );
     }
+
+    // getBalanceDay(): Observable<> {
+
+    //     return merge(
+    //         this.displayExpensesSum(),
+    //         this.displaySoldsSum()
+    //     );
+    // }
 }

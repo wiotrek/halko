@@ -4,8 +4,8 @@ namespace Core.Specifications
 {
     public class UserWithPointsSpecification : BaseSpecification<UserPoint>
     {
-        public UserWithPointsSpecification( int id ) : 
-            base( x => x.UserId == id )
+        public UserWithPointsSpecification( int userId ) : 
+            base( x => x.UserId == userId )
         {
             AddInclude ( x => x.User );
             AddInclude ( x => x.Point );

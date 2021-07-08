@@ -21,10 +21,11 @@ export class NavComponent {
     };
 
     links: Links[] = [
-        { displayName: 'Strona główna', path: ''},
+        { displayName: 'Strona główna', path: '/zarzadzaj/'},
         { displayName: 'Spis telefonów', path: 'spis-telefonów'},
         { displayName: 'Rozliczenia', path: 'rozliczenia'},
         { displayName: 'Serwis', path: 'serwis'},
+        { displayName: 'Skup telefonów', path: 'skup-telefonów'},
     ];
 
     constructor(

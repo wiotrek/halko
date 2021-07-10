@@ -4,10 +4,9 @@ namespace Core.Specifications
 {
     public class UserWithRoleSpecification : BaseSpecification<UserRole>
     {
-        public UserWithRoleSpecification( int userId ) 
-            : base( x => x.UserId == userId )
+        public UserWithRoleSpecification( int userId ) : 
+            base( x => x.User.Id == userId )
         {
-            AddInclude ( x => x.User );
             AddInclude ( x => x.Role );
         }
     }

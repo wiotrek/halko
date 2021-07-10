@@ -21,6 +21,8 @@ import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
 import { PhonesComponent } from './sites/phones/phones.component';
 import { SitesRoutingModule } from './sites/sites-routing.module';
+import { PhonesListComponent } from './sites/phones/phones-list/phones-list.component';
+import { PhonesSeacherComponent } from './sites/phones/phones-seacher/phones-seacher.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { SitesRoutingModule } from './sites/sites-routing.module';
     ItemViewComponent,
     ItemEditComponent,
     ItemsSumComponent,
-    PhonesComponent
+    PhonesComponent,
+    PhonesListComponent,
+    PhonesSeacherComponent
   ],
   imports: [
     BrowserModule,

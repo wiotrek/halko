@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-phones',
-    template: 'dsad'
+    templateUrl: './phones.component.html',
+    styleUrls: ['./phones.component.scss']
 })
 
 export class PhonesComponent {}

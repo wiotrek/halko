@@ -13,8 +13,7 @@
             appDropdown
             #s="appDropdown"
         >
-            <fa-icon [icon]="faCaretDown"></fa-icon>
-            {{defaultSorted.name}}
+            <fa-icon [icon]="faCaretDown"></fa-icon> {{defaultSorted.name}}
             <fa-icon [icon]="iconsToValue[defaultSorted.vector]"></fa-icon>
 
             <div class="searcher__left-side__sorted__dropdown" *ngIf="s.isOpen">

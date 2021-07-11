@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { faArrowUp, faArrowDown, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faArrowUp,
+    faArrowDown,
+    IconDefinition,
+    faCaretDown
+} from '@fortawesome/free-solid-svg-icons';
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 
 
@@ -12,6 +17,7 @@ import { Dictionary } from 'src/app/shared/models/dictionary.model';
 export class PhonesSeacherComponent {
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
+    faCaretDown = faCaretDown;
 
     iconsToValue: Dictionary<IconDefinition> = {
         up: faArrowUp,

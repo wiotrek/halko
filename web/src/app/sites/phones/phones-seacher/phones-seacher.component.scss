@@ -3,70 +3,150 @@
 @media (min-width: 0) {
     .searcher {
         display: flex;
-        justify-content: space-evenly;
+        flex-direction: column;
         background-color: white;
         font-size: .8rem;
         color: $primaryGrey;
         padding: 3px 5px;
 
-        &__main-searcher {
-            max-width: 200px;
-            text-align: center;
-            border: 0;
-        }
+        &__left-side {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 5px 0;
 
-        &__sorted, &__points-names {
-            position: relative;
-            cursor: pointer;
-            align-self: center;
-            text-align: center;
-            min-width: 100px;
-
-            fa-icon {
-                font-size: .6rem;
+            &__main-searcher {
+                max-width: 270px;
+                text-align: center;
+                border: 1px solid $primaryGrey;
+            }
+    
+            &__sorted {
+                position: relative;
+                cursor: pointer;
+                align-self: center;
+                text-align: center;
+                min-width: 100px;
+    
+                fa-icon {
+                    font-size: .6rem;
+                }
+    
+    
+                &__dropdown {
+                    background-color: white;
+                    text-align: center;
+                    position: absolute;
+                    width: 100%;
+    
+                    &__option {
+                        font-size: .7rem;
+    
+                        fa-icon  {
+                            font-size: .5rem;
+                        }
+    
+                        &:hover {
+                            background-color: $prettyGreen;
+                            color: white;
+                        }
+                    }
+                }
             }
 
+        }
 
-            &__dropdown {
-                background-color: white;
-                text-align: center;
-                position: absolute;
-                width: 100%;
+        &__middle-side {
+            padding: 5px 0;
+            display: flex;
+            justify-content: space-around;
 
-                &__option {
-                    font-size: .7rem;
-
-                    fa-icon  {
-                        font-size: .5rem;
-                    }
-
-                    &:hover {
-                        background-color: $prettyGreen;
-                        color: white;
-                    }
+            &__state {
+                font-size: .7rem;
+    
+                input {
+                    visibility: hidden;
+                }
+    
+                label {
+                    cursor: pointer;
+                    border: 1px groove $primaryGrey;
+                    padding: 0 5px;
+                    font-weight: bolder;
+                }
+    
+                input:checked + label{
+                    background-color: $prettyGreen;
+                    color: white;
+                    border: 1px solid white;
                 }
             }
         }
 
-        &__state {
+        &__right-side {
+            margin: 0 auto;
+            padding: 5px 0;
 
-            input {
-                visibility: hidden;
-            }
-
-            label {
+            &__points-names {
+                position: relative;
                 cursor: pointer;
-                border: 1px groove $primaryGrey;
-                padding: 0 5px;
-                font-weight: bolder;
+                align-self: center;
+                text-align: center;
+                min-width: 150px;
+    
+                fa-icon {
+                    font-size: .6rem;
+                }
+    
+                &__dropdown {
+                    background-color: white;
+                    text-align: center;
+                    position: absolute;
+                    width: 100%;
+    
+                    &__option {
+                        font-size: .7rem;
+    
+                        fa-icon  {
+                            font-size: .5rem;
+                        }
+    
+                        &:hover {
+                            background-color: $prettyGreen;
+                            color: white;
+                        }
+                    }
+                }
             }
+        }
+    }
+}
 
-            input:checked + label{
-                background-color: $prettyGreen;
-                color: white;
-                border: 1px solid white;
+@media (min-width: $minValueDesktop) {
+    .searcher {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        &__left-side {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            padding: 3px 0;
+
+            &__main-searcher {
+                max-width: 150px;
+                border: 0;
             }
+        }
 
+        &__middle-side {
+            padding: unset;
+            align-items: center;
+        }
+
+        &__right-side {
+            margin: 0;
         }
     }
 }

@@ -1,81 +1,92 @@
 <div class="searcher">
-    
-    <input
-        class="searcher__main-searcher"
-        type="text"
-        placeholder="Wyszukaj"
-    >
 
-    <div 
-        class="searcher__sorted"
-        appDropdown
-        #s="appDropdown"
-    >
-        {{defaultSorted.name}} <fa-icon [icon]="iconsToValue[defaultSorted.vector]"></fa-icon>
+    <div class="searcher__left-side">
 
-        <div class="searcher__sorted__dropdown" *ngIf="s.isOpen">
+        <input
+            class="searcher__left-side__main-searcher"
+            type="text"
+            placeholder="Wyszukaj"
+        >
 
-            <div
-                class="searcher__sorted__dropdown__option"
-                *ngFor="let value of valuesToSorted"
-                (click)="defaultSorted = value"
-            >
-                {{value.name}} <fa-icon [icon]="iconsToValue[value.vector]"></fa-icon>
+        <div 
+            class="searcher__left-side__sorted"
+            appDropdown
+            #s="appDropdown"
+        >
+            <fa-icon [icon]="faCaretDown"></fa-icon>
+            {{defaultSorted.name}}
+            <fa-icon [icon]="iconsToValue[defaultSorted.vector]"></fa-icon>
+
+            <div class="searcher__left-side__sorted__dropdown" *ngIf="s.isOpen">
+
+                <div
+                    class="searcher__left-side__sorted__dropdown__option"
+                    *ngFor="let value of valuesToSorted"
+                    (click)="defaultSorted = value"
+                >
+                    {{value.name}} <fa-icon [icon]="iconsToValue[value.vector]"></fa-icon>
+                </div>
+
             </div>
 
         </div>
 
-
     </div>
 
-    <div class="searcher__state">
+    <div class="searcher__middle-side">
+
+        <div class="searcher__middle-side__state">
         
-        <input 
-            type="radio"
-            id="allOfThem"
-            value="all"
-            [(ngModel)]="state"
-        >
-        <label for="allOfThem">Wszystkie</label>
-
-        <input 
-            type="radio"
-            [(ngModel)]="state"
-            id="onlyNew"
-            value="new"
-        >
-        <label for="onlyNew">Nowe</label>
-
-        <input 
-            type="radio"
-            [(ngModel)]="state"
-            id="onlyUsed"
-            value="used"
-        >
-        <label for="onlyUsed">Używane</label>
+            <input 
+                type="radio"
+                id="allOfThem"
+                value="all"
+                [(ngModel)]="state"
+            >
+            <label for="allOfThem">Wszystkie</label>
     
+            <input 
+                type="radio"
+                [(ngModel)]="state"
+                id="onlyNew"
+                value="new"
+            >
+            <label for="onlyNew">Nowe</label>
     
+            <input 
+                type="radio"
+                [(ngModel)]="state"
+                id="onlyUsed"
+                value="used"
+            >
+            <label for="onlyUsed">Używane</label>
+        
+        </div>
+
     </div>
 
-    <div 
-        class="searcher__points-names"
-        appDropdown
-        #p="appDropdown"
-    >
-        {{defaultPoint}}
+    <div class="searcher__right-side">
 
-        <div class="searcher__points-names__dropdown" *ngIf="p.isOpen">
+        <div 
+            class="searcher__right-side__points-names"
+            appDropdown
+            #p="appDropdown"
+        >
+            <fa-icon [icon]="faCaretDown"></fa-icon> {{defaultPoint}}
 
-            <div
-                class="searcher__points-names__dropdown__option"
-                *ngFor="let point of pointsNames"
-                (click)="defaultPoint = point"
-            >
-                {{point}}
+            <div class="searcher__right-side__points-names__dropdown" *ngIf="p.isOpen">
+
+                <div
+                    class="searcher__right-side__points-names__dropdown__option"
+                    *ngFor="let point of pointsNames"
+                    (click)="defaultPoint = point"
+                >
+                    {{point}}
+                </div>
+
             </div>
 
         </div>
-
 
     </div>
 

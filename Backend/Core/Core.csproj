@@ -16,4 +16,10 @@
       <None Remove="obj\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Identity.Stores, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.extensions.identity.stores\5.0.6\lib\net5.0\Microsoft.Extensions.Identity.Stores.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

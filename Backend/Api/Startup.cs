@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Api.Extensions;
 using Api.Helpers;
+using Core.Entities.Auth;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace Api
@@ -33,11 +29,19 @@ namespace Api
             services.AddAutoMapper ( typeof(MappingProfiles) );
             services.AddControllers().AddNewtonsoftJson();
 
+            #region Connection Strings
+            
             services.AddDbContext<HalkoContext> ( x => x.UseSqlite (
                 _config.GetConnectionString ( "DefaultConnection" ) ) );
             
+            services.AddDbContext<AppIdentityDbContext> ( x => x.UseSqlite (
+                _config.GetConnectionString ( "IdentityConnection" ) ) );
+            
+            #endregion
+
             // Services with all register depedencies
             services.AddApplicationServices();
+            services.AddIdentityService ( _config );
             
             services.AddSwaggerGen ( c => { c.SwaggerDoc ( "v1", new OpenApiInfo {Title = "Api", Version = "v1"} ); } );
         }
@@ -56,6 +60,7 @@ namespace Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints ( endpoints => { endpoints.MapControllers(); } );

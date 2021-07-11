@@ -11,7 +11,9 @@ namespace Api.Extensions
         {
             services.AddScoped ( typeof(IGenericRepository<>), typeof(GenericRepository<>) );
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPointService, PointService>();
         }
     }
 }

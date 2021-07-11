@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Infrastructure.Data;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -30,6 +28,9 @@ namespace Api
                 {
                     var context = services.GetRequiredService<HalkoContext>();
                     await context.Database.MigrateAsync();
+
+                    var identityConext = services.GetRequiredService<AppIdentityDbContext>();
+                    await identityConext.Database.MigrateAsync();
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

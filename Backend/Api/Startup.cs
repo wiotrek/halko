@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Extensions;
+using Api.Helpers;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,10 +30,14 @@ namespace Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices( IServiceCollection services )
         {
-            services.AddControllers();
+            services.AddAutoMapper ( typeof(MappingProfiles) );
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddDbContext<HalkoContext> ( x => x.UseSqlite (
                 _config.GetConnectionString ( "DefaultConnection" ) ) );
+            
+            // Services with all register depedencies
+            services.AddApplicationServices();
             
             services.AddSwaggerGen ( c => { c.SwaggerDoc ( "v1", new OpenApiInfo {Title = "Api", Version = "v1"} ); } );
         }

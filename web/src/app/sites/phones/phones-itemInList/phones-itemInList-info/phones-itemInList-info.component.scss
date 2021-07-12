@@ -13,17 +13,28 @@
                 font-weight: bolder;
             }
 
-            &__common {
+            // setting category and property
+            &__main, &__common, &__prices {
                 margin-top: 10px;
+
+                &__brand, &__model, &__model,
+                &__place, &__state, &__imei, &__color,
+                &__comments, &__bought-date, &__bought,
+                &__price {
+                    margin-top: 5px;
+                    display: flex;
+                    align-items: center;
+
+                    &__category-param {
+                        margin-right: 5px;
+                    }
+
+                    &__name-param {
+                        text-decoration: underline;
+                    }
+                }
             }
 
-            &__prices {
-                margin-top: 10px;
-            }
-
-            & {
-                margin-top: 5px;
-            }
         }
 
         .options {

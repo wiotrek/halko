@@ -10,6 +10,7 @@ namespace Api.Extensions
         public static void AddApplicationServices( this IServiceCollection services )
         {
             services.AddScoped ( typeof(IGenericRepository<>), typeof(GenericRepository<>) );
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ITokenService, TokenService>();
         }
     }

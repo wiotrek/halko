@@ -1,0 +1,125 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .elInList {
+        padding: 3px 10px;
+        font-size: .7rem;
+        background-color: white;
+        margin-top: 10px;
+        border-radius: 5px;
+
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & {
+                text-align: center;
+                overflow: hidden;
+            }
+    
+            &__index {
+                width: 10px;
+            }
+    
+            &__brand {
+                width: 80px;
+            }
+    
+            &__model {
+                width: 80px;
+            }
+    
+            &__imei {
+                display: none;
+            }
+    
+            &__color {
+                display: none;
+            }
+    
+            &__place {
+                display: none;
+            }
+    
+            &__state {
+                display: none;
+            }
+    
+            &__bought {
+                display: none;
+            }
+    
+            &__price {
+                width: 50px;
+            }
+
+
+            &__editing {
+                border: 0;
+                background-color: transparent;
+                color: $prettyGreen;
+                transition: transform 0s .2 ease-in-out;
+    
+                &:hover {
+                    transform: translateY(-1px);
+                }
+            }
+    
+            &:hover {
+                color: $prettyGreen;
+            }
+    
+            &:hover &__editing {
+                color: $waringColor;
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .elInList {
+
+        &__header {
+
+            &__imei {
+                width: 85px;
+                display: initial;
+            }
+    
+            &__color {
+                width: 70px;
+                display: initial;
+            }
+    
+            &__place {
+                width: 120px;
+                display: initial;
+            }
+    
+            &__state {
+                width: 50px;
+                display: initial;
+            }
+    
+            &__bought {
+                width: 50px;
+                display: initial;
+            }
+    
+            &__editing {
+                border: 0;
+                background-color: transparent;
+                color: $prettyGreen;
+            }
+    
+            &:hover {
+                color: $prettyGreen;
+            }
+    
+            &:hover &__editing {
+                color: $waringColor;
+            }
+        }
+    }
+}

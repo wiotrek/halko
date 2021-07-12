@@ -9,11 +9,11 @@
 
         <app-phones-seacher></app-phones-seacher>
         
-        <app-phones-list
+        <app-phones-item-in-list
             *ngFor="let phone of phonesList; index as i"
             [elInList]="phone"
             [ind]="i + 1"
-        ></app-phones-list>
+        ></app-phones-item-in-list>
 
     </div>
 

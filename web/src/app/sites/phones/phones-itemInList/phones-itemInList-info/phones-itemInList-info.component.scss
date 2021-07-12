@@ -1,0 +1,61 @@
+@import 'src/app/shared/global-styles/variable.scss';
+@import 'src/app/shared/global-styles/components.scss';
+
+@media (min-width: 0) {
+    .elInList {
+        margin-top: 15px;
+        font-size: .6rem;
+        padding: 0 10px;
+
+        .details {
+
+            &__main {
+                font-weight: bolder;
+            }
+
+            &__common {
+                margin-top: 10px;
+            }
+
+            &__prices {
+                margin-top: 10px;
+            }
+
+            & {
+                margin-top: 5px;
+            }
+        }
+
+        .options {
+            margin: 10px 0;
+
+            a {
+                cursor: pointer;
+                padding: 2px 5px;
+                margin: 0 3px;
+                border: 1px solid $primaryGrey;
+
+                &:hover {
+                    color: white;
+                    background-color: $primaryGrey;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .elInList {
+        font-size: .7rem;
+
+        .options {
+
+            a {
+                cursor: pointer;
+                padding: 2px 5px;
+                margin: 0 3px;
+                border: 1px solid black;
+            }
+        }
+    }
+}

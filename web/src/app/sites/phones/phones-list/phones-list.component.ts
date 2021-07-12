@@ -9,20 +9,8 @@ import { ItemInList } from '../_models/itemInList.model';
 })
 
 export class PhonesListComponent {
-    elInList: ItemInList;
-    faEdit = faEdit;
+    @Input() elInList: ItemInList;
+    @Input() ind: number;
 
-    constructor() {
-        this.elInList = {
-            ind: 1,
-            brand: 'Apple',
-            model: 'Iphone 7',
-            imei: '123123123123',
-            color: 'Space gray',
-            place: 'Karuzela Września',
-            state: 'Nowy',
-            bought: 700,
-            price: 1300
-        };
-    }
+    faEdit = faEdit;
 }

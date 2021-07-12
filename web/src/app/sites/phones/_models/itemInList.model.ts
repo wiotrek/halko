@@ -1,5 +1,4 @@
 export interface ItemInList {
-    ind: number;
     brand: string;
     model: string;
     imei: string;

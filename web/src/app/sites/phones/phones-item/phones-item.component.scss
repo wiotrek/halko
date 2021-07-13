@@ -64,6 +64,10 @@
                 &:hover {
                     transform: translateY(-1px);
                 }
+
+                &.detailsMode {
+                    color: $waringColor;
+                }
             }
     
             &:hover {

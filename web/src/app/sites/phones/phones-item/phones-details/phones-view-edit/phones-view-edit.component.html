@@ -1,0 +1,215 @@
+<ng-template 
+    #view
+    let-mainOrCommon="mainOrCommon"
+    let-categoryName="categoryName"
+    let-polishName="polishName"
+    let-objValue="objValue"
+>
+
+    <div class="details__{{mainOrCommon}}__{{categoryName}}">
+
+        <div class="details__{{mainOrCommon}}__{{categoryName}}__category-param">
+            {{polishName}}:
+        </div>
+
+        <div 
+            class="details__{{mainOrCommon}}__{{categoryName}}__name-param"
+            *ngIf="!editMode; else editModeTemplate"
+        >   
+            {{objValue}}
+        </div>
+
+        <ng-template #editModeTemplate>
+            
+            <div class="details__{{mainOrCommon}}__{{categoryName}}__name-param--editMode">   
+                <input type="text">
+            </div>
+        
+        </ng-template>
+
+    </div>
+
+</ng-template>
+
+
+<div class="details">
+
+    <div class="details__main">
+
+        <ng-container 
+            *ngTemplateOutlet="view; context: {
+                mainOrCommon: 'main',
+                categoryName: 'brand',
+                polishName: 'Producent',
+                objValue: elInList.brand
+            }"
+        ></ng-container>
+
+        <!-- <div class="details__main__brand">
+
+            <div class="details__main__brand__category-param">
+                Marka:
+            </div>
+
+            <div 
+                class="details__main__brand__name-param"
+                *ngIf="!editMode; else editModeTemplate"
+            >   
+                {{elInList.brand}}
+            </div>
+
+            <ng-template #editModeTemplate>
+
+                <div class="details__main__brand__name-param--editMode">   
+                    <input type="text">
+                </div>
+            
+            </ng-template>
+
+        </div> -->
+
+        <div class="details__main__model">
+
+            <div class="details__main__model__category-param">
+                Model:
+            </div>
+
+            <div 
+                class="details__main__model__name-param"
+                *ngIf="!editMode; else editModeTemplate"
+            >
+                {{elInList.model}}
+            </div>
+
+            <ng-template #editModeTemplate>
+
+                <div class="details__main__model__name-param--editMode">   
+                    <input type="text">
+                </div>
+            
+            </ng-template>
+
+        </div>
+
+        <div 
+            class="details__main__place"
+            *ngIf="!editMode"
+        >
+
+            <div class="details__main__place__category-param">
+                Punkt:
+            </div>
+
+            <div class="details__main__place__name-param">
+                {{elInList.place}}
+            </div>
+
+        </div>
+
+        <div class="details__main__state">
+
+            <div class="details__main__state__category-param">
+                Stan:
+            </div>
+
+            <div 
+                class="details__main__state__name-param"
+                *ngIf="!editMode; else editModeTemplate"
+            >
+                {{elInList.state}}
+            </div>
+
+            <ng-container #editModeTemplate>
+
+                <select>
+                    <option
+                        *ngFor="let state of phoneStates"
+                        [value]="state"
+                    >
+                        {{state}}
+                    </option>
+                </select>
+
+            </ng-container>
+
+        </div>
+
+        <div class="details__main__imei">
+
+            <div class="details__common__imei__category-param">
+                Imei:
+            </div>
+
+            <div class="details__common__imei__name-param">
+                {{elInList.imei}}
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="details__common">
+
+        <div class="details__common__color">
+
+            <div class="details__common__color__category-param">
+                Kolor:
+            </div>
+
+            <div class="details__common__color__name-param">
+                {{elInList.color}}
+            </div>
+
+        </div>
+
+        <div class="details__common__comments">
+
+            <div class="details__common__comments__category-param">
+                Uwagi:
+            </div>
+
+            <div class="details__common__comments__name-param">
+                {{elInList.comments || 'brak'}}
+            </div>
+
+        </div>
+
+        <div class="details__common__bought-date">
+
+            <div class="details__common__bought-date__category-param">
+                Data zakupu:
+            </div>
+
+            <div class="details__common__bought-date__name-param">
+                {{elInList.dateBought}}
+            </div>
+
+        </div>
+
+        <div class="details__common__bought">
+
+            <div class="details__common__bought__category-param">
+                Cena zakupu:
+            </div>
+
+            <div class="details__common__bought__name-param">
+                {{elInList.bought}} zł
+            </div>
+
+        </div>
+
+        <div class="details__common__price">
+
+            <div class="details__common__price__category-param">
+                Cena:
+            </div>
+
+            <div class="details__common__price__name-param">
+                {{elInList.price}} zł
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

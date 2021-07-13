@@ -5,6 +5,8 @@ export interface ItemInList {
     color: string;
     place: string;
     state: string;
+    comments?: string;
+    dateBought?: string;
     bought: number;
     price: number;
 }

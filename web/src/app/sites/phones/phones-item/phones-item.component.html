@@ -6,7 +6,7 @@
             {{ind}}.
         </div>
     
-        <ng-container *ngIf="!infoMode">
+        <ng-container *ngIf="!detailsMode">
 
             <div class="elInList__header__brand">
                 {{elInList.brand}}
@@ -44,13 +44,19 @@
 
         <button 
             class="elInList__header__editing"
-            (click)="infoMode = !infoMode"
+            (click)="detailsMode = !detailsMode"
+            [ngClass]="{'detailsMode': detailsMode}"
         >
             
-            <fa-icon [icon]="faInfoCircle" *ngIf="!infoMode; else infoModeActive"></fa-icon>
+            <fa-icon 
+                [icon]="faInfoCircle"
+                *ngIf="!detailsMode; else detailsModeActive"
+            ></fa-icon>
             
-            <ng-template #infoModeActive>
-                <fa-icon [icon]="faUndo" *ngIf="infoMode"></fa-icon>
+            <ng-template #detailsModeActive>
+                
+                <fa-icon [icon]="faUndo"></fa-icon>
+            
             </ng-template>
         
         </button>
@@ -59,10 +65,10 @@
 
     <div class="elInList-inner">
 
-        <ng-container *ngIf="infoMode">
-            <app-phones-item-in-list-info
+        <ng-container *ngIf="detailsMode">
+            <app-phones-details
                 [elInList]="elInList"
-            ></app-phones-item-in-list-info>
+            ></app-phones-details>
         </ng-container>
 
     </div>

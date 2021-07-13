@@ -21,9 +21,10 @@ import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
 import { PhonesComponent } from './sites/phones/phones.component';
 import { SitesRoutingModule } from './sites/sites-routing.module';
-import { PhonesItemInListComponent } from './sites/phones/phones-itemInList/phones-itemInList.component';
+import { PhonesItemComponent } from './sites/phones/phones-item/phones-item.component';
 import { PhonesSeacherComponent } from './sites/phones/phones-seacher/phones-seacher.component';
-import { PhonesItemInListInfoComponent } from './sites/phones/phones-itemInList/phones-itemInList-info/phones-itemInList-info.component';
+import { PhonesDetailsComponent } from './sites/phones/phones-item/phones-details/phones-details.component';
+import { PhonesViewEditComponent } from './sites/phones/phones-item/phones-details/phones-view-edit/phones-view-edit.component';
 
 @NgModule({
   declarations: [
@@ -40,9 +41,10 @@ import { PhonesItemInListInfoComponent } from './sites/phones/phones-itemInList/
     ItemEditComponent,
     ItemsSumComponent,
     PhonesComponent,
-    PhonesItemInListComponent,
+    PhonesItemComponent,
     PhonesSeacherComponent,
-    PhonesItemInListInfoComponent
+    PhonesDetailsComponent,
+    PhonesViewEditComponent
   ],
   imports: [
     BrowserModule,

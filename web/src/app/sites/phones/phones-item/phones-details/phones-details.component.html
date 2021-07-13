@@ -1,0 +1,24 @@
+<div class="elInList">
+
+    <app-phones-view-edit
+        [elInList]="elInList"
+        [editMode]="editMode"
+    ></app-phones-view-edit>
+
+    <div class="options">
+    
+        <ng-container *ngIf="!someModeIsActive; else someModeIsActiveTem">
+            
+            <a (click)="someModeIsActiveToggle()">Edytuj</a>
+            <a>Sprzedaj</a>
+            <a>Przekaż</a>
+
+        </ng-container>
+
+        <ng-template #someModeIsActiveTem>
+            <a (click)="someModeIsActiveToggle()">Cofnij</a>
+        </ng-template>
+
+    </div>
+
+</div>

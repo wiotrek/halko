@@ -1,0 +1,50 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .details {
+
+        &__main {
+            font-weight: bolder;
+        }
+
+        // setting category and property
+        &__main, &__common {
+            margin-top: 10px;
+
+            &__brand, &__model, &__model,
+            &__place, &__state, &__imei, &__color,
+            &__comments, &__bought-date, &__bought,
+            &__price {
+                margin-top: 5px;
+                display: flex;
+                align-items: center;
+
+                &__category-param {
+                    margin-right: 5px;
+                }
+
+                &__name-param {
+                    text-decoration: underline;
+                }
+
+                &__name-param--editMode {
+
+                    input {
+                        border: 0;
+                        border-bottom: 1px solid black;
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .details {
+
+        &__main, &__common {
+            margin-top: 15px;
+        }
+    }
+}

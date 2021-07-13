@@ -16,6 +16,8 @@ export class PhonesComponent {
             color: 'Space gray',
             place: 'Karuzela Września',
             state: 'Nowy',
+            comments: 'wszystko ladnie',
+            dateBought: '2021-03-02',
             bought: 700,
             price: 1300
         },
@@ -26,6 +28,8 @@ export class PhonesComponent {
             color: 'Blue',
             place: 'Karuzela Września',
             state: 'Używany',
+            comments: 'nic nie ladnie',
+            dateBought: '2021-03-02',
             bought: 7000,
             price: 2000
         },
@@ -36,6 +40,7 @@ export class PhonesComponent {
             color: 'star red spophhie',
             place: 'Karuzela Września',
             state: 'Nowy',
+            dateBought: '2021-03-02',
             bought: 30,
             price: 100
         },
@@ -46,6 +51,7 @@ export class PhonesComponent {
             color: 'yellow green blue',
             place: 'Karuzela Września',
             state: 'Używany',
+            dateBought: '2021-03-02',
             bought: 500,
             price: 300
         }

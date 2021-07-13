@@ -4,12 +4,12 @@ import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { ItemInList } from '../_models/itemInList.model';
 
 @Component({
-    selector: 'app-phones-item-in-list',
-    templateUrl: './phones-itemInList.component.html',
-    styleUrls: ['./phones-itemInList.component.scss']
+    selector: 'app-phones-item',
+    templateUrl: './phones-item.component.html',
+    styleUrls: ['./phones-item.component.scss']
 })
 
-export class PhonesItemInListComponent {
+export class PhonesItemComponent {
     @Input() elInList: ItemInList;
     @Input() ind: number;
 
@@ -17,5 +17,5 @@ export class PhonesItemInListComponent {
     faInfoCircle = faInfoCircle;
     faUndo = faUndo;
 
-    infoMode = false;
+    detailsMode = false;
 }

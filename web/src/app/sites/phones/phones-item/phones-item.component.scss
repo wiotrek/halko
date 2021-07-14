@@ -77,6 +77,10 @@
             &:hover &__editing {
                 color: $waringColor;
             }
+
+            &.detailsMode {
+                justify-content: flex-end;
+            }
         }
     }
 }

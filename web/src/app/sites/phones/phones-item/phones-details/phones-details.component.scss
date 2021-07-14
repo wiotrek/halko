@@ -2,23 +2,24 @@
 
 @media (min-width: 0) {
     .elInList {
-        margin-top: 15px;
         font-size: .6rem;
-        padding: 0 10px;
+        padding: 0 0 15px 10px;
 
         .options {
-            margin: 20px 0;
+            margin: 10px 0;
 
             a {
                 cursor: pointer;
-                padding: 2px 5px;
-                margin: 0 3px;
-                border: 1px solid $primaryGrey;
+                padding: 2px 10px;
+                margin-right: 3px;
+                background-color: $prettyGreen;
+                color: white;
+                font-weight: bolder;
+                border: 0;
+                border-radius: 1px;
 
                 &:hover {
-                    color: white;
-                    font-weight: bolder;
-                    background-color: $prettyGreen;
+                    opacity: .9;
                 }
             }
         }

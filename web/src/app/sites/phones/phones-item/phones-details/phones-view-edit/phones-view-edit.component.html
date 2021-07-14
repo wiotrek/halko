@@ -1,48 +1,52 @@
-<ng-template 
-    #view
-    let-mainOrCommon="mainOrCommon"
-    let-categoryName="categoryName"
-    let-polishName="polishName"
-    let-objValue="objValue"
-    let-editModeNotAvailable="editModeNotAvailable"
-    let-isNumber="isNumber"
+<form 
+    class="details"
+    #updatePhone="ngForm"
+    (ngSubmit)="updatePhone.valid && updatePhoneFunc(updatePhone)"
 >
 
-    <div 
-        *ngIf="!editModeNotAvailable || !editMode"
-        class="details__{{mainOrCommon}}__{{categoryName}}"
-    >
-
-        <div class="details__{{mainOrCommon}}__{{categoryName}}__category-param">
-            {{polishName}}:
-        </div>
-
-        <div 
-            class="details__{{mainOrCommon}}__{{categoryName}}__name-param"
-            *ngIf="!editMode; else editModeTemplate"
-        >   
-            {{objValue || 'brak'}} {{isNumber ? ' zł' : ''}}
-        </div>
-
-        <ng-template #editModeTemplate>
-            
-            <div class="details__{{mainOrCommon}}__{{categoryName}}__name-param--editMode">   
-                <input 
-                    type="text"
-                    name="{{objValue}}"
-                    [ngModel]="objValue"
-                >
-            </div>
-        
-        </ng-template>
-
-    </div>
-
-</ng-template>
-
-<div class="details">
-
     <div class="details__main">
+
+        <ng-template 
+            #view
+            let-mainOrCommon="mainOrCommon"
+            let-categoryName="categoryName"
+            let-polishName="polishName"
+            let-objValue="objValue"
+            let-editModeNotAvailable="editModeNotAvailable"
+            let-isNumber="isNumber"
+        >
+
+            <div 
+                *ngIf="!editModeNotAvailable || !editMode"
+                class="details__{{mainOrCommon}}__{{categoryName}}"
+            >
+
+                <div class="details__{{mainOrCommon}}__{{categoryName}}__category-param">
+                    {{polishName}}:
+                </div>
+
+                <div 
+                    class="details__{{mainOrCommon}}__{{categoryName}}__name-param"
+                    *ngIf="!editMode; else editModeTemplate"
+                >   
+                    {{objValue || 'brak'}} {{isNumber ? ' zł' : ''}}
+                </div>
+
+                <ng-template #editModeTemplate>
+                    
+                    <div class="details__{{mainOrCommon}}__{{categoryName}}__name-param--editMode">   
+                        <input 
+                            type="text"
+                            name="{{categoryName}}"
+                            [ngModel]="objValue"
+                        >
+                    </div>
+                
+                </ng-template>
+
+            </div>
+
+        </ng-template>
 
         <ng-container 
             *ngTemplateOutlet="view; context: {
@@ -93,6 +97,7 @@
                 <div class="details__main__state__name-param--editMode">
 
                     <select
+                        name="state"
                         [ngModel]="elInList.state"
                     >
                         <option
@@ -179,4 +184,12 @@
 
     </div>
 
-</div>
+    <button
+        *ngIf="editMode"
+        class="details__submit"
+        type="submit"
+    >
+        Zapisz
+    </button>
+
+</form>

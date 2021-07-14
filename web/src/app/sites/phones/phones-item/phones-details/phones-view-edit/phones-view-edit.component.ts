@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { ItemInList } from '../../../_models/itemInList.model';
 
 @Component({
@@ -14,4 +15,8 @@ export class PhonesViewEditComponent {
         'Nowy',
         'Używany'
     ];
+
+    updatePhoneFunc(f: NgForm): void {
+        console.log(f.value as ItemInList);
+    }
 }

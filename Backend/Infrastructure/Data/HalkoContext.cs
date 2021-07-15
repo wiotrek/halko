@@ -10,11 +10,8 @@ namespace Infrastructure.Data
         
         #region Auth Members
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
         public DbSet<Point> Points { get; set; }
         public DbSet<ParticipantPoint> Participants { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<UserPoint> UserPoints { get; set; }
         
         #endregion

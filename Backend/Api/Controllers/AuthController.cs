@@ -4,9 +4,8 @@ using System.Threading.Tasks;
 using Api.Dtos;
 using Core.Entities.Auth;
 using Core.Interfaces;
-using Core.Specifications;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
@@ -15,9 +14,6 @@ namespace Api.Controllers
     {
         #region Private Members
         
-        private readonly IGenericRepository<User> _userRepo;
-        private readonly IGenericRepository<UserRole> _userRoleRepo;
-        private readonly IGenericRepository<UserPoint> _userPointsRepo;
         private readonly ITokenService _tokenService;
         
         /// <summary>
@@ -30,19 +26,15 @@ namespace Api.Controllers
         /// </summary>
         private readonly SignInManager<AppUser> _signInManager;
         
+
+
         #endregion
 
         public AuthController(
-            IGenericRepository<User> userRepo,
-            IGenericRepository<UserRole> userRoleRepo,
-            IGenericRepository<UserPoint> userPointsRepo,
             ITokenService tokenService,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager)
         {
-            _userRepo = userRepo;
-            _userRoleRepo = userRoleRepo;
-            _userPointsRepo = userPointsRepo;
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -54,28 +46,32 @@ namespace Api.Controllers
         {
             // TODO: Change login way using Identity
             // TODO: Modify user table in halko database for reference between user in halko and user in identity
+
+            // Sign out any previous sessions
+            await HttpContext.SignOutAsync ( IdentityConstants.ApplicationScheme );
+
             
-            // var spec = new UserSpecification ( loginDto.Login );
-            // var user = await _userRepo.GetEntityWithSpecAsync ( spec );
-            //
-            //
-            // if( user == null ) return Unauthorized ();
-            // if (user.Password != loginDto.Password) return Unauthorized ();
-            //
-            //
-            // var userWithRoleSpec = new UserWithRoleSpecification ( user.Id );
+            var user = await _userManager.FindByNameAsync ( loginDto.Login );
+            if( user == null ) return Unauthorized();
+
+            var userRole = _userManager.GetRolesAsync ( user ).Result.First();
+            
+            // TODO: Add Point and AspNetUserPoints tables in identity database
             // var userWithPointSpec = new UserWithPointsSpecification ( user.Id );
-            //
-            // var userRole = await _userRoleRepo.GetEntityWithSpecAsync ( userWithRoleSpec );
             // var userPoints = await _userPointsRepo.ListAsync ( userWithPointSpec );
 
             var result = await _signInManager.PasswordSignInAsync ( loginDto.Login, loginDto.Password, true, true );
+
+
+            if( !result.Succeeded )
+                return BadRequest();
+
             
             return new LoginUserDto
             {
                 PointNames = new List<string>(),//userPoints.Select ( x => x.Point.Name ),
-                Role = "",//userRole.Role.Name,
-                Token = ""//_tokenService.CreateToken ( user )
+                Role = userRole,
+                Token = _tokenService.CreateToken ( user )
             };
         }
         

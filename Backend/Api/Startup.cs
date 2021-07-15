@@ -1,11 +1,9 @@
 using Api.Extensions;
 using Api.Helpers;
-using Core.Entities.Auth;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +25,7 @@ namespace Api
         public void ConfigureServices( IServiceCollection services )
         {
             services.AddAutoMapper ( typeof(MappingProfiles) );
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers();//.AddNewtonsoftJson();
 
             #region Connection Strings
             

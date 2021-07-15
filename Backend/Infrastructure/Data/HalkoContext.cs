@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Core.Entities.Auth;
+using Core.Entities.Halko;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
@@ -12,7 +12,6 @@ namespace Infrastructure.Data
 
         public DbSet<Point> Points { get; set; }
         public DbSet<ParticipantPoint> Participants { get; set; }
-        public DbSet<UserPoint> UserPoints { get; set; }
         
         #endregion
         

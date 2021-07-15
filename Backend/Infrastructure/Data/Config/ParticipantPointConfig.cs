@@ -1,4 +1,4 @@
-﻿using Core.Entities.Auth;
+﻿using Core.Entities.Halko;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

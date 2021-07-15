@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Identity.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class IdentityInitial : Migration
     {
@@ -26,7 +26,6 @@ namespace Infrastructure.Identity.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    DisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -45,6 +44,32 @@ namespace Infrastructure.Identity.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Point",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Point", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Points",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Points", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -153,6 +178,49 @@ namespace Infrastructure.Identity.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ParticipantPoint",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Initial = table.Column<string>(type: "TEXT", nullable: false),
+                    PointId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ParticipantPoint", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ParticipantPoint_Point_PointId",
+                        column: x => x.PointId,
+                        principalTable: "Point",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserPoints",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false),
+                    PointId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserPoints", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserPoints_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_UserPoints_Points_PointId",
+                        column: x => x.PointId,
+                        principalTable: "Points",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -189,6 +257,21 @@ namespace Infrastructure.Identity.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ParticipantPoint_PointId",
+                table: "ParticipantPoint",
+                column: "PointId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPoints_AppUserId",
+                table: "UserPoints",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserPoints_PointId",
+                table: "UserPoints",
+                column: "PointId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,10 +292,22 @@ namespace Infrastructure.Identity.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ParticipantPoint");
+
+            migrationBuilder.DropTable(
+                name: "UserPoints");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Point");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Points");
         }
     }
 }

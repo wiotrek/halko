@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Dtos;
-using Core.Entities.Auth;
+using Api.Extensions;
+using Core.Entities.Identity;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,25 +23,32 @@ namespace Api.Controllers
         /// </summary>
         private readonly UserManager<AppUser> _userManager;
         
+
         /// <summary>
         /// The manager for handling signing in and out for our users
         /// </summary>
         private readonly SignInManager<AppUser> _signInManager;
         
 
+        private readonly IPointService _pointService;
 
         #endregion
 
+        #region Constructor
+        
         public AuthController(
             ITokenService tokenService,
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager)
+            SignInManager<AppUser> signInManager,
+            IPointService pointService)
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
+            _pointService = pointService;
         }
         
+        #endregion
 
         [HttpPost ( "login" )]
         public async Task<ActionResult<LoginUserDto>> LoginAsync( LoginDto loginDto )
@@ -74,34 +83,75 @@ namespace Api.Controllers
                 Token = _tokenService.CreateToken ( user )
             };
         }
+
         
-        [HttpPost ("register-points")]
-        public async Task<ActionResult> RegisterPointAsync( UserCreateDto userCreateDto)
+        [HttpGet ( "logout" )]
+        public async Task<IActionResult> LogoutAsync()
         {
-            var user = HttpContext.User.Identity.Name;
-            
-            // Check if user is admin to create point
-            
-            // TODO: Attach role to user as point
-            
+            await HttpContext.SignOutAsync ( IdentityConstants.ApplicationScheme );
+
             return Ok();
         }
         
-        [HttpPost ("register-user")]
-        public async Task<ActionResult> RegisterAdminAsync( UserCreateDto userCreateDto)
+        
+        [HttpPost ("register-point")]
+        [Authorize]
+        public async Task<ActionResult> RegisterPointAsync( PointCreateDto pointCreateDto)
         {
-            // Check if user is admin to add next admin user
+            // Get current user
+            var currentUser = await _userManager.FindByNameByClaimsPrincipleAsync ( User );
             
-            var user = new AppUser
+            // Get user role
+            var userRole = await _userManager.GetRolesAsync ( currentUser );
+            var userRoleName = userRole.First();
+            
+            // Make sure that user is admin
+            if( userRoleName != "Admin" )
+                return Unauthorized();
+
+            
+            #region Duplicate Checker
+            
+            var isExistUser = await _userManager.FindByNameAsync ( pointCreateDto.Login );
+            if( isExistUser  != null )
+                return BadRequest();
+
+            if( await _pointService.IsPointExist ( pointCreateDto.PointName ) )
+                return BadRequest();
+            
+            #endregion
+            
+            #region Create user with point role
+            
+            var appUser = new AppUser
             {
-                UserName = userCreateDto.Name,
+                UserName = pointCreateDto.Login
             };
             
-            // TODO: attach role to user as admin
-
-            var result = await _userManager.CreateAsync ( user, userCreateDto.Password );
-
-            if( !result.Succeeded ) return BadRequest();
+            var insertedUser = await  _userManager.CreateAsync ( appUser, pointCreateDto.Password );
+            if( !insertedUser.Succeeded ) return BadRequest();
+            
+            await _userManager.AddToRoleAsync ( appUser, "Point" );
+            
+            #endregion
+            
+            #region Create Point
+            
+            // Create point
+            var insertedPoint = await _pointService.CreatePointAsync ( pointCreateDto.PointName );
+            if (insertedPoint == null) return BadRequest();
+            
+            
+            // Make reference between created user and point in UserPoints table
+            await _pointService.AddPointToUser ( appUser.Id, insertedPoint.Id );
+            
+            // and also reference between admin users with this point
+            var adminUsers = await _userManager.GetUsersInRoleAsync ( "Admin" );
+            foreach ( var user in adminUsers )
+                await _pointService.AddPointToUser ( user.Id, insertedPoint.Id );
+            
+            #endregion
+            
             
             return Ok();
         }

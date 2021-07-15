@@ -1,8 +1,11 @@
 using System;
 using System.Threading.Tasks;
+using Api.Extensions;
+using Core.Entities.Identity;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,9 +31,21 @@ namespace Api
                 {
                     var context = services.GetRequiredService<HalkoContext>();
                     await context.Database.MigrateAsync();
+                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists AppUser" );
+                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists Point" );
+                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists UserPoints" );
 
                     var identityConext = services.GetRequiredService<AppIdentityDbContext>();
                     await identityConext.Database.MigrateAsync();
+
+                    await identityConext.Database.ExecuteSqlRawAsync ( "drop table if exists Point" );
+                    await identityConext.Database.ExecuteSqlRawAsync ( "drop table if exists ParticipantPoint" );
+
+                    // Necessery data as first user and roles are inserted to database after migration
+                    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+                    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    
+                    await InitializeIdentityExtensions.FirstUsingApplication ( roleManager, userManager  );
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

@@ -1,8 +1,8 @@
-﻿using Core.Entities.Halko;
+﻿using Core.Entities.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Data.Config
+namespace Infrastructure.Identity.Config
 {
     public class PointConfig : IEntityTypeConfiguration<Point>
     {
@@ -10,10 +10,6 @@ namespace Infrastructure.Data.Config
         {
             builder.Property ( p => p.Id ).IsRequired();
             builder.Property ( p => p.Name ).IsRequired().HasMaxLength ( 150 );
-
-            builder.HasMany ( p => p.Participants )
-                .WithOne()
-                .OnDelete ( DeleteBehavior.NoAction );
         }
     }
 }

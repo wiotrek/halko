@@ -1,4 +1,4 @@
-﻿namespace Core.Entities.Auth
+﻿namespace Core.Entities.Halko
 {
     /// <summary>
     /// The member of specific point

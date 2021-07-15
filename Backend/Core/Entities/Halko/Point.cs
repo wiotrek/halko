@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Core.Entities.Auth
+namespace Core.Entities.Halko
 {
     public class Point : BaseEntity
     {

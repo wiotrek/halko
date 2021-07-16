@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
-
-interface Links {
-    displayName: string;
-    path: string;
-}
+import { Links } from 'src/app/shared/models/links.model';
 
 @Component({
     selector: 'app-nav',
@@ -21,11 +17,11 @@ export class NavComponent {
     };
 
     links: Links[] = [
-        { displayName: 'Strona główna', path: '/zarzadzaj/'},
-        { displayName: 'Spis telefonów', path: 'spis-telefonów'},
-        { displayName: 'Rozliczenia', path: 'rozliczenia'},
-        { displayName: 'Serwis', path: 'serwis'},
-        { displayName: 'Skup telefonów', path: 'skup-telefonów'},
+        { caption: 'Strona główna', path: '/zarzadzaj/'},
+        { caption: 'Spis telefonów', path: 'telefony'},
+        { caption: 'Rozliczenia', path: 'rozliczenia'},
+        { caption: 'Serwis', path: 'serwis'},
+        { caption: 'Skup telefonów', path: 'skup-telefonów'},
     ];
 
     constructor(

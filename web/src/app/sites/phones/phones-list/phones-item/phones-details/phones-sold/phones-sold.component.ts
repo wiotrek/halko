@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ItemInList } from '../../../_models/itemInList.model';
+import { ItemInList } from '../../../../_models/itemInList.model';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
 

@@ -1,0 +1,22 @@
+<div class="header">
+
+    <h3 class="header__headline">{{activeSite.caption}}</h3>
+
+    <div class="header__right-side">
+
+        <a 
+            class="header__right-side__option-left"
+            (click)="setPropertyNav(leftOption)"
+        >
+            {{leftOption.caption}}
+        </a>
+        /
+        <a 
+            class="header__right-side__option-right"
+            (click)="setPropertyNav(rightOption)"
+        >
+            {{rightOption.caption}}
+        </a>
+    </div>
+
+</div>

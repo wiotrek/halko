@@ -26,6 +26,7 @@ import { PhonesSeacherComponent } from './sites/phones/phones-seacher/phones-sea
 import { PhonesDetailsComponent } from './sites/phones/phones-item/phones-details/phones-details.component';
 import { PhonesViewEditComponent } from './sites/phones/phones-item/phones-details/phones-view-edit/phones-view-edit.component';
 import { PhonesSoldComponent } from './sites/phones/phones-item/phones-details/phones-sold/phones-sold.component';
+import { PhonesTransferComponent } from './sites/phones/phones-item/phones-details/phones-transfer/phones-transfer.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { PhonesSoldComponent } from './sites/phones/phones-item/phones-details/p
     PhonesSeacherComponent,
     PhonesDetailsComponent,
     PhonesViewEditComponent,
-    PhonesSoldComponent
+    PhonesSoldComponent,
+    PhonesTransferComponent
   ],
   imports: [
     BrowserModule,

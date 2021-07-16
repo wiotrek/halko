@@ -1,0 +1,44 @@
+<div class="wrapper">
+    
+    <div class="header">
+        Przekazujesz {{elInList.brand +' '+elInList.model}}
+    </div>
+
+    <form 
+        class="form-transfer"
+        #transferPhone="ngForm"
+        (ngSubmit)="transferPhone.valid && transferPhoneFunc(transferPhone)"
+    >
+        
+        <label
+            class="form-transfer__label-place"
+            for="place"
+        >
+            Wybierz punkt: 
+        </label>
+        
+        <select
+            class="form-transfer__select-place"
+            id="place"
+            name="place"
+            [ngModel]="elInList.place"
+            required
+        >
+            <option 
+                *ngFor="let place of places"
+                [value]="place"
+            >
+                {{place}}
+            </option>
+        </select>
+
+        <button
+            class="form-transfer__btn"
+            type="submit"
+        >
+            Potwierdź
+        </button>
+
+    </form>
+
+</div>

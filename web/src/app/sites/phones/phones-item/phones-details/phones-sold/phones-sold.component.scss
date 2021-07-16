@@ -1,0 +1,46 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+.wrapper {
+    margin-top: 25px;
+
+    .header {
+        font-size: 1rem;
+
+        fa-icon {
+            margin-left: 5px;
+            color: #98FB98;
+        }
+    }
+
+    .form-sold {
+        margin: 10px 0;
+
+        &__input-price {
+            margin-left: 10px;
+            margin-right: 15px;
+            width: 50px;
+            border: 0;
+            border-bottom: 1px solid $primaryGrey;
+            text-align: center;
+        }
+
+        &__btn {
+            border: 0;
+            background-color: transparent;
+
+            &:hover {
+                text-decoration: underline;
+                color: $prettyGreen;
+            }
+
+            &.--non-valid {
+                color: $dangerColor;
+
+                &:hover {
+                    text-decoration: none;
+                    cursor: not-allowed;
+                }
+            }
+        }
+    }
+}

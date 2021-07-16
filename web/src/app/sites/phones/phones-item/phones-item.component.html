@@ -1,0 +1,79 @@
+<div class="elInList">
+
+    <div 
+        class="elInList__header"
+        [ngClass]="{'detailsMode': detailsMode}"
+    >
+
+        <ng-container *ngIf="!detailsMode">
+
+            <div class="elInList__header__index">
+                {{ind}}.
+            </div>
+
+            <div class="elInList__header__brand">
+                {{elInList.brand}}
+            </div>
+
+            <div class="elInList__header__model">
+                {{elInList.model}}
+            </div>
+
+            <div class="elInList__header__imei">
+                {{elInList.imei}}
+            </div>
+        
+            <div class="elInList__header__color">
+                {{elInList.color}}
+            </div>
+        
+            <div class="elInList__header__place">
+                {{elInList.place}}
+            </div>
+        
+            <div class="elInList__header__state">
+                {{elInList.state}}
+            </div>
+        
+            <div class="elInList__header__bought">
+                {{elInList.bought}} zł
+            </div>
+        
+            <div class="elInList__header__price">
+                {{elInList.price}} zł
+            </div>
+
+        </ng-container>
+
+        <button 
+            class="elInList__header__editing"
+            (click)="detailsMode = !detailsMode"
+            [ngClass]="{'detailsMode': detailsMode}"
+        >
+            
+            <fa-icon 
+                [icon]="faInfoCircle"
+                *ngIf="!detailsMode; else detailsModeActive"
+            ></fa-icon>
+            
+            <ng-template #detailsModeActive>
+                
+                <fa-icon [icon]="faUndo"></fa-icon>
+            
+            </ng-template>
+        
+        </button>
+
+    </div>
+
+    <div class="elInList-inner">
+
+        <ng-container *ngIf="detailsMode">
+            <app-phones-details
+                [elInList]="elInList"
+            ></app-phones-details>
+        </ng-container>
+
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+@import '../../shared/global-styles/variable.scss';
+
+
+@media (min-width: 0) {
+    .wrapper {
+        margin-top: 30px;
+
+        .middle {
+            max-width: 850px;
+            margin: 0 auto;
+
+            .header {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+
+                &__headline {
+                    font-size: 1.5rem;
+                }
+
+                &__add-new-phone {
+                    cursor: pointer;
+                    color: $primaryGrey;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}

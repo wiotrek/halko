@@ -19,14 +19,7 @@ import { ItemViewComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-edit/item-edit.component';
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
-import { PhonesComponent } from './sites/phones/phones.component';
 import { SitesRoutingModule } from './sites/sites-routing.module';
-import { PhonesItemComponent } from './sites/phones/phones-item/phones-item.component';
-import { PhonesSeacherComponent } from './sites/phones/phones-seacher/phones-seacher.component';
-import { PhonesDetailsComponent } from './sites/phones/phones-item/phones-details/phones-details.component';
-import { PhonesViewEditComponent } from './sites/phones/phones-item/phones-details/phones-view-edit/phones-view-edit.component';
-import { PhonesSoldComponent } from './sites/phones/phones-item/phones-details/phones-sold/phones-sold.component';
-import { PhonesTransferComponent } from './sites/phones/phones-item/phones-details/phones-transfer/phones-transfer.component';
 
 @NgModule({
   declarations: [
@@ -41,14 +34,7 @@ import { PhonesTransferComponent } from './sites/phones/phones-item/phones-detai
     ScratchAdderComponent,
     ItemViewComponent,
     ItemEditComponent,
-    ItemsSumComponent,
-    PhonesComponent,
-    PhonesItemComponent,
-    PhonesSeacherComponent,
-    PhonesDetailsComponent,
-    PhonesViewEditComponent,
-    PhonesSoldComponent,
-    PhonesTransferComponent
+    ItemsSumComponent
   ],
   imports: [
     BrowserModule,

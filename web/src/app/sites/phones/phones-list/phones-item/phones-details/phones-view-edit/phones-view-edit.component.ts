@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ItemInList } from '../../../_models/itemInList.model';
+import { ItemInList } from '../../../../_models/itemInList.model';
 
 @Component({
     selector: 'app-phones-view-edit',

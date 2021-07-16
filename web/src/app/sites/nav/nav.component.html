@@ -18,7 +18,7 @@
                 [routerLink]="site.path"
                 [routerLinkActiveOptions]="{ exact: true }"
             >
-                {{site.displayName}}
+                {{site.caption}}
             </a>
 
         </div>
@@ -49,7 +49,7 @@
                         *ngFor="let site of links"
                         routerLink="{{site.path}}"
                     >
-                        {{site.displayName}}
+                        {{site.caption}}
                     </a>
 
                     <a

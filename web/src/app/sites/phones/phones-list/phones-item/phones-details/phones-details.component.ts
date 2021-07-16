@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ItemInList } from '../../_models/itemInList.model';
+import { ItemInList } from '../../../_models/itemInList.model';
 
 @Component({
     selector: 'app-phones-details',

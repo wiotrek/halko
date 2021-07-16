@@ -17,7 +17,7 @@ export class NavComponent {
     };
 
     links: Links[] = [
-        { caption: 'Strona główna', path: '/zarzadzaj/'},
+        { caption: 'Strona główna', path: ''},
         { caption: 'Spis telefonów', path: 'telefony'},
         { caption: 'Rozliczenia', path: 'rozliczenia'},
         { caption: 'Serwis', path: 'serwis'},

@@ -19,7 +19,6 @@ import { ItemViewComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-edit/item-edit.component';
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
-import { SitesRoutingModule } from './sites/sites-routing.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { SitesRoutingModule } from './sites/sites-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SitesRoutingModule,
     HttpClientModule,
     FontAwesomeModule,
     SharedModule

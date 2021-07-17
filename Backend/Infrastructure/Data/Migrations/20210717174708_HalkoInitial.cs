@@ -274,6 +274,12 @@ namespace Infrastructure.Data.Migrations
                 column: "TransactionTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TransactionTypes_Type",
+                table: "TransactionTypes",
+                column: "Type",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserPoints_AppUserId",
                 table: "UserPoints",
                 column: "AppUserId");

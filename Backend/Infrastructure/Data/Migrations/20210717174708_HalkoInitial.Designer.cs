@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HalkoContext))]
-    [Migration("20210717164231_HalkoInitial")]
+    [Migration("20210717174708_HalkoInitial")]
     partial class HalkoInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -178,6 +178,9 @@ namespace Infrastructure.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Type")
+                        .IsUnique();
 
                     b.ToTable("TransactionTypes");
                 });

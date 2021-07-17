@@ -43,6 +43,11 @@ namespace Infrastructure.Repositories
             return await ApplySpecification ( spec ).ToListAsync();
         }
 
+        public void Add( T entity )
+        {
+            _context.Set<T>().Add ( entity );
+        }
+
         #endregion
         
         #region Private Methods

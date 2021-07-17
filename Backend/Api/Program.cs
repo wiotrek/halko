@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Api.Extensions;
+using Core.Entities.Halko;
 using Core.Entities.Identity;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
@@ -44,8 +46,9 @@ namespace Api
                     // Necessery data as first user and roles are inserted to database after migration
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                    var unitOfWork = services.GetRequiredService<IUnitOfWork>();
                     
-                    await InitializeIdentityExtensions.FirstUsingApplication ( roleManager, userManager  );
+                    await InitializeIdentityExtensions.FirstUsingApplicationAsync ( roleManager, userManager, unitOfWork  );
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

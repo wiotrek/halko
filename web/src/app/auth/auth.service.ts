@@ -5,45 +5,31 @@ import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { User } from './user.model';
 import { catchError, tap } from 'rxjs/operators';
 import { environment } from 'environments/environment';
-
-export interface AuthResponseData {
-    kind: string;
-    idToken: string;
-    email: string;
-    refreshToken: string;
-    expiresIn: string;
-    localId: string;
-    registered?: boolean;
-}
+import { AuthResponseData } from './_models/auth-response-data.model';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-
-    // temporary resolve
-    pathSingIn = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
-    keyFirebase = environment.firebase_key;
-
     user = new BehaviorSubject(null);
+    apiUrl = environment.api;
 
     constructor(
         private http: HttpClient,
         private router: Router) {}
 
-    login(email: string, password: string): Observable<AuthResponseData> | Observable<unknown>{
+    login(login: string, password: string): Observable<AuthResponseData> | Observable<unknown> {
         return this.http.post<AuthResponseData>(
-            this.pathSingIn + this.keyFirebase,
+            this.apiUrl + 'api/auth/login',
             {
-                email,
+                login,
                 password,
-                returnSecureToken: true
             }
         ).pipe(
             catchError(this.handleError),
             tap((res: AuthResponseData) => {
                 this.handleAuthentication(
-                    res.email,
-                    res.localId,
-                    res.idToken
+                    res.pointNames,
+                    res.token,
+                    res.role
                 );
             })
         );
@@ -56,17 +42,19 @@ export class AuthService {
     }
 
     autoLogin(): void {
+
         const userData: {
-            email: string;
-            id: string;
+            pointNames: string[];
             token: string;
+            role: string;
         } = JSON.parse(localStorage.getItem('userData'));
+
         if (!userData) { return; }
 
         const loadedUser = new User(
-            userData.email,
-            userData.id,
-            userData.token
+            userData.pointNames,
+            userData.token,
+            userData.role
         );
 
         if (loadedUser.tokenFunc) {
@@ -74,17 +62,22 @@ export class AuthService {
         }
     }
 
-    private handleAuthentication(email: string, userId: string, token: string): void {
+    private handleAuthentication(
+            pointNames: string[], token: string, role: string
+        ): void {
+
         const user = new User(
-            email,
-            userId,
-            token
+            pointNames,
+            token,
+            role
         );
+
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
     private handleError(errRes: HttpErrorResponse): any {
+
         const errMsg = !errRes.error || !errRes.error.error
         ? 'Pojawił się problem z serverem'
         : 'Błędny login lub hasło';

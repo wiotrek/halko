@@ -28,7 +28,7 @@ export class AuthComponent {
         this.isLoadingSpinner = true;
 
         this.authService.login(
-            form.value.email,
+            form.value.login,
             form.value.password
         ).subscribe(() => {
             this.router.navigate(['']);

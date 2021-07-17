@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20210714194634_IdentityInitial")]
+    [Migration("20210717122657_IdentityInitial")]
     partial class IdentityInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,11 +24,22 @@ namespace Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Initial")
+                    b.Property<string>("FirstName")
                         .IsRequired()
+                        .HasMaxLength(40)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("PointId")
+                    b.Property<string>("Initial")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("PointId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -286,10 +297,13 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.Halko.ParticipantPoint", b =>
                 {
-                    b.HasOne("Core.Entities.Halko.Point", null)
-                        .WithMany("Participants")
+                    b.HasOne("Core.Entities.Halko.Point", "Point")
+                        .WithMany()
                         .HasForeignKey("PointId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Point");
                 });
 
             modelBuilder.Entity("Core.Entities.Identity.UserPoints", b =>
@@ -360,11 +374,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Core.Entities.Halko.Point", b =>
-                {
-                    b.Navigation("Participants");
                 });
 #pragma warning restore 612, 618
         }

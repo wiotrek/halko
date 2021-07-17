@@ -1,11 +1,17 @@
 export class User {
     constructor(
-        public email: string,
-        public password: string,
-        private token: string
+        public pointNames: string[],
+        public role: string,
+        private token: string,
     ) {}
 
     get tokenFunc(): string {
         return this.token;
+    }
+
+    get displayName(): string {
+        return this.role === 'Admin'
+        ? 'Admin'
+        : this.pointNames[0];
     }
 }

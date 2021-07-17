@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Migrations.Halko
+namespace Infrastructure.Data.Migrations
 {
     public partial class HalkoInitial : Migration
     {
@@ -88,8 +88,10 @@ namespace Infrastructure.Migrations.Halko
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Initial = table.Column<string>(type: "TEXT", nullable: false),
-                    PointId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Initial = table.Column<string>(type: "TEXT", maxLength: 5, nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    PointId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,7 +100,8 @@ namespace Infrastructure.Migrations.Halko
                         name: "FK_Participants_Points_PointId",
                         column: x => x.PointId,
                         principalTable: "Points",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

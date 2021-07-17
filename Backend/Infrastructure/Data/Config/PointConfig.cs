@@ -10,10 +10,6 @@ namespace Infrastructure.Data.Config
         {
             builder.Property ( p => p.Id ).IsRequired();
             builder.Property ( p => p.Name ).IsRequired().HasMaxLength ( 150 );
-
-            builder.HasMany ( p => p.Participants )
-                .WithOne()
-                .OnDelete ( DeleteBehavior.NoAction );
         }
     }
 }

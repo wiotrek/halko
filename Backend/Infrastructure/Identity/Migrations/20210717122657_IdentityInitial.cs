@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Identity.Migrations
 {
     public partial class IdentityInitial : Migration
     {
@@ -184,8 +184,10 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Initial = table.Column<string>(type: "TEXT", nullable: false),
-                    PointId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Initial = table.Column<string>(type: "TEXT", maxLength: 5, nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 40, nullable: false),
+                    PointId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -194,7 +196,8 @@ namespace Infrastructure.Migrations
                         name: "FK_ParticipantPoint_Point_PointId",
                         column: x => x.PointId,
                         principalTable: "Point",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

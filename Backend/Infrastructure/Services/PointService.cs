@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -9,8 +11,14 @@ namespace Infrastructure.Services
 {
     public class PointService : IPointService
     {
+        #region Private Members
+        
         private readonly AppIdentityDbContext _identityContext;
         private readonly HalkoContext _halkoContext;
+
+        #endregion
+        
+        #region Constructors
 
         public PointService(
             AppIdentityDbContext identityContext,
@@ -19,6 +27,10 @@ namespace Infrastructure.Services
             _identityContext = identityContext;
             _halkoContext = halkoContext;
         }
+        
+        #endregion
+        
+        #region Implemented Methods
         
         public async Task<Point> CreatePointAsync( string name )
         {
@@ -51,6 +63,24 @@ namespace Infrastructure.Services
             return identityPoint;
         }
 
+        public async Task<List<Point>> ListPointsAsync()
+        {
+            return await _identityContext.Points.ToListAsync();
+        }
+
+        public async Task<Point> GetPointByUserAsync( AppUser user )
+        {
+            var userPoint = await _identityContext.UserPoints
+                .FirstOrDefaultAsync (  x => x.AppUserId == user.Id );
+
+
+            var point = await _identityContext.Points
+                .FirstOrDefaultAsync ( x => x.Id == userPoint.PointId );
+            
+
+            return point;
+        }
+
         public async Task<int> AddPointToUser( string appUserId, int pointId )
         {
                 var userPoint = new UserPoints
@@ -69,5 +99,7 @@ namespace Infrastructure.Services
         {
             return await _identityContext.Points.FirstOrDefaultAsync ( x => x.Name == name ) != null;
         }
+        
+        #endregion
     }
 }

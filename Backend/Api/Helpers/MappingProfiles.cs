@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using Api.Dtos;
+using AutoMapper;
+using Core.Entities.Halko;
 
 namespace Api.Helpers
 {
@@ -7,8 +9,16 @@ namespace Api.Helpers
         
         public MappingProfiles()
         {
-            
+            CreateMap<ParticipantPoint, ParticipantsToReturnDto>();
+            ProductCategoryToProductCategoryDto();
         }
-        
+
+
+        private void ProductCategoryToProductCategoryDto()
+        {
+            CreateMap<ProductCategory, ProductCategoriesToReturnDto>()
+                .ForMember ( d => d.Type,
+                    m => m.MapFrom ( s => s.TransactionType.Type ) );
+        }
     }
 }

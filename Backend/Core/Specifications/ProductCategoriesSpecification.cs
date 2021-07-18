@@ -10,5 +10,10 @@ namespace Core.Specifications
         {
             
         }
+        
+        public ProductCategoriesSpecification()
+        {
+            AddInclude ( x => x.TransactionType );
+        }
     }
 }

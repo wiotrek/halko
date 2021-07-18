@@ -31,6 +31,12 @@ namespace Core.Interfaces
         Task<IReadOnlyList<T>> ListAsync( ISpecification<T> spec );
 
         /// <summary>
+        /// Select * from T
+        /// </summary>
+        /// <returns>All row from db of specific T without specification</returns>
+        Task<IReadOnlyList<T>> ListAllAsync();
+
+        /// <summary>
         /// Local store entites before saving to database
         /// </summary>
         /// <param name="entity"></param>

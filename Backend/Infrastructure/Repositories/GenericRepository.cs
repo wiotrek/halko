@@ -43,6 +43,11 @@ namespace Infrastructure.Repositories
             return await ApplySpecification ( spec ).ToListAsync();
         }
 
+        public async Task<IReadOnlyList<T>> ListAllAsync()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
         public void Add( T entity )
         {
             _context.Set<T>().Add ( entity );

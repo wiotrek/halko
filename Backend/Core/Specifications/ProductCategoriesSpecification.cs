@@ -8,7 +8,14 @@ namespace Core.Specifications
             : base( x => x.Name == name && 
                          x.TransactionTypeId == transactionTypeId)
         {
-            
+            AddInclude ( x => x.TransactionType );
+        }
+        
+        public ProductCategoriesSpecification( string name, string transactionType ) 
+            : base( x => x.Name == name && 
+                         x.TransactionType.Type == transactionType)
+        {
+            AddInclude ( x => x.TransactionType );
         }
         
         public ProductCategoriesSpecification()

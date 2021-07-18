@@ -84,11 +84,10 @@ namespace Api.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<ParticipantsToReturnDto>>> GetParticipantsAsync(ParticipantCreateDto participantCreateDto)
+        public async Task<ActionResult<List<ParticipantsToReturnDto>>> GetParticipantsAsync([FromQuery] string pointName)
         {
-            if (participantCreateDto.PointName == null) return BadRequest();
+            if (string.IsNullOrEmpty(pointName)) return BadRequest();
             
-            var pointName = participantCreateDto.PointName;
             var participantSpec = new ParticipantSpecification ( pointName );
             var participants = await _unitOfWork
                 .Repository<ParticipantPoint>()

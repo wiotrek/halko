@@ -123,7 +123,7 @@ namespace Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
                     TransactionTypeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
@@ -145,7 +145,7 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Price = table.Column<double>(type: "decimal(18, 2)", nullable: false),
-                    DateTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ParticipantId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductCategoryId = table.Column<int>(type: "INTEGER", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -188,7 +188,8 @@ namespace Infrastructure.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ProductName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Price = table.Column<double>(type: "decimal(18, 2)", nullable: false),
-                    DateTime = table.Column<long>(type: "INTEGER", nullable: false),
+                    InsertedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DeletedTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ParticipantId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductCategoryId = table.Column<int>(type: "INTEGER", nullable: false),
                     TransactionTypeId = table.Column<int>(type: "INTEGER", nullable: false),

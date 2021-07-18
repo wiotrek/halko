@@ -1,5 +1,8 @@
 ﻿using System.Threading.Tasks;
+using Core.Entities.Halko;
 using Core.Entities.Identity;
+using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Identity;
 
 namespace Api.Extensions
@@ -14,12 +17,15 @@ namespace Api.Extensions
         /// <summary>
         /// Execute methods to create first user with roles to using application
         /// </summary>
-        public  static async Task FirstUsingApplication(
+        public  static async Task FirstUsingApplicationAsync(
             RoleManager<IdentityRole> roleManager, 
-            UserManager<AppUser> userManager)
+            UserManager<AppUser> userManager,
+            IUnitOfWork unitOfWork)
         {
-            await CreateRoles(roleManager);
-            await CreateUser(userManager);
+            await CreateRolesAsync(roleManager);
+            await CreateUserAsync(userManager);
+            await CreateTransactionTypesAsync ( unitOfWork );
+            await CreateProductCategoriesAsync ( unitOfWork );
         }
         
         #endregion
@@ -29,7 +35,7 @@ namespace Api.Extensions
         /// <summary>
         /// Initialize AspNetRoles table in identity database with roles
         /// </summary>
-        private static async Task CreateRoles(RoleManager<IdentityRole> roleManager)
+        private static async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
         {
             IdentityRole[] roleIdentities =
             {
@@ -44,7 +50,7 @@ namespace Api.Extensions
         /// <summary>
         /// Initialize AspNetUsers table in identity database with administrator user
         /// </summary>
-        private static async Task CreateUser(UserManager<AppUser> userManager)
+        private static async Task CreateUserAsync(UserManager<AppUser> userManager)
         {
             var appUser = new AppUser
             {
@@ -53,6 +59,63 @@ namespace Api.Extensions
             
             await  userManager.CreateAsync ( appUser, "1w2q3e" );
             await userManager.AddToRoleAsync ( appUser, "Admin" );
+        }
+
+        private static async Task CreateTransactionTypesAsync( IUnitOfWork unitOfWork )
+        {
+            var transactionTypes = new TransactionType[]
+            {
+                new() { Type = "Sprzedaż"},
+                new() { Type = "Zakup"}
+            };
+
+            foreach ( var transactionType in transactionTypes )
+            {
+                var transactionSpec = new TransactionTypesSpecification ( transactionType.Type );
+                
+                var transaction = await unitOfWork
+                    .Repository<TransactionType>()
+                    .GetEntityWithSpecAsync ( transactionSpec );
+                
+                if (transaction != null) continue;
+
+                unitOfWork.Repository<TransactionType>().Add ( transactionType );
+            }
+
+            await unitOfWork.CompleteAsync();
+        }
+        
+        private static async Task CreateProductCategoriesAsync( IUnitOfWork unitOfWork )
+        {
+            var productCategories = new ProductCategory[]
+            {
+                new() {Name = "akcesoria", TransactionTypeId = 1},
+                new() {Name = "telefon", TransactionTypeId = 1},
+                new() {Name = "serwis", TransactionTypeId = 1},
+                new() {Name = "paczka", TransactionTypeId = 2},
+                new() {Name = "zwrot", TransactionTypeId = 2},
+                new() {Name = "telefon", TransactionTypeId = 2},
+                new() {Name = "zaliczka", TransactionTypeId = 2},
+            };
+
+            foreach ( var productCategory in productCategories )
+            {
+                var productSpec = new ProductCategoriesSpecification ( 
+                    productCategory.Name, 
+                    productCategory.TransactionTypeId 
+                );
+                
+                var product = await unitOfWork
+                    .Repository<ProductCategory>()
+                    .GetEntityWithSpecAsync ( productSpec );
+
+                if( product != null )
+                    continue;
+                
+                unitOfWork.Repository<ProductCategory>().Add ( productCategory );
+            }
+
+            await unitOfWork.CompleteAsync();
         }
         
         #endregion

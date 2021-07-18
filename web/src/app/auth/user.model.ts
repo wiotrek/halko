@@ -1,7 +1,7 @@
 export class User {
     constructor(
-        public pointNames: string[],
-        public role: string,
+        private role: string,
+        private pointNames: string[],
         private token: string,
     ) {}
 

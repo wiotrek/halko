@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Dtos;
 using AutoMapper;
@@ -31,6 +32,16 @@ namespace Api.Controllers
             if( transaction == null ) return BadRequest();
 
             return Ok();
+        }
+
+        [HttpGet]
+        public async Task<IReadOnlyList<TransactionDto>> GetTransactionAsync([FromQuery] DateTime date, string pointName )
+        {
+            var transactions = await _transactionService.GetTransactionAsync ( date, pointName );
+
+            var transactionsToReturn = _mapper.Map<IReadOnlyList<TransactionDto>> ( transactions );
+            
+            return transactionsToReturn;
         }
 
 

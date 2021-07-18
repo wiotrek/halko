@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HalkoContext))]
-    [Migration("20210717174708_HalkoInitial")]
+    [Migration("20210718150247_HalkoInitial")]
     partial class HalkoInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,7 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Category")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("TransactionTypeId")
@@ -90,8 +90,8 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("DateTime")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ParticipantId")
                         .HasColumnType("INTEGER");
@@ -132,8 +132,11 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<long>("DateTime")
-                        .HasColumnType("INTEGER");
+                    b.Property<DateTime>("DeletedTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("InsertedTime")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ParticipantId")
                         .HasColumnType("INTEGER");

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.WebDtos;
 using Core.Entities.Halko;
@@ -23,6 +24,7 @@ namespace Infrastructure.Services
             
             var pointSpec = new PointSpecification ( transactionDto.PointName );
             var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
+            if( point == null ) return null;
             
             
             var participantSpec = new ParticipantSpecification ( transactionDto.ParticipantInitial, point.Id );
@@ -52,6 +54,16 @@ namespace Infrastructure.Services
 
             
             return result <= 0 ? null : transactionToSave;
+        }
+
+        
+        public async Task<IReadOnlyList<Transaction>> GetTransactionAsync( DateTime date, string pointName )
+        {
+            var transactionSpec = new TransactionSpecification ( date, pointName );
+            
+            var transactions = await _unitOfWork.Repository<Transaction>().ListAsync ( transactionSpec );
+
+            return transactions;
         }
 
 

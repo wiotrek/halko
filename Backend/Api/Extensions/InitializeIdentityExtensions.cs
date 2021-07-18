@@ -89,19 +89,19 @@ namespace Api.Extensions
         {
             var productCategories = new ProductCategory[]
             {
-                new() {Name = "akcesoria", TransactionTypeId = 1},
-                new() {Name = "telefon", TransactionTypeId = 1},
-                new() {Name = "serwis", TransactionTypeId = 1},
-                new() {Name = "paczka", TransactionTypeId = 2},
-                new() {Name = "zwrot", TransactionTypeId = 2},
-                new() {Name = "telefon", TransactionTypeId = 2},
-                new() {Name = "zaliczka", TransactionTypeId = 2},
+                new() {Category = "akcesoria", TransactionTypeId = 1},
+                new() {Category = "telefon", TransactionTypeId = 1},
+                new() {Category = "serwis", TransactionTypeId = 1},
+                new() {Category = "paczka", TransactionTypeId = 2},
+                new() {Category = "zwrot", TransactionTypeId = 2},
+                new() {Category = "telefon", TransactionTypeId = 2},
+                new() {Category = "zaliczka", TransactionTypeId = 2},
             };
 
             foreach ( var productCategory in productCategories )
             {
                 var productSpec = new ProductCategoriesSpecification ( 
-                    productCategory.Name, 
+                    productCategory.Category, 
                     productCategory.TransactionTypeId 
                 );
                 

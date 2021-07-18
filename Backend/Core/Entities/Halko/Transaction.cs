@@ -6,7 +6,7 @@ namespace Core.Entities.Halko
     {
         public string ProductName { get; set; }
         public double Price { get; set; }
-        public DateTimeOffset DateTime { get; set; } = DateTimeOffset.Now;
+        public DateTime DateTime { get; set; } = DateTime.Now;
 
         public int ParticipantId { get; set; }
         public ParticipantPoint Participant { get; set; }

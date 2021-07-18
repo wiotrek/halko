@@ -25,9 +25,9 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateTransactionAsync(TransactionToInsertDto transactionToInsertDto)
+        public async Task<ActionResult> CreateTransactionAsync(TransactionWebDto transactionWebDto)
         {
-            var transaction = await _transactionService.CreateTransactionAsync ( transactionToInsertDto );
+            var transaction = await _transactionService.CreateTransactionAsync ( transactionWebDto );
 
             if( transaction == null ) return BadRequest();
 
@@ -42,6 +42,18 @@ namespace Api.Controllers
             var transactionsToReturn = _mapper.Map<IReadOnlyList<TransactionDto>> ( transactions );
             
             return transactionsToReturn;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<TransactionDto>> UpdateTransactionAsync( TransactionWebDto transactionWebDto )
+        {
+            var transaction = await _transactionService.UpdateTransactionAsync ( transactionWebDto );
+            
+            if (transaction == null) return BadRequest();
+
+            var transactionToReturn = _mapper.Map<TransactionDto> ( transaction );
+
+            return Ok ( transactionToReturn );
         }
 
 

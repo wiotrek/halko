@@ -41,5 +41,11 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         void Add( T entity );
+        
+        /// <summary>
+        /// Local storage entity before replace with new to database
+        /// </summary>
+        /// <param name="entity"></param>
+        void Update( T entity );
     }
 }

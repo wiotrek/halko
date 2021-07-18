@@ -4,9 +4,11 @@ namespace Api.Dtos
 {
     public class TransactionDto
     {
+        public int Id { get; set; }
         public string ProductName { get; set; }
         public double Price { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime InsertedDateTime { get; set; }
+        public DateTime EditedDateTime { get; set; }
         public string Initial { get; set; }
         public string Category { get; set; }
         public string Type { get; set; }

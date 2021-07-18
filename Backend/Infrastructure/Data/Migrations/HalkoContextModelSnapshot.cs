@@ -88,7 +88,10 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime?>("EditedDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("InsertedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ParticipantId")
@@ -130,10 +133,13 @@ namespace Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DeletedTime")
+                    b.Property<DateTime>("DeletedDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("InsertedTime")
+                    b.Property<DateTime>("EditedDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("InsertedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ParticipantId")

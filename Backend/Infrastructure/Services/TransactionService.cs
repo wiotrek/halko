@@ -17,7 +17,7 @@ namespace Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<Transaction> CreateTransactionAsync( TransactionToInsertDto transactionDto )
+        public async Task<Transaction> CreateTransactionAsync( TransactionWebDto transactionDto )
         {
             if( string.IsNullOrEmpty ( transactionDto.ProductName ) || transactionDto.Price <= 0 ) return null;
             
@@ -56,7 +56,55 @@ namespace Infrastructure.Services
             return result <= 0 ? null : transactionToSave;
         }
 
-        
+
+        public async Task<Transaction> UpdateTransactionAsync( TransactionWebDto transactionWebDto )
+        {
+            var transactionSpec = new TransactionSpecification ( transactionWebDto.Id );
+            var transactionToUpdate = await _unitOfWork.Repository<Transaction>().GetEntityWithSpecAsync ( transactionSpec );
+
+            if( transactionToUpdate == null ) return null;
+
+            if( transactionToUpdate.ProductName != transactionWebDto.ProductName )
+                transactionToUpdate.ProductName = transactionWebDto.ProductName;
+            
+            if( transactionToUpdate.Price != transactionWebDto.Price )
+                transactionToUpdate.Price = transactionWebDto.Price;
+
+            if( transactionToUpdate.Participant.Initial != transactionWebDto.ParticipantInitial )
+            {
+                var participantSpec = new ParticipantSpecification ( transactionWebDto.ParticipantInitial, transactionToUpdate.PointId );
+                var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
+                
+                if (participant == null) return null;
+                
+                transactionToUpdate.ParticipantId = participant.Id;
+            }
+
+            if( transactionToUpdate.ProductCategory.Category != transactionWebDto.ProductCategoryName )
+            {
+                var productSpec = new ProductCategoriesSpecification ( 
+                    transactionWebDto.ProductCategoryName, 
+                    transactionToUpdate.TransactionTypeId 
+                );
+                
+                var product = await _unitOfWork
+                    .Repository<ProductCategory>()
+                    .GetEntityWithSpecAsync ( productSpec );
+
+                if( product == null ) return null;
+                
+                transactionToUpdate.ProductCategoryId = product.Id;
+            }
+            
+            transactionToUpdate.EditedDateTime = DateTime.Now;
+
+            _unitOfWork.Repository<Transaction>().Update ( transactionToUpdate );
+            var result = await _unitOfWork.CompleteAsync();
+
+            return result <= 0 ? null : transactionToUpdate;
+        }
+
+
         public async Task<IReadOnlyList<Transaction>> GetTransactionAsync( DateTime date, string pointName )
         {
             var transactionSpec = new TransactionSpecification ( date, pointName );

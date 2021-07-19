@@ -6,14 +6,14 @@
 
         <a 
             class="header__right-side__option-left"
-            (click)="setPropertyNav(leftOption)"
+            (click)="switchSiteNav(leftOption.path)"
         >
             {{leftOption.caption}}
         </a>
         /
         <a 
             class="header__right-side__option-right"
-            (click)="setPropertyNav(rightOption)"
+            (click)="switchSiteNav(rightOption.path)"
         >
             {{rightOption.caption}}
         </a>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Links } from 'src/app/shared/models/links.model';
 
@@ -7,7 +7,7 @@ import { Links } from 'src/app/shared/models/links.model';
     templateUrl: './phones-nav.component.html',
     styleUrls: ['./phones-nav.component.scss']
 })
-export class PhonesNavComponent {
+export class PhonesNavComponent implements DoCheck {
 
     paths: Links[] = [
         { caption: 'Spis telefonów', path: '' },
@@ -21,23 +21,39 @@ export class PhonesNavComponent {
 
     constructor(
         private router: Router,
-        private route: ActivatedRoute) {
-
-        // default
+        private route: ActivatedRoute
+    ) {
+        // default values
         this.activeSite = this.paths[0];
         this.leftOption = this.paths[2];
         this.rightOption = this.paths[1];
     }
 
-    setPropertyNav = (link: Links) => {
-        this.activeSite = link;
+    ngDoCheck(): void {
+        this.setPropertyNav(this.router.url);
+    }
 
-        this.leftOption = this.paths[2] === link
-        ? this.paths[0] : this.paths[2];
+    setPropertyNav = (currenturl: string) => {
 
-        this.rightOption = this.paths[1] === link
+        // check which path is now
+        const currentlyLink = this.paths.find(
+            x => x.path === currenturl.slice(10)
+        );
+
+        // set header
+        this.activeSite = currentlyLink;
+
+        // set left link button
+        this.leftOption = this.paths[2] === currentlyLink
+        ? this.paths[0]
+        : this.paths[2];
+
+        // set right link button
+        this.rightOption = this.paths[1] === currentlyLink
         ? this.paths[0] : this.paths[1];
+    }
 
-        this.router.navigate([`./${link.path}`], { relativeTo: this.route });
+    switchSiteNav = (link: string) => {
+        this.router.navigate([`./${link}`], { relativeTo: this.route });
     }
 }

@@ -16,7 +16,7 @@ export class AuthService {
         private http: HttpClient,
         private router: Router) {}
 
-    login(login: string, password: string): Observable<AuthResponseData> | Observable<unknown> {
+    login(login: string, password: string): Observable<AuthResponseData> {
         return this.http.post<AuthResponseData>(
             this.apiUrl + 'api/auth/login',
             {
@@ -27,9 +27,9 @@ export class AuthService {
             catchError(this.handleError),
             tap((res: AuthResponseData) => {
                 this.handleAuthentication(
+                    res.role,
                     res.pointNames,
-                    res.token,
-                    res.role
+                    res.token
                 );
             })
         );
@@ -44,17 +44,17 @@ export class AuthService {
     autoLogin(): void {
 
         const userData: {
+            role: string;
             pointNames: string[];
             token: string;
-            role: string;
         } = JSON.parse(localStorage.getItem('userData'));
 
         if (!userData) { return; }
 
         const loadedUser = new User(
+            userData.role,
             userData.pointNames,
             userData.token,
-            userData.role
         );
 
         if (loadedUser.tokenFunc) {
@@ -63,13 +63,13 @@ export class AuthService {
     }
 
     private handleAuthentication(
-            pointNames: string[], token: string, role: string
+            role: string, pointNames: string[], token: string,
         ): void {
 
         const user = new User(
+            role,
             pointNames,
             token,
-            role
         );
 
         this.user.next(user);

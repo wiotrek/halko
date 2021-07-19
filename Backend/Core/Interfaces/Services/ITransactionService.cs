@@ -12,6 +12,7 @@ namespace Core.Interfaces
         Task<IReadOnlyList<Transaction>> GetTransactionAsync( DateTime date, string pointName );
         Task<Transaction> UpdateTransactionAsync( TransactionWebDto transactionWebDto );
         Task<int> DeleteTransactionAsync( int transactionId );
+        Task<IReadOnlyList<TransactionDeleted>> GetDeletedTransactionsAsync( DateTime? date, string pointName );
         Task<IReadOnlyList<ProductCategory>> GetProductCategories();
     }
 }

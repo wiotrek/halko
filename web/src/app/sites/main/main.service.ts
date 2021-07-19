@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CategoriesAmount } from './_models/categories-amount.model';
@@ -7,6 +8,7 @@ import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
 export class MainService {
+    apiUrl = environment.api;
 
     // for solds items
 
@@ -43,28 +45,23 @@ export class MainService {
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
-
-    // for another
-
     private employees: Employees[] = [
         {
-            name: 'Marek',
-            lastName: 'Konrad',
-            initials: 'MK'
-        },
-        {
-            name: 'Wojtek',
-            lastName: 'Kierzkowski',
-            initials: 'WK'
+            initials: 'DD',
+            firstName: 'Default',
+            lastName: 'Dupa'
         }
     ];
 
+
+    // for employess
+
     getEmplyees(): Observable<Employees[]> {
+
         return new Observable(
             observer => observer.next(this.employees)
         );
     }
-
 
     // for solds items
 

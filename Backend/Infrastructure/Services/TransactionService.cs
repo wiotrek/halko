@@ -114,6 +114,37 @@ namespace Infrastructure.Services
             return transactions;
         }
 
+        
+        public async Task<int> DeleteTransactionAsync( int transactionId )
+        {
+            var transactionSpec = new TransactionSpecification ( transactionId );
+            var transaction = await _unitOfWork.Repository<Transaction>().GetEntityWithSpecAsync ( transactionSpec );
+
+            if( transaction == null ) return 0;
+
+            var transactionDelete = new TransactionDeleted
+            {
+                ProductName = transaction.ProductName,
+                Price = transaction.Price,
+                InsertedDateTime = transaction.InsertedDateTime,
+                EditedDateTime = transaction.EditedDateTime,
+                DeletedDateTime = DateTime.Now,
+                ParticipantId = transaction.ParticipantId,
+                ProductCategoryId = transaction.ProductCategoryId,
+                TransactionTypeId = transaction.TransactionTypeId,
+                PointId = transaction.PointId
+            };
+
+            _unitOfWork.Repository<Transaction>().Delete ( transaction );
+            var result = await _unitOfWork.CompleteAsync();
+            if( result <= 0 ) return result;
+
+            _unitOfWork.Repository<TransactionDeleted>().Add ( transactionDelete );
+            result = await _unitOfWork.CompleteAsync();
+
+            return result;
+        }
+
 
         public async Task<IReadOnlyList<ProductCategory>> GetProductCategories()
         {

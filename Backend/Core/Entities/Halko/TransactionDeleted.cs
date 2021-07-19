@@ -7,7 +7,7 @@ namespace Core.Entities.Halko
         public string ProductName { get; set; }
         public double Price { get; set; }
         public DateTime InsertedDateTime { get; set; }
-        public DateTime EditedDateTime { get; set; }
+        public DateTime? EditedDateTime { get; set; }
         public DateTime DeletedDateTime { get; set; } = DateTime.Now;
 
         public int ParticipantId { get; set; }

@@ -47,5 +47,11 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         void Update( T entity );
+
+        /// <summary>
+        /// Local storage entity before remove from database
+        /// </summary>
+        /// <param name="entity"></param>
+        void Delete( T entity );
     }
 }

@@ -57,6 +57,15 @@ namespace Api.Controllers
         }
 
 
+        [HttpDelete]
+        public async Task<ActionResult> DeleteTransactionAsync( [FromQuery] int id )
+        {
+            var result = await _transactionService.DeleteTransactionAsync ( id );
+
+            return result > 0 ? Ok() : BadRequest();
+        }
+
+
         [HttpGet ( "product-categories" )]
         public async Task<ActionResult<List<ProductCategoriesToReturnDto>>> GetProductCategoriesAsync()
         {

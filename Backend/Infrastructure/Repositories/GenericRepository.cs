@@ -58,6 +58,11 @@ namespace Infrastructure.Repositories
             _context.Set<T>().Update ( entity );
         }
 
+        public void Delete( T entity )
+        {
+            _context.Set<T>().Remove ( entity );
+        }
+
         #endregion
         
         #region Private Methods

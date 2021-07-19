@@ -146,6 +146,18 @@ namespace Infrastructure.Services
         }
 
 
+        public async Task<IReadOnlyList<TransactionDeleted>> GetDeletedTransactionsAsync( DateTime? insertedDate, string pointName )
+        {
+            var transactionSpec = insertedDate != null ? 
+                new TransactionDeletedSpecification ( (DateTime) insertedDate, pointName ) : 
+                new TransactionDeletedSpecification ( pointName );
+
+            var deletedTransactions = await _unitOfWork.Repository<TransactionDeleted>().ListAsync ( transactionSpec );
+
+            return deletedTransactions;
+        }
+
+
         public async Task<IReadOnlyList<ProductCategory>> GetProductCategories()
         {
             var productCategories = await _unitOfWork.Repository<ProductCategory>()

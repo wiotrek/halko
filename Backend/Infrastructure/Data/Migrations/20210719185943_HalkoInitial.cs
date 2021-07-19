@@ -190,7 +190,7 @@ namespace Infrastructure.Data.Migrations
                     ProductName = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     Price = table.Column<double>(type: "decimal(18, 2)", nullable: false),
                     InsertedDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EditedDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    EditedDateTime = table.Column<DateTime>(type: "TEXT", nullable: true),
                     DeletedDateTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     ParticipantId = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductCategoryId = table.Column<int>(type: "INTEGER", nullable: false),

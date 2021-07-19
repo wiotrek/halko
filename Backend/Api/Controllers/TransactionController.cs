@@ -35,7 +35,7 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IReadOnlyList<TransactionDto>> GetTransactionAsync([FromQuery] DateTime date, string pointName )
+        public async Task<IReadOnlyList<TransactionDto>> GetTransactionsAsync([FromQuery] DateTime date, string pointName )
         {
             var transactions = await _transactionService.GetTransactionAsync ( date, pointName );
 
@@ -63,6 +63,18 @@ namespace Api.Controllers
             var result = await _transactionService.DeleteTransactionAsync ( id );
 
             return result > 0 ? Ok() : BadRequest();
+        }
+        
+        [HttpGet("deleted")]
+        public async Task<ActionResult<IReadOnlyList<TransactionDeletedDto>>> GetDeletedTransactionsAsync 
+            ([FromQuery] DateTime? insertedDate, string pointName)
+        {
+            var deletedTransactions = await _transactionService.GetDeletedTransactionsAsync ( insertedDate, pointName );
+            if (deletedTransactions == null) return BadRequest();
+
+            var deletedTransactionsToReturn = _mapper.Map<IReadOnlyList<TransactionDeletedDto>> ( deletedTransactions );
+
+            return Ok ( deletedTransactionsToReturn );
         }
 
 

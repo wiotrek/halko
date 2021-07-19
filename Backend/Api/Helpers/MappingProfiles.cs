@@ -12,6 +12,7 @@ namespace Api.Helpers
             CreateMap<ParticipantPoint, ParticipantsToReturnDto>();
             ProductCategoryToProductCategoryDto();
             TransactionToTransactionDto();
+            TransactionDeletedToTransactionDeletedDto();
         }
 
 
@@ -25,6 +26,19 @@ namespace Api.Helpers
         private void TransactionToTransactionDto()
         {
             CreateMap<Transaction, TransactionDto>()
+                .ForMember ( d => d.Initial,
+                    m => m.MapFrom ( s => s.Participant.Initial ) )
+                .ForMember ( d => d.Category,
+                    m => m.MapFrom ( s => s.ProductCategory.Category ) )
+                .ForMember ( d => d.Type,
+                    m => m.MapFrom ( s => s.TransactionType.Type ) )
+                .ForMember ( d => d.Name,
+                    m => m.MapFrom ( s => s.Point.Name ) );
+        }
+
+        private void TransactionDeletedToTransactionDeletedDto()
+        {
+            CreateMap<TransactionDeleted, TransactionDeletedDto>()
                 .ForMember ( d => d.Initial,
                     m => m.MapFrom ( s => s.Participant.Initial ) )
                 .ForMember ( d => d.Category,

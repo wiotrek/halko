@@ -136,7 +136,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DeletedDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EditedDateTime")
+                    b.Property<DateTime?>("EditedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("InsertedDateTime")

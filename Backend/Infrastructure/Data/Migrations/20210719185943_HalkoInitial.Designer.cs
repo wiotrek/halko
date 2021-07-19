@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HalkoContext))]
-    [Migration("20210718181306_HalkoInitial")]
+    [Migration("20210719185943_HalkoInitial")]
     partial class HalkoInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,7 +138,7 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("DeletedDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EditedDateTime")
+                    b.Property<DateTime?>("EditedDateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("InsertedDateTime")

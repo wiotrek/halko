@@ -16,7 +16,7 @@ export class AuthService {
         private http: HttpClient,
         private router: Router) {}
 
-    login(login: string, password: string): Observable<AuthResponseData> | Observable<unknown> {
+    login(login: string, password: string): Observable<AuthResponseData> {
         return this.http.post<AuthResponseData>(
             this.apiUrl + 'api/auth/login',
             {

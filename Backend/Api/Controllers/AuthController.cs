@@ -81,6 +81,7 @@ namespace Api.Controllers
 
             return new LoginUserDto
             {
+                Login = user.UserName,
                 PointNames = listPoints,
                 Role = userRole,
                 Token = _tokenService.CreateToken ( user )
@@ -187,6 +188,25 @@ namespace Api.Controllers
             
             
             return Ok();
+        }
+
+        [HttpPut("change-password")]
+        [Authorize]
+        public async Task<ActionResult> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
+        {
+            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
+
+            if( userRole != EUserRole.Admin.GetDisplayName() )
+                return Unauthorized();
+            
+            var user = await _userManager.FindByNameAsync ( changePasswordDto.Login );
+            if( user  == null )
+                return BadRequest();
+            
+
+            var result = await _userManager.ChangePasswordAsync ( user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword );
+            
+            return result.Succeeded ? Ok() : BadRequest();
         }
     }
 }

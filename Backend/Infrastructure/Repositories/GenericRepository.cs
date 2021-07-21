@@ -62,6 +62,21 @@ namespace Infrastructure.Repositories
         {
             _context.Set<T>().Remove ( entity );
         }
+        
+        public void DetachLocal<TEntity> (TEntity entity, int entityId ) 
+            where TEntity : BaseEntity
+        {
+            var local = _context.Set<TEntity>()
+                .Local
+                .FirstOrDefault ( entry => entry.Id == entityId );
+
+            if( local != null )
+            {
+                _context.Entry ( local ).State = EntityState.Detached;
+            }
+
+            _context.Entry ( entity ).State = EntityState.Modified;
+        }
 
         #endregion
         

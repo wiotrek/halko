@@ -4,6 +4,12 @@ namespace Core.Specifications
 {
     public class ParticipantSpecification : BaseSpecification<ParticipantPoint>
     {
+        public ParticipantSpecification(int id) 
+            : base(x => x.Id == id)
+        {
+            AddInclude ( x => x.Point );
+        }
+        
         public ParticipantSpecification(string pointName) 
             : base(x => x.Point.Name == pointName)
         {

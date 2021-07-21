@@ -81,7 +81,6 @@ namespace Api.Controllers
 
             return new LoginUserDto
             {
-                Login = user.UserName,
                 PointNames = listPoints,
                 Role = userRole,
                 Token = _tokenService.CreateToken ( user )

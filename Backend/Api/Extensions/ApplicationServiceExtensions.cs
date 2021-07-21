@@ -15,6 +15,7 @@ namespace Api.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPointService, PointService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IParticipantService, ParticipantService>();
         }
     }
 }

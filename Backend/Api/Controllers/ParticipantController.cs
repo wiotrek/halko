@@ -7,12 +7,10 @@ using Core.Entities.Halko;
 using Core.Entities.Identity;
 using Core.Enums;
 using Core.Interfaces;
-using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
-using Point = Core.Entities.Halko.Point;
 
 namespace Api.Controllers
 {
@@ -21,7 +19,7 @@ namespace Api.Controllers
     {
         #region Private Members
         
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IParticipantService _participantService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
@@ -30,11 +28,11 @@ namespace Api.Controllers
         #region Constructor
         
         public ParticipantController(
-            IUnitOfWork unitOfWork,
+            IParticipantService participantService,
             UserManager<AppUser> userManager,
             IMapper mapper)
         {
-            _unitOfWork = unitOfWork;
+            _participantService = participantService;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -57,45 +55,62 @@ namespace Api.Controllers
             
             #endregion
 
-            var pointSpec = new PointSpecification ( participantCreateDto.PointName );
-            var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
-            if( point == null ) return BadRequest();
+            var participant = _mapper.Map<ParticipantPoint> ( participantCreateDto );
 
-            
-            var participantSpec = new ParticipantSpecification ( participantCreateDto.Initial, point.Id );
-            var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
-            if (participant != null) return BadRequest();
-            
-
-            var participantToCreate = new ParticipantPoint
-            {
-                FirstName = participantCreateDto.FirstName,
-                LastName = participantCreateDto.LastName,
-                Initial = participantCreateDto.Initial,
-                PointId = point.Id,
-            };
-
-
-            _unitOfWork.Repository<ParticipantPoint>().Add ( participantToCreate );
-            var result = await _unitOfWork.CompleteAsync();
-
+            var result = await _participantService.CreateParticipant ( participant, participantCreateDto.PointName );
 
             return result > 0 ? Ok() : BadRequest();
         }
         
         [HttpGet]
-        public async Task<ActionResult<List<ParticipantsToReturnDto>>> GetParticipantsAsync([FromQuery] string pointName)
+        public async Task<ActionResult<List<ParticipantDto>>> GetParticipantsAsync([FromQuery] string pointName)
         {
             if (string.IsNullOrEmpty(pointName)) return BadRequest();
+
+            var participants = await _participantService.GetParticipants ( pointName );
+            var participantsToReturn = _mapper.Map<IReadOnlyList<ParticipantDto>> ( participants );
             
-            var participantSpec = new ParticipantSpecification ( pointName );
-            var participants = await _unitOfWork
-                .Repository<ParticipantPoint>()
-                .ListAsync ( participantSpec );
-
-            var participantsToReturn = _mapper.Map<IReadOnlyList<ParticipantsToReturnDto>> ( participants );
-
             return Ok ( participantsToReturn );
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ParticipantDto>> UpdateParticipantAsync
+            ( ParticipantDto participant, [FromQuery] string pointName ) 
+        {
+            #region Validate
+            
+            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
+
+            if( userRole != EUserRole.Admin.GetDisplayName() )
+                return Unauthorized();
+
+            if (string.IsNullOrEmpty(pointName)) return BadRequest();
+
+            #endregion
+
+            var participantEntity = _mapper.Map<ParticipantPoint> ( participant );
+            var participantUpdated = await _participantService.UpdateParticipant ( participantEntity, pointName );
+            var participantDto = _mapper.Map<ParticipantDto> ( participantUpdated );
+
+            
+            return participantUpdated == null ? BadRequest() : Ok(participantDto);
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeleteParticipantAsync( [FromQuery] int id )
+        {
+            #region Validate
+            
+            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
+
+            if( userRole != EUserRole.Admin.GetDisplayName() )
+                return Unauthorized();
+
+            #endregion
+
+            var result = await _participantService.DeleteParticipant ( id );
+
+            return result <= 0 ? BadRequest() : Ok();
         }
         
     }

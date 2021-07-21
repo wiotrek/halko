@@ -7,7 +7,6 @@ namespace Api.Dtos
     /// </summary>
     public class LoginUserDto
     {
-        public string Login { get; set; }
         public IEnumerable<string> PointNames { get; set; }
         public string Token { get; set; }
         public string Role { get; set; }

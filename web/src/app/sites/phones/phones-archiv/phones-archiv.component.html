@@ -1,0 +1,37 @@
+<ng-template 
+    #item
+    let-categoryName="categoryName"
+    let-objValue="objValue"
+>
+    <div class="elInList__header__{{categoryName}}">
+        {{objValue}}
+    </div>
+</ng-template>
+
+<div class="archiv">
+    <app-phones-seacher></app-phones-seacher>
+
+    <div 
+        class="elInList" 
+        *ngFor="let phone of phonesList; index as i"
+    >
+
+        <div class="elInList__index">
+            {{i + 1}}.
+        </div>
+
+        <div *ngFor="let element of phonesField">
+
+            <ng-container
+                *ngTemplateOutlet="item;
+                    context: {
+                        categoryName: element,
+                        objValue: phone[element]
+                    }"
+            ></ng-container>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
-
-interface Field {
-    categoryName: string;
-    polishName: string;
-    isNumber: boolean;
-}
+import { NgForm } from '@angular/forms';
+import { PhoneFields } from '../_dictionary/phone-fields.dictionary';
+import { PhoneStates } from '../_dictionary/phone-states.dictionary';
 
 @Component({
     selector: 'app-phones-add',
@@ -12,42 +9,10 @@ interface Field {
     styleUrls: ['./phones-add.component.scss']
 })
 export class PhonesAddComponent {
+    fields = PhoneFields;
+    phoneStates = PhoneStates;
 
-    fields: Field[] = [
-        {
-            categoryName: 'brand',
-            polishName: 'Producent',
-            isNumber: false
-        },
-        {
-            categoryName: 'model',
-            polishName: 'Model',
-            isNumber: false
-        },
-        {
-            categoryName: 'imei',
-            polishName: 'Imei',
-            isNumber: true
-        },
-        {
-            categoryName: 'color',
-            polishName: 'Kolor',
-            isNumber: false
-        },
-        {
-            categoryName: 'comments',
-            polishName: 'Uwagi',
-            isNumber: false
-        },
-        {
-            categoryName: 'bought',
-            polishName: 'Cena zakupu',
-            isNumber: true
-        },
-        {
-            categoryName: 'price',
-            polishName: 'Cena',
-            isNumber: true
-        }
-    ];
+    addNewPhone(f: NgForm): void {
+        console.log(f.value);
+    }
 }

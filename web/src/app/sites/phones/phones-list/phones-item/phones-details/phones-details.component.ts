@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ItemInList } from '../../../_models/itemInList.model';
+import { ItemInListModel } from '../../../_models/item-in-list.model';
 
 @Component({
     selector: 'app-phones-details',
@@ -7,7 +7,7 @@ import { ItemInList } from '../../../_models/itemInList.model';
     styleUrls: ['phones-details.component.scss']
 })
 export class PhonesDetailsComponent implements OnInit{
-    @Input() elInList: ItemInList;
+    @Input() elInList: ItemInListModel;
 
     // these elements will replacement each other
     @ViewChild(

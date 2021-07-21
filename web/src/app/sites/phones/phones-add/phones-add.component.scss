@@ -1,27 +1,78 @@
 @import 'src/app/shared/global-styles/variable.scss';
+@import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
 
     .new-phone {
-        margin-top: 10px;
-        font-size: .9rem;
-        padding-left: 20px;
+        max-width: 350px;
+        margin: 20px auto;
+        font-size: .8rem;
+        padding: 20px;
         background-color: white;
-        min-height: 150px;
         border-radius: 3px;
 
-        .form-text {
+        &__field {
             padding: 10px 0;
 
             label {
                 margin-right: 10px;
+                width: 100px;
             }
     
             input {
                 border: 0;
                 background-color: transparent;
                 border-bottom: 1px solid $primaryGrey;
+                font-size: .6rem;
+                text-align: center;
+
+                &.bought, &.price {
+                    width: 40px;
+                }
+
+                &.bought + span::after,
+                &.price + span::after {
+                    content: ' zł';
+                }
+            }
+
+            select {
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+        }
+
+        &__submit-button {
+            margin-top: 10px;
+            text-align: center;
+            
+            &__btn {
+                @include firstlyBtn;
                 font-size: .7rem;
+                padding: 5px 15px;
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+
+    .new-phone {
+        font-size: .9rem;
+
+        &__field {
+
+    
+            input {
+                font-size: .7rem;
+            }
+        }
+
+        &__submit-button {
+            
+            &__btn {
+                font-size: .8rem;
             }
         }
     }

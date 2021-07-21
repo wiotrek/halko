@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ItemInList } from '../../../../_models/itemInList.model';
+import { ItemInListModel } from '../../../../_models/item-in-list.model';
 
 @Component({
     selector: 'app-phones-transfer',
@@ -8,7 +8,7 @@ import { ItemInList } from '../../../../_models/itemInList.model';
     styleUrls: ['./phones-transfer.component.scss']
 })
 export class PhonesTransferComponent {
-    @Input() elInList: ItemInList;
+    @Input() elInList: ItemInListModel;
 
     places = [
         'Karuzela Września',

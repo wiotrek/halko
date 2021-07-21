@@ -1,4 +1,4 @@
-export interface ItemInList {
+export interface ItemInListModel {
     brand: string;
     model: string;
     imei: string;

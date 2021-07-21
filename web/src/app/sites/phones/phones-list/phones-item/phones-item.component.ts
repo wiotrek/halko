@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { ItemInList } from '../../_models/itemInList.model';
+import { ItemInListModel } from '../../_models/item-in-list.model';
 
 @Component({
     selector: 'app-phones-item',
@@ -10,7 +10,7 @@ import { ItemInList } from '../../_models/itemInList.model';
 })
 
 export class PhonesItemComponent {
-    @Input() elInList: ItemInList;
+    @Input() elInList: ItemInListModel;
     @Input() ind: number;
 
     faEdit = faEdit;

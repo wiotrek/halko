@@ -1,0 +1,28 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+
+    .new-phone {
+        margin-top: 10px;
+        font-size: .9rem;
+        padding-left: 20px;
+        background-color: white;
+        min-height: 150px;
+        border-radius: 3px;
+
+        .form-text {
+            padding: 10px 0;
+
+            label {
+                margin-right: 10px;
+            }
+    
+            input {
+                border: 0;
+                background-color: transparent;
+                border-bottom: 1px solid $primaryGrey;
+                font-size: .7rem;
+            }
+        }
+    }
+}

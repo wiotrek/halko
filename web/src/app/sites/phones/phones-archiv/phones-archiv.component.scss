@@ -1,0 +1,70 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .elInList {
+        padding: 3px 10px;
+        font-size: .7rem;
+        background-color: white;
+        margin-top: 10px;
+        border-radius: 5px;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+
+        & {
+            text-align: center;
+            overflow: hidden;
+        }
+
+        &__index {
+            width: 10px;
+        }
+
+        &__brand, &__model, &__price {
+            width: 80px;
+        }
+
+        &__imei {
+            width: 100px;
+        }
+
+        &__color, &__place, 
+        &__state, &__bought {
+            display: none;
+        }
+
+        &:hover {
+            color: $prettyGreen;
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .elInList {
+
+        &__imei, &__color, &__place,
+        &__state, &__bought {
+            display: initial;
+        }
+
+        &__imei {
+            width: 85px;
+        }
+
+        &__color {
+            width: 70px;
+        }
+
+        &__place {
+            width: 120px;
+        }
+
+        &__state, &__bought {
+            width: 50px;
+        }
+
+        &:hover {
+            color: $prettyGreen;
+        }
+    }
+}

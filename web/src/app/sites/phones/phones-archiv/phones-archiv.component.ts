@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { PhoneFields } from '../_dictionary/phone-fields.dictionary';
+import { Component } from '@angular/core';
 import { ItemInListModel } from '../_models/item-in-list.model';
+import { PhoneFieldsDictionary } from './_dictionary/phone-fields.dictionary';
 
 @Component({
     selector: 'app-phones-archiv',
     templateUrl: './phones-archiv.component.html',
     styleUrls: ['./phones-archiv.component.scss']
 })
-export class PhonesArchivComponent implements OnInit{
+export class PhonesArchivComponent {
+
+    phoneField = PhoneFieldsDictionary;
+
     phonesList: ItemInListModel[] = [
         {
             brand: 'Apple',
@@ -55,24 +58,5 @@ export class PhonesArchivComponent implements OnInit{
             bought: 500,
             price: 300
         }
-
     ];
-
-    phonesField: string[];
-
-
-    ngOnInit(): void {
-        this.phonesField = [...Object.keys(this.phonesList[0])];
-
-        this.phonesField
-        .splice(
-            this.phonesField.indexOf('comments'), 1
-        )
-        .splice(
-            this.phonesField.indexOf('dateBought'), 1
-        );
-
-    }
-
-
 }

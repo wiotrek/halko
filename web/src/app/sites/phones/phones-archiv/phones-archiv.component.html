@@ -1,13 +1,3 @@
-<ng-template 
-    #item
-    let-categoryName="categoryName"
-    let-objValue="objValue"
->
-    <div class="elInList__header__{{categoryName}}">
-        {{objValue}}
-    </div>
-</ng-template>
-
 <div class="archiv">
     <app-phones-seacher></app-phones-seacher>
 
@@ -20,16 +10,11 @@
             {{i + 1}}.
         </div>
 
-        <div *ngFor="let element of phonesField">
-
-            <ng-container
-                *ngTemplateOutlet="item;
-                    context: {
-                        categoryName: element,
-                        objValue: phone[element]
-                    }"
-            ></ng-container>
-
+        <div 
+            *ngFor="let element of phoneField"
+            class="elInList__{{element}}"
+        >
+            {{phone[element]}}
         </div>
 
     </div>

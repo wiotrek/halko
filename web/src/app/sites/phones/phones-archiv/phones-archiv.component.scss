@@ -7,9 +7,9 @@
         background-color: white;
         margin-top: 10px;
         border-radius: 5px;
+        align-items: center;
         display: flex;
         justify-content: space-between;
-        align-items: center;
 
         & {
             text-align: center;
@@ -20,36 +20,17 @@
             width: 10px;
         }
 
-        &__brand {
-            width: 80px;
-        }
-
-        &__model {
+        &__brand, &__model, &__price {
             width: 80px;
         }
 
         &__imei {
-            display: none;
+            width: 100px;
         }
 
-        &__color {
+        &__color, &__place, 
+        &__state, &__bought {
             display: none;
-        }
-
-        &__place {
-            display: none;
-        }
-
-        &__state {
-            display: none;
-        }
-
-        &__bought {
-            display: none;
-        }
-
-        &__price {
-            width: 50px;
         }
 
         &:hover {
@@ -61,35 +42,25 @@
 @media (min-width: $minValueDesktop) {
     .elInList {
 
+        &__imei, &__color, &__place,
+        &__state, &__bought {
+            display: initial;
+        }
+
         &__imei {
             width: 85px;
-            display: initial;
         }
 
         &__color {
             width: 70px;
-            display: initial;
         }
 
         &__place {
             width: 120px;
-            display: initial;
         }
 
-        &__state {
+        &__state, &__bought {
             width: 50px;
-            display: initial;
-        }
-
-        &__bought {
-            width: 50px;
-            display: initial;
-        }
-
-        &__editing {
-            border: 0;
-            background-color: transparent;
-            color: $prettyGreen;
         }
 
         &:hover {

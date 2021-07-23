@@ -14,4 +14,8 @@ export class User {
         ? 'Admin'
         : this.pointNames[0];
     }
+
+    get pointName(): string {
+        return this.pointNames[0];
+    }
 }

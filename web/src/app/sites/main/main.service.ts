@@ -1,6 +1,7 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
@@ -45,21 +46,41 @@ export class MainService {
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
-    private employees: Employees[] = [
-        {
-            initials: 'DD',
-            firstName: 'Default',
-            lastName: 'Dupa'
-        }
-    ];
 
+    private employeesCache = new Map();
+
+    constructor(
+        private http: HttpClient
+    ) {}
 
     // for employess
 
-    getEmplyees(): Observable<Employees[]> {
+    getEmployees(pointNameRaw: string): Observable<Employees[]> {
 
-        return new Observable(
-            observer => observer.next(this.employees)
+        // const pointName = pointNameRaw.replace(/-/g, ' ');
+
+        // const response = this.employeesCache.get(
+        //     Object.values(pointName).join('-')
+        // );
+
+        // if (response) { return of (response); }
+
+        let params = new HttpParams();
+        params = params.set('pointName', pointNameRaw);
+
+        return this.http.get<Employees[]>(
+            this.apiUrl + 'api/participant', { params }
+        ).pipe(
+            map(
+                (res: Employees[]) => {
+                    this.employeesCache.set(
+                        Object.values(pointNameRaw).join('-'), res
+                    );
+                    console.log(res);
+                    
+                    return res;
+                }
+            )
         );
     }
 

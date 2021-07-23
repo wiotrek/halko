@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { MainService } from '../main.service';
 import { CategoryItemExpenses } from '../_dictionary/category-item-expenses.dictionary';
 import { Employees } from '../_models/employees.model';
@@ -14,6 +16,7 @@ import { ItemStructure } from '../_models/item-structure.model';
 export class MainExpensesComponent implements OnInit, OnDestroy {
     title = 'Wydatki';
     isSetDanger = true;
+    pointName: string;
 
     subscription: Subscription;
 
@@ -34,7 +37,13 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     sum: number;
 
     constructor(
-        private mainService: MainService) {}
+        private mainService: MainService,
+        private authService: AuthService
+    ) {
+            this.subscription = this.authService.user.subscribe(
+                (user: User) => this.pointName = user.pointName
+            );
+        }
 
     ngOnInit(): void {
         this.getElements();
@@ -65,15 +74,21 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private getEmployees(): void {
-        this.mainService.getEmplyees().subscribe(
-            (res: Employees[]) => this.employees = res
-        );
+
+        const sub = this.mainService.getEmployees(this.pointName)
+            .subscribe(
+                (res: Employees[]) => this.employees = res
+            );
+
+        this.subscription.add(sub);
     }
 
     private getElements(): void {
         this.items = this.mainService.getExpensesItems();
-        this.subscription = this.mainService.expensesItem$.subscribe(
-            (res: ItemStructure[]) => this.items = res
+        this.subscription.add(
+            this.mainService.expensesItem$.subscribe(
+                (res: ItemStructure[]) => this.items = res
+            )
         );
     }
 

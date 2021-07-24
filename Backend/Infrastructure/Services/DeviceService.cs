@@ -53,6 +53,12 @@ namespace Infrastructure.Services
             var device = await GetDeviceByid ( deviceId );
             return device is {DateSold: { }} ? null : device;
         }
+        
+        public async Task<Device> GetSoldDeviceById( int deviceId )
+        {
+            var device = await GetDeviceByid ( deviceId );
+            return device is not {DateSold: { }} ? null : device;
+        }
 
         public async Task<int> SellDevice( int deviceId, double price )
         {

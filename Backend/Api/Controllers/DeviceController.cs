@@ -41,7 +41,19 @@ namespace Api.Controllers
         {
             if( !IsLogin() ) return Unauthorized();
 
-            var deviceList =  await _deviceService.GetDevices ( point );
+            var deviceList =  await _deviceService.GetDevicesToSell ( point );
+            var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
+
+            return Ok ( deviceListToReturn );
+        }
+        
+        
+        [HttpGet("sold")]
+        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetSoldDevices( [FromQuery] string point )
+        {
+            if( !IsLogin() ) return Unauthorized();
+
+            var deviceList =  await _deviceService.GetSoldDevices ( point );
             var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
 
             return Ok ( deviceListToReturn );

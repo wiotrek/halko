@@ -8,7 +8,8 @@ namespace Core.Interfaces
     {
         Task<int> CreateDevice( Device device );
         
-        Task<IEnumerable<Device>> GetDevices( string point );
+        Task<IEnumerable<Device>> GetDevicesToSell( string point );
+        Task<IEnumerable<Device>> GetSoldDevices( string point );
         
         /// <summary>
         /// Create sold date for device which is selling

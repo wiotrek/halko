@@ -32,14 +32,18 @@ namespace Infrastructure.Services
             return result;
         }
 
-        public async Task<IEnumerable<Device>> GetDevices( string point )
+        public async Task<IEnumerable<Device>> GetDevicesToSell( string point )
         {
-            var pointEntity = await GetPointByNameAsync ( point );
-            if( pointEntity == null ) return null;
-            
-            var deviceSpec = new DeviceSpecification ( point );
-            var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
+            var deviceList = await GetDevicesByPoint ( point );
             var deviceListToSell = deviceList.Where ( x => x.DateSold == null );
+            
+            return deviceListToSell;
+        }
+        
+        public async Task<IEnumerable<Device>> GetSoldDevices( string point )
+        {
+            var deviceList = await GetDevicesByPoint ( point );
+            var deviceListToSell = deviceList.Where ( x => x.DateSold != null );
             
             return deviceListToSell;
         }
@@ -100,7 +104,18 @@ namespace Infrastructure.Services
             
             return pointEntity;
         }
+
+        private async Task<IEnumerable<Device>> GetDevicesByPoint( string point )
+        {
+            var pointEntity = await GetPointByNameAsync ( point );
+            if( pointEntity == null ) return null;
             
+            var deviceSpec = new DeviceSpecification ( point );
+            var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
+
+            return deviceList;
+        }
+
         #endregion
     }
 }

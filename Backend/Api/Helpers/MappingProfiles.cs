@@ -15,6 +15,7 @@ namespace Api.Helpers
             ProductCategoryToProductCategoryDto();
             TransactionToTransactionDto();
             TransactionDeletedToTransactionDeletedDto();
+            DeviceDtoToDevice();
         }
 
 
@@ -49,6 +50,11 @@ namespace Api.Helpers
                     m => m.MapFrom ( s => s.TransactionType.Type ) )
                 .ForMember ( d => d.Name,
                     m => m.MapFrom ( s => s.Point.Name ) );
+        }
+
+        private void DeviceDtoToDevice()
+        {
+            CreateMap<DeviceDto, Device>().ReverseMap();
         }
     }
 }

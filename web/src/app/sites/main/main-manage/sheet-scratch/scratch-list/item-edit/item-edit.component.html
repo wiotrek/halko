@@ -7,13 +7,13 @@
 
     <select
         class="editMode__ini"
-        name="initials"
-        [ngModel]="ourItem.initials"
+        name="initial"
+        [ngModel]="ourItem.initial"
     >
         <option
             *ngFor="let human of employees"
-            [value]="human.initials"
-        >{{human.initials}}</option>
+            [value]="human.initial"
+        >{{human.initial}}</option>
     </select>
 
     <select

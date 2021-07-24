@@ -5,16 +5,16 @@
     
 >
     <select
-        name="initials"
+        name="initial"
         class="addition-item__ini"
         required
-        [ngModel]="employees[0].initials"
+        [ngModel]="employees[0].initial"
     >
     <option
         *ngFor="let employee of employees"
-        [value]="employee.initials"
+        [value]="employee.initial"
     >
-        {{employee.initials}}
+        {{employee.initial}}
     </option>
 
     </select>

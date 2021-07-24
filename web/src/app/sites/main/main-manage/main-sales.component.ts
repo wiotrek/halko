@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { MainService } from '../main.service';
 import { CategoryItemSolds } from '../_dictionary/catogory-item-solds.dictionary';
+import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
 import { Employees } from '../_models/employees.model';
 import { ItemStructure } from '../_models/item-structure.model';
 
@@ -13,6 +16,7 @@ import { ItemStructure } from '../_models/item-structure.model';
 export class MainSalesComponent implements OnInit, OnDestroy {
     title = 'Sprzedaż';
     isSetDanger = false;
+    pointName: string;
 
     private subscription: Subscription;
 
@@ -20,7 +24,8 @@ export class MainSalesComponent implements OnInit, OnDestroy {
 
     category = CategoryItemSolds;
 
-    employees: Employees[];
+    // assign default names
+    employees: Employees[] = EmployeesInitialDictionary;
 
     // if element is -1 then none is editing
     currentlyEditedElement = -1;
@@ -33,7 +38,13 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     sum: number;
 
     constructor(
-        private mainService: MainService) {}
+        private mainService: MainService,
+        private authService: AuthService
+    ) {
+        this.subscription = this.authService.user.subscribe(
+            (user: User) => this.pointName = user.pointName
+        );
+    }
 
     ngOnInit(): void {
         this.getElements();
@@ -64,15 +75,21 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     }
 
     private getEmployees(): void {
-        this.mainService.getEmplyees().subscribe(
-            (res: Employees[]) => this.employees = res
-        );
+        const sub = this.mainService.getEmployees(this.pointName)
+            .subscribe(
+                (res: Employees[]) => this.employees = res,
+                () => this.employees = EmployeesInitialDictionary
+            );
+
+        this.subscription.add(sub);
     }
 
     private getElements(): void {
         this.items = this.mainService.getSoldsItems();
-        this.subscription = this.mainService.soldsItem$.subscribe(
-            (res: ItemStructure[]) => this.items = res
+
+        this.subscription.add(this.mainService.soldsItem$.subscribe(
+                (res: ItemStructure[]) => this.items = res
+            )
         );
     }
 

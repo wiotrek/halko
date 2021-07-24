@@ -15,13 +15,13 @@ export class MainService {
 
     private soldsItem: ItemStructure[] = [
         {
-            initials: 'WK',
+            initial: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
         },
         {
-            initials: 'WK',
+            initial: 'WK',
             category: 'akcesoria',
             name: 'szklo p9 lite',
             price: 40
@@ -36,7 +36,7 @@ export class MainService {
 
     private expensesItems: ItemStructure[] = [
         {
-            initials: 'WK',
+            initial: 'WK',
             category: 'telefon',
             name: 'P20 lite',
             price: 700
@@ -57,13 +57,11 @@ export class MainService {
 
     getEmployees(pointNameRaw: string): Observable<Employees[]> {
 
-        // const pointName = pointNameRaw.replace(/-/g, ' ');
+        const response = this.employeesCache.get(
+            Object.values(pointNameRaw).join('-')
+        );
 
-        // const response = this.employeesCache.get(
-        //     Object.values(pointName).join('-')
-        // );
-
-        // if (response) { return of (response); }
+        if (response) { return of (response); }
 
         let params = new HttpParams();
         params = params.set('pointName', pointNameRaw);
@@ -76,8 +74,7 @@ export class MainService {
                     this.employeesCache.set(
                         Object.values(pointNameRaw).join('-'), res
                     );
-                    console.log(res);
-                    
+
                     return res;
                 }
             )

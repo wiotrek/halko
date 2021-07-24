@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { MainService } from '../main.service';
 import { CategoryItemExpenses } from '../_dictionary/category-item-expenses.dictionary';
+import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
 import { Employees } from '../_models/employees.model';
 import { ItemStructure } from '../_models/item-structure.model';
 
@@ -24,7 +25,8 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
 
     category = CategoryItemExpenses;
 
-    employees: Employees[];
+    // assign default values
+    employees: Employees[] = EmployeesInitialDictionary;
 
     // if element is -1 then none is editing
     currentlyEditedElement = -1;
@@ -77,7 +79,8 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
 
         const sub = this.mainService.getEmployees(this.pointName)
             .subscribe(
-                (res: Employees[]) => this.employees = res
+                (res: Employees[]) => this.employees = res,
+                () => this.employees = EmployeesInitialDictionary
             );
 
         this.subscription.add(sub);

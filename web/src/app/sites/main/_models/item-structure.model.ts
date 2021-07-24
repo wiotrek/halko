@@ -1,5 +1,5 @@
 export interface ItemStructure {
-    initials: string;
+    initial: string;
     category: string;
     name: string;
     price: number;

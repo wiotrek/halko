@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.Entities.Halko;
 using Core.Interfaces;
+using Core.Specifications;
 
 namespace Infrastructure.Services
 {
@@ -26,6 +28,24 @@ namespace Infrastructure.Services
             _unitOfWork.Repository<Device>().Add ( device );
             var result = await _unitOfWork.CompleteAsync();
 
+            return result;
+        }
+
+        public async Task<int> SellDevice( int deviceId, double price )
+        {
+            var deviceSpec = new DeviceSpecification ( deviceId );
+            var device = await _unitOfWork.Repository<Device>().GetEntityWithSpecAsync ( deviceSpec );
+            if( device == null ) return 0;
+
+            
+            device.Price = price;
+            device.DateSold = DateTime.Now;
+            
+            
+            _unitOfWork.Repository<Device>().Update ( device );
+            var result = await _unitOfWork.CompleteAsync();
+            
+            
             return result;
         }
 

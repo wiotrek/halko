@@ -35,6 +35,18 @@ namespace Api.Controllers
             return result <= 0 ? BadRequest() : Ok();
         }
 
+
+        [HttpPut("sell")]
+        public async Task<ActionResult> SellDevice([FromQuery] int id, double price)
+        {
+            if( !IsLogin() ) return Unauthorized();
+
+            var result = await _deviceService.SellDevice ( id, price );
+
+            return result <= 0 ? BadRequest() : Ok();
+        }
+        
+
         [HttpGet("states")]
         public async Task<ActionResult<IReadOnlyList<DeviceState>>> GetDeviceState()
         {

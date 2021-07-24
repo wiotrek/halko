@@ -53,5 +53,14 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         void Delete( T entity );
+        
+        /// <summary>
+        /// The instance of entity type TEntity cannot be tracked because another instance with
+        /// the same key value for Id is already being tracked.
+        /// Only one entity instance with a given key value can be attached before saving changes.
+        /// </summary>
+        /// <param name="entity">Given entity</param>
+        /// <param name="entityId">Given entity id</param>
+        void DetachLocal<TEntity>( TEntity entity, int entityId ) where TEntity : BaseEntity;
     }
 }

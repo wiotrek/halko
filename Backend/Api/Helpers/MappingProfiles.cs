@@ -9,7 +9,9 @@ namespace Api.Helpers
         
         public MappingProfiles()
         {
-            CreateMap<ParticipantPoint, ParticipantsToReturnDto>();
+            CreateMap<ParticipantPoint, ParticipantDto>();
+            CreateMap<ParticipantDto, ParticipantPoint>().ReverseMap();
+            
             ProductCategoryToProductCategoryDto();
             TransactionToTransactionDto();
             TransactionDeletedToTransactionDeletedDto();

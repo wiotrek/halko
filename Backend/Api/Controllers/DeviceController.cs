@@ -46,6 +46,17 @@ namespace Api.Controllers
             return result <= 0 ? BadRequest() : Ok();
         }
         
+        
+        [HttpPut("move")]
+        public async Task<ActionResult> MoveDevice([FromQuery] int id, string point)
+        {
+            if( !IsLogin() ) return Unauthorized();
+
+            var result = await _deviceService.MoveDevice ( id, point );
+
+            return result <= 0 ? BadRequest() : Ok();
+        }
+        
 
         [HttpGet("states")]
         public async Task<ActionResult<IReadOnlyList<DeviceState>>> GetDeviceState()

@@ -33,13 +33,33 @@ namespace Infrastructure.Services
 
         public async Task<int> SellDevice( int deviceId, double price )
         {
-            var deviceSpec = new DeviceSpecification ( deviceId );
-            var device = await _unitOfWork.Repository<Device>().GetEntityWithSpecAsync ( deviceSpec );
-            if( device == null ) return 0;
+            var device = await GetDeviceByIdAsync ( deviceId );
+            if( device is not {DateSold: null} ) return 0;
 
-            
+
             device.Price = price;
             device.DateSold = DateTime.Now;
+            
+            
+            _unitOfWork.Repository<Device>().Update ( device );
+            var result = await _unitOfWork.CompleteAsync();
+            
+            
+            return result;
+        }
+
+        public async Task<int> MoveDevice( int deviceId, string point )
+        {
+            var device = await GetDeviceByIdAsync ( deviceId );
+            if( device is not {DateSold: null} ) return 0;
+
+            
+            var pointSpec = new PointSpecification ( point );
+            var pointEntity = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
+            if( pointEntity == null ) return 0;
+
+            
+            device.PointId = pointEntity.Id;
             
             
             _unitOfWork.Repository<Device>().Update ( device );
@@ -52,6 +72,15 @@ namespace Infrastructure.Services
         public async Task<IReadOnlyList<DeviceState>> ReadDeviceState()
         {
             return await _unitOfWork.Repository<DeviceState>().ListAllAsync();
+        }
+
+
+        private async Task<Device> GetDeviceByIdAsync( int deviceId )
+        {
+            var deviceSpec = new DeviceSpecification ( deviceId );
+            var device = await _unitOfWork.Repository<Device>().GetEntityWithSpecAsync ( deviceSpec );
+            
+            return device ?? null;
         }
     }
 }

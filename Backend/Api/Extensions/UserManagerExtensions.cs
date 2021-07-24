@@ -25,7 +25,7 @@ namespace Api.Extensions
         public static async Task<string> FindByNameByClaimsPrincipleUserRoleAsync( 
             this UserManager<AppUser> input, ClaimsPrincipal user )
         {
-            
+            if( user.Identity.Name == null ) return null;
             
             var loginUser = await input.FindByNameByClaimsPrincipleAsync ( user );
             var role = await input.GetRolesAsync ( loginUser );

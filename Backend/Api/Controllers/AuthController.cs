@@ -2,12 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Dtos;
-using Api.Extensions;
 using Core.Entities.Identity;
 using Core.Enums;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
@@ -37,19 +35,19 @@ namespace Api.Controllers
         #endregion
 
         #region Constructor
-        
+
         public AuthController(
             ITokenService tokenService,
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IPointService pointService)
+            IPointService pointService ) : base ( userManager )
         {
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
             _pointService = pointService;
         }
-        
+
         #endregion
 
         [HttpPost ( "login" )]
@@ -99,14 +97,9 @@ namespace Api.Controllers
         
         
         [HttpPost ("register-point")]
-        [Authorize]
         public async Task<ActionResult> RegisterPointAsync( PointCreateDto pointCreateDto)
         {
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
-
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
-
+            if( !await IsAdmin() ) return Unauthorized();
             
             #region Duplicate Checker
             
@@ -155,14 +148,9 @@ namespace Api.Controllers
         }
 
         [HttpPost ( "register-admin" )]
-        [Authorize]
         public async Task<ActionResult> RegisterUserAsync( UserCreateDto userCreateDto )
         {
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
-            
-            
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
+            if( !await IsAdmin() ) return Unauthorized();
             
             
             var isExistUser = await _userManager.FindByNameAsync ( userCreateDto.Name );
@@ -191,13 +179,9 @@ namespace Api.Controllers
         }
 
         [HttpPut("change-password")]
-        [Authorize]
         public async Task<ActionResult> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
-
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
+            if( !await IsAdmin() ) return Unauthorized();
             
             var user = await _userManager.FindByNameAsync ( changePasswordDto.Login );
             if( user  == null )

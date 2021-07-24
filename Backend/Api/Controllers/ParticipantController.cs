@@ -1,53 +1,43 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Dtos;
-using Api.Extensions;
 using AutoMapper;
 using Core.Entities.Halko;
 using Core.Entities.Identity;
-using Core.Enums;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Extensions;
 
 namespace Api.Controllers
 {
-    [Authorize]
     public class ParticipantController : BaseApiController
     {
         #region Private Members
         
         private readonly IParticipantService _participantService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
         #endregion
 
         #region Constructor
-        
+
         public ParticipantController(
             IParticipantService participantService,
             UserManager<AppUser> userManager,
-            IMapper mapper)
+            IMapper mapper ) : base ( userManager )
         {
             _participantService = participantService;
-            _userManager = userManager;
             _mapper = mapper;
         }
-        
+
         #endregion
         
         [HttpPost]
         public async Task<ActionResult> SaveParticipant(ParticipantCreateDto participantCreateDto)
         {
             #region Validate
-            
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
 
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
+            if( !await IsAdmin() ) return Unauthorized();
 
             if( string.IsNullOrWhiteSpace ( participantCreateDto.Initial ) ||
                 string.IsNullOrWhiteSpace ( participantCreateDto.PointName ) )
@@ -65,6 +55,8 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ParticipantDto>>> GetParticipantsAsync([FromQuery] string pointName)
         {
+            if( !IsLogin() ) return Unauthorized();
+            
             if (string.IsNullOrEmpty(pointName)) return BadRequest();
 
             var participants = await _participantService.GetParticipants ( pointName );
@@ -79,10 +71,7 @@ namespace Api.Controllers
         {
             #region Validate
             
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
-
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
+            if( !await IsAdmin() ) return Unauthorized();
 
             if (string.IsNullOrEmpty(pointName)) return BadRequest();
 
@@ -101,10 +90,7 @@ namespace Api.Controllers
         {
             #region Validate
             
-            var userRole = await _userManager.FindByNameByClaimsPrincipleUserRoleAsync ( User );
-
-            if( userRole != EUserRole.Admin.GetDisplayName() )
-                return Unauthorized();
+            if( !await IsAdmin() ) return Unauthorized();
 
             #endregion
 

@@ -10,14 +10,14 @@ namespace Api.Extensions
     /// <summary>
     /// Is fired only if the application is first time running or identity table is empty
     /// </summary>
-    public static class InitializeIdentityExtensions
+    public static class InitializeDataExtensions
     {
         #region Public Methods
         
         /// <summary>
         /// Execute methods to create first user with roles to using application
         /// </summary>
-        public  static async Task FirstUsingApplicationAsync(
+        public static async Task FirstUsingApplicationAsync(
             RoleManager<IdentityRole> roleManager, 
             UserManager<AppUser> userManager,
             IUnitOfWork unitOfWork)
@@ -26,6 +26,7 @@ namespace Api.Extensions
             await CreateUserAsync(userManager);
             await CreateTransactionTypesAsync ( unitOfWork );
             await CreateProductCategoriesAsync ( unitOfWork );
+            await CreateDeviceStates ( unitOfWork );
         }
         
         #endregion
@@ -72,11 +73,7 @@ namespace Api.Extensions
             foreach ( var transactionType in transactionTypes )
             {
                 var transactionSpec = new TransactionTypesSpecification ( transactionType.Type );
-                
-                var transaction = await unitOfWork
-                    .Repository<TransactionType>()
-                    .GetEntityWithSpecAsync ( transactionSpec );
-                
+                var transaction = await unitOfWork.Repository<TransactionType>().GetEntityWithSpecAsync ( transactionSpec );
                 if (transaction != null) continue;
 
                 unitOfWork.Repository<TransactionType>().Add ( transactionType );
@@ -104,15 +101,30 @@ namespace Api.Extensions
                     productCategory.Category, 
                     productCategory.TransactionTypeId 
                 );
-                
-                var product = await unitOfWork
-                    .Repository<ProductCategory>()
-                    .GetEntityWithSpecAsync ( productSpec );
-
-                if( product != null )
-                    continue;
+                var product = await unitOfWork.Repository<ProductCategory>().GetEntityWithSpecAsync ( productSpec );
+                if( product != null ) continue;
                 
                 unitOfWork.Repository<ProductCategory>().Add ( productCategory );
+            }
+
+            await unitOfWork.CompleteAsync();
+        }
+
+        public static async Task CreateDeviceStates(IUnitOfWork unitOfWork)
+        {
+            var deviceStates = new DeviceState[]
+            {
+                new() {State = "Nowy"},
+                new() {State = "Używany"}
+            };
+
+            foreach ( var deviceState in deviceStates )
+            {
+                var stateSpec = new DeviceStateSpecification ( deviceState.State );
+                var state = await unitOfWork.Repository<DeviceState>().GetEntityWithSpecAsync ( stateSpec );
+                if( state != null ) continue;
+
+                unitOfWork.Repository<DeviceState>().Add ( deviceState );
             }
 
             await unitOfWork.CompleteAsync();

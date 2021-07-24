@@ -32,23 +32,17 @@ namespace Api
                 try
                 {
                     var context = services.GetRequiredService<HalkoContext>();
-                    await context.Database.MigrateAsync();
-                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists AppUser" );
-                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists Point" );
-                    await context.Database.ExecuteSqlRawAsync ( "drop table if exists UserPoints" );
-
-                    var identityConext = services.GetRequiredService<AppIdentityDbContext>();
-                    await identityConext.Database.MigrateAsync();
-
-                    await identityConext.Database.ExecuteSqlRawAsync ( "drop table if exists Point" );
-                    await identityConext.Database.ExecuteSqlRawAsync ( "drop table if exists ParticipantPoint" );
+                    var identityContext = services.GetRequiredService<AppIdentityDbContext>();
+                    
+                    await MigrateDatabaseExtension.MigrateHalko ( context );
+                    await MigrateDatabaseExtension.MigrateIdentity ( identityContext );
 
                     // Necessery data as first user and roles are inserted to database after migration
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     var unitOfWork = services.GetRequiredService<IUnitOfWork>();
                     
-                    await InitializeIdentityExtensions.FirstUsingApplicationAsync ( roleManager, userManager, unitOfWork  );
+                    await InitializeDataExtensions.FirstUsingApplicationAsync ( roleManager, userManager, unitOfWork  );
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

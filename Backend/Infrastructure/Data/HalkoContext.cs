@@ -17,6 +17,8 @@ namespace Infrastructure.Data
         public DbSet<TransactionType> TransactionTypes { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<TransactionDeleted> TransactionsDeleted { get; set; }
+        public DbSet<Device> Devices { get; set; }
+        public DbSet<DeviceState> DeviceStates { get; set; }
         
         #endregion
         

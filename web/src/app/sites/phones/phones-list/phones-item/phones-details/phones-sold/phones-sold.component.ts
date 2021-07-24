@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ItemInList } from '../../../../_models/itemInList.model';
+import { ItemInListModel } from '../../../../_models/item-in-list.model';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { NgForm } from '@angular/forms';
     styleUrls: ['./phones-sold.component.scss']
 })
 export class PhonesSoldComponent {
-    @Input() elInList: ItemInList;
+    @Input() elInList: ItemInListModel;
 
     faMobileAlt = faMobileAlt;
 

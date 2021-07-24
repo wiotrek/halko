@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ItemInList } from '../_models/itemInList.model';
+import { ItemInListModel } from '../_models/item-in-list.model';
 
 @Component({
     selector: 'app-phones-list',
@@ -13,7 +13,7 @@ import { ItemInList } from '../_models/itemInList.model';
     `
 })
 export class PhonesListComponent {
-    phonesList: ItemInList[] = [
+    phonesList: ItemInListModel[] = [
         {
             brand: 'Apple',
             model: 'Iphone 7',

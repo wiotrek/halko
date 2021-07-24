@@ -60,6 +60,18 @@ namespace Api.Controllers
         }
 
 
+        [HttpGet("details")]
+        public async Task<ActionResult<DeviceDisplayItemDto>> GetDeviceById( [FromQuery] int id )
+        {
+            if( !IsLogin() ) return Unauthorized();
+
+            var device = await _deviceService.GetDeviceToSellById ( id );
+            var deviceToReturn = _mapper.Map<DeviceDisplayItemDto> ( device );
+
+            return Ok ( deviceToReturn );
+        }
+
+
         [HttpPut ( "sell" )]
         public async Task<ActionResult> SellDevice( [FromQuery] int id, double price )
         {

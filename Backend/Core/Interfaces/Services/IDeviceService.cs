@@ -10,6 +10,7 @@ namespace Core.Interfaces
         
         Task<IEnumerable<Device>> GetDevicesToSell( string point );
         Task<IEnumerable<Device>> GetSoldDevices( string point );
+        Task<Device> GetDeviceToSellById( int deviceId );
         
         /// <summary>
         /// Create sold date for device which is selling

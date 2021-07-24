@@ -48,6 +48,12 @@ namespace Infrastructure.Services
             return deviceListToSell;
         }
 
+        public async Task<Device> GetDeviceToSellById( int deviceId )
+        {
+            var device = await GetDeviceByid ( deviceId );
+            return device is {DateSold: { }} ? null : device;
+        }
+
         public async Task<int> SellDevice( int deviceId, double price )
         {
             var device = await GetDeviceByIdAsync ( deviceId );
@@ -114,6 +120,14 @@ namespace Infrastructure.Services
             var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
 
             return deviceList;
+        }
+        
+        private async Task<Device> GetDeviceByid( int deviceId )
+        {
+            var deviceSpec = new DeviceSpecification ( deviceId );
+            var device = await _unitOfWork.Repository<Device>().GetEntityWithSpecAsync ( deviceSpec );
+
+            return device;
         }
 
         #endregion

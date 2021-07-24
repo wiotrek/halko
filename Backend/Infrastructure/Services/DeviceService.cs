@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities.Halko;
 using Core.Interfaces;
@@ -31,6 +32,18 @@ namespace Infrastructure.Services
             return result;
         }
 
+        public async Task<IEnumerable<Device>> GetDevices( string point )
+        {
+            var pointEntity = await GetPointByNameAsync ( point );
+            if( pointEntity == null ) return null;
+            
+            var deviceSpec = new DeviceSpecification ( point );
+            var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
+            var deviceListToSell = deviceList.Where ( x => x.DateSold == null );
+            
+            return deviceListToSell;
+        }
+
         public async Task<int> SellDevice( int deviceId, double price )
         {
             var device = await GetDeviceByIdAsync ( deviceId );
@@ -51,14 +64,10 @@ namespace Infrastructure.Services
         public async Task<int> MoveDevice( int deviceId, string point )
         {
             var device = await GetDeviceByIdAsync ( deviceId );
-            if( device is not {DateSold: null} ) return 0;
+            var pointEntity = await GetPointByNameAsync ( point );
+            if( device is not {DateSold: null} || pointEntity == null ) return 0;
 
-            
-            var pointSpec = new PointSpecification ( point );
-            var pointEntity = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
-            if( pointEntity == null ) return 0;
 
-            
             device.PointId = pointEntity.Id;
             
             
@@ -74,13 +83,24 @@ namespace Infrastructure.Services
             return await _unitOfWork.Repository<DeviceState>().ListAllAsync();
         }
 
+        #region Private Methods
 
         private async Task<Device> GetDeviceByIdAsync( int deviceId )
         {
             var deviceSpec = new DeviceSpecification ( deviceId );
             var device = await _unitOfWork.Repository<Device>().GetEntityWithSpecAsync ( deviceSpec );
             
-            return device ?? null;
+            return device;
         }
+
+        private async Task<Point> GetPointByNameAsync( string point )
+        {
+            var pointSpec = new PointSpecification ( point );
+            var pointEntity = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
+            
+            return pointEntity;
+        }
+            
+        #endregion
     }
 }

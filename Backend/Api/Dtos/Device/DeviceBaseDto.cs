@@ -1,6 +1,6 @@
 ﻿namespace Api.Dtos
 {
-    public class DeviceDto
+    public class DeviceBaseDto
     {
         public string Producer { get; set; }
         public string Model { get; set; }
@@ -9,7 +9,5 @@
         public string Comment { get; set; }
         public double PriceBuyed { get; set; }
         public double Price { get; set; }
-        public int DeviceStateId { get; set; }
-        public int PointId { get; set; }
     }
 }

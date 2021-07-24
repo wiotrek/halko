@@ -16,6 +16,7 @@ namespace Api.Helpers
             TransactionToTransactionDto();
             TransactionDeletedToTransactionDeletedDto();
             DeviceDtoToDevice();
+            DeviceToDeviceDisplayItemDto();
         }
 
 
@@ -54,7 +55,16 @@ namespace Api.Helpers
 
         private void DeviceDtoToDevice()
         {
-            CreateMap<DeviceDto, Device>().ReverseMap();
+            CreateMap<DeviceCreateDto, Device>().ReverseMap();
+        }
+
+        private void DeviceToDeviceDisplayItemDto()
+        {
+            CreateMap<Device, DeviceDisplayItemDto>()
+                .ForMember ( d => d.Name,
+                    m => m.MapFrom ( s => s.Point.Name ) )
+                .ForMember ( d => d.State,
+                    m => m.MapFrom ( s => s.DeviceState.State ) );
         }
     }
 }

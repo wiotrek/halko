@@ -10,5 +10,12 @@ namespace Core.Specifications
             AddInclude ( x => x.DeviceState );
             AddInclude ( x => x.Point );
         }
+        
+        public DeviceSpecification( string point )
+            : base ( x => x.Point.Name == point )
+        {
+            AddInclude ( x => x.DeviceState );
+            AddInclude ( x => x.Point );
+        }
     }
 }

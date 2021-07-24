@@ -8,6 +8,8 @@ namespace Core.Interfaces
     {
         Task<int> CreateDevice( Device device );
         
+        Task<IEnumerable<Device>> GetDevices( string point );
+        
         /// <summary>
         /// Create sold date for device which is selling
         /// </summary>
@@ -23,6 +25,7 @@ namespace Core.Interfaces
         /// <param name="point">The point name</param>
         /// <returns></returns>
         Task<int> MoveDevice( int deviceId, string point );
+
         Task<IReadOnlyList<DeviceState>> ReadDeviceState();
     }
 }

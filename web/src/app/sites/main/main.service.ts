@@ -55,16 +55,16 @@ export class MainService {
 
     // for employess
 
-    getEmployees(pointNameRaw: string): Observable<Employees[]> {
+    getEmployees(pointName: string): Observable<Employees[]> {
 
         const response = this.employeesCache.get(
-            Object.values(pointNameRaw).join('-')
+            Object.values(pointName).join('-')
         );
 
         if (response) { return of (response); }
 
         let params = new HttpParams();
-        params = params.set('pointName', pointNameRaw);
+        params = params.set('pointName', pointName);
 
         return this.http.get<Employees[]>(
             this.apiUrl + 'api/participant', { params }
@@ -72,7 +72,7 @@ export class MainService {
             map(
                 (res: Employees[]) => {
                     this.employeesCache.set(
-                        Object.values(pointNameRaw).join('-'), res
+                        Object.values(pointName).join('-'), res
                     );
 
                     return res;

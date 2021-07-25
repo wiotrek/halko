@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { Links } from 'src/app/shared/models/links.model';
@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
     templateUrl: './nav.component.html',
     styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
     faSignInAlt = faSignInAlt;
     faBars = faBars;
 
@@ -40,5 +40,9 @@ export class NavComponent implements OnInit {
     logout(): void {
         this.subscription.unsubscribe();
         this.authService.logout();
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

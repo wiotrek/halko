@@ -41,13 +41,10 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     constructor(
         private mainService: MainService,
         private authService: AuthService
-    ) {
-            this.subscription = this.authService.user.subscribe(
-                (user: User) => this.pointName = user.pointName
-            );
-        }
+    ) {}
 
     ngOnInit(): void {
+        this.getPointName();
         this.getElements();
         this.getEmployees();
         this.displaySum();
@@ -75,6 +72,15 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
         this.currentlyEditedElement = -1;
     }
 
+    private getPointName(): void {
+        this.subscription = this.authService.user.subscribe(
+            (user: User | null) => user
+                ? this.pointName = user.pointName
+                : this.pointName = 'Punkt',
+            () => this.pointName = 'Punkt'
+        );
+    }
+
     private getEmployees(): void {
 
         const sub = this.mainService.getEmployees(this.pointName)
@@ -88,11 +94,12 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
 
     private getElements(): void {
         this.items = this.mainService.getExpensesItems();
-        this.subscription.add(
-            this.mainService.expensesItem$.subscribe(
-                (res: ItemStructure[]) => this.items = res
-            )
+
+        const sub = this.mainService.expensesItem$.subscribe(
+            (res: ItemStructure[]) => this.items = res
         );
+
+        this.subscription.add(sub);
     }
 
     private displaySum(): void {

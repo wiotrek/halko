@@ -28,6 +28,7 @@ export class AuthService {
             catchError(this.handleError),
             tap((res: AuthResponseData) => {
                 this.handleAuthentication(
+                    res.login,
                     res.role,
                     res.pointNames,
                     res.token
@@ -45,6 +46,7 @@ export class AuthService {
     autoLogin(): void {
 
         const userData: {
+            login: string;
             role: string;
             pointNames: string[];
             token: string;
@@ -53,6 +55,7 @@ export class AuthService {
         if (!userData) { return; }
 
         const loadedUser = new User(
+            userData.login,
             userData.role,
             userData.pointNames,
             userData.token,
@@ -64,10 +67,14 @@ export class AuthService {
     }
 
     private handleAuthentication(
-            role: string, pointNames: string[], token: string,
+            login: string,
+            role: string,
+            pointNames: string[],
+            token: string,
         ): void {
 
         const user = new User(
+            login,
             role,
             pointNames,
             token,

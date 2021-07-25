@@ -13,14 +13,15 @@ namespace Api.Extensions
     {
         public static void AddIdentityService( this IServiceCollection services, IConfiguration config )
         {
-            // Add identity adds cookie based authentication
+            // Add identity without cookie based authentication
             // Adds scoped classes for thinkgs like UserManager, SignInManager, PasswordHashers etc..
-            // NOTE: Automatically adds the validated user from a cookie to the HttpContext.User
-            services.AddIdentity<AppUser, IdentityRole>()
+            // NOTE: Automatically adds the validated user from a token to the HttpContext.User
+            var builder = services.AddIdentityCore<AppUser>().AddRoles<IdentityRole>();
 
-                // Adds UserStore and RoleStore from this context
-                // That are consumed by the UserManager and RoleManager
-                .AddEntityFrameworkStores<AppIdentityDbContext>();
+            // Adds UserStore and RoleStore from this context
+            // That are consumed by the UserManager and RoleManager
+            builder.AddEntityFrameworkStores<AppIdentityDbContext>();
+            builder.AddSignInManager<SignInManager<AppUser>>();
             
                 
             // Change password policy

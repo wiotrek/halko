@@ -53,15 +53,12 @@ namespace Api.Controllers
         [HttpPost ( "login" )]
         public async Task<ActionResult<LoginUserDto>> LoginAsync( LoginDto loginDto )
         {
-            // Sign out any previous sessions
-            await HttpContext.SignOutAsync ( IdentityConstants.ApplicationScheme );
-
             #region Get User
             
             var user = await _userManager.FindByNameAsync ( loginDto.Login );
             if( user == null ) return Unauthorized();
 
-            var result = await _signInManager.PasswordSignInAsync ( loginDto.Login, loginDto.Password, true, true );
+            var result = await _signInManager.CheckPasswordSignInAsync ( user, loginDto.Password, false );
             
             if( !result.Succeeded )
                 return BadRequest();

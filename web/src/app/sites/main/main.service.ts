@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructure } from './_models/item-structure.model';
@@ -49,9 +50,7 @@ export class MainService {
 
     private employeesCache = new Map();
 
-    constructor(
-        private http: HttpClient
-    ) {}
+    constructor(private http: HttpClient) {}
 
     // for employess
 
@@ -71,11 +70,15 @@ export class MainService {
         ).pipe(
             map(
                 (res: Employees[]) => {
-                    this.employeesCache.set(
-                        Object.values(pointName).join('-'), res
-                    );
+                    if (res.length > 0) {
+                        this.employeesCache.set(
+                            Object.values(pointName).join('-'), res
+                        );
 
-                    return res;
+                        return res;
+                    }
+
+                    return EmployeesInitialDictionary;
                 }
             )
         );

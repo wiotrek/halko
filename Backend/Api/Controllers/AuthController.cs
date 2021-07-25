@@ -2,10 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Api.Dtos;
+using Api.Errors;
+using Api.Extensions;
 using Core.Entities.Identity;
 using Core.Enums;
 using Core.Interfaces;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
@@ -56,12 +58,11 @@ namespace Api.Controllers
             #region Get User
             
             var user = await _userManager.FindByNameAsync ( loginDto.Login );
-            if( user == null ) return Unauthorized();
+            if( user == null ) return Unauthorized ( new ApiResponse ( 401 ) );
 
             var result = await _signInManager.CheckPasswordSignInAsync ( user, loginDto.Password, false );
             
-            if( !result.Succeeded )
-                return BadRequest();
+            if( !result.Succeeded ) return Unauthorized ( new ApiResponse ( 401 ) );
 
             #endregion
 
@@ -83,29 +84,22 @@ namespace Api.Controllers
             };
         }
 
-        
-        [HttpGet ( "logout" )]
-        public async Task<IActionResult> LogoutAsync()
-        {
-            await HttpContext.SignOutAsync ( IdentityConstants.ApplicationScheme );
 
-            return Ok();
-        }
-        
-        
+        [Authorize]
         [HttpPost ("register-point")]
         public async Task<ActionResult> RegisterPointAsync( PointCreateDto pointCreateDto)
         {
-            if( !await IsAdmin() ) return Unauthorized();
+            if( !await IsAdmin() ) 
+                return Unauthorized ( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
             
             #region Duplicate Checker
             
             var isExistUser = await _userManager.FindByNameAsync ( pointCreateDto.Login );
-            if( isExistUser  != null )
-                return BadRequest();
+            if( isExistUser != null )
+                return BadRequest ( new ApiResponse ( 400, ApiErrorMessage.UserExist.GetnEnumMemberValue() ) );
 
             if( await _pointService.IsPointExist ( pointCreateDto.PointName ) )
-                return BadRequest();
+                return BadRequest ( new ApiResponse ( 400, ApiErrorMessage.PointExist.GetnEnumMemberValue() ) );
             
             #endregion
             
@@ -117,7 +111,8 @@ namespace Api.Controllers
             };
             
             var insertedUser = await  _userManager.CreateAsync ( appUser, pointCreateDto.Password );
-            if( !insertedUser.Succeeded ) return BadRequest();
+            if( !insertedUser.Succeeded )
+                return BadRequest ( new ApiResponse ( 400, ApiErrorMessage.PointCreate.GetnEnumMemberValue() ) );
             
             await _userManager.AddToRoleAsync ( appUser, EUserRole.Point.GetDisplayName() );
             
@@ -127,7 +122,8 @@ namespace Api.Controllers
             
             // Create point
             var insertedPoint = await _pointService.CreatePointAsync ( pointCreateDto.PointName );
-            if (insertedPoint == null) return BadRequest();
+            if( insertedPoint == null )
+                return BadRequest ( new ApiResponse ( 400, ApiErrorMessage.PointCreate.GetnEnumMemberValue() ) );
             
             
             // Make reference between created user and point in UserPoints table
@@ -144,25 +140,25 @@ namespace Api.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost ( "register-admin" )]
         public async Task<ActionResult> RegisterUserAsync( UserCreateDto userCreateDto )
         {
-            if( !await IsAdmin() ) return Unauthorized();
+            if( !await IsAdmin() )
+                return Unauthorized ( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
             
             
             var isExistUser = await _userManager.FindByNameAsync ( userCreateDto.Name );
-            if( isExistUser  != null )
-                return BadRequest();
-            
-            
-            var appUser = new AppUser
-            {
-                UserName = userCreateDto.Name
-            };
+            if( isExistUser != null )
+                return BadRequest ( new ApiResponse ( 400, ApiErrorMessage.AdminExist.GetnEnumMemberValue() ) );
+
+
+            var appUser = new AppUser { UserName = userCreateDto.Name };
             
             
             var insertedUser = await  _userManager.CreateAsync ( appUser, userCreateDto.Password );
-            if( !insertedUser.Succeeded ) return BadRequest();
+            if( !insertedUser.Succeeded ) 
+                return BadRequest( new ApiResponse ( 400, ApiErrorMessage.AdminCreate.GetnEnumMemberValue() ) );
             
             
             await _userManager.AddToRoleAsync ( appUser, EUserRole.Admin.GetDisplayName() );
@@ -175,19 +171,23 @@ namespace Api.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut("change-password")]
         public async Task<ActionResult> ChangePasswordAsync(ChangePasswordDto changePasswordDto)
         {
-            if( !await IsAdmin() ) return Unauthorized();
+            if( !await IsAdmin() ) 
+                return Unauthorized( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
             
             var user = await _userManager.FindByNameAsync ( changePasswordDto.Login );
             if( user  == null )
-                return BadRequest();
+                return BadRequest( new ApiResponse ( 400, ApiErrorMessage.UserNotExist.GetnEnumMemberValue() ) );
             
 
             var result = await _userManager.ChangePasswordAsync ( user, changePasswordDto.CurrentPassword, changePasswordDto.NewPassword );
             
-            return result.Succeeded ? Ok() : BadRequest();
+            return result.Succeeded ? 
+                Ok() : 
+                BadRequest( new ApiResponse ( 400, ApiErrorMessage.ChangePassword.GetnEnumMemberValue() ) );
         }
     }
 }

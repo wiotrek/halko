@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Dtos;
+using Api.Errors;
 using AutoMapper;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Core.WebDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+    [Authorize]
     public class TransactionController : BaseApiController
     {
         private readonly ITransactionService _transactionService;
@@ -28,20 +31,17 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateTransactionAsync(TransactionWebDto transactionWebDto)
         {
-            if( !IsLogin() ) return Unauthorized();
-            
-            var transaction = await _transactionService.CreateTransactionAsync ( transactionWebDto );
+            var result = await _transactionService.CreateTransactionAsync ( transactionWebDto );
 
-            if( transaction == null ) return BadRequest();
 
-            return Ok();
+            return result <= 0
+                ? BadRequest ( new ApiResponse ( 400, result ) )
+                : Ok ( new ApiResponse ( 200, result ) );
         }
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<TransactionDto>>> GetTransactionsAsync([FromQuery] DateTime date, string pointName )
         {
-            if( !IsLogin() ) return Unauthorized();
-            
             var transactions = await _transactionService.GetTransactionAsync ( date, pointName );
 
             var transactionsToReturn = _mapper.Map<IReadOnlyList<TransactionDto>> ( transactions );
@@ -52,11 +52,15 @@ namespace Api.Controllers
         [HttpPut]
         public async Task<ActionResult<TransactionDto>> UpdateTransactionAsync( TransactionWebDto transactionWebDto )
         {
-            if( !IsLogin() ) return Unauthorized();
-            
             var transaction = await _transactionService.UpdateTransactionAsync ( transactionWebDto );
-            
-            if (transaction == null) return BadRequest();
+
+            if( transaction == null )
+                return BadRequest (
+                    new ApiResponse ( 400,
+                        $"Transakcja nie została zaktualizowana. Możliwe przyczyny: {Environment.NewLine}  " +
+                        $"Brak rodzaju produktu.{Environment.NewLine} " +
+                        $"Brak lub usunięty pracownik.{Environment.NewLine} " +
+                        "Aktualizowana transakcja została wcześniej usunięta" ) );
 
             var transactionToReturn = _mapper.Map<TransactionDto> ( transaction );
 
@@ -67,11 +71,11 @@ namespace Api.Controllers
         [HttpDelete]
         public async Task<ActionResult> DeleteTransactionAsync( [FromQuery] int id )
         {
-            if( !IsLogin() ) return Unauthorized();
-            
             var result = await _transactionService.DeleteTransactionAsync ( id );
 
-            return result > 0 ? Ok() : BadRequest();
+            return result <= 0
+                ? BadRequest ( new ApiResponse ( 400, result ) )
+                : Ok ( new ApiResponse ( 200, result ) );
         }
         
         [HttpGet("deleted")]
@@ -92,8 +96,6 @@ namespace Api.Controllers
         [HttpGet ( "product-categories" )]
         public async Task<ActionResult<List<ProductCategoriesToReturnDto>>> GetProductCategoriesAsync()
         {
-            if( !IsLogin() ) return Unauthorized();
-            
             var productCategories = await _transactionService.GetProductCategories();
 
             var productCategoriesToReturn = _mapper.Map<IReadOnlyList<ProductCategoriesToReturnDto>> ( productCategories );

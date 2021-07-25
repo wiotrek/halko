@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities.Halko;
+using Core.Enums;
 using Core.Interfaces;
 using Core.Specifications;
 
@@ -38,16 +39,20 @@ namespace Infrastructure.Services
             return participants.Where( x => !x.Initial.Contains("[D]"));
         }
 
-        public async Task<int> CreateParticipant( ParticipantPoint participantPoint, string pointName )
+        public async Task<EServiceResponse> CreateParticipant( ParticipantPoint participantPoint, string pointName )
         {
-            if( participantPoint.Initial.Contains("[D]") ) return 0;
-            
             var pointSpec = new PointSpecification ( pointName );
             var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
-            if( point == null ) return 0;
-
-
-            if( await IsParticipantExist ( participantPoint.Initial, point.Id ) ) return 0; 
+            
+            
+            #region Errors
+            
+            if( point == null ) return EServiceResponse.PointNotExist;
+            if( participantPoint.Initial.Contains("[D]") ) return EServiceResponse.ParticipantWasDeleted;
+            if( await IsParticipantWasDeleted(participantPoint.Initial, point.Id) ) return EServiceResponse.ParticipantWasDeleted;
+            if( await IsParticipantExist ( participantPoint.Initial, point.Id ) ) return EServiceResponse.ParticipantExist; 
+            
+            #endregion
             
 
             var participantToCreate = new ParticipantPoint
@@ -62,7 +67,9 @@ namespace Infrastructure.Services
             _unitOfWork.Repository<ParticipantPoint>().Add ( participantToCreate );
             var result = await _unitOfWork.CompleteAsync();
 
-            return result;
+            return result <= 0 ? 
+                EServiceResponse.ParticipantCreateFailed : 
+                EServiceResponse.ParticipantCreateSuccess;
         }
 
         public async Task<ParticipantPoint> UpdateParticipant( ParticipantPoint participantPoint, string pointName )
@@ -87,10 +94,11 @@ namespace Infrastructure.Services
             return result <= 0 ? null : participantPoint;
         }
 
-        public async Task<int> DeleteParticipant( int id )
+        public async Task<EServiceResponse> DeleteParticipant( int id )
         {
             var participant = await _unitOfWork.Repository<ParticipantPoint>().GetByIdAsync ( id );
-            if( participant == null || participant.Initial.Contains ( "[D]" ) ) return 0;
+            if( participant == null ) return EServiceResponse.ParticipantNotExistWhileDelete;
+            if (participant.Initial.Contains ( "[D]" ) ) return EServiceResponse.ParticipantWasDeleted;
 
             participant.Initial += " [D]";
             
@@ -98,7 +106,9 @@ namespace Infrastructure.Services
             _unitOfWork.Repository<ParticipantPoint>().Update ( participant );
             var result = await _unitOfWork.CompleteAsync();
 
-            return result;
+            return result <= 0 ? 
+                EServiceResponse.ParticipantDeletedFailed : 
+                EServiceResponse.ParticipantDeletedSuccess;
         }
         
         #endregion
@@ -117,7 +127,13 @@ namespace Infrastructure.Services
         {
             var participantSpec = new ParticipantSpecification ( initial, pointId );
             var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
-
+            return participant != null;
+        }
+        
+        private async Task<bool> IsParticipantWasDeleted( string initial, int pointId )
+        {
+            var participantSpec = new ParticipantSpecification ( initial + " [D]", pointId );
+            var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
             return participant != null;
         }
     }

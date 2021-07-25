@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Core.WebDtos;
 using Core.Entities.Halko;
+using Core.Enums;
 using Core.Interfaces;
 using Core.Specifications;
 
@@ -17,14 +18,15 @@ namespace Infrastructure.Services
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<Transaction> CreateTransactionAsync( TransactionWebDto transactionDto )
+        public async Task<EServiceResponse> CreateTransactionAsync( TransactionWebDto transactionDto )
         {
-            if( string.IsNullOrEmpty ( transactionDto.ProductName ) || transactionDto.Price <= 0 ) return null;
+            if( string.IsNullOrEmpty ( transactionDto.ProductName ) ) return EServiceResponse.ProductEmpty;
+            if( transactionDto.Price <= 0 ) return EServiceResponse.PriceBelowZero;
             
             
             var pointSpec = new PointSpecification ( transactionDto.PointName );
             var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
-            if( point == null ) return null;
+            if( point == null ) return EServiceResponse.PointNotExist;
             
             
             var participantSpec = new ParticipantSpecification ( transactionDto.ParticipantInitial, point.Id );
@@ -35,7 +37,9 @@ namespace Infrastructure.Services
             var productCategory = await _unitOfWork.Repository<ProductCategory>().GetEntityWithSpecAsync ( productCategorySpec );
 
             
-            if( participant == null || productCategory == null ) return null;
+            if( participant == null ) return EServiceResponse.ParticipantNotExist;
+            if( productCategory == null ) return EServiceResponse.ProductCategoryNotExist;
+            if( transactionDto.ParticipantInitial.Contains ( "[D]" ) ) return EServiceResponse.ParticipantWasDeleted;
 
             
             var transactionToSave = new Transaction
@@ -53,7 +57,9 @@ namespace Infrastructure.Services
             var result = await _unitOfWork.CompleteAsync();
 
             
-            return result <= 0 ? null : transactionToSave;
+            return result <= 0 
+                ? EServiceResponse.TransactionCreateFailed 
+                : EServiceResponse.TransactionCreateSuccess;
         }
 
 
@@ -76,6 +82,9 @@ namespace Infrastructure.Services
                 var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
                 
                 if (participant == null) return null;
+
+                if( participant.Initial.Contains ( "[D]" ) ||
+                    transactionToUpdate.Participant.Initial.Contains ( "[D]" ) ) return null;
                 
                 transactionToUpdate.ParticipantId = participant.Id;
             }
@@ -115,12 +124,12 @@ namespace Infrastructure.Services
         }
 
         
-        public async Task<int> DeleteTransactionAsync( int transactionId )
+        public async Task<EServiceResponse> DeleteTransactionAsync( int transactionId )
         {
             var transactionSpec = new TransactionSpecification ( transactionId );
             var transaction = await _unitOfWork.Repository<Transaction>().GetEntityWithSpecAsync ( transactionSpec );
 
-            if( transaction == null ) return 0;
+            if( transaction == null ) return EServiceResponse.TransactionNotExist;
 
             var transactionDelete = new TransactionDeleted
             {
@@ -137,12 +146,12 @@ namespace Infrastructure.Services
 
             _unitOfWork.Repository<Transaction>().Delete ( transaction );
             var result = await _unitOfWork.CompleteAsync();
-            if( result <= 0 ) return result;
+            if( result <= 0 ) return EServiceResponse.TransactionDeleteFailed;
 
             _unitOfWork.Repository<TransactionDeleted>().Add ( transactionDelete );
-            result = await _unitOfWork.CompleteAsync();
+            await _unitOfWork.CompleteAsync();
 
-            return result;
+            return EServiceResponse.TransactionDeleteSuccess;
         }
 
 

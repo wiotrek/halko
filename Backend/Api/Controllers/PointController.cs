@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Point = Core.Entities.Halko.Point;
 
 namespace Api.Controllers
 {
+    [Authorize]
     public class PointController : BaseApiController
     {
         private readonly IPointService _pointService;
@@ -22,8 +24,6 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<Point>>> GetPoints()
         {
-            if( !IsLogin() ) return Unauthorized();
-            
             return Ok ( await _pointService.ListPointsAsync() );
         }
     }

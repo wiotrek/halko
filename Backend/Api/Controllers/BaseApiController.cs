@@ -25,10 +25,5 @@ namespace Api.Controllers
 
             return userRole == EUserRole.Admin.GetDisplayName();
         }
-
-        protected bool IsLogin()
-        {
-            return User.Identity.Name != null;
-        }
     }
 }

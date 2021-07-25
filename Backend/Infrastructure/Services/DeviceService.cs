@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Entities.Halko;
+using Core.Enums;
 using Core.Interfaces;
 using Core.Specifications;
 
@@ -10,28 +11,44 @@ namespace Infrastructure.Services
 {
     public class DeviceService : IDeviceService
     {
+        #region Private Members
+        
         private readonly IUnitOfWork _unitOfWork;
+        
+        #endregion
+        
+        #region Constructors
 
         public DeviceService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
         
-        public async Task<int> CreateDevice( Device device )
+        #endregion
+        
+        #region Implemented Methods
+        
+        public async Task<EServiceResponse> CreateDevice( Device device )
         {
             var isStateExist = await _unitOfWork.Repository<DeviceState>().GetByIdAsync ( device.DeviceStateId );
-            if( isStateExist == null ) return 0;
-            
             var isPointExist = await _unitOfWork.Repository<Point>().GetByIdAsync ( device.PointId );
-            if( isPointExist == null ) return 0;
             
+            #region Errors
             
+            if( isStateExist == null ) return EServiceResponse.StateNotExist;
+            if( isPointExist == null ) return EServiceResponse.PointNotExist;
+            
+            #endregion
+
             _unitOfWork.Repository<Device>().Add ( device );
             var result = await _unitOfWork.CompleteAsync();
 
-            return result;
+            return result <= 0 ? 
+                EServiceResponse.DeviceCreateFailed : 
+                EServiceResponse.DeviceCreateSuccess;
         }
 
+        
         public async Task<IEnumerable<Device>> GetDevicesToSell( string point )
         {
             var deviceList = await GetDevicesByPoint ( point );
@@ -39,6 +56,7 @@ namespace Infrastructure.Services
             
             return deviceListToSell;
         }
+        
         
         public async Task<IEnumerable<Device>> GetSoldDevices( string point )
         {
@@ -48,11 +66,13 @@ namespace Infrastructure.Services
             return deviceListToSell;
         }
 
+        
         public async Task<Device> GetDeviceToSellById( int deviceId )
         {
             var device = await GetDeviceByid ( deviceId );
             return device is {DateSold: { }} ? null : device;
         }
+        
         
         public async Task<Device> GetSoldDeviceById( int deviceId )
         {
@@ -60,10 +80,17 @@ namespace Infrastructure.Services
             return device is not {DateSold: { }} ? null : device;
         }
 
-        public async Task<int> SellDevice( int deviceId, double price )
+        
+        public async Task<EServiceResponse> SellDevice( int deviceId, double price )
         {
             var device = await GetDeviceByIdAsync ( deviceId );
-            if( device is not {DateSold: null} ) return 0;
+            
+            #region Errors
+            
+            if( device == null ) return EServiceResponse.DeviceNotExist;
+            if( device.DateSold != null ) return EServiceResponse.DeviceWasSold;
+            
+            #endregion
 
 
             device.Price = price;
@@ -74,15 +101,25 @@ namespace Infrastructure.Services
             var result = await _unitOfWork.CompleteAsync();
             
             
-            return result;
+            return result <= 0 ?
+                EServiceResponse.DeviceNotSold : 
+                EServiceResponse.DeviceSold;
         }
 
-        public async Task<int> MoveDevice( int deviceId, string point )
+        
+        public async Task<EServiceResponse> MoveDevice( int deviceId, string point )
         {
             var device = await GetDeviceByIdAsync ( deviceId );
             var pointEntity = await GetPointByNameAsync ( point );
-            if( device is not {DateSold: null} || pointEntity == null ) return 0;
-
+            
+            #region Errors
+            
+            if( device == null ) return EServiceResponse.DeviceNotExist;
+            if( pointEntity == null ) return EServiceResponse.PointNotExist;
+            if( device.DateSold != null ) return EServiceResponse.DeviceWasSold;
+            if( device.PointId == pointEntity.Id ) return EServiceResponse.DeviceIsInThisPoint;
+            
+            #endregion
 
             device.PointId = pointEntity.Id;
             
@@ -91,13 +128,18 @@ namespace Infrastructure.Services
             var result = await _unitOfWork.CompleteAsync();
             
             
-            return result;
+            return result <= 0 ? 
+                EServiceResponse.DeviceMoveFailed : 
+                EServiceResponse.DeviceMoveSuccess;
         }
 
+        
         public async Task<IReadOnlyList<DeviceState>> ReadDeviceState()
         {
             return await _unitOfWork.Repository<DeviceState>().ListAllAsync();
         }
+        
+        #endregion
 
         #region Private Methods
 

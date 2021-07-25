@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,7 @@ import { ItemViewComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/item-edit/item-edit.component';
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
+import { AuthInterceptorService } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,13 @@ import { MainStatisticsComponent } from './sites/main/main-manage/main-statistic
     FontAwesomeModule,
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

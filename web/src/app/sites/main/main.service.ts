@@ -1,8 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
@@ -50,7 +51,7 @@ export class MainService {
 
     private employeesCache = new Map();
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private authService: AuthService) {}
 
     // for employess
 

@@ -1,5 +1,6 @@
 export class User {
     constructor(
+        private login: string,
         private role: string,
         private pointNames: string[],
         private token: string,
@@ -17,5 +18,9 @@ export class User {
 
     get pointName(): string {
         return this.pointNames[0];
+    }
+
+    get loginFunc(): string {
+        return this.login;
     }
 }

@@ -19,17 +19,13 @@ export class MainService {
     todayDate = new Date().toISOString().slice(0, 10);
 
     // for solds items
-
     private soldsItem: ItemStructure[] = [];
-
     private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItem);
     public soldsItem$ = this.soldsItemsChanged.asObservable();
 
 
     // for expenses items
-
     private expensesItems: ItemStructure[] = [];
-
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
@@ -46,7 +42,10 @@ export class MainService {
                 : this.pointName = 'Punkt',
             () => this.pointName = 'Punkt'
         );
+
+        this.getAllItemsInitialFunc();
     }
+
 
     // for employess
 
@@ -79,6 +78,7 @@ export class MainService {
             )
         );
     }
+
 
     // for solds items
 
@@ -115,23 +115,7 @@ export class MainService {
 
     // for expneses items
 
-    getExpensesItems(): ItemStructure[] {
-
-        let params = new HttpParams();
-        params = params.set('date', this.todayDate);
-        params = params.append('pointName', this.pointName);
-
-        this.http.get(
-            this.apiUrl + 'api/transaction',
-            { params }
-        ).subscribe(
-            (res: ItemStructure[]) => {
-                this.expensesItemsChanged.next(res);
-                this.expensesItems = res;
-            }
-        );
-
-        return this.expensesItems;
+    getExpensesItems(): void {
     }
 
     addNewExpenseItem(el: ItemStructureAdd): void {
@@ -143,7 +127,18 @@ export class MainService {
             this.apiUrl + 'api/transaction',
             elOnBackend
         ).subscribe(
-            () => this.getExpensesItems()
+            () => {
+                const item: ItemStructure = {
+                    productName: el.productName,
+                    price: el.price,
+                    initial: el.participantInitial,
+                    category: el.productCategoryName,
+                    type: 'Zakup',
+                    name: this.pointName
+                };
+                this.expensesItems.unshift(item);
+                this.expensesItemsChanged.next(this.expensesItems);
+            }
         );
     }
 
@@ -202,6 +197,26 @@ export class MainService {
                     return categories;
                 }
             )
+        );
+    }
+
+
+    // get solds items and expenses item
+    private getAllItemsInitialFunc(): void {
+
+        let params = new HttpParams();
+        params = params.set('date', this.todayDate);
+        params = params.append('pointName', this.pointName);
+
+        this.http.get(
+            this.apiUrl + 'api/transaction',
+            { params }
+        ).subscribe(
+            (res: ItemStructure[]) => {
+                this.soldsItem = res.filter(x => x.type === 'Sprzedaż').reverse();
+                this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
+                this.expensesItemsChanged.next(this.expensesItems);
+            }
         );
     }
 }

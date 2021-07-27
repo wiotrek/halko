@@ -80,7 +80,7 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private getElements(): void {
-        this.items = this.mainService.getExpensesItems();
+        this.mainService.getExpensesItems();
 
         const sub = this.mainService.expensesItem$.subscribe(
             (res: ItemStructure[]) => this.items = res

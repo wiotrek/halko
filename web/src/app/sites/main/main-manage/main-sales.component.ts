@@ -6,6 +6,7 @@ import { MainService } from '../main.service';
 import { CategoryItemSolds } from '../_dictionary/catogory-item-solds.dictionary';
 import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
 import { Employees } from '../_models/employees.model';
+import { ItemStructureAdd } from '../_models/item-structure-add.model';
 import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
@@ -16,7 +17,6 @@ import { ItemStructure } from '../_models/item-structure.model';
 export class MainSalesComponent implements OnInit, OnDestroy {
     title = 'Sprzedaż';
     isSetDanger = false;
-    pointName: string;
 
     private subscription: Subscription;
 
@@ -37,15 +37,11 @@ export class MainSalesComponent implements OnInit, OnDestroy {
 
     sum: number;
 
-    constructor(
-        private mainService: MainService,
-        private authService: AuthService
-    ) {}
+    constructor(private mainService: MainService) {}
 
     ngOnInit(): void {
-        this.getPointName();
-        this.getElements();
         this.getEmployees();
+        this.getElements();
         this.displaySum();
     }
 
@@ -55,7 +51,7 @@ export class MainSalesComponent implements OnInit, OnDestroy {
         : ind;
     }
 
-    addNewElementFunc = (newElement: ItemStructure) => {
+    addNewElementFunc = (newElement: ItemStructureAdd) => {
         this.mainService.addNewSoldItem(newElement);
     }
 
@@ -71,23 +67,14 @@ export class MainSalesComponent implements OnInit, OnDestroy {
         this.currentlyEditedElement = -1;
     }
 
-    private getPointName(): void {
-        this.subscription = this.authService.user.subscribe(
-            (user: User | null) => user
-                ? this.pointName = user.pointName
-                : this.pointName = 'Punkt',
-            () => this.pointName = 'Punkt'
-        );
-    }
-
     private getEmployees(): void {
-        const sub = this.mainService.getEmployees(this.pointName)
+        const sub = this.mainService.getEmployees()
             .subscribe(
                 (res: Employees[]) => this.employees = res,
                 () => this.employees = EmployeesInitialDictionary
             );
 
-        this.subscription.add(sub);
+        this.subscription = sub;
     }
 
     private getElements(): void {

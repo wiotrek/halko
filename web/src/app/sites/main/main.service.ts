@@ -3,31 +3,24 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/user.model';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
+import { ItemStructureAddBackend } from './_models/item-structure-add-backend.model';
+import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
 export class MainService {
     apiUrl = environment.api;
+    pointName: string;
+    todayDate = new Date().toISOString().slice(0, 10);
 
     // for solds items
 
-    private soldsItem: ItemStructure[] = [
-        {
-            initial: 'WK',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        },
-        {
-            initial: 'WK',
-            category: 'akcesoria',
-            name: 'szklo p9 lite',
-            price: 40
-        }
-    ];
+    private soldsItem: ItemStructure[] = [];
 
     private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItem);
     public soldsItem$ = this.soldsItemsChanged.asObservable();
@@ -35,14 +28,7 @@ export class MainService {
 
     // for expenses items
 
-    private expensesItems: ItemStructure[] = [
-        {
-            initial: 'WK',
-            category: 'telefon',
-            name: 'P20 lite',
-            price: 700
-        },
-    ];
+    private expensesItems: ItemStructure[] = [];
 
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
@@ -50,20 +36,30 @@ export class MainService {
 
     private employeesCache = new Map();
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private authService: AuthService
+    ) {
+        this.authService.user.subscribe(
+            (user: User) =>  user
+                ? this.pointName = user.pointName
+                : this.pointName = 'Punkt',
+            () => this.pointName = 'Punkt'
+        );
+    }
 
     // for employess
 
-    getEmployees(pointName: string): Observable<Employees[]> {
+    getEmployees(): Observable<Employees[]> {
 
         const response = this.employeesCache.get(
-            Object.values(pointName).join('-')
+            Object.values(this.pointName).join('-')
         );
 
         if (response) { return of (response); }
 
         let params = new HttpParams();
-        params = params.set('pointName', pointName);
+        params = params.set('pointName', this.pointName);
 
         return this.http.get<Employees[]>(
             this.apiUrl + 'api/participant', { params }
@@ -72,7 +68,7 @@ export class MainService {
                 (res: Employees[]) => {
                     if (res.length > 0) {
                         this.employeesCache.set(
-                            Object.values(pointName).join('-'), res
+                            Object.values(this.pointName).join('-'), res
                         );
 
                         return res;
@@ -91,8 +87,8 @@ export class MainService {
         return this.soldsItem;
     }
 
-    addNewSoldItem(el: ItemStructure): void {
-        this.soldsItem.unshift(el);
+    addNewSoldItem(el: ItemStructureAdd): void {
+        // this.soldsItem.unshift(el);
         this.soldsItemsChanged.next(this.soldsItem);
     }
 
@@ -120,13 +116,35 @@ export class MainService {
     // for expneses items
 
     getExpensesItems(): ItemStructure[] {
-        this.expensesItemsChanged.next(this.expensesItems);
+
+        let params = new HttpParams();
+        params = params.set('date', this.todayDate);
+        params = params.append('pointName', this.pointName);
+
+        this.http.get(
+            this.apiUrl + 'api/transaction',
+            { params }
+        ).subscribe(
+            (res: ItemStructure[]) => {
+                this.expensesItemsChanged.next(res);
+                this.expensesItems = res;
+            }
+        );
+
         return this.expensesItems;
     }
 
-    addNewExpenseItem(el: ItemStructure): void {
-        this.expensesItems.unshift(el);
-        this.expensesItemsChanged.next(this.expensesItems);
+    addNewExpenseItem(el: ItemStructureAdd): void {
+        const elOnBackend = el as ItemStructureAddBackend;
+        elOnBackend.pointName = this.pointName;
+        elOnBackend.transactionType = 'Zakup';
+
+        this.http.post(
+            this.apiUrl + 'api/transaction',
+            elOnBackend
+        ).subscribe(
+            () => this.getExpensesItems()
+        );
     }
 
     EditExpenseItem(editedElement: ItemStructure, indElement: number): void {

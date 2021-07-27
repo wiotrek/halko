@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Employees } from '../../../_models/employees.model';
-import { ItemStructure } from '../../../_models/item-structure.model';
+import { ItemStructureAdd } from '../../../_models/item-structure-add.model';
 
 @Component({
     selector: 'app-scratch-adder',
@@ -14,16 +14,15 @@ export class ScratchAdderComponent {
     @Input() setDanger?: boolean;
     @Input() category: string[];
     @Input() employees: Employees[];
-    @Output() newElement: EventEmitter<ItemStructure> = new EventEmitter();
+    @Output() newElement: EventEmitter<ItemStructureAdd> = new EventEmitter();
 
     // icons
     faCheckCircle = faCheck;
 
     addElement(f: NgForm): void {
-        const elementToAdd = f.value as ItemStructure;
+        const elementToAdd = f.value as ItemStructureAdd;
         this.newElement.emit(elementToAdd);
-
         f.controls.price.reset();
-        f.controls.name.reset();
+        f.controls.productName.reset();
     }
 }

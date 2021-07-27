@@ -90,11 +90,9 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private displaySum(): void {
-        const sub = this.mainService.displayExpensesSum().subscribe(
+        this.mainService.displayExpensesSum().subscribe(
             res => this.sum = res
         );
-
-        this.subscription.add(sub);
     }
 
     ngOnDestroy(): void {

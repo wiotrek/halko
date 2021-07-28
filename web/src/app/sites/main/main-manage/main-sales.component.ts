@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/auth/user.model';
 import { MainService } from '../main.service';
 import { CategoryItemSolds } from '../_dictionary/catogory-item-solds.dictionary';
 import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
@@ -78,21 +76,16 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     }
 
     private getElements(): void {
-        this.items = this.mainService.getSoldsItems();
-
         const sub = this.mainService.soldsItem$.subscribe(
             (res: ItemStructure[]) => this.items = res
         );
-
         this.subscription.add(sub);
     }
 
     private displaySum(): void {
-        const sub = this.mainService.displaySoldsSum().subscribe(
+        this.mainService.displaySoldsSum().subscribe(
             res => this.sum = res
         );
-
-        this.subscription.add(sub);
     }
 
     ngOnDestroy(): void {

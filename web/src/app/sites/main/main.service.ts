@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
+import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
@@ -35,7 +37,8 @@ export class MainService {
 
     constructor(
         private http: HttpClient,
-        private authService: AuthService
+        private authService: AuthService,
+        private toastr: ToastrService
     ) {
         this.authService.user.subscribe(
             (user: User) =>  user
@@ -190,7 +193,8 @@ export class MainService {
 
                 this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
                 this.expensesItemsChanged.next(this.expensesItems);
-            }
+            },
+            () => this.toastr.error(ErrorsDictionary.server)
         );
     }
 
@@ -220,7 +224,8 @@ export class MainService {
                     this.soldsItems.unshift(item);
                     this.soldsItemsChanged.next(this.soldsItems);
                 }
-            }
+            },
+            () => this.toastr.error(ErrorsDictionary.insert)
         );
     }
 }

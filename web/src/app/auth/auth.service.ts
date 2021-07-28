@@ -84,12 +84,6 @@ export class AuthService {
         localStorage.setItem('userData', JSON.stringify(user));
     }
 
-    private handleError(errRes: HttpErrorResponse): any {
-
-        const errMsg = !errRes.error || !errRes.error.error
-        ? 'Pojawił się problem z serverem'
-        : 'Błędny login lub hasło';
-
-        return throwError(errMsg);
-    }
+    private handleError = (errRes: HttpErrorResponse) =>
+        throwError(errRes.error.message)
 }

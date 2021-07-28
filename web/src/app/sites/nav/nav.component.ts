@@ -21,7 +21,7 @@ export class NavComponent implements OnInit, OnDestroy {
         { caption: 'Spis telefonów', path: 'telefony' },
         { caption: 'Rozliczenia', path: 'rozliczenia' },
         { caption: 'Serwis', path: 'serwis' },
-        { caption: 'Skup telefonów', path: 'skup-telefonów' }
+        { caption: 'Cennik', path: 'cennik' }
     ];
 
     subscription: Subscription;

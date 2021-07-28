@@ -5,4 +5,4 @@
 /Infrastructure/obj/
 /Infrastructure/bin/
 /Api/appsettings.Development.json
-halko.db
+*.db

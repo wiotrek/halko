@@ -25,7 +25,9 @@ export class AuthService {
                 password,
             }
         ).pipe(
-            catchError(this.handleError),
+            catchError(
+                (err: HttpErrorResponse) => throwError(err.error.message)
+            ),
             tap((res: AuthResponseData) => {
                 this.handleAuthentication(
                     res.login,
@@ -83,7 +85,4 @@ export class AuthService {
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));
     }
-
-    private handleError = (errRes: HttpErrorResponse) =>
-        throwError(errRes.error.message)
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
-import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
@@ -43,8 +42,11 @@ export class MainService {
         this.authService.user.subscribe(
             (user: User) =>  user
                 ? this.pointName = user.pointName
-                : this.pointName = 'Punkt',
-            () => this.pointName = 'Punkt'
+                : this.pointName = 'Punkt'
+            , (err: HttpErrorResponse) => {
+                this.toastr.error(err.error.message);
+                this.pointName = 'Punkt';
+            }
         );
 
         this.getAllItemsInitialFunc();
@@ -194,7 +196,7 @@ export class MainService {
                 this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
                 this.expensesItemsChanged.next(this.expensesItems);
             },
-            () => this.toastr.error(ErrorsDictionary.server)
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
         );
     }
 
@@ -225,7 +227,7 @@ export class MainService {
                     this.soldsItemsChanged.next(this.soldsItems);
                 }
             },
-            () => this.toastr.error(ErrorsDictionary.insert)
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
         );
     }
 }

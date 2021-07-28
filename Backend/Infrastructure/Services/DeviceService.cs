@@ -30,22 +30,29 @@ namespace Infrastructure.Services
         
         public async Task<EServiceResponse> CreateDevice( Device device )
         {
-            var isStateExist = await _unitOfWork.Repository<DeviceState>().GetByIdAsync ( device.DeviceStateId );
-            var isPointExist = await _unitOfWork.Repository<Point>().GetByIdAsync ( device.PointId );
+            var stateSpec = new DeviceStateSpecification ( device.DeviceState.State );
+            var pointSpec = new PointSpecification ( device.Point.Name );
+            var deviceState = await _unitOfWork.Repository<DeviceState>().GetEntityWithSpecAsync (  stateSpec );
+            var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
             
             #region Errors
             
-            if( isStateExist == null ) return EServiceResponse.StateNotExist;
-            if( isPointExist == null ) return EServiceResponse.PointNotExist;
+            if( deviceState == null ) return EServiceResponse.StateNotExist;
+            if( point == null ) return EServiceResponse.PointNotExist;
             
             #endregion
 
+            device.DeviceState = null;
+            device.Point = null;
+            device.DeviceStateId = deviceState.Id;
+            device.PointId = point.Id;
             _unitOfWork.Repository<Device>().Add ( device );
             var result = await _unitOfWork.CompleteAsync();
-
+            
+            
             return result <= 0 ? 
                 EServiceResponse.DeviceCreateFailed : 
-                EServiceResponse.DeviceCreateSuccess;
+                (EServiceResponse) device.Id;
         }
 
         

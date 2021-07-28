@@ -33,9 +33,14 @@ namespace Api.Controllers
             var device = _mapper.Map<Device> ( deviceCreateDto );
             var result = await _deviceService.CreateDevice ( device );
 
-            return result <= 0
-                ? BadRequest ( new ApiResponse ( 400, result ) )
-                : Ok ( new ApiResponse ( 200, result ) );
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
+
+            
+            var deviceCreated = await _deviceService.GetDeviceToSellById ( (int) result );
+            var deviceDto = _mapper.Map<DeviceDisplayItemDto> ( deviceCreated );
+            
+            return Ok ( deviceDto );
         }
 
 

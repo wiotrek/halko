@@ -20,6 +20,7 @@ import { ItemEditComponent } from './sites/main/main-manage/sheet-scratch/scratc
 import { ItemsSumComponent } from './sites/main/main-manage/sheet-scratch/scratch-list/items-sum/items-sum.component';
 import { MainStatisticsComponent } from './sites/main/main-manage/main-statistics/main-statistics.component';
 import { AuthInterceptorService } from './auth/auth.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { AuthInterceptorService } from './auth/auth.interceptor';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FontAwesomeModule,

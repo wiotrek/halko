@@ -1,7 +1,8 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -12,15 +13,12 @@ import { AuthService } from './auth.service';
 export class AuthComponent {
     isLoadingSpinner = false;
     faHandPeace = faHandPeace;
-    err: string = null;
 
     constructor(
         private router: Router,
-        private authService: AuthService) {}
-
-    @HostListener('click') onClick(): void {
-        this.err = null;
-    }
+        private authService: AuthService,
+        private toastr: ToastrService
+    ) {}
 
     onSubmit(form: NgForm): void {
         if (!form.valid) { return; }
@@ -34,7 +32,7 @@ export class AuthComponent {
             this.router.navigate(['']);
             this.isLoadingSpinner = false;
         }, errMsg => {
-            this.err = errMsg;
+            this.toastr.error(errMsg);
             this.isLoadingSpinner = false;
         });
 

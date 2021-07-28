@@ -2,10 +2,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
+import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructureAddBackend } from './_models/item-structure-add-backend.model';
@@ -19,8 +20,8 @@ export class MainService {
     todayDate = new Date().toISOString().slice(0, 10);
 
     // for solds items
-    private soldsItem: ItemStructure[] = [];
-    private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItem);
+    private soldsItems: ItemStructure[] = [];
+    private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItems);
     public soldsItem$ = this.soldsItemsChanged.asObservable();
 
 
@@ -82,24 +83,18 @@ export class MainService {
 
     // for solds items
 
-    getSoldsItems(): ItemStructure[] {
-        this.soldsItemsChanged.next(this.soldsItem);
-        return this.soldsItem;
-    }
-
     addNewSoldItem(el: ItemStructureAdd): void {
-        // this.soldsItem.unshift(el);
-        this.soldsItemsChanged.next(this.soldsItem);
+        this.addNewItem(el, TransactionTypeEnum.solds);
     }
 
     EditSoldItem(editedElement: ItemStructure, indElement: number): void {
-        this.soldsItem[indElement] = editedElement;
-        this.soldsItemsChanged.next(this.soldsItem);
+        this.soldsItems[indElement] = editedElement;
+        this.soldsItemsChanged.next(this.soldsItems);
     }
 
     removeSoldItem(ind: number): void {
-        this.soldsItem.splice(ind, 1);
-        this.soldsItemsChanged.next(this.soldsItem);
+        this.soldsItems.splice(ind, 1);
+        this.soldsItemsChanged.next(this.soldsItems);
     }
 
     displaySoldsSum(): Observable<number> {
@@ -115,31 +110,8 @@ export class MainService {
 
     // for expneses items
 
-    getExpensesItems(): void {
-    }
-
     addNewExpenseItem(el: ItemStructureAdd): void {
-        const elOnBackend = el as ItemStructureAddBackend;
-        elOnBackend.pointName = this.pointName;
-        elOnBackend.transactionType = 'Zakup';
-
-        this.http.post(
-            this.apiUrl + 'api/transaction',
-            elOnBackend
-        ).subscribe(
-            () => {
-                const item: ItemStructure = {
-                    productName: el.productName,
-                    price: el.price,
-                    initial: el.participantInitial,
-                    category: el.productCategoryName,
-                    type: 'Zakup',
-                    name: this.pointName
-                };
-                this.expensesItems.unshift(item);
-                this.expensesItemsChanged.next(this.expensesItems);
-            }
-        );
+        this.addNewItem(el, TransactionTypeEnum.expenses);
     }
 
     EditExpenseItem(editedElement: ItemStructure, indElement: number): void {
@@ -213,9 +185,41 @@ export class MainService {
             { params }
         ).subscribe(
             (res: ItemStructure[]) => {
-                this.soldsItem = res.filter(x => x.type === 'Sprzedaż').reverse();
+                this.soldsItems = res.filter(x => x.type === 'Sprzedaż').reverse();
+                this.soldsItemsChanged.next(this.soldsItems);
+
                 this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
                 this.expensesItemsChanged.next(this.expensesItems);
+            }
+        );
+    }
+
+    private addNewItem(el: ItemStructureAdd, transactionTypeEnum: TransactionTypeEnum): void {
+        const elOnBackend = el as ItemStructureAddBackend;
+        elOnBackend.pointName = this.pointName;
+        elOnBackend.transactionType = transactionTypeEnum;
+
+        this.http.post(
+            this.apiUrl + 'api/transaction',
+            elOnBackend
+        ).subscribe(
+            () => {
+                const item: ItemStructure = {
+                    productName: el.productName,
+                    price: el.price,
+                    initial: el.participantInitial,
+                    category: el.productCategoryName,
+                    type: transactionTypeEnum,
+                    name: this.pointName
+                };
+
+                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+                    this.expensesItems.unshift(item);
+                    this.expensesItemsChanged.next(this.expensesItems);
+                } else {
+                    this.soldsItems.unshift(item);
+                    this.soldsItemsChanged.next(this.soldsItems);
+                }
             }
         );
     }

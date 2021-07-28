@@ -1,7 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/auth/user.model';
 import { MainService } from '../main.service';
 import { CategoryItemExpenses } from '../_dictionary/category-item-expenses.dictionary';
 import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
@@ -80,8 +78,6 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private getElements(): void {
-        this.mainService.getExpensesItems();
-
         const sub = this.mainService.expensesItem$.subscribe(
             (res: ItemStructure[]) => this.items = res
         );

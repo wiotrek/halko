@@ -38,8 +38,15 @@ namespace Api.Errors
         [EnumMember(Value = "Pracownik został pomyślnie zaktualizowany")]
         ParticipantUpdatedSuccess,
         [EnumMember(Value = "Pracownik nie został zaktualizowany")]
-        ParticipantUpdatedFailed
+        ParticipantUpdatedFailed,
 
+        #endregion
+        
+        #region Transaction Messages
+        
+        [EnumMember(Value = "Transakcja nie została usunięta")]
+        TransactionDeletedFailed
+        
         #endregion
     }
 }

@@ -41,7 +41,8 @@ namespace Api.Controllers
         {
             #region Validate
 
-            if( !await IsAdmin() ) return Unauthorized();
+            if( !await IsAdmin() )
+                return Unauthorized ( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
 
             if( string.IsNullOrWhiteSpace ( participantCreateDto.Initial ) ||
                 string.IsNullOrWhiteSpace ( participantCreateDto.PointName ) )
@@ -61,7 +62,8 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<ParticipantDto>>> GetParticipantsAsync([FromQuery] string pointName)
         {
-            if (string.IsNullOrEmpty(pointName)) return BadRequest();
+            if (string.IsNullOrEmpty(pointName)) 
+                return BadRequest(new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ));
 
             var participants = await _participantService.GetParticipants ( pointName );
             var participantsToReturn = _mapper.Map<IReadOnlyList<ParticipantDto>> ( participants );

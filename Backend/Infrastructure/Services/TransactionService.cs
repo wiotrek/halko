@@ -56,10 +56,10 @@ namespace Infrastructure.Services
             _unitOfWork.Repository<Transaction>().Add ( transactionToSave );
             var result = await _unitOfWork.CompleteAsync();
 
-            
-            return result <= 0 
-                ? EServiceResponse.TransactionCreateFailed 
-                : EServiceResponse.TransactionCreateSuccess;
+
+            return result <= 0
+                ? EServiceResponse.TransactionCreateFailed
+                : (EServiceResponse) transactionToSave.Id;
         }
 
 
@@ -121,6 +121,12 @@ namespace Infrastructure.Services
             var transactions = await _unitOfWork.Repository<Transaction>().ListAsync ( transactionSpec );
 
             return transactions;
+        }
+
+
+        public async Task<Transaction> GetTransactionById( int transactionId )
+        {
+            return await _unitOfWork.Repository<Transaction>().GetByIdAsync ( transactionId );
         }
 
         

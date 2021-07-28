@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Api.Dtos;
 using Api.Errors;
+using Api.Extensions;
 using AutoMapper;
 using Core.Entities.Identity;
 using Core.Interfaces;
@@ -33,10 +34,13 @@ namespace Api.Controllers
         {
             var result = await _transactionService.CreateTransactionAsync ( transactionWebDto );
 
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
 
-            return result <= 0
-                ? BadRequest ( new ApiResponse ( 400, result ) )
-                : Ok ( new ApiResponse ( 200, result ) );
+            var transactionCreated = await _transactionService.GetTransactionById ( (int) result );
+            var transactionDto = _mapper.Map<TransactionDto> ( transactionCreated );
+
+            return Ok ( transactionDto );
         }
 
         [HttpGet]
@@ -82,10 +86,12 @@ namespace Api.Controllers
         public async Task<ActionResult<IReadOnlyList<TransactionDeletedDto>>> GetDeletedTransactionsAsync 
             ([FromQuery] DateTime? insertedDate, string pointName)
         {
-            if( !await IsAdmin() ) return Unauthorized();
+            if( !await IsAdmin() )
+                return Unauthorized ( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
             
             var deletedTransactions = await _transactionService.GetDeletedTransactionsAsync ( insertedDate, pointName );
-            if (deletedTransactions == null) return BadRequest();
+            if( deletedTransactions == null )
+                return BadRequest ( new ApiResponse ( 401, ApiErrorMessage.TransactionDeletedFailed.GetnEnumMemberValue() ) );
 
             var deletedTransactionsToReturn = _mapper.Map<IReadOnlyList<TransactionDeletedDto>> ( deletedTransactions );
 

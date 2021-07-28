@@ -6,12 +6,14 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
+import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { EmployeesInitialDictionary } from './_dictionary/employees-initial.dictionary';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from './_models/employees.model';
 import { ItemStructureAddBackend } from './_models/item-structure-add-backend.model';
 import { ItemStructureAdd } from './_models/item-structure-add.model';
+import { ItemStructureEdit } from './_models/item-structure-edit.model';
 import { ItemStructure } from './_models/item-structure.model';
 
 @Injectable({providedIn: 'root'})
@@ -92,9 +94,8 @@ export class MainService {
         this.addNewItem(el, TransactionTypeEnum.solds);
     }
 
-    EditSoldItem(editedElement: ItemStructure, indElement: number): void {
-        this.soldsItems[indElement] = editedElement;
-        this.soldsItemsChanged.next(this.soldsItems);
+    EditSoldItem(editedElement: ItemStructureEdit, ind: number): void {
+        this.editItem(editedElement, ind, TransactionTypeEnum.solds);
     }
 
     removeSoldItem(ind: number): void {
@@ -119,9 +120,8 @@ export class MainService {
         this.addNewItem(el, TransactionTypeEnum.expenses);
     }
 
-    EditExpenseItem(editedElement: ItemStructure, indElement: number): void {
-        this.expensesItems[indElement] = editedElement;
-        this.expensesItemsChanged.next(this.expensesItems);
+    EditExpenseItem(editedElement: ItemStructureEdit, ind: number): void {
+        this.editItem(editedElement, ind, TransactionTypeEnum.expenses);
     }
 
     removeExpenseItem(ind: number): void {
@@ -196,7 +196,7 @@ export class MainService {
                 this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
                 this.expensesItemsChanged.next(this.expensesItems);
             },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+            () => this.toastr.error(ErrorsDictionary.server)
         );
     }
 
@@ -206,28 +206,35 @@ export class MainService {
         elOnBackend.transactionType = transactionTypeEnum;
 
         this.http.post(
-            this.apiUrl + 'api/transaction',
-            elOnBackend
+            this.apiUrl + 'api/transaction', elOnBackend
         ).subscribe(
-            () => {
-                const item: ItemStructure = {
-                    productName: el.productName,
-                    price: el.price,
-                    initial: el.participantInitial,
-                    category: el.productCategoryName,
-                    type: transactionTypeEnum,
-                    name: this.pointName
-                };
-
+            (res: ItemStructure) => {
                 if (transactionTypeEnum === TransactionTypeEnum.expenses) {
-                    this.expensesItems.unshift(item);
+                    this.expensesItems.unshift(res);
                     this.expensesItemsChanged.next(this.expensesItems);
                 } else {
-                    this.soldsItems.unshift(item);
+                    this.soldsItems.unshift(res);
                     this.soldsItemsChanged.next(this.soldsItems);
                 }
             },
             (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+        );
+    }
+
+    private editItem(el: ItemStructureEdit, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
+
+        this.http.put(
+            this.apiUrl + 'api/transaction', el
+        ).subscribe(
+            (res: ItemStructure) => {
+                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+                    this.expensesItems[ind] = res;
+                    this.expensesItemsChanged.next(this.expensesItems);
+                } else {
+                    this.soldsItems[ind] = res;
+                    this.soldsItemsChanged.next(this.expensesItems);
+                }
+            }, (err: HttpErrorResponse) => this.toastr.error(err.error.message)
         );
     }
 }

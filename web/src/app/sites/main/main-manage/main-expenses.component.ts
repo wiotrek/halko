@@ -5,6 +5,7 @@ import { CategoryItemExpenses } from '../_dictionary/category-item-expenses.dict
 import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
 import { Employees } from '../_models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
+import { ItemStructureEdit } from '../_models/item-structure-edit.model';
 import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
@@ -54,7 +55,7 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
         this.mainService.addNewExpenseItem(newElement);
     }
 
-    editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
+    editElementFunc(elementToEdit: {newElement: ItemStructureEdit, ind: number}): void {
         this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
@@ -78,11 +79,9 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     }
 
     private getElements(): void {
-        const sub = this.mainService.expensesItem$.subscribe(
+        this.mainService.expensesItem$.subscribe(
             (res: ItemStructure[]) => this.items = res
         );
-
-        this.subscription.add(sub);
     }
 
     private displaySum(): void {

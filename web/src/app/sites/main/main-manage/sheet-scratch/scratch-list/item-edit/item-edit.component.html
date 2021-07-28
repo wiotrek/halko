@@ -7,7 +7,7 @@
 
     <select
         class="editMode__ini"
-        name="initial"
+        name="participantInitial"
         [ngModel]="ourItem.initial"
     >
         <option
@@ -18,7 +18,7 @@
 
     <select
         class="editMode__category"
-        name="category"
+        name="productCategoryName"
         [ngModel]="ourItem.category"
     >
         <option
@@ -32,7 +32,7 @@
     <input
         type="text"
         class="editMode__name"
-        name="name"
+        name="productName"
         [ngModel]="ourItem.productName"
     >
 
@@ -55,7 +55,7 @@
 
         <button
             class="editMode__edit__option"
-            (click)="editElementForm.valid && editElementFunc(editElementForm, indexOfElement)"
+            (click)="editElementForm.valid && editElementFunc(editElementForm)"
         >
             <fa-icon [icon]="faSave"></fa-icon>
         </button>

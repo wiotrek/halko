@@ -5,6 +5,7 @@ import { CategoryItemSolds } from '../_dictionary/catogory-item-solds.dictionary
 import { EmployeesInitialDictionary } from '../_dictionary/employees-initial.dictionary';
 import { Employees } from '../_models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
+import { ItemStructureEdit } from '../_models/item-structure-edit.model';
 import { ItemStructure } from '../_models/item-structure.model';
 
 @Component({
@@ -53,7 +54,7 @@ export class MainSalesComponent implements OnInit, OnDestroy {
         this.mainService.addNewSoldItem(newElement);
     }
 
-    editElementFunc(elementToEdit: { newElement: ItemStructure, ind: number}): void {
+    editElementFunc(elementToEdit: {newElement: ItemStructureEdit, ind: number}): void {
         this.mainService.EditSoldItem(elementToEdit.newElement, elementToEdit.ind);
         this.currentlyEditedElement = -1;
     }
@@ -76,10 +77,9 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     }
 
     private getElements(): void {
-        const sub = this.mainService.soldsItem$.subscribe(
+        this.mainService.soldsItem$.subscribe(
             (res: ItemStructure[]) => this.items = res
         );
-        this.subscription.add(sub);
     }
 
     private displaySum(): void {

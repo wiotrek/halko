@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -35,7 +36,8 @@ namespace Infrastructure.Services
             {
                 Subject = new ClaimsIdentity ( claims ),
                 SigningCredentials = creds,
-                Issuer = _config["Token:Issuer"]
+                Issuer = _config["Token:Issuer"],
+                Expires = DateTime.Now.AddDays(30)
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

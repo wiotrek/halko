@@ -3,6 +3,7 @@ import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
 import { faTrashAlt, faUndoAlt, faSave } from '@fortawesome/free-solid-svg-icons';
 import { Employees } from 'src/app/sites/main/_models/employees.model';
 import { NgForm } from '@angular/forms';
+import { ItemStructureEdit } from 'src/app/sites/main/_models/item-structure-edit.model';
 
 @Component({
     selector: 'app-item-edit',
@@ -16,9 +17,12 @@ export class ItemEditComponent {
     @Input() category: string[];
     @Input() employees: Employees[];
 
-    @Output() deleteElement: EventEmitter<number> = new EventEmitter();
+    @Output() deleteElement: EventEmitter<
+    { indexBackend: string, indexArr: number }
+    > = new EventEmitter();
+
     @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
-    @Output() editElement: EventEmitter<{newElement: ItemStructure, ind: number}> = new EventEmitter();
+    @Output() editElement: EventEmitter<{newElement: ItemStructureEdit, ind: number}> = new EventEmitter();
 
 
     // icons
@@ -26,19 +30,21 @@ export class ItemEditComponent {
     faUndoAlt = faUndoAlt;
     faSave = faSave;
 
-    deleteElementFunc = (ind: number) => {
-        this.deleteElement.emit(ind);
+    deleteElementFunc = () => {
+        this.deleteElement.emit({
+            indexBackend: this.ourItem.id.toString(), indexArr: this.indexOfElement
+        });
     }
 
-    editElementFunc = (f: NgForm, ind: number) => {
-        const newElement = f.value as ItemStructure;
+    editElementFunc = (f: NgForm) => {
+        const newElement = f.value as ItemStructureEdit;
+        newElement.id = this.ourItem.id.toString();
 
-        const editElementEmit = { newElement, ind };
-
-        this.editElement.emit(editElementEmit);
+        const readyElement = { newElement, ind: this.indexOfElement };
+        this.editElement.emit(readyElement);
     }
 
-    editElementModeToggleFunc = (ind: number) => {
-        this.editModeToggle.emit(ind);
+    editElementModeToggleFunc = () => {
+        this.editModeToggle.emit(this.indexOfElement);
     }
 }

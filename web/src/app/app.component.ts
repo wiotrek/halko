@@ -6,15 +6,12 @@ import { AuthService } from './auth/auth.service';
   template: '<router-outlet></router-outlet>'
 })
 export class AppComponent implements OnInit{
-  isUserExist = true;
 
-  constructor(
-    private authService: AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
     this.checkUser();
   }
-
 
   // setting current user if exist date on datastorage
   // if user doesnt exist then auth.guard move user to urltree = /logowanie

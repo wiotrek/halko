@@ -4,9 +4,13 @@ export class User {
         private role: string,
         private pointNames: string[],
         private token: string,
+        private tokenExpirationDate: Date
     ) {}
 
     get tokenFunc(): string {
+        if (!this.tokenExpirationDate || new Date() > this.tokenExpirationDate) {
+            return null;
+        }
         return this.token;
     }
 

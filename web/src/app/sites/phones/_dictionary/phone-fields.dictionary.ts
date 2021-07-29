@@ -2,7 +2,7 @@ import { PhoneFieldsModel } from '../_models/phone-fields.model';
 
 export const PhoneFields: PhoneFieldsModel[] = [
     {
-        categoryName: 'brand',
+        categoryName: 'producer',
         polishName: 'Producent',
         isNumber: false
     },
@@ -22,12 +22,12 @@ export const PhoneFields: PhoneFieldsModel[] = [
         isNumber: false
     },
     {
-        categoryName: 'comments',
+        categoryName: 'comment',
         polishName: 'Uwagi',
         isNumber: false
     },
     {
-        categoryName: 'bought',
+        categoryName: 'priceBuyed',
         polishName: 'Cena zakupu',
         isNumber: true
     },

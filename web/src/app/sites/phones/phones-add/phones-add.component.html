@@ -4,15 +4,15 @@
     (ngSubmit)="addNewPhone(addPhone)"
 >
 
-    <ng-template 
+    <ng-template
         #phone
         let-categoryName="categoryName"
         let-polishName="polishName"
         let-isNumber="isNumber"
     >
-            
+
         <label [for]="categoryName">{{polishName}}:</label>
-        <input 
+        <input
             type="text"
             [id]="categoryName"
             [name]="categoryName"
@@ -26,7 +26,7 @@
 
     </ng-template>
 
-    <div 
+    <div
         class="new-phone__field form-text"
         *ngFor="let field of fields"
     >
@@ -44,7 +44,7 @@
     <div class="new-phone__field form-text">
         <label for="state">Stan:</label>
 
-        <select 
+        <select
             name="state"
             id="state"
             [ngModel]="phoneStates[0]"

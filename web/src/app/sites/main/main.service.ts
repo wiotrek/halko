@@ -45,14 +45,14 @@ export class MainService {
                 user
                 ? this.pointName = user.pointName
                 : this.pointName = 'Punkt';
-
-                this.getAllItemsInitialFunc();
             },
             (err: HttpErrorResponse) => {
                 this.toastr.error(err.error.message);
                 this.pointName = 'Punkt';
             }
         );
+
+        this.getAllItemsInitialFunc();
     }
 
 

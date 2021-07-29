@@ -18,7 +18,7 @@
                 margin-right: 10px;
                 width: 100px;
             }
-    
+
             input {
                 border: 0;
                 background-color: transparent;
@@ -26,11 +26,11 @@
                 font-size: .6rem;
                 text-align: center;
 
-                &.bought, &.price {
+                &.priceBuyed, &.price {
                     width: 40px;
                 }
 
-                &.bought + span::after,
+                &.priceBuyed + span::after,
                 &.price + span::after {
                     content: ' zł';
                 }
@@ -46,7 +46,7 @@
         &__submit-button {
             margin-top: 10px;
             text-align: center;
-            
+
             &__btn {
                 @include firstlyBtn;
                 font-size: .7rem;
@@ -63,14 +63,14 @@
 
         &__field {
 
-    
+
             input {
                 font-size: .7rem;
             }
         }
 
         &__submit-button {
-            
+
             &__btn {
                 font-size: .8rem;
             }

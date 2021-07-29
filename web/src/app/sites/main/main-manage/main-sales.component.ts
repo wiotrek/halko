@@ -59,8 +59,10 @@ export class MainSalesComponent implements OnInit, OnDestroy {
         this.currentlyEditedElement = -1;
     }
 
-    deleteElementFunc = (ind: number) => {
-        this.mainService.removeSoldItem(ind);
+    deleteElementFunc = (el: {indexBackend: string, indexArr: number}) => {
+        this.mainService.removeSoldItem(
+            el.indexBackend, el.indexArr
+        );
 
         // because next element inherit editmode
         this.currentlyEditedElement = -1;
@@ -91,5 +93,4 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
     }
-
 }

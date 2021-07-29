@@ -17,7 +17,10 @@ export class ItemEditComponent {
     @Input() category: string[];
     @Input() employees: Employees[];
 
-    @Output() deleteElement: EventEmitter<number> = new EventEmitter();
+    @Output() deleteElement: EventEmitter<
+    { indexBackend: string, indexArr: number }
+    > = new EventEmitter();
+
     @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
     @Output() editElement: EventEmitter<{newElement: ItemStructureEdit, ind: number}> = new EventEmitter();
 
@@ -27,8 +30,10 @@ export class ItemEditComponent {
     faUndoAlt = faUndoAlt;
     faSave = faSave;
 
-    deleteElementFunc = (ind: number) => {
-        this.deleteElement.emit(ind);
+    deleteElementFunc = () => {
+        this.deleteElement.emit({
+            indexBackend: this.ourItem.id.toString(), indexArr: this.indexOfElement
+        });
     }
 
     editElementFunc = (f: NgForm) => {
@@ -39,7 +44,7 @@ export class ItemEditComponent {
         this.editElement.emit(readyElement);
     }
 
-    editElementModeToggleFunc = (ind: number) => {
-        this.editModeToggle.emit(ind);
+    editElementModeToggleFunc = () => {
+        this.editModeToggle.emit(this.indexOfElement);
     }
 }

@@ -33,7 +33,6 @@ export class MainService {
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
-
     private employeesCache = new Map();
 
     constructor(
@@ -42,16 +41,18 @@ export class MainService {
         private toastr: ToastrService
     ) {
         this.authService.user.subscribe(
-            (user: User) =>  user
+            (user: User) =>  {
+                user
                 ? this.pointName = user.pointName
-                : this.pointName = 'Punkt'
-            , (err: HttpErrorResponse) => {
+                : this.pointName = 'Punkt';
+
+                this.getAllItemsInitialFunc();
+            },
+            (err: HttpErrorResponse) => {
                 this.toastr.error(err.error.message);
                 this.pointName = 'Punkt';
             }
         );
-
-        this.getAllItemsInitialFunc();
     }
 
 
@@ -94,13 +95,12 @@ export class MainService {
         this.addNewItem(el, TransactionTypeEnum.solds);
     }
 
-    EditSoldItem(editedElement: ItemStructureEdit, ind: number): void {
-        this.editItem(editedElement, ind, TransactionTypeEnum.solds);
+    EditSoldItem(el: ItemStructureEdit, ind: number): void {
+        this.editItem(el, ind, TransactionTypeEnum.solds);
     }
 
-    removeSoldItem(ind: number): void {
-        this.soldsItems.splice(ind, 1);
-        this.soldsItemsChanged.next(this.soldsItems);
+    removeSoldItem(indBackend: string, ind: number): void {
+        this.removeItem(indBackend, ind, TransactionTypeEnum.solds);
     }
 
     displaySoldsSum(): Observable<number> {
@@ -120,13 +120,12 @@ export class MainService {
         this.addNewItem(el, TransactionTypeEnum.expenses);
     }
 
-    EditExpenseItem(editedElement: ItemStructureEdit, ind: number): void {
-        this.editItem(editedElement, ind, TransactionTypeEnum.expenses);
+    EditExpenseItem(el: ItemStructureEdit, ind: number): void {
+        this.editItem(el, ind, TransactionTypeEnum.expenses);
     }
 
-    removeExpenseItem(ind: number): void {
-        this.expensesItems.splice(ind, 1);
-        this.expensesItemsChanged.next(this.expensesItems);
+    removeExpenseItem(indBackend: string, ind: number): void {
+        this.removeItem(indBackend, ind, TransactionTypeEnum.expenses);
     }
 
     displayExpensesSum(): Observable<number> {
@@ -232,9 +231,31 @@ export class MainService {
                     this.expensesItemsChanged.next(this.expensesItems);
                 } else {
                     this.soldsItems[ind] = res;
-                    this.soldsItemsChanged.next(this.expensesItems);
+                    this.soldsItemsChanged.next(this.soldsItems);
                 }
-            }, (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+            },
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+        );
+    }
+
+    private removeItem(indBackend: string, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
+        let params = new HttpParams();
+        params = params.set('id', indBackend);
+
+        this.http.delete(
+            this.apiUrl + 'api/transaction',
+            { params }
+        ).subscribe(
+            () => {
+                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+                    this.expensesItems.splice(ind, 1);
+                    this.expensesItemsChanged.next(this.expensesItems);
+                } else {
+                    this.soldsItems.splice(ind, 1);
+                    this.soldsItemsChanged.next(this.soldsItems);
+                }
+            },
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
         );
     }
 }

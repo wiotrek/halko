@@ -60,8 +60,10 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
         this.currentlyEditedElement = -1;
     }
 
-    deleteElementFunc = (ind: number) => {
-        this.mainService.removeExpenseItem(ind);
+    deleteElementFunc = (el: {indexBackend: string, indexArr: number}) => {
+        this.mainService.removeExpenseItem(
+            el.indexBackend, el.indexArr
+        );
 
         // because next element inherit editmode
         this.currentlyEditedElement = -1;

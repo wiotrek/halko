@@ -51,9 +51,9 @@
         <ng-container 
             *ngTemplateOutlet="view; context: {
                 mainOrCommon: 'main',
-                categoryName: 'brand',
+                categoryName: 'producer',
                 polishName: 'Producent',
-                objValue: elInList.brand,
+                objValue: elInList.producer,
                 editModeNotAvailable: false
             }"
         ></ng-container>
@@ -71,9 +71,9 @@
         <ng-container 
             *ngTemplateOutlet="view; context: {
                 mainOrCommon: 'main',
-                categoryName: 'place',
+                categoryName: 'name',
                 polishName: 'Punkt',
-                objValue: elInList.place,
+                objValue: elInList.name,
                 editModeNotAvailable: true
             }"
         ></ng-container>
@@ -143,9 +143,9 @@
         <ng-container 
             *ngTemplateOutlet="view; context: {
                 mainOrCommon: 'common',
-                categoryName: 'comments',
+                categoryName: 'comment',
                 polishName: 'Uwagi',
-                objValue: elInList.comments,
+                objValue: elInList.comment,
                 editModeNotAvailable: false
             }"
         ></ng-container>
@@ -153,9 +153,9 @@
         <ng-container 
             *ngTemplateOutlet="view; context: {
                 mainOrCommon: 'common',
-                categoryName: 'bought-date',
+                categoryName: 'date-buyed',
                 polishName: 'Data zakupu',
-                objValue: elInList.dateBought,
+                objValue: elInList.dateBuyed | date:'dd.MM.yyyy',
                 editModeNotAvailable: true
             }"
         ></ng-container>
@@ -163,9 +163,9 @@
         <ng-container 
             *ngTemplateOutlet="view; context: {
                 mainOrCommon: 'common',
-                categoryName: 'bought',
+                categoryName: 'priceBuyed',
                 polishName: 'Cena zakupu',
-                objValue: elInList.bought,
+                objValue: elInList.priceBuyed,
                 editModeNotAvailable: false,
                 isNumber: true
             }"

@@ -16,9 +16,7 @@ import { PhoneModel } from '../_models/phone.model';
 export class PhonesListComponent implements OnInit {
     phonesList: PhoneModel[];
 
-    constructor(
-        private phoneService: PhonesService
-    ) {}
+    constructor(private phoneService: PhonesService) {}
 
     ngOnInit(): void {
         this.getPhones();
@@ -26,9 +24,7 @@ export class PhonesListComponent implements OnInit {
 
     private getPhones(): void {
         this.phoneService.phoneList$.subscribe(
-            (res: PhoneModel[]) => {
-                this.phonesList = res;
-            }
+            (res: PhoneModel[]) => this.phonesList = res
         );
     }
 }

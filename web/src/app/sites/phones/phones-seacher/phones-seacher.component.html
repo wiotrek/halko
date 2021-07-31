@@ -77,10 +77,10 @@
 
                 <div
                     class="searcher__right-side__points-names__dropdown__option"
-                    *ngFor="let point of pointsNames"
-                    (click)="defaultPoint = point"
+                    *ngFor="let point of points"
+                    (click)="defaultPoint = point.name"
                 >
-                    {{point}}
+                    {{point.name}}
                 </div>
 
             </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
     faArrowUp,
     faArrowDown,
@@ -6,6 +6,8 @@ import {
     faCaretDown
 } from '@fortawesome/free-solid-svg-icons';
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
+import { PhonesService } from '../phones.service';
+import { Point } from '../_models/point.model';
 
 
 @Component({
@@ -14,7 +16,7 @@ import { Dictionary } from 'src/app/shared/models/dictionary.model';
     styleUrls: ['./phones-seacher.component.scss']
 })
 
-export class PhonesSeacherComponent {
+export class PhonesSeacherComponent implements OnInit {
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
     faCaretDown = faCaretDown;
@@ -35,11 +37,25 @@ export class PhonesSeacherComponent {
 
     state = 'all';
 
-    pointsNames = [
-        'Wszystkie',
-        'Karuzela Września',
-        'Kaufland Poznań'
-    ];
+    points: Point[];
 
     defaultPoint = 'Karuzela Września';
+
+    constructor(private phonesService: PhonesService) {}
+
+    ngOnInit(): void {
+        this.getPointName();
+        this.getListPoints();
+    }
+
+    private getListPoints(): void {
+        this.phonesService.getListPoints().subscribe(
+            (res: Point[]) => this.points = res,
+            () => this.points = [{ id: -1, name: 'Brak' }]
+        );
+    }
+
+    private getPointName(): void {
+        this.defaultPoint = this.phonesService.pointName;
+    }
 }

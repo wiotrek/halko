@@ -69,9 +69,8 @@ export class PhonesService {
             this.apiUrl + 'api/device',
             phone, { params }
         ).subscribe(
-            (res: PhoneModel) => {
-                this.phoneList.push(res);
-                this.phoneListChanged.next(this.phoneList);
+            () => {
+                this.getPhones();
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
             },
             (err: HttpErrorResponse) =>
@@ -92,16 +91,19 @@ export class PhonesService {
         params = params.set('id', phoneId);
         params = params.append('point', pointToTransfer);
 
-        this.http.get(
-            this.apiUrl + 'api/device', { params }
+        this.http.put(
+            this.apiUrl + 'api/device/move', {}, { params }
         ).subscribe(
             () => {
                 this.getPhones();
                 this.toastr.success('Telefon został wysłany');
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
             },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
+            (err: HttpErrorResponse) => {
+                err
+                ? this.toastr.error(err.error.message)
+                : this.toastr.error(this.errorsDictionary.bad);
+            }
         );
     }
 

@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" *ngIf="show; else lackPoints">
 
     <div class="header">
         Przekazujesz {{elInList.producer +' '+elInList.model}}
@@ -20,13 +20,13 @@
         <select
             class="form-transfer__select-place"
             id="place"
-            name="place"
-            [ngModel]="elInList.name"
+            name="point"
+            [ngModel]="points[0].name"
             required
         >
             <option
                 *ngFor="let point of points"
-                [value]="point"
+                [value]="point.name"
             >
                 {{point.name}}
             </option>
@@ -42,3 +42,9 @@
     </form>
 
 </div>
+
+<ng-template #lackPoints>
+    <div class="wrapper">
+        <div class="header">Brak punktów do przekazania</div>
+    </div>
+</ng-template>

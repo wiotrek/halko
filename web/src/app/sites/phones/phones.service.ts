@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
+import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from './_models/point.model';
@@ -15,6 +16,8 @@ import { Point } from './_models/point.model';
 export class PhonesService {
     pointName: string;
     apiUrl = environment.api;
+
+    errorsDictionary = ErrorsDictionary;
 
     points: Point[] = [];
 
@@ -66,13 +69,41 @@ export class PhonesService {
             this.apiUrl + 'api/device',
             phone, { params }
         ).subscribe(
-            (res: PhoneModel) => {
-                this.phoneList.push(res);
-                this.phoneListChanged.next(this.phoneList);
+            () => {
+                this.getPhones();
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
             },
             (err: HttpErrorResponse) =>
                 this.toastr.error(err.error.message)
+        );
+    }
+
+    // this fuction agree transfer phone to another point.
+    // if point is same as loged point then return toastr error
+    movePhone(phoneId: string, pointToTransfer: string): void {
+
+        if (this.pointName === pointToTransfer) {
+            this.toastr.error(this.errorsDictionary.operation);
+            return;
+        }
+
+        let params = new HttpParams();
+        params = params.set('id', phoneId);
+        params = params.append('point', pointToTransfer);
+
+        this.http.put(
+            this.apiUrl + 'api/device/move', {}, { params }
+        ).subscribe(
+            () => {
+                this.getPhones();
+                this.toastr.success('Telefon został wysłany');
+                this.router.navigate([`./telefony`], { relativeTo: this.route });
+            },
+            (err: HttpErrorResponse) => {
+                err
+                ? this.toastr.error(err.error.message)
+                : this.toastr.error(this.errorsDictionary.bad);
+            }
         );
     }
 

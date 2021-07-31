@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 import { Point } from 'src/app/sites/phones/_models/point.model';
@@ -9,10 +10,14 @@ import { Point } from 'src/app/sites/phones/_models/point.model';
     templateUrl: './phones-transfer.component.html',
     styleUrls: ['./phones-transfer.component.scss']
 })
-export class PhonesTransferComponent implements OnInit {
+export class PhonesTransferComponent implements OnInit, OnDestroy {
     @Input() elInList: PhoneModel;
 
+    show = true;
+
     points: Point[];
+
+    subscription: Subscription;
 
     constructor(private phonesService: PhonesService) {}
 
@@ -21,12 +26,27 @@ export class PhonesTransferComponent implements OnInit {
     }
 
     transferPhoneFunc(f: NgForm): void {
-        console.log(f.value);
+        this.phonesService.movePhone(
+            this.elInList.id, f.value.point
+        );
     }
 
     private getListPoints(): void {
-        this.phonesService.getListPoints().subscribe(
-            (res: Point[]) => this.points = res
+        const sub = this.phonesService.getListPoints().subscribe(
+            (res: Point[]) => {
+                this.points = res;
+                this.show = this.points.length > 1;
+            },
+            () => {
+                this.show = false;
+                this.points = [{id: -1, name: 'Brak'}];
+            }
         );
+
+        this.subscription = sub;
+    }
+
+    ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }

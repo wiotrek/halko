@@ -1,17 +1,19 @@
 using System;
 using System.Threading.Tasks;
 using Api.Extensions;
-using Core.Entities.Halko;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Core.IoC.Base;
+using Core.IoC.Interfaces;
+using Core.Logging;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using LogLevel = Core.Logging.LogLevel;
 
 namespace Api
 {
@@ -27,6 +29,15 @@ namespace Api
                 
                 // Collect log information
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+                IoC.Setup();
+                IoC.Kernel.Bind<ILogFactory>().ToConstant ( new BaseLogFactory() );
+                IoC.Logger.Log ( "Application starting up..." );
+                IoC.Logger.Log ( "This is Debug", LogLevel.Debug );
+                IoC.Logger.Log ( "This is Error", LogLevel.Error );
+                IoC.Logger.Log ( "This is Informative", LogLevel.Informative );
+                IoC.Logger.Log ( "This is Success", LogLevel.Success );
+                IoC.Logger.Log ( "This is Verbose", LogLevel.Verbose );
+                IoC.Logger.Log ( "This is Warning", LogLevel.Warning );
 
                 // When application is starting, then create database from existing migration
                 try

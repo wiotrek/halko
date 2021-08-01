@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ItemInListModel } from '../../../../_models/item-in-list.model';
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { NgForm } from '@angular/forms';
+import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
+import { PhonesService } from 'src/app/sites/phones/phones.service';
 
 @Component({
     selector: 'app-phones-sold',
@@ -9,11 +10,17 @@ import { NgForm } from '@angular/forms';
     styleUrls: ['./phones-sold.component.scss']
 })
 export class PhonesSoldComponent {
-    @Input() elInList: ItemInListModel;
+    @Input() elInList: PhoneModel;
 
     faMobileAlt = faMobileAlt;
 
+    constructor(
+        private phonesService: PhonesService
+    ) {}
+
     soldPhoneFunc(f: NgForm): void {
-        console.log(f.value);
+        this.phonesService.sellPhone(
+            this.elInList.id, f.value.price
+        );
     }
 }

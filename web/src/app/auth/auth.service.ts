@@ -51,7 +51,7 @@ export class AuthService {
         if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
         }
-        this.tokenExpirationTimer = null;
+        window.location.reload();
     }
 
     autoLogin(): void {

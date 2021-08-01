@@ -1,24 +1,24 @@
 <div class="wrapper">
-    
+
     <div class="header">
-        Sprzedajesz {{elInList.brand +' '+elInList.model}}
+        Sprzedajesz {{elInList.producer +' '+elInList.model}}
         <fa-icon [icon]="faMobileAlt"></fa-icon>
     </div>
 
-    <form 
+    <form
         class="form-sold"
         #soldPhone="ngForm"
         (ngSubmit)="soldPhone.valid && soldPhoneFunc(soldPhone)"
     >
-        
+
         <label
             class="form-sold__label-price"
             for="price"
         >
-            Cena: 
+            Cena:
         </label>
-        
-        <input 
+
+        <input
             class="form-sold__input-price"
             type="text"
             id="price"

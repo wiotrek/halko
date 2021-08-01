@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -104,6 +104,24 @@ export class PhonesService {
                 ? this.toastr.error(err.error.message)
                 : this.toastr.error(this.errorsDictionary.bad);
             }
+        );
+    }
+
+    sellPhone(phoneId: string, price: number): void {
+        let params = new HttpParams();
+        params = params.set('id', phoneId);
+        params = params.append('price', price.toString());
+
+        this.http.put(
+            this.apiUrl + 'api/device/sell', {}, { params }
+        ).subscribe(
+            (res: HttpErrorResponse) => {
+                this.getPhones();
+                this.toastr.success(res.message);
+                this.router.navigate([`./telefony`], { relativeTo: this.route });
+            },
+            (err: HttpErrorResponse) =>
+                this.toastr.error(err.error.message)
         );
     }
 

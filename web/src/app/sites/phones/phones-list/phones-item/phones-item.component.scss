@@ -22,38 +22,18 @@
                 width: 10px;
             }
     
-            &__brand {
+            &__producer, &__model{
                 width: 80px;
             }
     
-            &__model {
-                width: 80px;
-            }
-    
-            &__imei {
-                display: none;
-            }
-    
-            &__color {
-                display: none;
-            }
-    
-            &__place {
-                display: none;
-            }
-    
-            &__state {
-                display: none;
-            }
-    
-            &__bought {
+            &__imei, &__color, &__name,
+            &__state, &__priceBuyed {
                 display: none;
             }
     
             &__price {
                 width: 50px;
             }
-
 
             &__editing {
                 border: 0;
@@ -100,7 +80,7 @@
                 display: initial;
             }
     
-            &__place {
+            &__name {
                 width: 120px;
                 display: initial;
             }
@@ -110,7 +90,7 @@
                 display: initial;
             }
     
-            &__bought {
+            &__priceBuyed {
                 width: 50px;
                 display: initial;
             }

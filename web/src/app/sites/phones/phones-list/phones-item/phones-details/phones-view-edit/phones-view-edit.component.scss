@@ -11,9 +11,9 @@
         &__main, &__common {
             margin-top: 10px;
 
-            &__brand, &__model, &__model,
-            &__place, &__state, &__imei, &__color,
-            &__comments, &__bought-date, &__bought,
+            &__producer, &__model, &__name,
+            &__state, &__imei, &__color,
+            &__comment, &__date-buyed, &__priceBuyed,
             &__price {
                 margin-top: 5px;
                 display: flex;

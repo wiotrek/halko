@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
-import { ItemInListModel } from '../../../../_models/item-in-list.model';
+import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 
 @Component({
     selector: 'app-phones-view-edit',
@@ -9,12 +9,12 @@ import { ItemInListModel } from '../../../../_models/item-in-list.model';
     styleUrls: ['./phones-view-edit.component.scss']
 })
 export class PhonesViewEditComponent {
-    @Input() elInList: ItemInListModel;
+    @Input() elInList: PhoneModel;
     @Input() editMode: boolean;
 
     phoneStates = PhoneStates;
 
     updatePhoneFunc(f: NgForm): void {
-        console.log(f.value as ItemInListModel);
+        console.log(f.value as PhoneModel);
     }
 }

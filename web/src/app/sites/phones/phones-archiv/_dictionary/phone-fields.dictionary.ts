@@ -1,10 +1,11 @@
 export const PhoneFieldsDictionary: string[] = [
-    'brand',
+    'producer',
     'model',
     'imei',
+    'name',
     'color',
-    'place',
+    'dateSold',
     'state',
-    'bought',
+    'priceBuyed',
     'price'
 ];

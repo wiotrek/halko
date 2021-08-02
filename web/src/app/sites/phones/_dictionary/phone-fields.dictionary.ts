@@ -14,7 +14,7 @@ export const PhoneFields: PhoneFieldsModel[] = [
     {
         categoryName: 'imei',
         polishName: 'Imei',
-        isNumber: true
+        isNumber: false
     },
     {
         categoryName: 'color',

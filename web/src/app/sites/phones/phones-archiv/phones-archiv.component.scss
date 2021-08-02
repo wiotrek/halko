@@ -20,7 +20,7 @@
             width: 10px;
         }
 
-        &__brand, &__model, &__price {
+        &__producer, &__model, &__price {
             width: 80px;
         }
 
@@ -28,8 +28,8 @@
             width: 100px;
         }
 
-        &__color, &__place, 
-        &__state, &__bought {
+        &__color, &__name, &__dateSold,
+        &__state, &__priceBuyed {
             display: none;
         }
 
@@ -42,8 +42,8 @@
 @media (min-width: $minValueDesktop) {
     .elInList {
 
-        &__imei, &__color, &__place,
-        &__state, &__bought {
+        &__imei, &__color, &__name,
+        &__dateSold, &__state, &__priceBuyed {
             display: initial;
         }
 
@@ -55,13 +55,14 @@
             width: 70px;
         }
 
-        &__place {
+        &__name {
             width: 120px;
         }
 
-        &__state, &__bought {
+        &__state, &__priceBuyed, &__dateSold {
             width: 50px;
         }
+
 
         &:hover {
             color: $prettyGreen;

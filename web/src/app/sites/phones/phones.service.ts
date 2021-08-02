@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
@@ -24,6 +24,8 @@ export class PhonesService {
     phoneList: PhoneModel[] = [];
     private phoneListChanged = new BehaviorSubject<PhoneModel[]>(this.phoneList);
     public phoneList$ = this.phoneListChanged.asObservable();
+
+    archivPhoneList: PhoneModel[] = [];
 
     constructor(
         private authService: AuthService,
@@ -125,11 +127,27 @@ export class PhonesService {
         );
     }
 
+    getArchivList(): Observable<PhoneModel[]> {
+        let params = new HttpParams();
+        params = params.set('point', this.pointName);
+
+        return this.http.get<PhoneModel[]>(
+            this.apiUrl + 'api/device/sold', { params }
+        ).pipe(
+            catchError(
+                (err: HttpErrorResponse) => {
+                    this.toastr.error(err.error.message);
+                    return throwError(err.error.message);
+                }
+            )
+        );
+    }
+
     private getPhones(): void {
         let params = new HttpParams();
         params = params.set('point', this.pointName);
 
-        this.http.get(
+        this.http.get<PhoneModel[]>(
             this.apiUrl + 'api/device', { params }
         ).subscribe(
             (res: PhoneModel[]) => {

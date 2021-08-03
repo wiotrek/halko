@@ -16,28 +16,16 @@ namespace Core.IoC.Base
         /// A shortcut to access the <see cref="ILogFactory"/>
         /// </summary>
         public static ILogFactory Logger => Get<ILogFactory>();
-
-        #endregion
-
-        #region Construction
-
+        
         /// <summary>
-        /// Sets up the IoC container, binds all information required and is ready for use
-        /// NOTE: Must be called as soon as your application starts up to ensure all 
-        ///       services can be found
+        /// A shortcut to access the <see cref="IFileManager"/>
         /// </summary>
-        public static void Setup()
-        {
-            // Bind all required view models
-            BindViewModels();
-        }
-
+        public static IFileManager File => Get<IFileManager>();
+        
         /// <summary>
-        /// Binds all singleton view models
+        /// A shortcut to access the <see cref="ITaskManager"/>
         /// </summary>
-        private static void BindViewModels()
-        {
-        }
+        public static ITaskManager Task => Get<ITaskManager>();
 
         #endregion
 

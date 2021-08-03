@@ -15,9 +15,7 @@ export class PhonesViewEditComponent {
 
     phoneStates = PhoneStates;
 
-    constructor(
-        private phoneService: PhonesService
-    ) {}
+    constructor(private phoneService: PhonesService) {}
 
     updatePhoneFunc(f: NgForm): void {
         const phoneRaw = f.value as PhoneModel;

@@ -118,11 +118,9 @@ export class PhonesService {
                 this.toastr.success('Telefon został wysłany');
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
             },
-            (err: HttpErrorResponse) => {
-                err
+            (err: HttpErrorResponse) => err
                 ? this.toastr.error(err.error.message)
-                : this.toastr.error(this.errorsDictionary.bad);
-            }
+                : this.toastr.error(this.errorsDictionary.bad)
         );
     }
 

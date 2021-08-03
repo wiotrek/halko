@@ -5,7 +5,9 @@ import { PhoneModel } from '../_models/phone.model';
 @Component({
     selector: 'app-phones-list',
     template: `
-        <app-phones-seacher></app-phones-seacher>
+        <app-phones-seacher
+            (searchString)="searchElement($event)"
+        ></app-phones-seacher>
         <app-phones-item
             *ngFor="let phone of phonesList; index as i"
             [elInList]="phone"
@@ -20,6 +22,17 @@ export class PhonesListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getPhones();
+    }
+
+    searchElement(name: string): void {
+        this.phoneService.phoneList$.subscribe(
+            (res: PhoneModel[]) => {
+                this.phonesList = res.filter(
+                    x => x.producer.toLowerCase().includes(name.toLowerCase())
+                    || x.model.toLowerCase().includes(name.toLowerCase())
+                );
+            }
+        );
     }
 
     private getPhones(): void {

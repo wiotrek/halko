@@ -11,15 +11,15 @@ export class PhonesDetailsComponent implements OnInit{
 
     // these elements will replacement each other
     @ViewChild(
-        'viewAndEditPhone', {static: true}
+        'viewAndEditPhone', { static: true }
     ) viewAndEditPhone: TemplateRef<any> | null = null;
 
     @ViewChild(
-        'soldPhone', {static: true}
+        'soldPhone', { static: true }
     ) soldPhone: TemplateRef<any> | null = null;
 
     @ViewChild(
-        'sendPhone', {static: true}
+        'sendPhone', { static: true }
     ) sendPhone: TemplateRef<any> | null = null;
 
     // block which any elements will replace

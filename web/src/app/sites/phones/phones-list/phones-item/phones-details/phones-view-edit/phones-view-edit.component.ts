@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 
@@ -14,7 +15,13 @@ export class PhonesViewEditComponent {
 
     phoneStates = PhoneStates;
 
+    constructor(private phoneService: PhonesService) {}
+
     updatePhoneFunc(f: NgForm): void {
-        console.log(f.value as PhoneModel);
+        const phoneRaw = f.value as PhoneModel;
+
+        // assign all field to elInList
+        Object.assign(this.elInList, phoneRaw);
+        this.phoneService.editPhone(this.elInList);
     }
 }

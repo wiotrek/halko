@@ -80,6 +80,23 @@ export class PhonesService {
         );
     }
 
+    editPhone(phone: PhoneModel): void {
+        this.http.put(
+            this.apiUrl + 'api/device/edit', phone
+        ).subscribe(
+            () => {
+                this.getPhones();
+                this.toastr.success('Telefon został zedytowany');
+                this.router.navigate([`./telefony`], { relativeTo: this.route });
+            },
+            (err: HttpErrorResponse) => {
+                err
+                ? this.toastr.error(err.error.message)
+                : this.toastr.error(this.errorsDictionary.bad);
+            }
+        );
+    }
+
     // this fuction agree transfer phone to another point.
     // if point is same as loged point then return toastr error
     movePhone(phoneId: string, pointToTransfer: string): void {

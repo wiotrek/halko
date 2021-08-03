@@ -24,7 +24,6 @@ export class PhonesViewEditComponent {
 
         // assign all field to elInList
         Object.assign(this.elInList, phoneRaw);
-
-        this.phoneService.updatePhone(this.elInList);
+        this.phoneService.editPhone(this.elInList);
     }
 }

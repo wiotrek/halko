@@ -80,7 +80,7 @@ export class PhonesService {
         );
     }
 
-    updatePhone(phone: PhoneModel): void {
+    editPhone(phone: PhoneModel): void {
         this.http.put(
             this.apiUrl + 'api/device/edit', phone
         ).subscribe(

@@ -30,6 +30,14 @@ namespace Core.Interfaces
         /// <returns></returns>
         Task<EServiceResponse> MoveDevice( int deviceId, string point );
 
+        /// <summary>
+        /// Edit <see cref="Device"/> with property from DeviceBaseDto include <see cref="DeviceState"/>
+        /// NOTE: Imei can't be changed 
+        /// </summary>
+        /// <param name="device">Device Entity</param>
+        /// <returns>Response result</returns>
+        Task<EServiceResponse> EditDevice( Device device );
+
         Task<IReadOnlyList<DeviceState>> ReadDeviceState();
     }
 }

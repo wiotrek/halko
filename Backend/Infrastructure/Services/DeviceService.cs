@@ -140,6 +140,33 @@ namespace Infrastructure.Services
                 EServiceResponse.DeviceMoveSuccess;
         }
 
+        public async Task<EServiceResponse> EditDevice( Device device )
+        {
+            var stateSpec = new DeviceStateSpecification ( device.DeviceState.State );
+            var deviceState = await _unitOfWork.Repository<DeviceState>().GetEntityWithSpecAsync (  stateSpec );
+            var deviceFromDb = await _unitOfWork.Repository<Device>().GetByIdAsync ( device.Id );
+
+            
+            if( deviceState == null ) return EServiceResponse.StateNotExist;
+            if( deviceFromDb == null ) return EServiceResponse.DeviceNotExist;
+
+
+            device.DeviceStateId = deviceState.Id;
+            device.PointId = deviceFromDb.PointId;
+            device.DateBuyed = deviceFromDb.DateBuyed;
+            device.Imei = deviceFromDb.Imei;
+            
+            
+            _unitOfWork.Repository<Device>().DetachLocal ( device, device.Id );
+            _unitOfWork.Repository<Device>().Update ( device );
+            var result = await _unitOfWork.CompleteAsync();
+            
+            
+            if( result <= 0 )
+                return EServiceResponse.DeviceEditFailed;
+
+            return (EServiceResponse) deviceFromDb.Id;
+        }
         
         public async Task<IReadOnlyList<DeviceState>> ReadDeviceState()
         {

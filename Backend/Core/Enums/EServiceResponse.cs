@@ -39,6 +39,8 @@ namespace Core.Enums
         DeviceIsInThisPoint = -105,
         [EnumMember(Value = "Urządzenie nie istnieje")]
         DeviceNotExist = -106,
+        [EnumMember(Value = "Urządzenie nie zostało zaktualizowane")]
+        DeviceEditFailed = -107,
         
         #endregion
         

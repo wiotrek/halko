@@ -6,9 +6,13 @@
             class="searcher__left-side__main-searcher"
             type="text"
             placeholder="Wyszukaj"
+            name="searcher"
+            ngModel
+            #searcher
+            (ngModelChange)="searchName(searcher)"
         >
 
-        <div 
+        <div
             class="searcher__left-side__sorted"
             appDropdown
             #s="appDropdown"
@@ -35,38 +39,38 @@
     <div class="searcher__middle-side">
 
         <div class="searcher__middle-side__state">
-        
-            <input 
+
+            <input
                 type="radio"
                 id="allOfThem"
                 value="all"
                 [(ngModel)]="state"
             >
             <label for="allOfThem">Wszystkie</label>
-    
-            <input 
+
+            <input
                 type="radio"
                 [(ngModel)]="state"
                 id="onlyNew"
                 value="new"
             >
             <label for="onlyNew">Nowe</label>
-    
-            <input 
+
+            <input
                 type="radio"
                 [(ngModel)]="state"
                 id="onlyUsed"
                 value="used"
             >
             <label for="onlyUsed">Używane</label>
-        
+
         </div>
 
     </div>
 
     <div class="searcher__right-side">
 
-        <div 
+        <div
             class="searcher__right-side__points-names"
             appDropdown
             #p="appDropdown"

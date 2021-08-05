@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import {
     faArrowUp,
     faArrowDown,
@@ -17,6 +18,7 @@ import { Point } from '../_models/point.model';
 })
 
 export class PhonesSeacherComponent implements OnInit {
+    @Output() searchString: EventEmitter<string> = new EventEmitter();
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
     faCaretDown = faCaretDown;
@@ -46,6 +48,10 @@ export class PhonesSeacherComponent implements OnInit {
     ngOnInit(): void {
         this.getPointName();
         this.getListPoints();
+    }
+
+    searchName(f: NgForm): void {
+        this.searchString.emit(f.value);
     }
 
     private getListPoints(): void {

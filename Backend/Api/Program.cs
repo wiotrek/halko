@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Api.Extensions;
+using Core;
 using Core.Entities.Identity;
+using Core.File;
 using Core.Interfaces;
 using Core.IoC.Base;
 using Core.IoC.Interfaces;
@@ -13,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ILogger = Core.Logging.ILogger;
 using LogLevel = Core.Logging.LogLevel;
 
 namespace Api
@@ -29,15 +32,15 @@ namespace Api
                 
                 // Collect log information
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-                IoC.Setup();
-                IoC.Kernel.Bind<ILogFactory>().ToConstant ( new BaseLogFactory() );
-                IoC.Logger.Log ( "Application starting up..." );
-                IoC.Logger.Log ( "This is Debug", LogLevel.Debug );
-                IoC.Logger.Log ( "This is Error", LogLevel.Error );
-                IoC.Logger.Log ( "This is Informative", LogLevel.Informative );
-                IoC.Logger.Log ( "This is Success", LogLevel.Success );
-                IoC.Logger.Log ( "This is Verbose", LogLevel.Verbose );
-                IoC.Logger.Log ( "This is Warning", LogLevel.Warning );
+                IoC.Kernel.Bind<ILogFactory>().ToConstant ( new BaseLogFactory ( new ILogger[]
+                {
+                    // For now just log to the path where this application is running
+                    new FileLogger ( "log.txt" )
+                } ) );
+                IoC.Kernel.Bind<ITaskManager>().ToConstant ( new TaskManager() );
+                IoC.Kernel.Bind<IFileManager>().ToConstant ( new FileManager() );
+
+                IoC.Logger.Log ( "Application starting up...", LogLevel.Debug );
 
                 // When application is starting, then create database from existing migration
                 try
@@ -60,6 +63,8 @@ namespace Api
                 {
                     var logger = loggerFactory.CreateLogger<Program>();
                     logger.LogError ( ex, "An error occured during migration" );
+                    IoC.Logger.Log ( "An error occured during migration", LogLevel.Error );
+                    await IoC.File.WriteTextToFileAsync ( "An error occured during migration", "Log.txt", true );
                 }
                 
                 // Run Application if all is fine

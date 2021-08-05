@@ -104,6 +104,21 @@ namespace Api.Controllers
                 Ok( new ApiResponse ( 200, result ) );
         }
 
+        [HttpPut]
+        public async Task<ActionResult<DeviceDisplayItemDto>> EditDevice(DeviceCreateDto deviceCreateDto, [FromQuery] int id)
+        {
+            var deviceEntity = _mapper.Map<Device> ( deviceCreateDto );
+            deviceEntity.Id = id;
+
+            var deviceUpdatedId = await _deviceService.EditDevice ( deviceEntity );
+            if( deviceUpdatedId <= 0 )
+                return BadRequest ( new ApiResponse ( 400, deviceUpdatedId ) );
+
+            var deviceUpdated = await _deviceService.GetDeviceToSellById ( (int) deviceUpdatedId );
+            var deviceToReturn = _mapper.Map<DeviceDisplayItemDto> ( deviceUpdated );
+
+            return Ok ( deviceToReturn );
+        }
 
         [HttpGet ( "states" )]
         public async Task<ActionResult<IReadOnlyList<DeviceState>>> GetDeviceState()

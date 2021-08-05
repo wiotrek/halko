@@ -42,11 +42,19 @@ namespace Core.Logging
         
         #region Constructors
 
-        public BaseLogFactory()
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="loggers">The loggers to add to the factory, on top of the stock loggers already included</param>
+        public BaseLogFactory(ILogger[] loggers = null)
         {
             AddLogger ( new ConsoleLogger() );
+            
+            if( loggers != null)
+                foreach ( var logger in loggers )
+                    AddLogger ( logger );
         }
-        
+
         #endregion
 
         #region Public Methods
@@ -82,11 +90,12 @@ namespace Core.Logging
             
             // If the user wants to know where the log originated from...
             if( IncludeLogOriginDetails )
-                message = $"[{Path.GetFileName ( filePath )} > {origin} > Line {lineNumber}] - {message}";
+                message = $"{level}: {message} [{Path.GetFileName ( filePath )} > {origin} > Line {lineNumber}] ";
             
             // Log to all loggers
-            _loggers.ForEach ( logger => logger.Log ( message, level ) );
-
+            lock ( _loggersLock )
+                _loggers.ForEach ( logger => logger.Log ( message, level ) );
+            
             // Inform listeners
             NewLog.Invoke ( ( message, level ) );
         }

@@ -22,8 +22,6 @@ export class PhonesService {
     points: Point[] = [];
 
     phoneList: PhoneModel[] = [];
-    private phoneListChanged = new BehaviorSubject<PhoneModel[]>(this.phoneList);
-    public phoneList$ = this.phoneListChanged.asObservable();
 
     archivPhoneList: PhoneModel[] = [];
 
@@ -58,6 +56,19 @@ export class PhonesService {
                     return res;
                 }
             )
+        );
+    }
+
+    getPhones(pointName: string = this.pointName): any {
+
+        let params = new HttpParams();
+        params = params.set('point', 'Karuzela Września');
+        params = params.append('point', 'Kafuland Poznań');
+
+        this.http.get<PhoneModel[]>(
+            this.apiUrl + 'api/device', { params }
+        ).subscribe(
+            res => console.log(res)
         );
     }
 
@@ -155,22 +166,6 @@ export class PhonesService {
                     return throwError(err.error.message);
                 }
             )
-        );
-    }
-
-    private getPhones(): void {
-        let params = new HttpParams();
-        params = params.set('point', this.pointName);
-
-        this.http.get<PhoneModel[]>(
-            this.apiUrl + 'api/device', { params }
-        ).subscribe(
-            (res: PhoneModel[]) => {
-                this.phoneList = res;
-                this.phoneListChanged.next(this.phoneList);
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
         );
     }
 }

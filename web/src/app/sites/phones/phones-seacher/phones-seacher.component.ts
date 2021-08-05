@@ -19,6 +19,7 @@ import { Point } from '../_models/point.model';
 
 export class PhonesSeacherComponent implements OnInit {
     @Output() searchString: EventEmitter<string> = new EventEmitter();
+    @Output() pointString: EventEmitter<string> = new EventEmitter();
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
     faCaretDown = faCaretDown;
@@ -52,6 +53,11 @@ export class PhonesSeacherComponent implements OnInit {
 
     searchName(f: NgForm): void {
         this.searchString.emit(f.value);
+    }
+
+    showDeviceForPoint(pointName: string): void {
+        this.defaultPoint = pointName;
+        this.pointString.emit(pointName);
     }
 
     private getListPoints(): void {

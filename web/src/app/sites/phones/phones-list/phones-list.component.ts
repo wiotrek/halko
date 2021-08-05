@@ -7,6 +7,7 @@ import { PhoneModel } from '../_models/phone.model';
     template: `
         <app-phones-seacher
             (searchString)="searchElement($event)"
+            (pointString)="selectForPoint($event)"
         ></app-phones-seacher>
         <app-phones-item
             *ngFor="let phone of phonesList; index as i"
@@ -25,19 +26,30 @@ export class PhonesListComponent implements OnInit {
     }
 
     searchElement(name: string): void {
-        this.phoneService.phoneList$.subscribe(
-            (res: PhoneModel[]) => {
-                this.phonesList = res.filter(
-                    x => x.producer.toLowerCase().includes(name.toLowerCase())
-                    || x.model.toLowerCase().includes(name.toLowerCase())
-                );
-            }
-        );
+        // this.phoneService.phoneList$.subscribe(
+        //     (res: PhoneModel[]) => {
+        //         this.phonesList = res.filter(
+        //             x => x.producer.toLowerCase().includes(name.toLowerCase())
+        //             || x.model.toLowerCase().includes(name.toLowerCase())
+        //         );
+        //     }
+        // );
+    }
+
+    selectForPoint(pointString: string): void {
+        // console.log(pointString);
+        // this.phoneService.phoneList$.subscribe(
+        //     (res: PhoneModel[]) => {
+        //         this.phonesList = res.filter(
+        //             x => x.name === pointString
+        //         );
+        //     }
+        // );
     }
 
     private getPhones(): void {
-        this.phoneService.phoneList$.subscribe(
-            (res: PhoneModel[]) => this.phonesList = res
-        );
+        // this.phoneService.phoneList$.subscribe(
+        //     (res: PhoneModel[]) => this.phonesList = res
+        // );
     }
 }

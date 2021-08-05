@@ -82,7 +82,7 @@
                 <div
                     class="searcher__right-side__points-names__dropdown__option"
                     *ngFor="let point of points"
-                    (click)="defaultPoint = point.name"
+                    (click)="showDeviceForPoint(point.name)"
                 >
                     {{point.name}}
                 </div>

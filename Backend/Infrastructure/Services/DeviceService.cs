@@ -58,16 +58,23 @@ namespace Infrastructure.Services
         
         public async Task<IEnumerable<Device>> GetDevicesToSell( string point )
         {
-            var deviceList = await GetDevicesByPoint ( point );
-            var deviceListToSell = deviceList.Where ( x => x.DateSold == null );
-            
+            IEnumerable<Device> deviceListToSell;
+
+            if( string.IsNullOrEmpty ( point ) )
+                deviceListToSell = await GetDevicesAsync();
+            else
+            {
+                var deviceList = await GetDevicesByPointAsync ( point );
+                deviceListToSell = deviceList?.Where ( x => x.DateSold == null );
+            }
+
             return deviceListToSell;
         }
         
         
         public async Task<IEnumerable<Device>> GetSoldDevices( string point )
         {
-            var deviceList = await GetDevicesByPoint ( point );
+            var deviceList = await GetDevicesByPointAsync ( point );
             var deviceListToSell = deviceList.Where ( x => x.DateSold != null );
             
             return deviceListToSell;
@@ -187,18 +194,27 @@ namespace Infrastructure.Services
 
         private async Task<Point> GetPointByNameAsync( string point )
         {
+            
             var pointSpec = new PointSpecification ( point );
             var pointEntity = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
             
             return pointEntity;
         }
 
-        private async Task<IEnumerable<Device>> GetDevicesByPoint( string point )
+        private async Task<IEnumerable<Device>> GetDevicesByPointAsync( string point )
         {
             var pointEntity = await GetPointByNameAsync ( point );
             if( pointEntity == null ) return null;
             
             var deviceSpec = new DeviceSpecification ( point );
+            var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
+
+            return deviceList;
+        }
+
+        private async Task<IEnumerable<Device>> GetDevicesAsync()
+        {
+            var deviceSpec = new DeviceSpecification();
             var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
 
             return deviceList;

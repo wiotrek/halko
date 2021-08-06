@@ -4,6 +4,12 @@ namespace Core.Specifications
 {
     public class DeviceSpecification : BaseSpecification<Device>
     {
+        public DeviceSpecification()
+        {
+            AddInclude ( x => x.DeviceState );
+            AddInclude ( x => x.Point );
+        }
+        
         public DeviceSpecification( int id )
             : base ( x => x.Id == id )
         {

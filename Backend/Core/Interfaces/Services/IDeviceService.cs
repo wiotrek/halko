@@ -9,6 +9,11 @@ namespace Core.Interfaces
     {
         Task<EServiceResponse> CreateDevice( Device device );
         
+        /// <summary>
+        /// Get device list to sell
+        /// </summary>
+        /// <param name="point">The point name as optional parameter</param>
+        /// <returns>If point isn't null then get device list for selected point, otherwise get device list from all points</returns>
         Task<IEnumerable<Device>> GetDevicesToSell( string point );
         Task<IEnumerable<Device>> GetSoldDevices( string point );
         Task<Device> GetDeviceToSellById( int deviceId );

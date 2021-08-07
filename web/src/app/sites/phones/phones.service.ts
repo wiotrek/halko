@@ -59,16 +59,13 @@ export class PhonesService {
         );
     }
 
-    getPhones(pointName: string = this.pointName): any {
+    getPhones(pointName: string = this.pointName): Observable<PhoneModel[]> {
 
         let params = new HttpParams();
-        params = params.set('point', 'Karuzela Września');
-        params = params.append('point', 'Kafuland Poznań');
+        params = params.set('point', pointName);
 
-        this.http.get<PhoneModel[]>(
+        return this.http.get<PhoneModel[]>(
             this.apiUrl + 'api/device', { params }
-        ).subscribe(
-            res => console.log(res)
         );
     }
 

@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
 
@@ -19,7 +21,10 @@ import { PhoneModel } from '../_models/phone.model';
 export class PhonesListComponent implements OnInit {
     phonesList: PhoneModel[];
 
-    constructor(private phoneService: PhonesService) {}
+    constructor(
+        private phoneService: PhonesService,
+        private toastr: ToastrService
+    ) {}
 
     ngOnInit(): void {
         this.getPhones();
@@ -48,8 +53,10 @@ export class PhonesListComponent implements OnInit {
     }
 
     private getPhones(): void {
-        // this.phoneService.phoneList$.subscribe(
-        //     (res: PhoneModel[]) => this.phonesList = res
-        // );
+        this.phoneService.getPhones().subscribe(
+            res => this.phonesList = res,
+            (err: HttpErrorResponse) =>
+                this.toastr.error(err.error.message)
+        );
     }
 }

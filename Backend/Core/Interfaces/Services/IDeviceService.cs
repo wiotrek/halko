@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Core.Entities.Halko;
 using Core.Enums;
+using Core.Specifications;
 
 namespace Core.Interfaces
 {
@@ -12,9 +13,9 @@ namespace Core.Interfaces
         /// <summary>
         /// Get device list to sell
         /// </summary>
-        /// <param name="point">The point name as optional parameter</param>
-        /// <returns>If point isn't null then get device list for selected point, otherwise get device list from all points</returns>
-        Task<IEnumerable<Device>> GetDevicesToSell( string point );
+        /// <param name="deviceParams">The params contain filter properties to find devices by them</param>
+        /// <returns>If each item of params is null return all devices, otherwise get devices finding by specific no empty and correct params</returns>
+        Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams );
         Task<IEnumerable<Device>> GetSoldDevices( string point );
         Task<Device> GetDeviceToSellById( int deviceId );
         Task<Device> GetSoldDeviceById( int deviceId );

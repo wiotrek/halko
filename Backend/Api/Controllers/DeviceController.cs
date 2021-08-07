@@ -6,6 +6,7 @@ using AutoMapper;
 using Core.Entities.Halko;
 using Core.Entities.Identity;
 using Core.Interfaces;
+using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -45,9 +46,10 @@ namespace Api.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( [FromQuery] string point )
+        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 
+            [FromQuery] DeviceSpecParams deviceParams )
         {
-            var deviceList =  await _deviceService.GetDevicesToSell ( point );
+            var deviceList =  await _deviceService.GetDevicesToSell ( deviceParams );
             var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
 
             return Ok ( deviceListToReturn );

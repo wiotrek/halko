@@ -56,19 +56,12 @@ namespace Infrastructure.Services
         }
 
         
-        public async Task<IEnumerable<Device>> GetDevicesToSell( string point )
+        public async Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
         {
-            IEnumerable<Device> deviceListToSell;
+            var deviceSpecParams = new DeviceSpecification ( deviceParams );
+            var deviceListToSell = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpecParams );
 
-            if( string.IsNullOrEmpty ( point ) )
-                deviceListToSell = await GetDevicesAsync();
-            else
-            {
-                var deviceList = await GetDevicesByPointAsync ( point );
-                deviceListToSell = deviceList?.Where ( x => x.DateSold == null );
-            }
-
-            return deviceListToSell;
+            return deviceListToSell?.Where ( x => x.DateSold == null );
         }
         
         
@@ -212,14 +205,6 @@ namespace Infrastructure.Services
             return deviceList;
         }
 
-        private async Task<IEnumerable<Device>> GetDevicesAsync()
-        {
-            var deviceSpec = new DeviceSpecification();
-            var deviceList = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpec );
-
-            return deviceList;
-        }
-        
         private async Task<Device> GetDeviceByid( int deviceId )
         {
             var deviceSpec = new DeviceSpecification ( deviceId );

@@ -6,22 +6,26 @@
             class="searcher__left-side__main-searcher"
             type="text"
             placeholder="Wyszukaj"
+            name="searcher"
+            ngModel
+            #searcher
+            (keyup.enter)="searchName(searcher)"
         >
 
-        <div 
+        <div
             class="searcher__left-side__sorted"
             appDropdown
             #s="appDropdown"
         >
-            <fa-icon [icon]="faCaretDown"></fa-icon> {{defaultSorted.name}}
-            <fa-icon [icon]="iconsToValue[defaultSorted.vector]"></fa-icon>
+            <fa-icon [icon]="faCaretDown"></fa-icon> {{selectSorted.name}}
+            <fa-icon [icon]="iconsToValue[selectSorted.vector]"></fa-icon>
 
             <div class="searcher__left-side__sorted__dropdown" *ngIf="s.isOpen">
 
                 <div
                     class="searcher__left-side__sorted__dropdown__option"
                     *ngFor="let value of valuesToSorted"
-                    (click)="defaultSorted = value"
+                    (click)="showSortingDevices(value)"
                 >
                     {{value.name}} <fa-icon [icon]="iconsToValue[value.vector]"></fa-icon>
                 </div>
@@ -35,38 +39,41 @@
     <div class="searcher__middle-side">
 
         <div class="searcher__middle-side__state">
-        
-            <input 
+
+            <input
                 type="radio"
                 id="allOfThem"
-                value="all"
+                value=""
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
             >
             <label for="allOfThem">Wszystkie</label>
-    
-            <input 
+
+            <input
                 type="radio"
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
                 id="onlyNew"
-                value="new"
+                value="Nowy"
             >
             <label for="onlyNew">Nowe</label>
-    
-            <input 
+
+            <input
                 type="radio"
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
                 id="onlyUsed"
-                value="used"
+                value="Używany"
             >
             <label for="onlyUsed">Używane</label>
-        
+
         </div>
 
     </div>
 
     <div class="searcher__right-side">
 
-        <div 
+        <div
             class="searcher__right-side__points-names"
             appDropdown
             #p="appDropdown"
@@ -78,7 +85,7 @@
                 <div
                     class="searcher__right-side__points-names__dropdown__option"
                     *ngFor="let point of points"
-                    (click)="defaultPoint = point.name"
+                    (click)="showDeviceForPoint(point.name)"
                 >
                     {{point.name}}
                 </div>

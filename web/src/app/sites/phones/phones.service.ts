@@ -1,9 +1,9 @@
-import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
@@ -11,6 +11,7 @@ import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from './_models/point.model';
+import { SearcherModel } from './_models/searcher.model';
 
 @Injectable({providedIn: 'root'})
 export class PhonesService {
@@ -22,8 +23,6 @@ export class PhonesService {
     points: Point[] = [];
 
     phoneList: PhoneModel[] = [];
-    private phoneListChanged = new BehaviorSubject<PhoneModel[]>(this.phoneList);
-    public phoneList$ = this.phoneListChanged.asObservable();
 
     archivPhoneList: PhoneModel[] = [];
 
@@ -39,8 +38,6 @@ export class PhonesService {
                 ? this.pointName = user.pointName
                 : this.pointName = 'Punkt'
         );
-
-        this.getPhones();
     }
 
     getListPoints(): Observable<Point[]> {
@@ -61,40 +58,64 @@ export class PhonesService {
         );
     }
 
-    insertNewPhone(phone: PhoneAddModel): void {
+    getPhones(searcher: SearcherModel = null): Observable<PhoneModel[]> {
+
         let params = new HttpParams();
-        params = params.set('point', this.pointName);
 
-        phone.point.name = this.pointName;
+        if (searcher) {
+            if (searcher.pointName.length) {
+                params = params.append('point', searcher.pointName);
+            }
 
-        this.http.post(
-            this.apiUrl + 'api/device',
-            phone, { params }
-        ).subscribe(
-            () => {
-                this.getPhones();
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
+            if (searcher.searchName.length) {
+                params = params.append('search', searcher.searchName);
+            }
+
+            if (searcher.state.length) {
+                params = params.append('deviceState', searcher.state);
+            }
+        }
+
+        // if exist some parametr, then append these to params
+        return this.http.get<PhoneModel[]>(
+            this.apiUrl + 'api/device', { params }
         );
     }
 
+    insertNewPhone(phone: PhoneAddModel): void {
+        // let params = new HttpParams();
+        // params = params.set('point', this.pointName);
+
+        // phone.point.name = this.pointName;
+
+        // this.http.post(
+        //     this.apiUrl + 'api/device',
+        //     phone, { params }
+        // ).subscribe(
+        //     () => {
+        //         this.getPhones();
+        //         this.router.navigate([`./telefony`], { relativeTo: this.route });
+        //     },
+        //     (err: HttpErrorResponse) =>
+        //         this.toastr.error(err.error.message)
+        // );
+    }
+
     editPhone(phone: PhoneModel): void {
-        this.http.put(
-            this.apiUrl + 'api/device/edit', phone
-        ).subscribe(
-            () => {
-                this.getPhones();
-                this.toastr.success('Telefon został zedytowany');
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
-            },
-            (err: HttpErrorResponse) => {
-                err
-                ? this.toastr.error(err.error.message)
-                : this.toastr.error(this.errorsDictionary.bad);
-            }
-        );
+        // this.http.put(
+        //     this.apiUrl + 'api/device/edit', phone
+        // ).subscribe(
+        //     () => {
+        //         this.getPhones();
+        //         this.toastr.success('Telefon został zedytowany');
+        //         this.router.navigate([`./telefony`], { relativeTo: this.route });
+        //     },
+        //     (err: HttpErrorResponse) => {
+        //         err
+        //         ? this.toastr.error(err.error.message)
+        //         : this.toastr.error(this.errorsDictionary.bad);
+        //     }
+        // );
     }
 
     // this fuction agree transfer phone to another point.
@@ -118,11 +139,9 @@ export class PhonesService {
                 this.toastr.success('Telefon został wysłany');
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
             },
-            (err: HttpErrorResponse) => {
-                err
+            (err: HttpErrorResponse) => err
                 ? this.toastr.error(err.error.message)
-                : this.toastr.error(this.errorsDictionary.bad);
-            }
+                : this.toastr.error(this.errorsDictionary.bad)
         );
     }
 
@@ -157,22 +176,6 @@ export class PhonesService {
                     return throwError(err.error.message);
                 }
             )
-        );
-    }
-
-    private getPhones(): void {
-        let params = new HttpParams();
-        params = params.set('point', this.pointName);
-
-        this.http.get<PhoneModel[]>(
-            this.apiUrl + 'api/device', { params }
-        ).subscribe(
-            (res: PhoneModel[]) => {
-                this.phoneList = res;
-                this.phoneListChanged.next(this.phoneList);
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
         );
     }
 }

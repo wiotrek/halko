@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import {
     faArrowUp,
@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 import { PhonesService } from '../phones.service';
+import { SortingValues } from '../_dictionary/sorting-values.dictionary';
 import { Point } from '../_models/point.model';
 
 
@@ -21,6 +22,13 @@ export class PhonesSeacherComponent implements OnInit {
     @Output() searchString: EventEmitter<string> = new EventEmitter();
     @Output() pointString: EventEmitter<string> = new EventEmitter();
     @Output() stateString: EventEmitter<string> = new EventEmitter();
+    @Output() sortingDevice: EventEmitter<{name: string, vector: string}> = new EventEmitter();
+
+    @Input() defaultPoint: string;
+
+    state = '';
+    points: Point[];
+
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
     faCaretDown = faCaretDown;
@@ -30,25 +38,12 @@ export class PhonesSeacherComponent implements OnInit {
         down: faArrowDown,
     };
 
-    valuesToSorted: { name: string, vector: string }[] =  [
-        { name: 'cena', vector: 'up'},
-        { name: 'cena', vector: 'down'},
-        { name: 'nazwa', vector: 'up'},
-        { name: 'nazwa', vector: 'down'},
-    ];
-
-    defaultSorted = { name: 'cena', vector: 'up' };
-
-    state = '';
-
-    points: Point[];
-
-    defaultPoint = 'Karuzela Września';
+    valuesToSorted = SortingValues;
+    selectSorted = this.valuesToSorted[0];
 
     constructor(private phonesService: PhonesService) {}
 
     ngOnInit(): void {
-        this.getPointName();
         this.getListPoints();
     }
 
@@ -60,11 +55,17 @@ export class PhonesSeacherComponent implements OnInit {
 
     showDeviceForPoint(pointName: string): void {
         this.defaultPoint = pointName;
-        this.pointString.emit(
-            pointName === 'Wszystkie'
-            ? ''
-            : pointName
-        );
+
+        const point = pointName === 'Wszystkie'
+        ? ''
+        : pointName;
+
+        this.pointString.emit(point);
+    }
+
+    showSortingDevices(val: {name: string, vector: string}): void {
+        this.selectSorted = val;
+        this.sortingDevice.emit(val);
     }
 
     private getListPoints(): void {
@@ -75,9 +76,5 @@ export class PhonesSeacherComponent implements OnInit {
             },
             () => this.points = [{ id: -1, name: 'Brak' }]
         );
-    }
-
-    private getPointName(): void {
-        this.defaultPoint = this.phonesService.pointName;
     }
 }

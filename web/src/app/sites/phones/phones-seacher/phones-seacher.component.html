@@ -9,7 +9,7 @@
             name="searcher"
             ngModel
             #searcher
-            (ngModelChange)="searchName(searcher)"
+            (keyup.enter)="searchName(searcher)"
         >
 
         <div
@@ -43,24 +43,27 @@
             <input
                 type="radio"
                 id="allOfThem"
-                value="all"
+                value=""
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
             >
             <label for="allOfThem">Wszystkie</label>
 
             <input
                 type="radio"
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
                 id="onlyNew"
-                value="new"
+                value="Nowy"
             >
             <label for="onlyNew">Nowe</label>
 
             <input
                 type="radio"
                 [(ngModel)]="state"
+                (ngModelChange)="showDeviceForState(state)"
                 id="onlyUsed"
-                value="used"
+                value="Używany"
             >
             <label for="onlyUsed">Używane</label>
 

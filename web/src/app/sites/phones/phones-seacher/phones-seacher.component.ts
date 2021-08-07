@@ -20,6 +20,7 @@ import { Point } from '../_models/point.model';
 export class PhonesSeacherComponent implements OnInit {
     @Output() searchString: EventEmitter<string> = new EventEmitter();
     @Output() pointString: EventEmitter<string> = new EventEmitter();
+    @Output() stateString: EventEmitter<string> = new EventEmitter();
     faArrowUp = faArrowUp;
     faArrowDown = faArrowDown;
     faCaretDown = faCaretDown;
@@ -38,7 +39,7 @@ export class PhonesSeacherComponent implements OnInit {
 
     defaultSorted = { name: 'cena', vector: 'up' };
 
-    state = 'all';
+    state = '';
 
     points: Point[];
 
@@ -51,18 +52,27 @@ export class PhonesSeacherComponent implements OnInit {
         this.getListPoints();
     }
 
-    searchName(f: NgForm): void {
-        this.searchString.emit(f.value);
-    }
+    searchName = (f: NgForm) =>
+        this.searchString.emit(f.value)
+
+    showDeviceForState = (state: string) =>
+        this.stateString.emit(state)
 
     showDeviceForPoint(pointName: string): void {
         this.defaultPoint = pointName;
-        this.pointString.emit(pointName);
+        this.pointString.emit(
+            pointName === 'Wszystkie'
+            ? ''
+            : pointName
+        );
     }
 
     private getListPoints(): void {
         this.phonesService.getListPoints().subscribe(
-            (res: Point[]) => this.points = res,
+            (res: Point[]) => {
+                this.points = res;
+                res.push({id: -2, name: 'Wszystkie'});
+            },
             () => this.points = [{ id: -1, name: 'Brak' }]
         );
     }

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
+import { SearcherModel } from '../_models/searcher.model';
 
 @Component({
     selector: 'app-phones-list',
@@ -10,6 +11,7 @@ import { PhoneModel } from '../_models/phone.model';
         <app-phones-seacher
             (searchString)="searchElement($event)"
             (pointString)="selectForPoint($event)"
+            (stateString)="selectStates($event)"
         ></app-phones-seacher>
         <app-phones-item
             *ngFor="let phone of phonesList; index as i"
@@ -21,6 +23,12 @@ import { PhoneModel } from '../_models/phone.model';
 export class PhonesListComponent implements OnInit {
     phonesList: PhoneModel[];
 
+    searcher: SearcherModel = {
+        pointName: '',
+        searchName: '',
+        state: ''
+    };
+
     constructor(
         private phoneService: PhonesService,
         private toastr: ToastrService
@@ -31,29 +39,22 @@ export class PhonesListComponent implements OnInit {
     }
 
     searchElement(name: string): void {
-        // this.phoneService.phoneList$.subscribe(
-        //     (res: PhoneModel[]) => {
-        //         this.phonesList = res.filter(
-        //             x => x.producer.toLowerCase().includes(name.toLowerCase())
-        //             || x.model.toLowerCase().includes(name.toLowerCase())
-        //         );
-        //     }
-        // );
+        this.searcher.searchName = name;
+        this.getPhones(this.searcher);
     }
 
     selectForPoint(pointString: string): void {
-        // console.log(pointString);
-        // this.phoneService.phoneList$.subscribe(
-        //     (res: PhoneModel[]) => {
-        //         this.phonesList = res.filter(
-        //             x => x.name === pointString
-        //         );
-        //     }
-        // );
+        this.searcher.pointName = pointString;
+        this.getPhones(this.searcher);
     }
 
-    private getPhones(): void {
-        this.phoneService.getPhones().subscribe(
+    selectStates(stateString: string): void {
+        this.searcher.state = stateString;
+        this.getPhones(this.searcher);
+    }
+
+    private getPhones(searcher: SearcherModel = this.searcher): void {
+        this.phoneService.getPhones(searcher).subscribe(
             res => this.phonesList = res,
             (err: HttpErrorResponse) =>
                 this.toastr.error(err.error.message)

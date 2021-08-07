@@ -1,7 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
+import { PhoneEditModel } from 'src/app/sites/phones/_models/phone-edit.model';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 
 @Component({
@@ -14,16 +18,35 @@ export class PhonesViewEditComponent {
     @Input() editMode: boolean;
 
     phoneStates = PhoneStates;
+    errorsDictionary: any;
 
-    constructor(private phoneService: PhonesService) {}
+    constructor(
+        private phoneService: PhonesService,
+        private toastr: ToastrService
+    ) {}
 
     updatePhoneFunc(f: NgForm): void {
-        const phoneRaw = f.value as PhoneModel;
-        console.log(phoneRaw);
-        
 
-        // assign all field to elInList
-        Object.assign(this.elInList, phoneRaw);
-        this.phoneService.editPhone(this.elInList);
+        const phone: PhoneEditModel = {
+            producer: f.value.producer,
+            model: f.value.model,
+            color: f.value.color,
+            comment: f.value.comment,
+            priceBuyed: f.value.priceBuyed,
+            price: f.value.price,
+            deviceState: {
+                state: f.value.state
+            }
+        };
+
+        this.phoneService.editPhone(
+            phone, this.elInList.id.toString()
+        ).subscribe(
+            () => {
+                this.toastr.success(ResponseDictionary.change);
+                Object.assign(this.elInList, f.value as PhoneModel);
+            },
+            () => this.toastr.error(this.errorsDictionary.bad)
+        );
     }
 }

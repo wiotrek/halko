@@ -10,6 +10,7 @@ import { User } from 'src/app/auth/user.model';
 import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
 import { PhoneAddModel } from './_models/phone-add.model';
+import { PhoneEditModel } from './_models/phone-edit.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from './_models/point.model';
 import { SearcherModel } from './_models/searcher.model';
@@ -99,38 +100,14 @@ export class PhonesService {
         );
     }
 
-    editPhone(phone: PhoneModel): boolean {
-
-        // this object is required through backend
-        const phoneEdited = {
-            producer: phone.producer,
-            model: phone.model,
-            color: phone.color,
-            comment: phone.comment,
-            priceBuyed: phone.priceBuyed,
-            price: phone.price,
-            deviceState: { state: phone.state }
-        };
+    editPhone(phone: PhoneEditModel, idPhone: string): Observable<any> {
 
         let params = new HttpParams();
-        params = params.set('id', phone.id);
+        params = params.set('id', idPhone);
 
-        this.http.put(
-            this.apiUrl + 'api/device', phoneEdited, { params }
-        ).subscribe(
-            () => {
-                this.toastr.success(ResponseDictionary.change);
-                return true;
-            },
-            (err: HttpErrorResponse) => {
-                err
-                ? this.toastr.error(err.error.message)
-                : this.toastr.error(this.errorsDictionary.bad);
-                return false;
-            }
+        return this.http.put(
+            this.apiUrl + 'api/device', phone, { params }
         );
-
-        return false;
     }
 
     // this fuction agree transfer phone to another point.

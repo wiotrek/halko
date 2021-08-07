@@ -56,18 +56,18 @@ namespace Infrastructure.Services
         }
 
         
-        public async Task<IEnumerable<Device>> GetDevicesToSell( string point )
+        public async Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
         {
-            var deviceList = await GetDevicesByPoint ( point );
-            var deviceListToSell = deviceList.Where ( x => x.DateSold == null );
-            
-            return deviceListToSell;
+            var deviceSpecParams = new DeviceSpecification ( deviceParams );
+            var deviceListToSell = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpecParams );
+
+            return deviceListToSell?.Where ( x => x.DateSold == null );
         }
         
         
         public async Task<IEnumerable<Device>> GetSoldDevices( string point )
         {
-            var deviceList = await GetDevicesByPoint ( point );
+            var deviceList = await GetDevicesByPointAsync ( point );
             var deviceListToSell = deviceList.Where ( x => x.DateSold != null );
             
             return deviceListToSell;
@@ -187,13 +187,14 @@ namespace Infrastructure.Services
 
         private async Task<Point> GetPointByNameAsync( string point )
         {
+            
             var pointSpec = new PointSpecification ( point );
             var pointEntity = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
             
             return pointEntity;
         }
 
-        private async Task<IEnumerable<Device>> GetDevicesByPoint( string point )
+        private async Task<IEnumerable<Device>> GetDevicesByPointAsync( string point )
         {
             var pointEntity = await GetPointByNameAsync ( point );
             if( pointEntity == null ) return null;
@@ -203,7 +204,7 @@ namespace Infrastructure.Services
 
             return deviceList;
         }
-        
+
         private async Task<Device> GetDeviceByid( int deviceId )
         {
             var deviceSpec = new DeviceSpecification ( deviceId );

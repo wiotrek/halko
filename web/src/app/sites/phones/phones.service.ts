@@ -8,6 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
+import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
 import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from './_models/point.model';
@@ -21,8 +22,6 @@ export class PhonesService {
     errorsDictionary = ErrorsDictionary;
 
     points: Point[] = [];
-
-    phoneList: PhoneModel[] = [];
 
     archivPhoneList: PhoneModel[] = [];
 
@@ -42,9 +41,7 @@ export class PhonesService {
 
     getListPoints(): Observable<Point[]> {
 
-        if (this.points.length >  0) {
-            return of(this.points);
-        }
+        if (this.points.length >  0) { return of(this.points); }
 
         return this.http.get<Point[]>(
             this.apiUrl + 'api/point'
@@ -52,7 +49,8 @@ export class PhonesService {
             map(
                 (res: Point[]) => {
                     this.points = res;
-                    return res;
+                    this.points.push({id: -1, name: 'Wszystkie'});
+                    return this.points;
                 }
             )
         );
@@ -83,39 +81,56 @@ export class PhonesService {
     }
 
     insertNewPhone(phone: PhoneAddModel): void {
-        // let params = new HttpParams();
-        // params = params.set('point', this.pointName);
+        let params = new HttpParams();
+        params = params.set('point', this.pointName);
 
-        // phone.point.name = this.pointName;
+        phone.point.name = this.pointName;
 
-        // this.http.post(
-        //     this.apiUrl + 'api/device',
-        //     phone, { params }
-        // ).subscribe(
-        //     () => {
-        //         this.getPhones();
-        //         this.router.navigate([`./telefony`], { relativeTo: this.route });
-        //     },
-        //     (err: HttpErrorResponse) =>
-        //         this.toastr.error(err.error.message)
-        // );
+        this.http.post(
+            this.apiUrl + 'api/device',
+            phone, { params }
+        ).subscribe(
+            () => {
+                this.router.navigate([`./telefony`], { relativeTo: this.route });
+                this.toastr.success(ResponseDictionary.added);
+            },
+            (err: HttpErrorResponse) =>
+                this.toastr.error(err.error.message)
+        );
     }
 
-    editPhone(phone: PhoneModel): void {
-        // this.http.put(
-        //     this.apiUrl + 'api/device/edit', phone
-        // ).subscribe(
-        //     () => {
-        //         this.getPhones();
-        //         this.toastr.success('Telefon został zedytowany');
-        //         this.router.navigate([`./telefony`], { relativeTo: this.route });
-        //     },
-        //     (err: HttpErrorResponse) => {
-        //         err
-        //         ? this.toastr.error(err.error.message)
-        //         : this.toastr.error(this.errorsDictionary.bad);
-        //     }
-        // );
+    editPhone(phone: PhoneModel): boolean {
+
+        // this object is required through backend
+        const phoneEdited = {
+            producer: phone.producer,
+            model: phone.model,
+            color: phone.color,
+            comment: phone.comment,
+            priceBuyed: phone.priceBuyed,
+            price: phone.price,
+            deviceState: { state: phone.state }
+        };
+
+        let params = new HttpParams();
+        params = params.set('id', phone.id);
+
+        this.http.put(
+            this.apiUrl + 'api/device', phoneEdited, { params }
+        ).subscribe(
+            () => {
+                this.toastr.success(ResponseDictionary.change);
+                return true;
+            },
+            (err: HttpErrorResponse) => {
+                err
+                ? this.toastr.error(err.error.message)
+                : this.toastr.error(this.errorsDictionary.bad);
+                return false;
+            }
+        );
+
+        return false;
     }
 
     // this fuction agree transfer phone to another point.
@@ -135,9 +150,8 @@ export class PhonesService {
             this.apiUrl + 'api/device/move', {}, { params }
         ).subscribe(
             () => {
-                this.getPhones();
-                this.toastr.success('Telefon został wysłany');
                 this.router.navigate([`./telefony`], { relativeTo: this.route });
+                this.toastr.success(ResponseDictionary.move);
             },
             (err: HttpErrorResponse) => err
                 ? this.toastr.error(err.error.message)

@@ -72,7 +72,6 @@ export class PhonesSeacherComponent implements OnInit {
         this.phonesService.getListPoints().subscribe(
             (res: Point[]) => {
                 this.points = res;
-                res.push({id: -2, name: 'Wszystkie'});
             },
             () => this.points = [{ id: -1, name: 'Brak' }]
         );

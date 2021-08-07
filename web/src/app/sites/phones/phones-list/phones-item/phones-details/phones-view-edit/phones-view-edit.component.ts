@@ -19,6 +19,8 @@ export class PhonesViewEditComponent {
 
     updatePhoneFunc(f: NgForm): void {
         const phoneRaw = f.value as PhoneModel;
+        console.log(phoneRaw);
+        
 
         // assign all field to elInList
         Object.assign(this.elInList, phoneRaw);

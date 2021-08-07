@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
 import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
@@ -18,7 +19,6 @@ export class PhonesViewEditComponent {
     @Input() editMode: boolean;
 
     phoneStates = PhoneStates;
-    errorsDictionary: any;
 
     constructor(
         private phoneService: PhonesService,
@@ -46,7 +46,7 @@ export class PhonesViewEditComponent {
                 this.toastr.success(ResponseDictionary.change);
                 Object.assign(this.elInList, f.value as PhoneModel);
             },
-            () => this.toastr.error(this.errorsDictionary.bad)
+            () => this.toastr.error(ErrorsDictionary.bad)
         );
     }
 }

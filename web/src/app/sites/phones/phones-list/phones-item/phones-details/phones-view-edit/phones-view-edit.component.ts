@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
@@ -16,6 +16,8 @@ import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 export class PhonesViewEditComponent {
     @Input() elInList: PhoneModel;
     @Input() editMode: boolean;
+
+    @Output() doneAction: EventEmitter<string> = new EventEmitter();
 
     phoneStates = PhoneStates;
 
@@ -43,7 +45,7 @@ export class PhonesViewEditComponent {
         ).subscribe(
             () => {
                 this.toastr.success(ResponseDictionary.change);
-                Object.assign(this.elInList, f.value as PhoneModel);
+                this.doneAction.emit();
             },
             () => this.toastr.error(ErrorsDictionary.bad)
         );

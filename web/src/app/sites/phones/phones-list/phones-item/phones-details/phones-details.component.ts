@@ -1,4 +1,12 @@
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+    Component,
+    Input,
+    OnInit,
+    Output,
+    TemplateRef,
+    ViewChild,
+    EventEmitter
+} from '@angular/core';
 import { ItemInListModel } from '../../../_models/item-in-list.model';
 
 @Component({
@@ -8,6 +16,7 @@ import { ItemInListModel } from '../../../_models/item-in-list.model';
 })
 export class PhonesDetailsComponent implements OnInit{
     @Input() elInList: ItemInListModel;
+    @Output() refreshList: EventEmitter<any> = new EventEmitter();
 
     // these elements will replacement each other
     @ViewChild(
@@ -53,5 +62,11 @@ export class PhonesDetailsComponent implements OnInit{
         }
 
         this.undoButtonActive = !this.undoButtonActive;
+    }
+
+    // after change like edit, transfer or sold phone
+    doneAction(): void {
+        this.switchBlock('back');
+        this.refreshList.emit();
     }
 }

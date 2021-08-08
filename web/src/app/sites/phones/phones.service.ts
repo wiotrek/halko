@@ -112,7 +112,7 @@ export class PhonesService {
 
     // this fuction agree transfer phone to another point.
     // if point is same as loged point then return toastr error
-    movePhone(phoneId: string, pointToTransfer: string): void {
+    movePhone(phoneId: string, pointToTransfer: string): Observable<any> {
 
         if (this.pointName === pointToTransfer) {
             this.toastr.error(this.errorsDictionary.operation);
@@ -123,34 +123,18 @@ export class PhonesService {
         params = params.set('id', phoneId);
         params = params.append('point', pointToTransfer);
 
-        this.http.put(
+        return this.http.put(
             this.apiUrl + 'api/device/move', {}, { params }
-        ).subscribe(
-            () => {
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
-                this.toastr.success(ResponseDictionary.move);
-            },
-            (err: HttpErrorResponse) => err
-                ? this.toastr.error(err.error.message)
-                : this.toastr.error(this.errorsDictionary.bad)
         );
     }
 
-    sellPhone(phoneId: string, price: number): void {
+    sellPhone(phoneId: string, price: number): Observable<any> {
         let params = new HttpParams();
         params = params.set('id', phoneId);
         params = params.append('price', price.toString());
 
-        this.http.put(
+        return this.http.put(
             this.apiUrl + 'api/device/sell', {}, { params }
-        ).subscribe(
-            (res: HttpErrorResponse) => {
-                this.getPhones();
-                this.toastr.success(res.message);
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
         );
     }
 

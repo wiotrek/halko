@@ -16,7 +16,13 @@ namespace Core.Interfaces
         /// <param name="deviceParams">The params contain filter properties to find devices by them</param>
         /// <returns>If each item of params is null return all devices, otherwise get devices finding by specific no empty and correct params</returns>
         Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams );
-        Task<IEnumerable<Device>> GetSoldDevices( string point );
+        
+        /// <summary>
+        /// Get sold list of devices
+        /// </summary>
+        /// <param name="deviceParams">The params contain filter properties to find devices by them</param>
+        /// <returns>If each item of params is null return all devices being sold, otherwise get sold devices finding by specific no empty and correct params</returns>
+        Task<IEnumerable<Device>> GetSoldDevices( DeviceSpecParams deviceParams );
         Task<Device> GetDeviceToSellById( int deviceId );
         Task<Device> GetSoldDeviceById( int deviceId );
         

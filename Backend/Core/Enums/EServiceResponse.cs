@@ -86,8 +86,9 @@ namespace Core.Enums
         PriceBelowZero = -403,
         [EnumMember(Value = "Transakcja nie istnieje")]
         TransactionNotExist = -404,
+        [EnumMember(Value = "Transakcja została usunięta pomyślnie")]
         TransactionDeleteSuccess = 405,
-        [EnumMember(Value = "Transakcja została odrzucona")]
+        [EnumMember(Value = "Transakcja nie została usunięta")]
         TransactionDeleteFailed = -405,
         
         

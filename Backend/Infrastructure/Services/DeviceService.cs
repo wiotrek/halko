@@ -65,12 +65,12 @@ namespace Infrastructure.Services
         }
         
         
-        public async Task<IEnumerable<Device>> GetSoldDevices( string point )
+        public async Task<IEnumerable<Device>> GetSoldDevices( DeviceSpecParams deviceParams )
         {
-            var deviceList = await GetDevicesByPointAsync ( point );
-            var deviceListToSell = deviceList.Where ( x => x.DateSold != null );
+            var deviceSpecParams = new DeviceSpecification ( deviceParams );
+            var deviceListToSell = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpecParams );
             
-            return deviceListToSell;
+            return deviceListToSell?.Where ( x => x.DateSold != null );;
         }
 
         

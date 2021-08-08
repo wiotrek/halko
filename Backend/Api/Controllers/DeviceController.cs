@@ -57,9 +57,10 @@ namespace Api.Controllers
         
         
         [HttpGet("sold")]
-        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetSoldDevices( [FromQuery] string point )
+        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetSoldDevices( 
+            [FromQuery] DeviceSpecParams deviceParams )
         {
-            var deviceList =  await _deviceService.GetSoldDevices ( point );
+            var deviceList =  await _deviceService.GetSoldDevices ( deviceParams );
             var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
 
             return Ok ( deviceListToReturn );

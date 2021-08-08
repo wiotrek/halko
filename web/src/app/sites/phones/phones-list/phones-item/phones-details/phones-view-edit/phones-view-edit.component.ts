@@ -45,8 +45,7 @@ export class PhonesViewEditComponent {
         ).subscribe(
             () => {
                 this.toastr.success(ResponseDictionary.change);
-                Object.assign(this.elInList, f.value as PhoneModel);
-                this.doneAction.emit('back');
+                this.doneAction.emit();
             },
             () => this.toastr.error(ErrorsDictionary.bad)
         );

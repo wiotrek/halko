@@ -20,6 +20,7 @@ import { SearcherModel } from '../_models/searcher.model';
             *ngFor="let phone of phonesList; index as i"
             [elInList]="phone"
             [ind]="i + 1"
+            (refreshPhoneList)="this.getPhones()"
         ></app-phones-item>
     `
 })

@@ -1,9 +1,9 @@
 <div class="elInList">
 
     <div class="options">
-    
+
         <ng-container *ngIf="!undoButtonActive; else undoButtonActiveTem">
-            
+
             <a (click)="switchBlock('viewAndEditPhone')">Edytuj</a>
             <a (click)="switchBlock('soldPhone')">Sprzedaj</a>
             <a (click)="switchBlock('sendPhone')">Przekaż</a>
@@ -24,24 +24,24 @@
         <app-phones-view-edit
             [elInList]="elInList"
             [editMode]="editMode"
-            (doneAction)="switchBlock($event)"
+            (doneAction)="doneAction()"
         ></app-phones-view-edit>
 
     </ng-template>
 
     <ng-template #soldPhone>
-    
-        <app-phones-sold 
+
+        <app-phones-sold
             [elInList]="elInList"
-            (doneAction)="switchBlock($event)"
+            (doneAction)="doneAction()"
         ></app-phones-sold>
-    
+
     </ng-template>
 
     <ng-template #sendPhone>
-        <app-phones-transfer 
+        <app-phones-transfer
             [elInList]="elInList"
-            (doneAction)="switchBlock($event)"
+            (doneAction)="doneAction()"
         ></app-phones-transfer>
     </ng-template>
 

@@ -128,21 +128,13 @@ export class PhonesService {
         );
     }
 
-    sellPhone(phoneId: string, price: number): void {
+    sellPhone(phoneId: string, price: number): Observable<any> {
         let params = new HttpParams();
         params = params.set('id', phoneId);
         params = params.append('price', price.toString());
 
-        this.http.put(
+        return this.http.put(
             this.apiUrl + 'api/device/sell', {}, { params }
-        ).subscribe(
-            (res: HttpErrorResponse) => {
-                this.getPhones();
-                this.toastr.success(res.message);
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
         );
     }
 

@@ -41,7 +41,7 @@ export class PhonesTransferComponent implements OnInit, OnDestroy {
             this.elInList.id, f.value.point
         ).subscribe(
             () => {
-                this.doneAction.emit('back');
+                this.doneAction.emit();
                 this.toastr.success(ResponseDictionary.move);
             },
             (err: HttpErrorResponse) => err

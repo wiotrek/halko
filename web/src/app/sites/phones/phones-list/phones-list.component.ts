@@ -16,12 +16,20 @@ import { SearcherModel } from '../_models/searcher.model';
             (stateString)="selectStates($event)"
             (sortingDevice)="selectSortingDevice($event)"
         ></app-phones-seacher>
+
         <app-phones-item
-            *ngFor="let phone of phonesList; index as i"
+            *ngFor="let phone of phonesList | slice:start:end"
             [elInList]="phone"
-            [ind]="i + 1"
+            [ind]="phonesList.indexOf(phone) + 1"
             (refreshPhoneList)="this.getPhones()"
         ></app-phones-item>
+
+        <app-phones-pagination
+            [pageSize]="pageSize"
+            [arrLength]="arrLength"
+            [(start)]="start"
+            [(end)]="end"
+        ><app-phones-pagination>
     `
 })
 export class PhonesListComponent implements OnInit {
@@ -32,6 +40,12 @@ export class PhonesListComponent implements OnInit {
         searchName: '',
         state: ''
     };
+
+    // pagination
+    readonly pageSize = 10;
+    start = 0;
+    end = 10;
+    arrLength = 0;
 
     constructor(
         private phoneService: PhonesService,
@@ -68,6 +82,8 @@ export class PhonesListComponent implements OnInit {
     ): void {
         this.phoneService.getPhones(searcher).subscribe(
             res => {
+                this.arrLength = res.length;
+
                 if (sorted) {
                     switch (sorted) {
 

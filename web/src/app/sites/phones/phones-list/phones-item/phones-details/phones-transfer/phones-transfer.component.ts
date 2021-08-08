@@ -34,13 +34,15 @@ export class PhonesTransferComponent implements OnInit, OnDestroy {
     private getListPoints(): void {
         const sub = this.phonesService.getListPoints().subscribe(
             (res: Point[]) => {
-                this.points = res;
-                this.show = this.points.length > 1;
+                this.points = res.filter(
+                    x =>
+                        x.name !== this.phonesService.pointName
+                        && x.id !== -1
+                );
+
+                this.show = this.points.length > 0;
             },
-            () => {
-                this.show = false;
-                this.points = [{id: -1, name: 'Brak'}];
-            }
+            () => this.show = false
         );
 
         this.subscription = sub;

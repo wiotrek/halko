@@ -22,18 +22,27 @@
     <ng-template #viewAndEditPhone>
 
         <app-phones-view-edit
-        [elInList]="elInList"
-        [editMode]="editMode"
+            [elInList]="elInList"
+            [editMode]="editMode"
+            (doneAction)="switchBlock($event)"
         ></app-phones-view-edit>
 
     </ng-template>
 
     <ng-template #soldPhone>
-        <app-phones-sold [elInList]="elInList"></app-phones-sold>
+    
+        <app-phones-sold 
+            [elInList]="elInList"
+            (doneAction)="switchBlock($event)"
+        ></app-phones-sold>
+    
     </ng-template>
 
     <ng-template #sendPhone>
-        <app-phones-transfer [elInList]="elInList"></app-phones-transfer>
+        <app-phones-transfer 
+            [elInList]="elInList"
+            (doneAction)="switchBlock($event)"
+        ></app-phones-transfer>
     </ng-template>
 
 </div>

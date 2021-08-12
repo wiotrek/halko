@@ -1,17 +1,17 @@
 <nav class="nav">
 
     <div class="nav__left-side">
-        
-        <img 
+
+        <img
             class="nav__left-side__logo"
-            src="../../../assets/logo-caption.png" 
+            src="../../../assets/logo-caption.png"
             alt="logo"
             srcset=""
         >
 
         <div class="nav__left-side__sites">
-            
-            <a 
+
+            <a
                 class="nav__left-side__sites__link"
                 *ngFor="let site of links"
                 routerLinkActive="active"
@@ -26,26 +26,26 @@
     </div>
 
     <div class="nav__right-side">
-        
+
         <div class="nav__right-side__name">{{singInUser}}</div>
 
-        <div 
+        <div
             class="nav__right-side__dropdown"
             appDropdown
-            #d="appDropdown"
+            #dropDown="appDropdown"
         >
-            
+
             <fa-icon
                 class="nav__right-side__dropdown__bars"
                 [icon]="faBars"
-                [ngClass]="{'active': d.isOpen}"
+                [ngClass]="{'active': dropDown.isOpen}"
             ></fa-icon>
 
-            <div class="nav__right-side__dropdown__menu" *ngIf="d.isOpen">
-              
+            <div class="nav__right-side__dropdown__menu" *ngIf="dropDown.isOpen">
+
                 <div class="nav__right-side__dropdown__menu__option">
 
-                    <a 
+                    <a
                         class="nav__right-side__dropdown__menu__option__a"
                         *ngFor="let site of links"
                         routerLink="{{site.path}}"
@@ -61,11 +61,11 @@
                     </a>
 
                 </div>
-            
+
             </div>
-        
+
         </div>
-    
+
     </div>
 
 </nav>

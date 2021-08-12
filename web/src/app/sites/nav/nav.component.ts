@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { Links } from 'src/app/shared/models/links.model';
@@ -26,8 +26,23 @@ export class NavComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
+
+    // Close dropdown outside button
+    // getting dropdown element
+    @ViewChild('dropDown') dropDown: any;
+
+    // getting outside click to close dropdown
+    @HostListener('document:click', ['$event'])
+    closeDropdown(event: Event): void {
+        if (!this.dropDown.isOpen) { return; }
+        if (!this.ref.nativeElement.contains(event.target)) {
+            this.dropDown.isOpen = false;
+        }
+    }
+
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private ref: ElementRef
     ) {}
 
     ngOnInit(): void {

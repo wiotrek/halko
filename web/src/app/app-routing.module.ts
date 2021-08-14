@@ -14,6 +14,10 @@ const routes: Routes = [
             {
                 path: 'telefony',
                 loadChildren: () => import('./sites/phones/phones.module').then(m => m.PhonesModule)
+            },
+            {
+                path: 'serwis',
+                loadChildren: () => import('./sites/repairs/repairs.module').then(m => m.RepairsModule)
             }
         ]
     },

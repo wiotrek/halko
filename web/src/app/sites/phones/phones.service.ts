@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/user.model';
 import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';

@@ -1,8 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { PhonesAddComponent } from './phones-add/phones-add.component';
 import { PhonesArchivComponent } from './phones-archiv/phones-archiv.component';
@@ -33,8 +30,7 @@ import { PhonesComponent } from './phones.component';
         PhonesPaginationComponent
     ],
     imports: [
-        CommonModule,
-        FormsModule,
+        SharedModule,
         RouterModule.forChild([
             {
                 path: '',
@@ -45,9 +41,7 @@ import { PhonesComponent } from './phones.component';
                     { path: 'dodaj-telefon', component: PhonesAddComponent }
                 ]
             }
-        ]),
-        FontAwesomeModule,
-        SharedModule
+        ])
     ]
 })
 export class PhonesModule {}

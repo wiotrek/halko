@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-item',
@@ -6,6 +7,9 @@ import { Component } from '@angular/core';
     styleUrls: ['./item.component.scss']
 })
 export class ItemComponent {
+    faInfoCircle = faInfoCircle;
+
+    ind = 1;
 
     categoryList = [
         'name',

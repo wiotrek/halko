@@ -1,17 +1,30 @@
 <div class="item">
 
-    <div class="header">
+    <div class="upward">
+
+        <div class="upward__category">
+            {{ind}}
+        </div>
 
         <div
             *ngFor="let category of categoryList"
-            class=""
+            class="upward__category"
         >
             {{category}}
         </div>
 
+        <div class="upward__category">
+
+            <button class="upward__category__info-btn">
+
+                <fa-icon
+                    [icon]="faInfoCircle"
+                ></fa-icon>
+
+            </button>
+            
+        </div>
+
     </div>
-
-    
-
 
 </div>

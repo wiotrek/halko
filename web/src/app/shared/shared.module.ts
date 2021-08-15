@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
-import { ItemComponent } from './components/item/item.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -12,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
     declarations: [
         LoadingSpinnerComponent,
         DropdownDirective,
-        ItemComponent
     ],
     imports: [
         CommonModule,
@@ -27,8 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
         FormsModule,
         FontAwesomeModule,
         LoadingSpinnerComponent,
-        DropdownDirective,
-        ItemComponent
+        DropdownDirective
     ]
 })
 export class SharedModule {}

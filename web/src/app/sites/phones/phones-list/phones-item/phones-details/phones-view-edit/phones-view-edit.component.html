@@ -4,186 +4,59 @@
     (ngSubmit)="updatePhone.valid && updatePhoneFunc(updatePhone)"
 >
 
-    <div class="details__main">
+    <ng-container *ngFor="let field of phonesItemField">
 
-        <ng-template 
-            #view
-            let-mainOrCommon="mainOrCommon"
-            let-categoryName="categoryName"
-            let-polishName="polishName"
-            let-objValue="objValue"
-            let-editModeNotAvailable="editModeNotAvailable"
-            let-isNumber="isNumber"
+        <div 
+            class="details__field"
+            *ngIf="field.override || !editMode"
         >
-
+            <div class="details__field__category">
+                {{field.polishName | titlecase}}:
+            </div>
+            
             <div 
-                *ngIf="!editModeNotAvailable || !editMode"
-                class="details__{{mainOrCommon}}__{{categoryName}}"
+                class="details__field__param"
+                *ngIf="!editMode; else editModeTem"
             >
-
-                <div class="details__{{mainOrCommon}}__{{categoryName}}__category-param">
-                    {{polishName}}:
-                </div>
-
-                <div 
-                    class="details__{{mainOrCommon}}__{{categoryName}}__name-param"
-                    *ngIf="!editMode; else editModeTemplate"
-                >   
-                    {{objValue || 'brak'}} {{isNumber ? ' zł' : ''}}
-                </div>
-
-                <ng-template #editModeTemplate>
-                    
-                    <div class="details__{{mainOrCommon}}__{{categoryName}}__name-param--editMode">   
-                        <input 
-                            type="text"
-                            name="{{categoryName}}"
-                            [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
-                            [ngModel]="objValue"
-                        >
-                    </div>
-                
-                </ng-template>
-
+                {{elInList[field.category]}} {{field.currency}}
             </div>
 
-        </ng-template>
+            <ng-template #editModeTem>
 
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'main',
-                categoryName: 'producer',
-                polishName: 'Producent',
-                objValue: elInList.producer,
-                editModeNotAvailable: false
-            }"
-        ></ng-container>
+                <div class="details__field__param--editMode">
 
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'main',
-                categoryName: 'model',
-                polishName: 'Model',
-                objValue: elInList.model,
-                editModeNotAvailable: false
-            }"
-        ></ng-container> 
-        
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'main',
-                categoryName: 'name',
-                polishName: 'Punkt',
-                objValue: elInList.name,
-                editModeNotAvailable: true
-            }"
-        ></ng-container>
-
-
-        <div class="details__main__state">
-
-            <div class="details__main__state__category-param">
-                Stan:
-            </div>
-
-            <div 
-                class="details__main__state__name-param"
-                *ngIf="!editMode; else editModeTemplateSelect"
-            >
-                {{elInList.state}}
-            </div>
-
-            <ng-template #editModeTemplateSelect>
-
-                <div class="details__main__state__name-param--editMode">
-
-                    <select
-                        name="state"
-                        [ngModel]="elInList.state"
+                    <input 
+                        *ngIf="!field.special; else special"
+                        type="text"
+                        [name]="field.category"
+                        [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+                        [ngModel]="elInList[field.category]"
                     >
-                        <option
-                            *ngFor="let state of phoneStates"
-                            [value]="state"
+
+                    <ng-template #special>
+
+                        <select
+                            name="state"
+                            [ngModel]="elInList.state"
                         >
-                            {{state}}
-                        </option>
-                    
-                    </select>
+                            <option
+                                *ngFor="let state of phoneStates"
+                                [value]="state"
+                            >
+                                {{state}}
+                            </option>
+                        
+                        </select>
+
+                    </ng-template>
 
                 </div>
 
             </ng-template>
-
+        
         </div>
 
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'main',
-                categoryName: 'imei',
-                polishName: 'Imei',
-                objValue: elInList.imei,
-                editModeNotAvailable: true
-            }"
-        ></ng-container> 
-
-    </div>
-
-    <div class="details__common">
-
-
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'common',
-                categoryName: 'color',
-                polishName: 'Kolor',
-                objValue: elInList.color,
-                editModeNotAvailable: false
-            }"
-        ></ng-container>
-
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'common',
-                categoryName: 'comment',
-                polishName: 'Uwagi',
-                objValue: elInList.comment,
-                editModeNotAvailable: false
-            }"
-        ></ng-container>
-
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'common',
-                categoryName: 'date-buyed',
-                polishName: 'Data zakupu',
-                objValue: elInList.dateBuyed | date:'dd.MM.yyyy',
-                editModeNotAvailable: true
-            }"
-        ></ng-container>
-
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'common',
-                categoryName: 'priceBuyed',
-                polishName: 'Cena zakupu',
-                objValue: elInList.priceBuyed,
-                editModeNotAvailable: false,
-                isNumber: true
-            }"
-        ></ng-container>
-
-        <ng-container 
-            *ngTemplateOutlet="view; context: {
-                mainOrCommon: 'common',
-                categoryName: 'price',
-                polishName: 'Cena',
-                objValue: elInList.price,
-                editModeNotAvailable: false,
-                isNumber: true
-            }"
-        ></ng-container>
-
-    </div>
+    </ng-container>
 
     <button
         *ngIf="editMode"

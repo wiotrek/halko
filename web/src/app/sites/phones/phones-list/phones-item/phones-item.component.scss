@@ -1,41 +1,17 @@
 @import 'src/app/shared/global-styles/variable.scss';
+@import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
     .elInList {
-        padding: 3px 10px;
-        font-size: .7rem;
-        background-color: white;
-        margin-top: 10px;
-        border-radius: 5px;
+        @include elInList;
 
-        &__header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            & {
-                text-align: center;
-                overflow: hidden;
-            }
-    
-            &__index {
-                width: 10px;
-            }
-    
-            &__producer, &__model{
-                width: 80px;
-            }
-    
-            &__imei, &__color, &__name,
-            &__state, &__priceBuyed {
+        &__upward {
+            
+            &__field--mobile {
                 display: none;
             }
-    
-            &__price {
-                width: 50px;
-            }
 
-            &__editing {
+            &__info-btn {
                 border: 0;
                 background-color: transparent;
                 color: $prettyGreen;
@@ -50,10 +26,6 @@
                 }
             }
     
-            &:hover {
-                color: $prettyGreen;
-            }
-    
             &:hover &__editing {
                 color: $waringColor;
             }
@@ -66,48 +38,26 @@
 }
 
 @media (min-width: $minValueDesktop) {
-    .elInList {
+    .elInList__upward {
+        font-size: .7rem;
 
-        &__header {
+        &__field--mobile {
+            display: initial;
+        }
+        
+        &__info-btn {
+            border: 0;
+            background-color: transparent;
+            color: $prettyGreen;
+        }
 
-            &__imei {
-                width: 85px;
-                display: initial;
-            }
-    
-            &__color {
-                width: 70px;
-                display: initial;
-            }
-    
-            &__name {
-                width: 120px;
-                display: initial;
-            }
-    
-            &__state {
-                width: 50px;
-                display: initial;
-            }
-    
-            &__priceBuyed {
-                width: 50px;
-                display: initial;
-            }
-    
-            &__editing {
-                border: 0;
-                background-color: transparent;
-                color: $prettyGreen;
-            }
-    
-            &:hover {
-                color: $prettyGreen;
-            }
-    
-            &:hover &__editing {
-                color: $waringColor;
-            }
+        &:hover {
+            color: $prettyGreen;
+        }
+
+        &:hover &__info-btn {
+            color: $waringColor;
         }
     }
+
 }

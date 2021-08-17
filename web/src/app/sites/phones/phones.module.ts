@@ -10,7 +10,6 @@ import { PhonesTransferComponent } from './phones-list/phones-item/phones-detail
 import { PhonesViewEditComponent } from './phones-list/phones-item/phones-details/phones-view-edit/phones-view-edit.component';
 import { PhonesItemComponent } from './phones-list/phones-item/phones-item.component';
 import { PhonesListComponent } from './phones-list/phones-list.component';
-import { PhonesNavComponent } from './phones-nav/phones-nav.component';
 import { PhonesSeacherComponent } from './phones-seacher/phones-seacher.component';
 import { PhonesComponent } from './phones.component';
 
@@ -23,7 +22,6 @@ import { PhonesComponent } from './phones.component';
         PhonesViewEditComponent,
         PhonesSoldComponent,
         PhonesTransferComponent,
-        PhonesNavComponent,
         PhonesListComponent,
         PhonesListArchivComponent,
         PhonesArchivComponent,

@@ -144,13 +144,6 @@ export class PhonesService {
 
         return this.http.get<PhoneModel[]>(
             this.apiUrl + 'api/device/sold', { params }
-        ).pipe(
-            catchError(
-                (err: HttpErrorResponse) => {
-                    this.toastr.error(err.error.message);
-                    return throwError(err.error.message);
-                }
-            )
         );
     }
 }

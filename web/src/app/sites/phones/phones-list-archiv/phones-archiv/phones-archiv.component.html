@@ -1,0 +1,26 @@
+<div class="elInList">
+
+    <div class="elInList__upward">
+
+        <div
+            class="elInList__upward__field"
+            [ngStyle]="{ width: phonesItemField[0].width }"
+        >
+            {{ind}}.
+        </div>
+
+        <div
+            class="elInList__upward__field"
+            *ngFor="let field of phonesItemField"
+            [ngStyle]="{
+                'width': field.width,
+                'display': elInList[field.category] ? '' : 'none'
+            }"
+            [ngClass]="{ 'elInList__upward__field--mobile': !field.isMobileRwd }"
+        >
+            {{elInList[field.category]}} {{field.currency}}
+        </div>
+
+    </div>
+
+</div>

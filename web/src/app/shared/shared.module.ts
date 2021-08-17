@@ -6,11 +6,13 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
+import { LaPaginationComponent } from './components/la-pagination/la-pagination';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
         DropdownDirective,
+        LaPaginationComponent
     ],
     imports: [
         CommonModule,
@@ -25,7 +27,8 @@ import { HttpClientModule } from '@angular/common/http';
         FormsModule,
         FontAwesomeModule,
         LoadingSpinnerComponent,
-        DropdownDirective
+        DropdownDirective,
+        LaPaginationComponent
     ]
 })
 export class SharedModule {}

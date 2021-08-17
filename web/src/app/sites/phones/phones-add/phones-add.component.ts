@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { PhonesService } from '../phones.service';
 import { PhoneFields } from '../_dictionary/phone-fields.dictionary';
 import { PhoneStates } from '../_dictionary/phone-states.dictionary';

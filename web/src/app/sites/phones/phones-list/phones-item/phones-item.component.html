@@ -1,52 +1,35 @@
 <div class="elInList">
 
     <div
-        class="elInList__header"
+        class="elInList__upward"
         [ngClass]="{'detailsMode': detailsMode}"
     >
 
         <ng-container *ngIf="!detailsMode">
 
-            <div class="elInList__header__index">
+            <div 
+                class="elInList__upward__field"
+                [ngStyle]="{ width: phonesItemField[0].width }"
+            >
                 {{ind}}.
             </div>
 
-            <div class="elInList__header__producer">
-                {{elInList.producer}}
-            </div>
-
-            <div class="elInList__header__model">
-                {{elInList.model}}
-            </div>
-
-            <div class="elInList__header__imei">
-                {{elInList.imei}}
-            </div>
-
-            <div class="elInList__header__color">
-                {{elInList.color}}
-            </div>
-
-            <div class="elInList__header__name">
-                {{elInList.name}}
-            </div>
-
-            <div class="elInList__header__state">
-                {{elInList.state}}
-            </div>
-
-            <div class="elInList__header__priceBuyed">
-                {{elInList.priceBuyed}} zł
-            </div>
-
-            <div class="elInList__header__price">
-                {{elInList.price}} zł
+            <div 
+                class="elInList__upward__field"
+                *ngFor="let field of phonesItemField"
+                [ngStyle]="{
+                    'width': field.width,
+                    'display': elInList[field.category] ? '' : 'none'
+                }"
+                [ngClass]="{ 'elInList__upward__field--mobile': !field.isMobileRwd }"
+            >
+                {{elInList[field.category]}} {{field.currency}}
             </div>
 
         </ng-container>
 
         <button
-            class="elInList__header__editing"
+            class="elInList__upward__info-btn"
             (click)="detailsMode = !detailsMode"
             [ngClass]="{'detailsMode': detailsMode}"
         >

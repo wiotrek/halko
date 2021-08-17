@@ -24,12 +24,12 @@ import { SearcherModel } from '../_models/searcher.model';
             (refreshPhoneList)="this.getPhones()"
         ></app-phones-item>
 
-        <app-phones-pagination
+        <app-la-pagination
             [pageSize]="pageSize"
             [arrLength]="arrLength"
             [(start)]="start"
             [(end)]="end"
-        ><app-phones-pagination>
+        ><app-la-pagination>
     `
 })
 export class PhonesListComponent implements OnInit {

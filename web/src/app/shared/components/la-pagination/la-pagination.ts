@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-    selector: 'app-phones-pagination',
+    selector: 'app-la-pagination',
     template: `
         <div class="pagination">
 
@@ -17,9 +17,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
         </div>
     `,
-    styleUrls: ['./phones-pagination.scss']
+    styleUrls: ['./la-pagination.scss']
 })
-export class PhonesPaginationComponent {
+export class LaPaginationComponent {
     @Input() pageSize: number;
     @Input() arrLength: number;
 

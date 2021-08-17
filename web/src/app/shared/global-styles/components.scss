@@ -40,3 +40,28 @@
     font-size: .7rem;
     align-items: center;
 }
+
+
+// for display phones elements
+@mixin elInList {
+    padding: 3px 10px;
+    font-size: .7rem;
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 5px;
+
+    &__upward {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__field {
+            text-align: center;
+            overflow: hidden;
+        }
+
+        &:hover {
+            color: $prettyGreen;
+        }
+    }
+}

@@ -1,19 +1,19 @@
-import { Component, DoCheck } from '@angular/core';
+import { Component, DoCheck, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Links } from 'src/app/shared/models/links.model';
 
 @Component({
-    selector: 'app-phones-nav',
-    templateUrl: './phones-nav.component.html',
-    styleUrls: ['./phones-nav.component.scss']
+    selector: 'app-sub-nav',
+    templateUrl: './sub-nav.component.html',
+    styleUrls: ['./sub-nav.component.scss']
 })
-export class PhonesNavComponent implements DoCheck {
+export class SubNavComponent implements DoCheck {
+    @Input() paths = {} as Links[];
 
-    paths: Links[] = [
-        { caption: 'Spis telefonów', path: '' },
-        { caption: 'Archiwum', path: 'archiwum'},
-        { caption: 'Dodaj telefon', path: 'dodaj-telefon' }
-    ];
+    // name module like telefony or serwis
+    // params is unnecessery because is using to slice
+    // this name.length + 2 in current url
+    @Input() nameModule = '';
 
     activeSite: Links;
     leftOption: Links;
@@ -37,7 +37,9 @@ export class PhonesNavComponent implements DoCheck {
 
         // check which path is now
         const currentlyLink = this.paths.find(
-            x => x.path === currenturl.slice(10)
+            x => x.path === currenturl.slice(
+                this.nameModule.length + 2
+            )
         );
 
         // set header

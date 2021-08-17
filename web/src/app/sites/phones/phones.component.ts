@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Links } from 'src/app/shared/models/links.model';
 
 @Component({
     selector: 'app-phones',
@@ -6,9 +7,16 @@ import { Component } from '@angular/core';
 
     <div class="wrapper">
         <div class="middle">
-            <app-phones-nav></app-phones-nav>
+
+            <app-sub-nav
+                [paths]="paths"
+                [nameModule]="nameModule"
+            ></app-sub-nav>
+
             <router-outlet></router-outlet>
+
         </div>
+
     </div>
 
     `,
@@ -26,4 +34,12 @@ import { Component } from '@angular/core';
     `]
 })
 
-export class PhonesComponent {}
+export class PhonesComponent {
+    nameModule = 'telefony';
+
+    paths: Links[] = [
+        { caption: 'Spis telefonów', path: '' },
+        { caption: 'Archiwum', path: 'archiwum'},
+        { caption: 'Dodaj telefon', path: 'dodaj-telefon' }
+    ];
+}

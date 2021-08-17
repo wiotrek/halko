@@ -7,12 +7,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { LaPaginationComponent } from './components/la-pagination/la-pagination';
+import { SubNavComponent } from './components/sub-nav/sub-nav.component';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
         DropdownDirective,
-        LaPaginationComponent
+        LaPaginationComponent,
+        SubNavComponent
     ],
     imports: [
         CommonModule,
@@ -28,7 +30,8 @@ import { LaPaginationComponent } from './components/la-pagination/la-pagination'
         FontAwesomeModule,
         LoadingSpinnerComponent,
         DropdownDirective,
-        LaPaginationComponent
+        LaPaginationComponent,
+        SubNavComponent
     ]
 })
 export class SharedModule {}

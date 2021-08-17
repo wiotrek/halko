@@ -7,6 +7,7 @@ import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
 import { PhoneEditModel } from 'src/app/sites/phones/_models/phone-edit.model';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
+import { PhonesViewEditFieldDictionary } from './phones-view-edit-field.dictionary';
 
 @Component({
     selector: 'app-phones-view-edit',
@@ -19,6 +20,7 @@ export class PhonesViewEditComponent {
 
     @Output() doneAction: EventEmitter<string> = new EventEmitter();
 
+    phonesItemField = PhonesViewEditFieldDictionary;
     phoneStates = PhoneStates;
 
     constructor(

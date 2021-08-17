@@ -2,33 +2,23 @@
 
 @media (min-width: 0) {
     .details {
+        margin-top: 20px;
 
-        &__main {
-            font-weight: bolder;
-        }
-
-        // setting category and property
-        &__main, &__common {
+        &__field {
             margin-top: 10px;
+            display: flex;
+            font-size:  .7rem;
 
-            &__producer, &__model, &__name,
-            &__state, &__imei, &__color,
-            &__comment, &__date-buyed, &__priceBuyed,
-            &__price {
-                margin-top: 5px;
-                display: flex;
-                align-items: center;
+            &__category {
+                font-weight: bolder;
+            }
 
-                &__category-param {
-                    margin-right: 5px;
-                }
+            &__param {
+                margin-left: 10px;
 
-                &__name-param {
-                    text-decoration: underline;
-                }
-
-                &__name-param--editMode {
-
+                &--editMode {
+                    margin-left: 10px;
+                    
                     input {
                         border: 0;
                         border-bottom: 1px solid black;
@@ -57,15 +47,6 @@
                 color: $successColor;
                 text-decoration: underline;
             }
-        }
-    }
-}
-
-@media (min-width: $minValueDesktop) {
-    .details {
-
-        &__main, &__common {
-            margin-top: 15px;
         }
     }
 }

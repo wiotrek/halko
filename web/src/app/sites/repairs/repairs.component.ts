@@ -2,6 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'app-reapirs',
-    template: ''
+    template: `<app-item></app-item>`
 })
 export class RepairsComponent {}

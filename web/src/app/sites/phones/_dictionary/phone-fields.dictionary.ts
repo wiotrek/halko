@@ -2,37 +2,37 @@ import { PhoneFieldsModel } from '../_models/phone-fields.model';
 
 export const PhoneFields: PhoneFieldsModel[] = [
     {
-        categoryName: 'producer',
+        category: 'producer',
         polishName: 'Producent',
         isNumber: false
     },
     {
-        categoryName: 'model',
+        category: 'model',
         polishName: 'Model',
         isNumber: false
     },
     {
-        categoryName: 'imei',
+        category: 'imei',
         polishName: 'Imei',
         isNumber: false
     },
     {
-        categoryName: 'color',
+        category: 'color',
         polishName: 'Kolor',
         isNumber: false
     },
     {
-        categoryName: 'comment',
+        category: 'comment',
         polishName: 'Uwagi',
         isNumber: false
     },
     {
-        categoryName: 'priceBuyed',
+        category: 'priceBuyed',
         polishName: 'Cena zakupu',
         isNumber: true
     },
     {
-        categoryName: 'price',
+        category: 'price',
         polishName: 'Cena',
         isNumber: true
     }

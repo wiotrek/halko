@@ -4,21 +4,28 @@ import { FormsModule } from '@angular/forms';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
-        DropdownDirective
+        DropdownDirective,
     ],
     imports: [
         CommonModule,
+        HttpClientModule,
         FormsModule,
+        FontAwesomeModule,
         ToastrModule.forRoot()
     ],
     exports: [
-        LoadingSpinnerComponent,
-        DropdownDirective,
+        CommonModule,
+        HttpClientModule,
         FormsModule,
+        FontAwesomeModule,
+        LoadingSpinnerComponent,
+        DropdownDirective
     ]
 })
 export class SharedModule {}

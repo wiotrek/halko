@@ -1,4 +1,4 @@
-import { PhoneFieldsModel } from '../_models/phone-fields.model';
+import { PhoneFieldsModel } from '../../../shared/models/phone-fields.model';
 
 export const PhoneFields: PhoneFieldsModel[] = [
     {

@@ -5,11 +5,13 @@ import { RepairsAddComponent } from './repairs-add/reapirs-add.component';
 import { RepairsArchivComponent } from './repairs-archiv/repairs-archiv.component';
 import { RepairsListComponent } from './repairs-list/repairs-list.component';
 import { RepairsComponent } from './repairs.component';
+import {RepairsItemComponent} from './repairs-list/repairs-item/repairs-item.component';
 
 @NgModule({
     declarations: [
         RepairsComponent,
         RepairsListComponent,
+        RepairsItemComponent,
         RepairsAddComponent,
         RepairsArchivComponent
     ],

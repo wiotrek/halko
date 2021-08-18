@@ -1,4 +1,4 @@
-import { PhoneFieldsModel } from 'src/app/sites/phones/_models/phone-fields.model';
+import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 export const PhonesViewEditFieldDictionary: PhoneFieldsModel[] = [
     {

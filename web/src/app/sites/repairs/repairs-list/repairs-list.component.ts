@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
+import { RepairModel } from 'src/app/shared/models/repair.model';
+import { RepairsItemDictionary } from './repairs-item.dictionary';
 
 @Component({
     selector: 'app-repairs-list',
     template: `
-        <app-repairs-item
-            *ngFor="let phone of repairs"
-            [ind]="repairs.indexOf(phone) + 1"
+        <app-phone-in-list
+            *ngFor="let phone of phonesRepairs"
+            [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
-        ></app-repairs-item>
+            [deviceFields]="repairsItemDictionary"
+        ></app-phone-in-list>
     `
 })
 export class RepairsListComponent {
-    repairs = [
+    repairsItemDictionary = RepairsItemDictionary;
+
+    phonesRepairs: RepairModel[] = [
         {
             phoneName: 'apple iphone 7',
             imei: '1231321312',

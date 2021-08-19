@@ -3,12 +3,28 @@
 
 @media (min-width: 0) {
     .elInList {
-        @include elInList;
+        padding: 3px 10px;
+        font-size: .7rem;
+        background-color: white;
+        margin-top: 10px;
+        border-radius: 5px;
 
         &__upward {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-            &__field--mobile {
-                display: none;
+            &__field {
+                text-align: center;
+                overflow: hidden;
+
+                &--hide {
+                    display: none;
+                }
+
+                &:hover {
+                    color: $prettyGreen;
+                }
             }
 
             &__info-btn {
@@ -41,7 +57,7 @@
     .elInList__upward {
         font-size: .7rem;
 
-        &__field--mobile {
+        &__field--hide {
             display: initial;
         }
 
@@ -59,5 +75,4 @@
             color: $waringColor;
         }
     }
-
 }

@@ -1,0 +1,65 @@
+<div class="elInList">
+
+    <div
+        class="elInList__upward"
+        [ngClass]="{'detailsMode': detailsMode}"
+    >
+
+        <ng-container *ngIf="!detailsMode">
+
+            <div
+                class="elInList__upward__field"
+                [ngStyle]="{ width: fieldsNonDetails[0].width }"
+            >
+                {{ind}}.
+            </div>
+
+            <div
+                class="elInList__upward__field"
+                *ngFor="let field of fieldsNonDetails"
+                [ngStyle]="{
+                    'width': field.width,
+                    'display': elInList[field.category] ? '' : 'none'
+                }"
+                [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
+            >
+                {{elInList[field.category]}} {{field.currency}}
+            </div>
+
+        </ng-container>
+
+        <button
+            class="elInList__upward__info-btn"
+            (click)="detailsMode = !detailsMode"
+            [ngClass]="{'detailsMode': detailsMode}"
+        >
+
+            <fa-icon
+                [icon]="faInfoCircle"
+                *ngIf="!detailsMode; else detailsModeActive"
+            ></fa-icon>
+
+            <ng-template #detailsModeActive>
+
+                <fa-icon [icon]="faUndo"></fa-icon>
+
+            </ng-template>
+
+        </button>
+
+    </div>
+
+    <div class="elInList__inner">
+
+        <ng-container *ngIf="detailsMode">
+
+            <app-phone-in-list-details
+                [elInList]="elInList"
+                [deviceFields]="deviceFields"
+            ></app-phone-in-list-details>
+
+        </ng-container>
+
+    </div>
+
+</div>

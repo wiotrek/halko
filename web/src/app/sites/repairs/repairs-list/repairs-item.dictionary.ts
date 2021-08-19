@@ -48,7 +48,7 @@ export const RepairsItemDictionary: PhoneFieldsModel[] = [
     {
         category: 'pickUpDate',
         polishName: 'Data przyjęcia',
-        width: '55px',
+        width: '60px',
         isNumber: false,
         isMobileRwd: true,
         onlyInDetails: false

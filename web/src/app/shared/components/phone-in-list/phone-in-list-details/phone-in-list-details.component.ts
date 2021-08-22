@@ -6,10 +6,11 @@ import {
     ViewContainerRef,
     AfterViewInit,
     Injector,
-    Type
+    Type,
+    ChangeDetectorRef
 } from '@angular/core';
-import { RepairsToArchiveType } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
-import { PhoneInListTypes } from 'src/app/shared/models-union/phone-in-list.types';
+import { PhoneInListDetailsCptsType } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
+import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 @Component({
@@ -19,16 +20,17 @@ import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 })
 export class PhoneInListDetailsComponent implements AfterViewInit {
     @Input() deviceFields: PhoneFieldsModel;
-    @Input() elInList: PhoneInListTypes;
+    @Input() elInList: PhoneInListType;
 
     // variable for which will be assign name component
-    @Input() componentWillUsing?: Type<RepairsToArchiveType>;
+    @Input() componentWillUsing?: Type<PhoneInListDetailsCptsType>;
 
     @ViewChild('optComponent', { read: ViewContainerRef }) optComponent: ViewContainerRef;
 
     constructor(
         private injector: Injector,
-        private componentFactoryResolver: ComponentFactoryResolver
+        private componentFactoryResolver: ComponentFactoryResolver,
+        private cdref: ChangeDetectorRef
     ) {}
 
     ngAfterViewInit(): void {
@@ -48,6 +50,10 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
 
             // setting choosen component to ng-container #optComponent
             this.optComponent.insert(view);
+
+            // without this function, appear error - ExpressionChangedAfterItHasBeenCheckedError
+            // because event loop is mistaken
+            this.cdref.detectChanges();
         }
     }
 }

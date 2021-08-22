@@ -2,7 +2,7 @@
 
 @media (min-width: 0) {
     .details {
-        margin-top: 20px;
+        margin-top: 10px;
 
         &__field {
             margin-top: 10px;
@@ -16,6 +16,16 @@
             &__param {
                 margin-left: 10px;
             }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+    .details {
+        padding-bottom: 10px;
+
+        &__field {
+            font-size:  .8rem;
         }
     }
 }

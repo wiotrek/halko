@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Type } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { PhoneInListTypes } from '../../models-union/phone-in-list.types';
+import { PhoneInListType } from '../../models-union/phone-in-list.type';
 import { PhoneFieldsModel } from '../../models/phone-fields.model';
 
 @Component({
@@ -10,7 +10,7 @@ import { PhoneFieldsModel } from '../../models/phone-fields.model';
     styleUrls: ['phone-in-list.component.scss']
 })
 export class PhoneInListComponent implements OnInit {
-    @Input() elInList: PhoneInListTypes;
+    @Input() elInList: PhoneInListType;
     @Input() ind: number;
     @Input() deviceFields: PhoneFieldsModel[];
     @Input() componentWillUsing?: Type<unknown>;

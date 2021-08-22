@@ -8,13 +8,19 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
 import { LaPaginationComponent } from './components/la-pagination/la-pagination';
 import { SubNavComponent } from './components/sub-nav/sub-nav.component';
+import { PhoneInListComponent } from './components/phone-in-list/phone-in-list.component';
+import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in-list-details/phone-in-list-details.component';
+import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archive/repairs-to-archive.component';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
         DropdownDirective,
         LaPaginationComponent,
-        SubNavComponent
+        SubNavComponent,
+        PhoneInListComponent,
+        PhoneInListDetailsComponent,
+        RepairsToArchiveComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +37,9 @@ import { SubNavComponent } from './components/sub-nav/sub-nav.component';
         LoadingSpinnerComponent,
         DropdownDirective,
         LaPaginationComponent,
-        SubNavComponent
+        SubNavComponent,
+        PhoneInListComponent,
+        PhoneInListDetailsComponent
     ]
 })
 export class SharedModule {}

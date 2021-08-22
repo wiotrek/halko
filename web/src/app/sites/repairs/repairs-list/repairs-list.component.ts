@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PhoneInListDetailsCptsDirectory } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
 import { RepairModel } from 'src/app/shared/models/repair.model';
 import { RepairsItemDictionary } from './repairs-item.dictionary';
 
@@ -10,11 +11,14 @@ import { RepairsItemDictionary } from './repairs-item.dictionary';
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
             [deviceFields]="repairsItemDictionary"
+            [componentWillUsing]="componentWillUsing"
         ></app-phone-in-list>
     `
 })
 export class RepairsListComponent {
     repairsItemDictionary = RepairsItemDictionary;
+
+    componentWillUsing = PhoneInListDetailsCptsDirectory.RepairsToArchiveComponent;
 
     phonesRepairs: RepairModel[] = [
         {

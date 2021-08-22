@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Type } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { PhoneInListTypes } from '../../models-union/phone-in-list.types';
@@ -13,6 +13,7 @@ export class PhoneInListComponent implements OnInit {
     @Input() elInList: PhoneInListTypes;
     @Input() ind: number;
     @Input() deviceFields: PhoneFieldsModel[];
+    @Input() componentWillUsing?: Type<unknown>;
 
     fieldsNonDetails: PhoneFieldsModel[];
 

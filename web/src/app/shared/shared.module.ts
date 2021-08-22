@@ -10,6 +10,7 @@ import { LaPaginationComponent } from './components/la-pagination/la-pagination'
 import { SubNavComponent } from './components/sub-nav/sub-nav.component';
 import { PhoneInListComponent } from './components/phone-in-list/phone-in-list.component';
 import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in-list-details/phone-in-list-details.component';
+import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archive/repairs-to-archive.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in
         LaPaginationComponent,
         SubNavComponent,
         PhoneInListComponent,
-        PhoneInListDetailsComponent
+        PhoneInListDetailsComponent,
+        RepairsToArchiveComponent
     ],
     imports: [
         CommonModule,

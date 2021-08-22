@@ -1,0 +1,21 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .details {
+        margin-top: 20px;
+
+        &__field {
+            margin-top: 10px;
+            display: flex;
+            font-size:  .7rem;
+
+            &__category {
+                font-weight: bolder;
+            }
+
+            &__param {
+                margin-left: 10px;
+            }
+        }
+    }
+}

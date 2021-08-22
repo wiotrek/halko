@@ -1,14 +1,23 @@
-<div
-    class="details"
-    *ngFor="let field of deviceFields"
->
+<div class="details">
 
-    <div class="details__category">
-        {{field.polishName | titlecase}}:
-    </div>
+    <ng-container #optComponent></ng-container>
 
-    <div class="details__param">
-        {{elInList[field.category]}} {{field.currency}}
+    <div
+        class="details__field"
+        *ngFor="let field of deviceFields"
+        [ngStyle]="{
+            'display': elInList[field.category] ? '' : 'none'
+        }"
+    >
+
+        <div class="details__field__category">
+            {{field.polishName | titlecase}}:
+        </div>
+
+        <div class="details__field__param">
+            {{elInList[field.category]}} {{field.currency}}
+        </div>
+
     </div>
 
 </div>

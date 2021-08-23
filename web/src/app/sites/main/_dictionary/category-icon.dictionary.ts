@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 
-export const categoryIcon: Dictionary<IconDefinition> = {
+export const CategoryIconDictionary: Dictionary<IconDefinition> = {
     akcesoria: faHeadphones,
     telefon: faMobileAlt,
     serwis: faWrench,

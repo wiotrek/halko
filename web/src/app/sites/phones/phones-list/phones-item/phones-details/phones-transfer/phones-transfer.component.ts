@@ -3,8 +3,8 @@ import { Component, Input, OnDestroy, OnInit, Output, EventEmitter } from '@angu
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
-import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
+import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
+import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 import { Point } from 'src/app/sites/phones/_models/point.model';

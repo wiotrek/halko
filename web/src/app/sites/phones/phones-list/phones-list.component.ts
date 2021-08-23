@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
-import { SortingValues } from '../_dictionary/sorting-values.dictionary';
+import { SortingValuesDirectory } from '../_directory/sorting-values.directory';
 import { PhoneModel } from '../_models/phone.model';
 import { SearcherModel } from '../_models/searcher.model';
 
@@ -87,25 +87,25 @@ export class PhonesListComponent implements OnInit {
                 if (sorted) {
                     switch (sorted) {
 
-                        case SortingValues[0]:
+                        case SortingValuesDirectory[0]:
                             this.phonesList = res.sort(
                                 (a, b) => a.producer.localeCompare(b.producer)
                             );
                             break;
 
-                        case SortingValues[1]:
+                        case SortingValuesDirectory[1]:
                             this.phonesList = res.sort(
                                 (a, b) => b.producer.localeCompare(a.producer)
                             );
                             break;
 
-                        case SortingValues[2]:
+                        case SortingValuesDirectory[2]:
                             this.phonesList = res.sort(
                                 (a, b) => a.price - b.price
                             );
                             break;
 
-                        case SortingValues[3]:
+                        case SortingValuesDirectory[3]:
                             this.phonesList = res.sort(
                                 (a, b) => b.price - a.price
                             );

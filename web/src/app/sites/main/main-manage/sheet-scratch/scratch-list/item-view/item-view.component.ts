@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { categoryIconColor } from 'src/app/sites/main/_dictionary/category-icon-color.dictionary';
-import { categoryIcon } from 'src/app/sites/main/_dictionary/category-icon.dictionary';
+import { CategoryIconColorDictionary } from 'src/app/sites/main/_dictionary/category-icon-color.dictionary';
+import { CategoryIconDictionary } from 'src/app/sites/main/_dictionary/category-icon.dictionary';
 import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
 
 @Component({
@@ -18,8 +18,8 @@ export class ItemViewComponent {
     faEdit = faEdit;
 
     // suplies from dictionary
-    categoryIcon = categoryIcon;
-    categoryIconColor = categoryIconColor;
+    categoryIcon = CategoryIconDictionary;
+    categoryIconColor = CategoryIconColorDictionary;
 
     editModeToggleFunc = (ind: number) => {
         this.editModeToggle.emit(ind);

@@ -1,4 +1,4 @@
-export const CategoryItemSolds = [
+export const CategoryItemSoldsDirectory = [
     'akcesoria',
     'telefon',
     'serwis'

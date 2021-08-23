@@ -1,6 +1,6 @@
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 
-export const categoryIconColor: Dictionary<string> = {
+export const CategoryIconColorDictionary: Dictionary<string> = {
     akcesoria: '#FFDAB9',
     telefon: '#9ACD32',
     serwis: '#B0E0E6',

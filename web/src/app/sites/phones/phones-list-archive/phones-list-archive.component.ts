@@ -6,15 +6,15 @@ import { PhoneModel } from '../_models/phone.model';
 import { SearcherModel } from '../_models/searcher.model';
 
 @Component({
-    selector: 'app-phones-list-archiv',
+    selector: 'app-phones-list-archive',
     template: `
         <app-phones-seacher></app-phones-seacher>
 
-        <app-phones-archiv
+        <app-phones-archive
             *ngFor="let phone of phonesList | slice:this.pagination.start:this.pagination.end"
             [elInList]="phone"
             [ind]="phonesList.indexOf(phone) + 1"
-        ></app-phones-archiv>
+        ></app-phones-archive>
 
         <app-la-pagination
             [pageSize]="this.pagination.pageSize"
@@ -24,7 +24,7 @@ import { SearcherModel } from '../_models/searcher.model';
         ><app-la-pagination>
     `
 })
-export class PhonesListArchivComponent implements OnInit {
+export class PhonesListArchiveComponent implements OnInit {
     phonesList: PhoneModel[];
 
     searcher: SearcherModel = {

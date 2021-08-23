@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-repairs-archiv',
+    selector: 'app-repairs-archive',
     template: ''
 })
-export class RepairsArchivComponent {}
+export class RepairsArchiveComponent {}

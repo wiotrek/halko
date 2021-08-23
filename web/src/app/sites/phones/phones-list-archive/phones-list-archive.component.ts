@@ -4,17 +4,19 @@ import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
 import { SearcherModel } from '../_models/searcher.model';
+import { PhonesArchiveFieldsDirectory } from './phones-list-archive.directory';
 
 @Component({
     selector: 'app-phones-list-archive',
     template: `
         <app-phones-seacher></app-phones-seacher>
 
-        <app-phones-archive
+        <app-phone-in-list
             *ngFor="let phone of phonesList | slice:this.pagination.start:this.pagination.end"
-            [elInList]="phone"
             [ind]="phonesList.indexOf(phone) + 1"
-        ></app-phones-archive>
+            [elInList]="phone"
+            [deviceFields]="phonesArchiveFieldDirectory"
+        ></app-phone-in-list>
 
         <app-la-pagination
             [pageSize]="this.pagination.pageSize"
@@ -26,6 +28,8 @@ import { SearcherModel } from '../_models/searcher.model';
 })
 export class PhonesListArchiveComponent implements OnInit {
     phonesList: PhoneModel[];
+
+    phonesArchiveFieldDirectory = PhonesArchiveFieldsDirectory;
 
     searcher: SearcherModel = {
         pointName: '',

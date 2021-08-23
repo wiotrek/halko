@@ -66,7 +66,7 @@ export const RepairsArchiveItemDirectory: PhoneFieldsModel[] = [
     },
     {
         category: 'returnDate',
-        polishName: 'Data oddania:',
+        polishName: 'Data oddania',
         isNumber: false,
         isMobileRwd: true,
         onlyInDetails: false

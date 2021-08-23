@@ -1,13 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ErrorsDictionary } from 'src/app/shared/directory/errors.directory';
-import { ResponseDictionary } from 'src/app/shared/directory/response.directory';
+import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
+import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
-import { PhoneStates } from 'src/app/sites/phones/_dictionary/phone-states.dictionary';
+import { PhoneStatesDirectory } from 'src/app/sites/phones/_directory/phone-states.directory';
 import { PhoneEditModel } from 'src/app/sites/phones/_models/phone-edit.model';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
-import { PhonesViewEditFieldDictionary } from './phones-view-edit-field.dictionary';
+import { PhonesViewEditFieldDirectory } from './phones-view-edit-field.directory';
 
 @Component({
     selector: 'app-phones-view-edit',
@@ -20,8 +20,8 @@ export class PhonesViewEditComponent {
 
     @Output() doneAction: EventEmitter<string> = new EventEmitter();
 
-    phonesItemField = PhonesViewEditFieldDictionary;
-    phoneStates = PhoneStates;
+    phonesItemField = PhonesViewEditFieldDirectory;
+    phoneStates = PhoneStatesDirectory;
 
     constructor(
         private phoneService: PhonesService,

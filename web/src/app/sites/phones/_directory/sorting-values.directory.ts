@@ -1,4 +1,4 @@
-export const SortingValues = [
+export const SortingValuesDirectory = [
     { name: 'nazwa', vector: 'up'},
     { name: 'nazwa', vector: 'down'},
     { name: 'cena', vector: 'up'},

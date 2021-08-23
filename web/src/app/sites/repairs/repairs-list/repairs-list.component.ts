@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { PhoneInListDetailsCptsDirectory } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
 import { RepairModel } from 'src/app/shared/models/repair.model';
-import { RepairsItemDictionary } from './repairs-item.dictionary';
+import { RepairsItemDirectory } from './repairs-item.directory';
 
 @Component({
     selector: 'app-repairs-list',
@@ -16,7 +16,7 @@ import { RepairsItemDictionary } from './repairs-item.dictionary';
     `
 })
 export class RepairsListComponent {
-    repairsItemDictionary = RepairsItemDictionary;
+    repairsItemDictionary = RepairsItemDirectory;
 
     componentWillUsing = PhoneInListDetailsCptsDirectory.RepairsToArchiveComponent;
 

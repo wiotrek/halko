@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 import { PhonesService } from '../phones.service';
-import { SortingValues } from '../_dictionary/sorting-values.dictionary';
+import { SortingValuesDirectory } from '../_directory/sorting-values.directory';
 import { Point } from '../_models/point.model';
 
 
@@ -38,7 +38,7 @@ export class PhonesSeacherComponent implements OnInit {
         down: faArrowDown,
     };
 
-    valuesToSorted = SortingValues;
+    valuesToSorted = SortingValuesDirectory;
     selectSorted = this.valuesToSorted[0];
 
     constructor(private phonesService: PhonesService) {}

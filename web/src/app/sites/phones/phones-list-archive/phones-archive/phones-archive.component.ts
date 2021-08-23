@@ -1,6 +1,6 @@
 import { Component, Input} from '@angular/core';
 import { PhoneModel } from '../../_models/phone.model';
-import { PhonesArchiveFieldDictionary } from './phones-list-archive.dictionary';
+import { PhonesArchiveFieldDirectory } from './phones-list-archive.directory';
 
 @Component({
     selector: 'app-phones-archive',
@@ -11,5 +11,5 @@ export class PhonesArchiveComponent {
     @Input() elInList: PhoneModel;
     @Input() ind: number;
 
-    phonesItemField = PhonesArchiveFieldDictionary;
+    phonesItemField = PhonesArchiveFieldDirectory;
 }

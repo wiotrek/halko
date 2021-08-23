@@ -1,6 +1,6 @@
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
-export const PhonesViewEditFieldDictionary: PhoneFieldsModel[] = [
+export const PhonesViewEditFieldDirectory: PhoneFieldsModel[] = [
     {
         category: 'producer',
         polishName: 'Producent',

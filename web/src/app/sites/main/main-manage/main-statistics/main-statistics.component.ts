@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
-import { categoryIconColor } from '../../_dictionary/category-icon-color.dictionary';
-import { categoryIcon } from '../../_dictionary/category-icon.dictionary';
-import { CategoryItemSolds } from '../../_dictionary/catogory-item-solds.dictionary';
+import { CategoryIconColorDictionary } from '../../_dictionary/category-icon-color.dictionary';
+import { CategoryIconDictionary } from '../../_dictionary/category-icon.dictionary';
+import { CategoryItemSoldsDirectory } from '../../_directory/catogory-item-solds.directory';
 import { CategoriesAmount } from '../../_models/categories-amount.model';
 
 @Component({
@@ -16,9 +16,9 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
     choiceDay: Date;
 
     // suplies from dictionary
-    categoryIcon = categoryIcon;
-    categoryIconColor = categoryIconColor;
-    categories = CategoryItemSolds;
+    categoryIcon = CategoryIconDictionary;
+    categoryIconColor = CategoryIconColorDictionary;
+    categories = CategoryItemSoldsDirectory;
 
     categoriesAmount: CategoriesAmount[];
     subscription: Subscription;

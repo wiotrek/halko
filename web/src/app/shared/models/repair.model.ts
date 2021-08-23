@@ -7,4 +7,7 @@ export interface RepairModel {
     pickUpDate: string;
     employer: string;
     pointName: string;
+    isReturn?: boolean;
+    returnDate?: string;
+    isSuccess?: boolean;
 }

@@ -1,0 +1,63 @@
+@import 'src/app/shared/global-styles/variable.scss';
+@import 'src/app/shared/global-styles/components.scss';
+
+@media (min-width: 0) {
+
+    .phone {
+        max-width: 350px;
+        margin: 20px auto;
+        font-size: .8rem;
+        padding: 20px;
+        background-color: white;
+        border-radius: 3px;
+
+        &__fields {
+            padding: 10px 0;
+
+            &__label {
+                margin-right: 10px;
+                width: 100px;
+            }
+
+            &__input {
+                border: 0;
+                background-color: transparent;
+                border-bottom: 1px solid $primaryGrey;
+                font-size: .6rem;
+                text-align: center;
+            }
+
+            &__select {
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+        }
+
+        &__submit-button {
+            margin-top: 10px;
+            text-align: center;
+
+            &__btn {
+                @include firstlyBtn;
+                font-size: .7rem;
+                padding: 5px 15px;
+            }
+        }
+    }
+}
+
+@media (min-width: $minValueDesktop) {
+
+    .phone {
+        font-size: .9rem;
+
+        &__field__input {
+            font-size: .7rem;
+        }
+
+        &__submit-button__btn {
+            font-size: .8rem;
+        }
+    }
+}

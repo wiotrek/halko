@@ -11,6 +11,7 @@ import { SubNavComponent } from './components/sub-nav/sub-nav.component';
 import { PhoneInListComponent } from './components/phone-in-list/phone-in-list.component';
 import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in-list-details/phone-in-list-details.component';
 import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archive/repairs-to-archive.component';
+import { AdderPhoneComponent } from './components/adder-phone/adder-phone.component';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archi
         SubNavComponent,
         PhoneInListComponent,
         PhoneInListDetailsComponent,
-        RepairsToArchiveComponent
+        RepairsToArchiveComponent,
+        AdderPhoneComponent
     ],
     imports: [
         CommonModule,
@@ -39,7 +41,8 @@ import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archi
         LaPaginationComponent,
         SubNavComponent,
         PhoneInListComponent,
-        PhoneInListDetailsComponent
+        PhoneInListDetailsComponent,
+        AdderPhoneComponent
     ]
 })
 export class SharedModule {}

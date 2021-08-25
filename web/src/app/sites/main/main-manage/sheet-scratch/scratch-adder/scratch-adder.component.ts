@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { Employees } from '../../../_models/employees.model';
+import { Employees } from '../../../../../shared/models/employees.model';
 import { ItemStructureAdd } from '../../../_models/item-structure-add.model';
 
 @Component({

@@ -7,5 +7,7 @@ export interface PhoneFieldsModel {
     isMobileRwd?: boolean;
     override?: boolean;
     currency?: string;
+    required?: boolean;
     special?: boolean;
+    forOptSelect?: string[];
 }

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
 import { CategoryItemExpensesDirectory } from '../_directory/category-item-expenses.directory';
 import { EmployeesInitialDirectory } from '../_directory/employees-initial.directory';
-import { Employees } from '../_models/employees.model';
+import { Employees } from '../../../shared/models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
 import { ItemStructureEdit } from '../_models/item-structure-edit.model';
 import { ItemStructure } from '../_models/item-structure.model';

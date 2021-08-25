@@ -1,0 +1,66 @@
+<form
+    class="phone"
+    #f="ngForm"
+    (ngSubmit)="f.valid && add(f)"
+>
+
+    <div
+        class="phone__fields form-text"
+        *ngFor="let field of fields"
+    >
+
+        <label
+            [for]="field.category"
+            class="phone__fields__label"
+        >
+            {{field.polishName}}:
+        </label>
+
+        <input
+            *ngIf="!field.special; else special"
+            type="text"
+            [id]="field.category"
+            class="phone__fields__input"
+            [name]="field.category"
+            [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+            [required]="field?.required"
+            ngModel
+        >
+
+        <ng-template #special>
+
+            <select
+                [id]="field.category"
+                class="phone__fields__select"
+                [name]="field.category"
+                [ngModel]="field.forOptSelect[0]"
+            >
+
+                <option
+                    *ngFor="let opt of field.forOptSelect"
+                    [value]="opt"
+                >
+                    {{opt}}
+                </option>
+
+            </select>
+
+        </ng-template>
+
+        <span class="phone__fields__currency">{{field?.currency}}</span>
+
+    </div>
+
+    <div class="phone__submit-button">
+
+        <button
+            type="submit"
+            class="phone__submit-button__btn"
+            [disabled]="!f.valid"
+        >
+            Dodaj
+        </button>
+
+    </div>
+
+</form>

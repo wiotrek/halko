@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
 import { faTrashAlt, faUndoAlt, faSave } from '@fortawesome/free-solid-svg-icons';
-import { Employees } from 'src/app/sites/main/_models/employees.model';
+import { Employees } from 'src/app/shared/models/employees.model';
 import { NgForm } from '@angular/forms';
 import { ItemStructureEdit } from 'src/app/sites/main/_models/item-structure-edit.model';
 

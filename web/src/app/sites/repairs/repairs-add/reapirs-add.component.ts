@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
+import { RepairsService } from '../repairs.service';
 import { RepairsAddFieldsDirectory } from './repairs-add-fields.directory';
 
 @Component({
@@ -9,27 +9,29 @@ import { RepairsAddFieldsDirectory } from './repairs-add-fields.directory';
         <app-adder-phone
             [fields]="fields"
             (outputElement)="addRepairPhone($event)"
-        ><app-adder-phone>
+        ></app-adder-phone>
     `
 })
 export class RepairsAddComponent implements OnInit {
     fields = RepairsAddFieldsDirectory;
 
+    constructor(private repairsService: RepairsService) {}
+
     ngOnInit(): void {
-        const employer: PhoneFieldsModel = {
-            category: 'employer',
-            polishName: 'Pracownik',
-            isNumber: false,
-            required: true,
-            special: true,
-            forOptSelect: ['Kg']
-        };
-
-        this.fields.push(employer);
-
+        this.setEmployerField();
     }
 
     addRepairPhone(f: NgForm): void {
         console.log(f.value);
+    }
+
+    private setEmployerField(): void {
+        this.repairsService.getEmployees().subscribe(
+            res => {
+                this.fields.find(
+                    x => x.category === 'employer'
+                ).forOptSelect = res.map(({initial}) => initial);
+            }
+        );
     }
 }

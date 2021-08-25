@@ -10,7 +10,7 @@ import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { EmployeesInitialDirectory } from './_directory/employees-initial.directory';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
-import { Employees } from './_models/employees.model';
+import { Employees } from '../../shared/models/employees.model';
 import { ItemStructureAddBackend } from './_models/item-structure-add-backend.model';
 import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructureEdit } from './_models/item-structure-edit.model';

@@ -32,14 +32,10 @@ export const RepairsAddFieldsDirectory: PhoneFieldsModel[] = [
         required: true
     },
     {
-        category: 'pickUp',
-        polishName: 'Data przyjęcia',
+        category: 'employer',
+        polishName: 'Pracownik',
         isNumber: false,
-        required: true
-    },
-    {
-        category: 'pointName',
-        polishName: 'Punkt',
-        isNumber: false
+        special: true,
+        forOptSelect: []
     }
 ];

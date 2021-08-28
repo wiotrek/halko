@@ -56,7 +56,7 @@ export class MainService {
     }
 
 
-    // for employess
+    // for employees
 
     getEmployees(): Observable<Employees[]> {
 

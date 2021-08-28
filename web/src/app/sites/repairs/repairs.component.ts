@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Links } from 'src/app/shared/models/links.model';
 
 @Component({
-    selector: 'app-reapirs',
+    selector: 'app-repairs',
     template: `
         <div class="wrapper">
 

@@ -7,23 +7,30 @@
 
         <ng-container *ngIf="!detailsMode">
 
-            <div
-                class="elInList__upward__field"
-                [ngStyle]="{ width: fieldsNonDetails[0].width }"
-            >
-                {{ind}}.
-            </div>
+            <div class="elInList__upward__fields" [ngStyle]="{
+            'display': 'flex',
+            'justify-content': 'flex-start'
+            }">
 
-            <div
-                class="elInList__upward__field"
-                *ngFor="let field of fieldsNonDetails"
-                [ngStyle]="{
+                <div
+                    class="elInList__upward__fields__field"
+                    [ngStyle]="{ width: fieldsNonDetails[0].width }"
+                >
+                    {{ind}}.
+                </div>
+
+                <div
+                    class="elInList__upward__fields__field"
+                    *ngFor="let field of fieldsNonDetails"
+                    [ngStyle]="{
                     'width': field.width,
                     'display': elInList[field.category] ? '' : 'none'
                 }"
-                [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
-            >
-                {{elInList[field.category]}} {{field.currency}}
+                    [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
+                >
+                    {{elInList[field.category]}} {{field.currency}}
+                </div>
+
             </div>
 
         </ng-container>

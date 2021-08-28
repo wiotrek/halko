@@ -14,16 +14,19 @@
             justify-content: space-between;
             align-items: center;
 
-            &__field {
-                text-align: center;
-                overflow: hidden;
+            &__fields {
 
-                &--hide {
-                    display: none;
-                }
+                &__field {
+                    text-align: center;
+                    overflow: hidden;
 
-                &:hover {
-                    color: $prettyGreen;
+                    &--hide {
+                        display: none;
+                    }
+
+                    &:hover {
+                        color: $prettyGreen;
+                    }
                 }
             }
 

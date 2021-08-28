@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/auth/user.model';
+import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { EmployeesInitialDirectory } from './_directory/employees-initial.directory';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';

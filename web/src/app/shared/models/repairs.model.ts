@@ -1,4 +1,4 @@
-export interface RepairModel {
+export interface RepairsModel {
     phoneName: string;
     imei: string;
     owner: string;

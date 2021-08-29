@@ -29,7 +29,7 @@ import { SearcherModel } from '../_models/searcher.model';
             [arrLength]="arrLength"
             [(start)]="start"
             [(end)]="end"
-        ><app-la-pagination>
+        ></app-la-pagination>
     `
 })
 export class PhonesListComponent implements OnInit {

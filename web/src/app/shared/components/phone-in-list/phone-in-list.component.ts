@@ -11,8 +11,11 @@ import { PhoneFieldsModel } from '../../models/phone-fields.model';
 })
 export class PhoneInListComponent implements OnInit {
     @Input() elInList: PhoneInListType;
-    @Input() ind: number;
     @Input() deviceFields: PhoneFieldsModel[];
+
+    // optionals members
+    @Input() ind?: number;
+    @Input() isFlexStart?: boolean;
     @Input() componentWillUsing?: Type<unknown>;
 
     fieldsNonDetails: PhoneFieldsModel[];

@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {SharedModule} from '../../shared/shared.module';
-import {PricesComponent} from './prices.component';
-import {PricesListComponent} from './prices-list/prices-list.component';
+import {PricesComponent} from './view/prices.component';
 
 @NgModule({
-    declarations: [
-        PricesComponent,
-        PricesListComponent
-    ],
+    declarations: [ PricesComponent ],
     imports: [
         SharedModule,
         RouterModule.forChild([

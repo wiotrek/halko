@@ -25,6 +25,9 @@ import { PhonesComponent } from './phones.component';
         PhonesListArchiveComponent,
         PhonesAddComponent
     ],
+    exports: [
+        PhonesSeacherComponent
+    ],
     imports: [
         SharedModule,
         RouterModule.forChild([
@@ -32,9 +35,9 @@ import { PhonesComponent } from './phones.component';
                 path: '',
                 component: PhonesComponent,
                 children: [
-                    { path: '', component: PhonesListComponent },
-                    { path: 'archiwum', component: PhonesListArchiveComponent },
-                    { path: 'dodaj-telefon', component: PhonesAddComponent }
+                    {path: '', component: PhonesListComponent},
+                    {path: 'archiwum', component: PhonesListArchiveComponent},
+                    {path: 'dodaj-telefon', component: PhonesAddComponent}
                 ]
             }
         ])

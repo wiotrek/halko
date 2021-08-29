@@ -1,22 +1,16 @@
 import { Component } from '@angular/core';
-import {PricesFieldsDirectory} from '../prices-fields.directory';
-import {PricesModel} from '../../../shared/models/prices.model';
+import { PricesFieldsDirectory } from '../prices-fields.directory';
+import { PricesModel } from '../../../shared/models/prices.model';
 
 @Component({
-    selector: 'app-prices-list',
-    template: `
-    <div class="prices">
-        <app-phone-in-list
-            *ngFor="let phone of phonePrices"
-            [elInList]="phone"
-            [deviceFields]="pricesFieldsDirectory"
-            [ind]="phonePrices.indexOf(phone) + 1"
-        ></app-phone-in-list>
-    </div>
-    `
+    selector: 'app-prices',
+    templateUrl: './prices.component.html',
+    styleUrls: ['prices.component.scss']
 })
-export class PricesListComponent {
+export class PricesComponent {
     pricesFieldsDirectory = PricesFieldsDirectory;
+    isFlexStart = true;
+    headline = 'Cennik';
 
     phonePrices: PricesModel[] = [
         {

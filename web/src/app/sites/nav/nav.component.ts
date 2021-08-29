@@ -26,7 +26,6 @@ export class NavComponent implements OnInit, OnDestroy {
 
     subscription: Subscription;
 
-
     // Close dropdown outside button
     // getting dropdown element
     @ViewChild('dropDown') dropDown: any;

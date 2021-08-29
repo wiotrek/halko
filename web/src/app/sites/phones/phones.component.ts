@@ -4,8 +4,8 @@ import { Links } from 'src/app/shared/models/links.model';
 @Component({
     selector: 'app-phones',
     template: `
-
     <div class="wrapper">
+
         <div class="middle">
 
             <app-sub-nav
@@ -22,15 +22,10 @@ import { Links } from 'src/app/shared/models/links.model';
     `,
     styles: [`
 
-        .wrapper {
-            margin-top: 30px;
-        }
-
         .middle {
             max-width: 850px;
             margin: 0 auto;
         }
-
     `]
 })
 

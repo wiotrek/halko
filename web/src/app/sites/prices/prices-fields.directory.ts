@@ -2,6 +2,14 @@ import {PhoneFieldsModel} from '../../shared/models/phone-fields.model';
 
 export const PricesFieldsDirectory: PhoneFieldsModel[] = [
     {
+        category: 'index',
+        polishName: 'indeks',
+        isNumber: false,
+        width: '20px',
+        onlyInDetails: false,
+        isMobileRwd: true
+    },
+    {
         category: 'producer',
         polishName: 'Nazwa',
         isNumber: false,

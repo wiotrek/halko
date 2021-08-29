@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RepairsArchiveItemDirectory } from './repairs-archive.directory';
-import {RepairsModel} from '../../../shared/models/repairs.model';
+import { RepairsModel } from '../../../shared/models/repairs.model';
 
 @Component({
     selector: 'app-repairs-archive',

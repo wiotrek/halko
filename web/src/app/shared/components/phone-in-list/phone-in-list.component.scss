@@ -14,19 +14,16 @@
             justify-content: space-between;
             align-items: center;
 
-            &__fields {
+            &__field {
+                text-align: center;
+                overflow: hidden;
 
-                &__field {
-                    text-align: center;
-                    overflow: hidden;
+                &--hide {
+                    display: none;
+                }
 
-                    &--hide {
-                        display: none;
-                    }
-
-                    &:hover {
-                        color: $prettyGreen;
-                    }
+                &:hover {
+                    color: $prettyGreen;
                 }
             }
 
@@ -40,8 +37,12 @@
                     transform: translateY(-1px);
                 }
 
-                &.detailsMode {
+                &.details-mode {
                     color: $waringColor;
+                }
+
+                &.flex-start {
+                    margin-left: auto;
                 }
             }
 
@@ -49,8 +50,12 @@
                 color: $waringColor;
             }
 
-            &.detailsMode {
+            &.details-mode {
                 justify-content: flex-end;
+            }
+
+            &.flex-start {
+                justify-content: flex-start;
             }
         }
     }

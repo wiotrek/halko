@@ -2,13 +2,17 @@
 
     <div
         class="elInList__upward"
-        [ngClass]="{'detailsMode': detailsMode}"
+        [ngClass]="{
+            'details-mode': detailsMode,
+            'flex-start': isFlexStart
+        }"
     >
 
         <ng-container *ngIf="!detailsMode">
 
             <div
                 class="elInList__upward__field"
+                *ngIf="ind"
                 [ngStyle]="{ width: fieldsNonDetails[0].width }"
             >
                 {{ind}}.
@@ -31,7 +35,10 @@
         <button
             class="elInList__upward__info-btn"
             (click)="detailsMode = !detailsMode"
-            [ngClass]="{'detailsMode': detailsMode}"
+            [ngClass]="{
+                'details-mode': detailsMode,
+                'flex-start': isFlexStart
+            }"
         >
 
             <fa-icon

@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/auth/user.model';
+import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 import { PhoneAddModel } from './_models/phone-add.model';

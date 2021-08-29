@@ -1,0 +1,17 @@
+<div class="wrapper">
+
+    <div class="middle">
+
+        <div class="headline">{{headline}}</div>
+
+        <app-phone-in-list
+            *ngFor="let phone of phonePrices"
+            [deviceFields]="pricesFieldsDirectory"
+            [elInList]="phone"
+            [isFlexStart]="isFlexStart"
+            [ind]="phonePrices.indexOf(phone) + 1"
+        ></app-phone-in-list>
+
+    </div>
+
+</div>

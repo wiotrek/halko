@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { AuthService } from 'src/app/auth/auth.service';
 import { faBars, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { Links } from 'src/app/shared/models/links.model';
-import { User } from 'src/app/auth/user.model';
+import { User } from 'src/app/auth/_models/user.model';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -25,7 +25,6 @@ export class NavComponent implements OnInit, OnDestroy {
     ];
 
     subscription: Subscription;
-
 
     // Close dropdown outside button
     // getting dropdown element

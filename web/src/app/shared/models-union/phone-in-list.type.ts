@@ -1,6 +1,6 @@
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
-import { RepairModel } from '../models/repair.model';
+import { RepairsModel } from '../models/repairs.model';
 
 export type PhoneInListType
     = PhoneModel
-    | RepairModel;
+    | RepairsModel;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PhoneInListDetailsCptsDirectory } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
-import { RepairModel } from 'src/app/shared/models/repair.model';
+import { RepairsModel } from 'src/app/shared/models/repairs.model';
 import { RepairsItemDirectory } from './repairs-item.directory';
 
 @Component({
@@ -20,7 +20,7 @@ export class RepairsListComponent {
 
     componentWillUsing = PhoneInListDetailsCptsDirectory.RepairsToArchiveComponent;
 
-    phonesRepairs: RepairModel[] = [
+    phonesRepairs: RepairsModel[] = [
         {
             phoneName: 'apple iphone 7',
             imei: '1231321312',

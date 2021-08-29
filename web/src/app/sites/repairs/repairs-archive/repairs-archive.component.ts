@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RepairModel } from 'src/app/shared/models/repair.model';
 import { RepairsArchiveItemDirectory } from './repairs-archive.directory';
+import { RepairsModel } from '../../../shared/models/repairs.model';
 
 @Component({
     selector: 'app-repairs-archive',
@@ -10,14 +10,13 @@ import { RepairsArchiveItemDirectory } from './repairs-archive.directory';
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
             [deviceFields]="repairsArchiveItemDirectory"
-            [componentWillUsing]="componentWillUsing"
         ></app-phone-in-list>
     `
 })
 export class RepairsArchiveComponent {
     repairsArchiveItemDirectory = RepairsArchiveItemDirectory;
 
-    phonesRepairs: RepairModel[] = [
+    phonesRepairs: RepairsModel[] = [
         {
             phoneName: 'apple iphone 8',
             imei: '12313212322',

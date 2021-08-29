@@ -19,7 +19,7 @@ import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
     styleUrls: ['phone-in-list-details.component.scss']
 })
 export class PhoneInListDetailsComponent implements AfterViewInit {
-    @Input() deviceFields: PhoneFieldsModel;
+    @Input() deviceFields: PhoneFieldsModel[];
     @Input() elInList: PhoneInListType;
 
     // variable for which will be assign name component
@@ -48,7 +48,7 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
 
             const view = componentRef.hostView;
 
-            // setting choosen component to ng-container #optComponent
+            // setting chosen component to ng-container #optComponent
             this.optComponent.insert(view);
 
             // without this function, appear error - ExpressionChangedAfterItHasBeenCheckedError

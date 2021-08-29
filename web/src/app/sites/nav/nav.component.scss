@@ -4,6 +4,7 @@
 @media (min-width: 0) {
     .nav {
         background-color: white;
+        margin-bottom: 30px;
 
         &__left-side {
             display: none;
@@ -34,7 +35,7 @@
                     margin: auto 15px;
                     font-size: 1.3rem;
                     cursor: pointer;
-    
+
                     &:hover, &.active {
                         color: $prettyGreen;
                     }
@@ -49,9 +50,9 @@
                     top: 50px;
                     left: 0;
 
-                    
+
                     &__option {
-                        
+
                         &__a {
                             padding: 2px;
                             margin: 5px auto;
@@ -100,7 +101,7 @@
                     font-weight: lighter;
                     margin: 0 8px;
                     color: $lightGrey;
-                    
+
                     &.active {
                         color: $primaryGrey;
                     }
@@ -125,7 +126,7 @@
                     margin: auto 15px;
                     font-size: 1.3rem;
                     cursor: pointer;
-    
+
                     &:hover, &.active {
                         color: $prettyGreen;
                     }
@@ -141,13 +142,13 @@
                     text-align: center;
                     border-radius: 2px;
 
-                    
+
                     &__option {
 
                         &__a {
                             display: none;
                         }
-                        
+
                         &__a:last-child {
                             padding: 2px;
                             margin: 2px auto;

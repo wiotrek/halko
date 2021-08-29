@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faHandPeace } from '@fortawesome/free-regular-svg-icons';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
     selector: 'app-auth',

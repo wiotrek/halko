@@ -37,8 +37,12 @@
                     transform: translateY(-1px);
                 }
 
-                &.detailsMode {
+                &.details-mode {
                     color: $waringColor;
+                }
+
+                &.flex-start {
+                    margin-left: auto;
                 }
             }
 
@@ -46,8 +50,12 @@
                 color: $waringColor;
             }
 
-            &.detailsMode {
+            &.details-mode {
                 justify-content: flex-end;
+            }
+
+            &.flex-start {
+                justify-content: flex-start;
             }
         }
     }

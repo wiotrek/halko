@@ -12,6 +12,7 @@ import { PhoneInListComponent } from './components/phone-in-list/phone-in-list.c
 import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in-list-details/phone-in-list-details.component';
 import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archive/repairs-to-archive.component';
 import { AdderPhoneComponent } from './components/adder-phone/adder-phone.component';
+import { SearcherComponent } from './components/searcher/searcher.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { AdderPhoneComponent } from './components/adder-phone/adder-phone.compon
         PhoneInListComponent,
         PhoneInListDetailsComponent,
         RepairsToArchiveComponent,
-        AdderPhoneComponent
+        AdderPhoneComponent,
+        SearcherComponent
     ],
     imports: [
         CommonModule,
@@ -42,7 +44,8 @@ import { AdderPhoneComponent } from './components/adder-phone/adder-phone.compon
         SubNavComponent,
         PhoneInListComponent,
         PhoneInListDetailsComponent,
-        AdderPhoneComponent
+        AdderPhoneComponent,
+        SearcherComponent
     ]
 })
 export class SharedModule {}

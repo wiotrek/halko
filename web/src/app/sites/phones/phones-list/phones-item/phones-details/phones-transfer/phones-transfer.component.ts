@@ -7,7 +7,7 @@ import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionar
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
-import { Point } from 'src/app/sites/phones/_models/point.model';
+import { Point } from 'src/app/shared/models/point.model';
 
 @Component({
     selector: 'app-phones-transfer',

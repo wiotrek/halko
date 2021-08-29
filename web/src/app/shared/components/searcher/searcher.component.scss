@@ -1,0 +1,131 @@
+@import 'src/app/shared/global-styles/variable.scss';
+
+@media (min-width: 0) {
+    .searcher {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        background-color: white;
+        font-size: .8rem;
+        color: $primaryGrey;
+        padding: 3px 5px;
+        align-items: baseline;
+
+        &__left-side {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            padding: 5px 0;
+            margin-left: 10px;
+
+            & > div {
+                margin-top: 10px;
+            }
+
+            &__main-searcher {
+                max-width: 200px;
+                text-align: center;
+                border: 0;
+                border-bottom: 1px groove $lightGrey;
+                margin-right: 20px;
+            }
+
+            &__sorting {
+                margin-right: 20px;
+                cursor: pointer;
+                align-self: center;
+                text-align: center;
+                min-width: 100px;
+
+                fa-icon {
+                    font-size: .6rem;
+                }
+
+                &__dropdown {
+                    background-color: white;
+                    text-align: center;
+                    position: absolute;
+                    min-width: 100px;
+
+                    &__option {
+                        font-size: .7rem;
+
+                        fa-icon {
+                            font-size: .5rem;
+                        }
+
+                        &:hover {
+                            background-color: $prettyGreen;
+                            color: white;
+                        }
+                    }
+                }
+            }
+
+            &__states {
+                font-size: .7rem;
+
+                input {
+                    visibility: hidden;
+                }
+
+                label {
+                    cursor: pointer;
+                    border: 1px groove $primaryGrey;
+                    padding: 0 5px;
+                    font-weight: bolder;
+                }
+
+                input:checked + label{
+                    background-color: $prettyGreen;
+                    color: white;
+                    border: 1px solid white;
+                }
+            }
+        }
+
+        &__right-side {
+            margin: 0 auto;
+
+            &__points-names {
+                cursor: pointer;
+                align-self: center;
+                text-align: center;
+                min-width: 150px;
+
+                fa-icon {
+                    font-size: .6rem;
+                }
+
+                &__dropdown {
+                    background-color: white;
+                    text-align: center;
+                    position: absolute;
+                    width: 170px;
+
+                    &__option {
+                        font-size: .7rem;
+
+                        fa-icon  {
+                            font-size: .5rem;
+                        }
+
+                        &:hover {
+                            background-color: $prettyGreen;
+                            color: white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@media (min-width: $minValueDesktop) {
+    .searcher__left-side {
+        justify-content: flex-start;
+
+        & > div {
+            margin-top: 0;
+        }
+    }
+}

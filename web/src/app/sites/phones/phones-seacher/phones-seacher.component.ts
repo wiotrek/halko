@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgForm } from '@angular/forms';
 import {
     faArrowUp,
     faArrowDown,
@@ -9,7 +8,7 @@ import {
 import { Dictionary } from 'src/app/shared/models/dictionary.model';
 import { PhonesService } from '../phones.service';
 import { SortingValuesDirectory } from '../_directory/sorting-values.directory';
-import { Point } from '../_models/point.model';
+import { Point } from '../../../shared/models/point.model';
 
 
 @Component({
@@ -47,7 +46,7 @@ export class PhonesSeacherComponent implements OnInit {
         this.getListPoints();
     }
 
-    searchName = (f: NgForm) =>
+    searchName = (f: any) =>
         this.searchString.emit(f.value)
 
     showDeviceForState = (state: string) =>

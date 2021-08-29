@@ -1,0 +1,87 @@
+<div class="searcher">
+
+    <div class="searcher__left-side">
+
+        <input
+            class="searcher__left-side__main-searcher"
+            placeholder="np. producent"
+        >
+
+        <div
+            *ngIf="searcherPattern.sorting"
+            class="searcher__left-side__sorting"
+            appDropdown
+            #s="appDropdown"
+        >
+            <fa-icon [icon]="faCaretDown"></fa-icon> {{selectedSorting.name}}
+            <fa-icon [icon]="searcherVectorIconsDictionary[selectedSorting.vector]"></fa-icon>
+
+            <div class="searcher__left-side__sorting__dropdown" *ngIf="s.isOpen">
+
+                <div
+                    class="searcher__left-side__sorting__dropdown__option"
+                    *ngFor="let sortVal of sortingValueConst"
+                >
+                    {{sortVal.name}} <fa-icon [icon]="searcherVectorIconsDictionary[sortVal.vector]"></fa-icon>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="searcher__left-side__states" *ngIf="searcherPattern.filterNewUsed">
+
+            <input
+                type="radio"
+                id="allOfThem"
+                value=""
+                [(ngModel)]="state"
+            >
+            <label for="allOfThem">Wszystkie</label>
+
+            <input
+                type="radio"
+                [(ngModel)]="state"
+                id="onlyNew"
+                value="Nowy"
+            >
+            <label for="onlyNew">Nowe</label>
+
+            <input
+                type="radio"
+                [(ngModel)]="state"
+                id="onlyUsed"
+                value="Używany"
+            >
+            <label for="onlyUsed">Używane</label>
+
+        </div>
+
+    </div>
+
+    <div class="searcher__right-side">
+
+        <div
+            *ngIf="searcherPattern.filterPoints"
+            class="searcher__right-side__points-names"
+            appDropdown
+            #p="appDropdown"
+        >
+            <fa-icon [icon]="faCaretDown"></fa-icon> {{defaultPoint}}
+
+            <div class="searcher__right-side__points-names__dropdown" *ngIf="p.isOpen">
+
+                <div
+                    class="searcher__right-side__points-names__dropdown__option"
+                    *ngFor="let point of points"
+                >
+                    {{point.name}}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

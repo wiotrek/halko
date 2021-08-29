@@ -5,6 +5,8 @@
         <input
             class="searcher__left-side__main-searcher"
             placeholder="np. producent"
+            #searcher
+            (keyup.enter)="searchName(searcher)"
         >
 
         <div

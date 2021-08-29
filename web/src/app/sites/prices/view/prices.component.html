@@ -6,6 +6,7 @@
 
         <app-searcher
             [searcherPattern]="searcherPattern"
+            (searchNameFilter)="searchNameFilter($event)"
         ></app-searcher>
 
         <app-phone-in-list

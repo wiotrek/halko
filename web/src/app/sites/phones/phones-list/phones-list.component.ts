@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { SortingValuesDirectory } from '../_directory/sorting-values.directory';
 import { PhoneModel } from '../_models/phone.model';
-import { SearcherModel } from '../_models/searcher.model';
+import { SearcherModel } from '../../../shared/models/searcher.model';
 
 @Component({
     selector: 'app-phones-list',

@@ -11,7 +11,7 @@
 
         <app-phone-in-list
             *ngFor="let phone of phonePrices"
-            [deviceFields]="pricesFieldsDirectory"
+            [deviceFields]="pricesFieldsArray"
             [elInList]="phone"
             [isFlexStart]="isFlexStart"
             [ind]="phonePrices.indexOf(phone) + 1"

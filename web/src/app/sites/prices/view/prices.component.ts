@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PricesFieldsDirectory } from '../prices-fields.directory';
+import { PricesFieldsArray } from '../prices-fields.array';
 import { PricesModel } from '../../../shared/models/prices.model';
 import {SearcherPatternModel} from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import {SearcherModel} from '../../../shared/models/searcher.model';
@@ -11,7 +11,7 @@ import { PricesService } from '../prices.service';
     styleUrls: ['prices.component.scss']
 })
 export class PricesComponent implements OnInit {
-    pricesFieldsDirectory = PricesFieldsDirectory;
+    pricesFieldsArray = PricesFieldsArray;
     isFlexStart = true;
     headline = 'Cennik';
 

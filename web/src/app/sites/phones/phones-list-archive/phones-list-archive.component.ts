@@ -3,8 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
-import { SearcherModel } from '../../../shared/models/searcher.model';
-import { PhonesArchiveFieldsDirectory } from './phones-list-archive.directory';
+import { PhonesArchiveFieldsConst } from './phones-list-archive.const';
 import {SearcherPatternModel} from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import {SortingVectorModel} from '../../../shared/components/searcher/_models/sorting-vector.model';
 import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
@@ -22,7 +21,7 @@ import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
             *ngFor="let phone of phonesList | slice:this.pagination.start:this.pagination.end"
             [ind]="phonesList.indexOf(phone) + 1"
             [elInList]="phone"
-            [deviceFields]="phonesArchiveFieldDirectory"
+            [deviceFields]="phonesArchiveFieldsConst"
         ></app-phone-in-list>
 
         <app-la-pagination
@@ -36,7 +35,7 @@ import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
 export class PhonesListArchiveComponent implements OnInit {
     phonesList: PhoneModel[];
 
-    phonesArchiveFieldDirectory = PhonesArchiveFieldsDirectory;
+    phonesArchiveFieldsConst = PhonesArchiveFieldsConst;
 
     // setting property which searcher must be using
     searcherPattern: SearcherPatternModel = {

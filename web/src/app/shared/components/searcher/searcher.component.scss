@@ -72,14 +72,14 @@
                 label {
                     cursor: pointer;
                     border: 1px groove $primaryGrey;
-                    padding: 0 5px;
+                    padding: 1px 8px;
                     font-weight: bolder;
                 }
 
                 input:checked + label{
                     background-color: $prettyGreen;
                     color: white;
-                    border: 1px solid white;
+                    border: 1px solid $prettyGreen;
                 }
             }
         }

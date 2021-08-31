@@ -43,8 +43,17 @@ export class SearcherComponent {
         this.searchNameFilter.emit(searcher.value);
     }
 
-    pointFilterFunc(point: string): void {
-        this.pointFilter.emit(point);
+    pointFilterFunc(pointName: string): void {
+
+        // default searching phones for current point
+        this.defaultPoint = pointName;
+
+        // searching phones for all points, then must be empty ''
+        const pointVal = pointName === 'Wszystkie'
+            ? ''
+            : pointName;
+
+        this.pointFilter.emit(pointVal);
     }
 
     stateFilterFunc(state: string): void {

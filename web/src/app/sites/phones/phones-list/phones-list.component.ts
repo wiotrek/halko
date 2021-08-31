@@ -2,20 +2,25 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
-import { SortingValuesDirectory } from '../_directory/sorting-values.directory';
 import { PhoneModel } from '../_models/phone.model';
 import { SearcherModel } from '../../../shared/models/searcher.model';
+import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
+import { Point } from '../../../shared/models/point.model';
+import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
+import { SortingValueConst } from '../../../shared/components/searcher/_consts/sorting-value.const';
 
 @Component({
     selector: 'app-phones-list',
     template: `
-        <app-phones-seacher
+        <app-searcher
+            [searcherPattern]="searcherPattern"
+            [points]="pointsList"
             [defaultPoint]="pointName"
-            (searchString)="searchElement($event)"
-            (pointString)="selectForPoint($event)"
-            (stateString)="selectStates($event)"
-            (sortingDevice)="selectSortingDevice($event)"
-        ></app-phones-seacher>
+            (searchNameFilter)="searchNameFilter($event)"
+            (pointFilter)="pointFilter($event)"
+            (stateFilter)="stateFilter($event)"
+            (sorting)="sorting($event)"
+        ></app-searcher>
 
         <app-phones-item
             *ngFor="let phone of phonesList | slice:start:end"
@@ -33,8 +38,23 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
     `
 })
 export class PhonesListComponent implements OnInit {
+
+    // main list
     phonesList: PhoneModel[];
+
+    // for points
     pointName: string;
+    pointsList: Point[];
+
+    // setting property which searcher must be using
+    searcherPattern: SearcherPatternModel = {
+        sorting: true,
+        filterNewUsed: true,
+        filterPoints: true
+    };
+
+    // searcher property will for getting from api
+    // searcher is using in every functions
     searcher: SearcherModel = {
         pointName: '',
         searchName: '',
@@ -53,32 +73,32 @@ export class PhonesListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.getPointName();
+        this.getPoints();
         this.getPhones(this.searcher);
     }
 
-    searchElement(name: string): void {
+    searchNameFilter(name: string): void {
         this.searcher.searchName = name;
         this.getPhones(this.searcher);
     }
 
-    selectForPoint(pointString: string): void {
+    pointFilter(pointString: string): void {
         this.searcher.pointName = pointString;
         this.getPhones(this.searcher);
     }
 
-    selectStates(stateString: string): void {
+    stateFilter(stateString: string): void {
         this.searcher.state = stateString;
         this.getPhones(this.searcher);
     }
 
-    selectSortingDevice(val: {name: string, vector: string}): void {
+    sorting(val: SortingVectorModel): void {
         this.getPhones(this.searcher, val);
     }
 
     private getPhones(
         searcher: SearcherModel = this.searcher,
-        sorted: {name: string, vector: string} = null
+        sorted: SortingVectorModel = null
     ): void {
         this.phoneService.getPhones(searcher).subscribe(
             res => {
@@ -87,25 +107,25 @@ export class PhonesListComponent implements OnInit {
                 if (sorted) {
                     switch (sorted) {
 
-                        case SortingValuesDirectory[0]:
+                        case SortingValueConst[0]:
                             this.phonesList = res.sort(
                                 (a, b) => a.producer.localeCompare(b.producer)
                             );
                             break;
 
-                        case SortingValuesDirectory[1]:
+                        case SortingValueConst[1]:
                             this.phonesList = res.sort(
                                 (a, b) => b.producer.localeCompare(a.producer)
                             );
                             break;
 
-                        case SortingValuesDirectory[2]:
+                        case SortingValueConst[2]:
                             this.phonesList = res.sort(
                                 (a, b) => a.price - b.price
                             );
                             break;
 
-                        case SortingValuesDirectory[3]:
+                        case SortingValueConst[3]:
                             this.phonesList = res.sort(
                                 (a, b) => b.price - a.price
                             );
@@ -122,8 +142,14 @@ export class PhonesListComponent implements OnInit {
         );
     }
 
-    private getPointName(): void {
+    private getPoints(): void {
+        // set current point name
         this.pointName = this.phoneService.pointName;
         this.searcher.pointName = this.pointName;
+
+        // set points list
+        this.phoneService.getListPoints().subscribe(
+            res => this.pointsList = res
+        );
     }
 }

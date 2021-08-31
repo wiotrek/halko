@@ -23,6 +23,7 @@
                 <div
                     class="searcher__left-side__sorting__dropdown__option"
                     *ngFor="let sortVal of sortingValueConst"
+                    (click)="sortingFunc(sortVal)"
                 >
                     {{sortVal.name}} <fa-icon [icon]="searcherVectorIconsDictionary[sortVal.vector]"></fa-icon>
                 </div>
@@ -38,22 +39,25 @@
                 id="allOfThem"
                 value=""
                 [(ngModel)]="state"
+                (ngModelChange)="stateFilterFunc(state)"
             >
             <label for="allOfThem">Wszystkie</label>
 
             <input
                 type="radio"
-                [(ngModel)]="state"
                 id="onlyNew"
                 value="Nowy"
+                [(ngModel)]="state"
+                (ngModelChange)="stateFilterFunc(state)"
             >
             <label for="onlyNew">Nowe</label>
 
             <input
                 type="radio"
-                [(ngModel)]="state"
                 id="onlyUsed"
                 value="Używany"
+                [(ngModel)]="state"
+                (ngModelChange)="stateFilterFunc(state)"
             >
             <label for="onlyUsed">Używane</label>
 
@@ -76,6 +80,7 @@
                 <div
                     class="searcher__right-side__points-names__dropdown__option"
                     *ngFor="let point of points"
+                    (click)="pointFilterFunc(point.name)"
                 >
                     {{point.name}}
                 </div>

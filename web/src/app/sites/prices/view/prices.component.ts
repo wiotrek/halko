@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PricesFieldsDirectory } from '../prices-fields.directory';
 import { PricesModel } from '../../../shared/models/prices.model';
 import {SearcherPatternModel} from '../../../shared/components/searcher/_models/searcher-pattern.model';
+import {SearcherModel} from '../../../shared/models/searcher.model';
+import { PricesService } from '../prices.service';
 
 @Component({
     selector: 'app-prices',
     templateUrl: './prices.component.html',
     styleUrls: ['prices.component.scss']
 })
-export class PricesComponent {
+export class PricesComponent implements OnInit {
     pricesFieldsDirectory = PricesFieldsDirectory;
     isFlexStart = true;
     headline = 'Cennik';
@@ -19,22 +21,31 @@ export class PricesComponent {
         filterPoints: false
     };
 
-    phonePrices: PricesModel[] = [
-        {
-            producer: 'Apple',
-            model: 'Iphone 7',
-            priceBought: 100,
-            priceSell: 300,
-            changeScreen: 400,
-            changeCamera: 200
-        },
-        {
-            producer: 'Apple',
-            model: 'Iphone X',
-            priceBought: 100,
-            priceSell: 300,
-            changeScreen: 400,
-            changeCamera: 200
-        }
-    ];
+    searcher: SearcherModel = {
+        pointName: '',
+        searchName: '',
+        state: ''
+    };
+
+    phonePrices: PricesModel[];
+
+    constructor(
+        private pricesService: PricesService
+    ) {}
+
+    ngOnInit(): void {
+        this.phonePrices = this.pricesService.getPricesList();
+        this.pricesService.pricesList$.subscribe(
+            res => this.phonePrices = res
+        );
+    }
+
+    searchNameFilter(name: string): void {
+        this.searcher.searchName = name;
+        this.pricesService.pricesList$.subscribe(
+            res => {
+                this.phonePrices = res.filter(x => x.model.includes(name));
+            }
+        );
+    }
 }

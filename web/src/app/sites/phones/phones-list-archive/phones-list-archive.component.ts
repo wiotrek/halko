@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
-import { SearcherModel } from '../_models/searcher.model';
+import { SearcherModel } from '../../../shared/models/searcher.model';
 import { PhonesArchiveFieldsDirectory } from './phones-list-archive.directory';
 
 @Component({

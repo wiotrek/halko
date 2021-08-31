@@ -13,7 +13,7 @@ import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneEditModel } from './_models/phone-edit.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from '../../shared/models/point.model';
-import { SearcherModel } from './_models/searcher.model';
+import { SearcherModel } from '../../shared/models/searcher.model';
 
 @Injectable({providedIn: 'root'})
 export class PhonesService {

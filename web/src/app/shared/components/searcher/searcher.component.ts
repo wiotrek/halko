@@ -1,4 +1,9 @@
-import { Component, Input } from '@angular/core';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter
+} from '@angular/core';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { SearcherVectorIconsDictionary } from './_dictionary/sorting-vector-icons.dictionary';
 import { SearcherPatternModel } from './_models/searcher-pattern.model';
@@ -17,6 +22,11 @@ export class SearcherComponent {
     @Input() points?: Point[];
     @Input() defaultPoint?: string;
 
+    @Output() searchNameFilter: EventEmitter<string> = new EventEmitter();
+    @Output() pointFilter: EventEmitter<string> = new EventEmitter();
+    @Output() stateFilter: EventEmitter<string> = new EventEmitter();
+    @Output() sorting: EventEmitter<SortingVectorModel> = new EventEmitter();
+
     // icons
     faCaretDown = faCaretDown;
 
@@ -28,4 +38,30 @@ export class SearcherComponent {
     // setting default variables
     selectedSorting: SortingVectorModel = this.sortingValueConst[0];
     state = '';
+
+    searchName(searcher: any): void {
+        this.searchNameFilter.emit(searcher.value);
+    }
+
+    pointFilterFunc(pointName: string): void {
+
+        // default searching phones for current point
+        this.defaultPoint = pointName;
+
+        // searching phones for all points, then must be empty ''
+        const pointVal = pointName === 'Wszystkie'
+            ? ''
+            : pointName;
+
+        this.pointFilter.emit(pointVal);
+    }
+
+    stateFilterFunc(state: string): void {
+        this.stateFilter.emit(state);
+    }
+
+    sortingFunc(sortVector: SortingVectorModel): void {
+        this.selectedSorting = sortVector;
+        this.sorting.emit(sortVector);
+    }
 }

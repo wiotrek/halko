@@ -9,14 +9,12 @@ import { PhonesTransferComponent } from './phones-list/phones-item/phones-detail
 import { PhonesViewEditComponent } from './phones-list/phones-item/phones-details/phones-view-edit/phones-view-edit.component';
 import { PhonesItemComponent } from './phones-list/phones-item/phones-item.component';
 import { PhonesListComponent } from './phones-list/phones-list.component';
-import { PhonesSeacherComponent } from './phones-seacher/phones-seacher.component';
 import { PhonesComponent } from './phones.component';
 
 @NgModule({
     declarations: [
         PhonesComponent,
         PhonesItemComponent,
-        PhonesSeacherComponent,
         PhonesDetailsComponent,
         PhonesViewEditComponent,
         PhonesSoldComponent,
@@ -24,9 +22,6 @@ import { PhonesComponent } from './phones.component';
         PhonesListComponent,
         PhonesListArchiveComponent,
         PhonesAddComponent
-    ],
-    exports: [
-        PhonesSeacherComponent
     ],
     imports: [
         SharedModule,

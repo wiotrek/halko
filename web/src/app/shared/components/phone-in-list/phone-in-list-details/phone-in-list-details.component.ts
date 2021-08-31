@@ -9,7 +9,7 @@ import {
     Type,
     ChangeDetectorRef
 } from '@angular/core';
-import { PhoneInListDetailsCptsType } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
+import { PhoneInListDetailsCptsType } from 'src/app/shared/array/phone-in-list-details-cpts.array';
 import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 

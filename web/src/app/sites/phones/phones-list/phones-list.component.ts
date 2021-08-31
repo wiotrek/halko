@@ -7,7 +7,7 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
 import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import { Point } from '../../../shared/models/point.model';
 import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
-import { SortingValueConst } from '../../../shared/components/searcher/_consts/sorting-value.const';
+import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class';
 
 @Component({
     selector: 'app-phones-list',
@@ -104,38 +104,8 @@ export class PhonesListComponent implements OnInit {
             res => {
                 this.arrLength = res.length;
 
-                if (sorted) {
-                    switch (sorted) {
-
-                        case SortingValueConst[0]:
-                            this.phonesList = res.sort(
-                                (a, b) => a.producer.localeCompare(b.producer)
-                            );
-                            break;
-
-                        case SortingValueConst[1]:
-                            this.phonesList = res.sort(
-                                (a, b) => b.producer.localeCompare(a.producer)
-                            );
-                            break;
-
-                        case SortingValueConst[2]:
-                            this.phonesList = res.sort(
-                                (a, b) => a.price - b.price
-                            );
-                            break;
-
-                        case SortingValueConst[3]:
-                            this.phonesList = res.sort(
-                                (a, b) => b.price - a.price
-                            );
-                            break;
-                    }
-                } else {
-                    // default is sorting on producer up
-                    this.phonesList = res.
-                        sort((a, b) => a.producer.localeCompare(b.producer));
-                }
+                // default sorting is for producer,and is alphabetic
+                this.phonesList = SortingPhonesClass.sortingPhonesFunc(res, sorted);
             },
             (err: HttpErrorResponse) =>
                 this.toastr.error(err.error.message)

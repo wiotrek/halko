@@ -1,4 +1,4 @@
-export const CategoryItemExpensesDirectory = [
+export const CategoryItemExpensesArray = [
     'paczka',
     'zwrot',
     'telefon',

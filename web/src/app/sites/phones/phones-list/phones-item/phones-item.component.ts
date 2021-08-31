@@ -1,7 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { PhoneFieldsDirectory } from '../../_directory/phone-fields.directory';
+import { PhoneFieldsArray } from '../../_array/phone-fields.array';
 import { PhoneModel } from '../../_models/phone.model';
 import { PhonesItemFieldsDirectory } from './phones-item-fields.directory';
 
@@ -20,7 +20,7 @@ export class PhonesItemComponent {
 
     phonesItemField = PhonesItemFieldsDirectory;
 
-    phoneFields = PhoneFieldsDirectory;
+    phoneFields = PhoneFieldsArray;
 
     faEdit = faEdit;
     faInfoCircle = faInfoCircle;

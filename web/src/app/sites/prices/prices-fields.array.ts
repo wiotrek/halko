@@ -1,6 +1,6 @@
 import {PhoneFieldsModel} from '../../shared/models/phone-fields.model';
 
-export const PricesFieldsDirectory: PhoneFieldsModel[] = [
+export const PricesFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'index',
         polishName: 'indeks',

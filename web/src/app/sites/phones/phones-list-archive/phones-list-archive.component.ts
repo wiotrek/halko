@@ -3,19 +3,25 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
 import { PhoneModel } from '../_models/phone.model';
-import { SearcherModel } from '../../../shared/models/searcher.model';
-import { PhonesArchiveFieldsDirectory } from './phones-list-archive.directory';
+import { PhonesArchiveFieldsConst } from './phones-list-archive.const';
+import {SearcherPatternModel} from '../../../shared/components/searcher/_models/searcher-pattern.model';
+import {SortingVectorModel} from '../../../shared/components/searcher/_models/sorting-vector.model';
+import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
 
 @Component({
     selector: 'app-phones-list-archive',
     template: `
-        <app-phones-seacher></app-phones-seacher>
+        <app-searcher
+            [searcherPattern]="searcherPattern"
+            (searchNameFilter)="searchNameFilter($event)"
+            (sorting)="sorting($event)"
+        ></app-searcher>
 
         <app-phone-in-list
             *ngFor="let phone of phonesList | slice:this.pagination.start:this.pagination.end"
             [ind]="phonesList.indexOf(phone) + 1"
             [elInList]="phone"
-            [deviceFields]="phonesArchiveFieldDirectory"
+            [deviceFields]="phonesArchiveFieldsConst"
         ></app-phone-in-list>
 
         <app-la-pagination
@@ -23,21 +29,20 @@ import { PhonesArchiveFieldsDirectory } from './phones-list-archive.directory';
             [arrLength]="this.pagination.arrLength"
             [(start)]="this.pagination.start"
             [(end)]="this.pagination.end"
-        ><app-la-pagination>
+        ></app-la-pagination>
     `
 })
 export class PhonesListArchiveComponent implements OnInit {
     phonesList: PhoneModel[];
 
-    phonesArchiveFieldDirectory = PhonesArchiveFieldsDirectory;
+    phonesArchiveFieldsConst = PhonesArchiveFieldsConst;
 
-    searcher: SearcherModel = {
-        pointName: '',
-        searchName: '',
-        state: ''
+    // setting property which searcher must be using
+    searcherPattern: SearcherPatternModel = {
+        sorting: true,
+        filterNewUsed: false,
+        filterPoints: false
     };
-
-    pointName = '';
 
     pagination = {
         pageSize: 10,
@@ -52,23 +57,29 @@ export class PhonesListArchiveComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.getPointName();
         this.getPhones();
     }
 
-    private getPhones(): void {
+    // to do
+    searchNameFilter(searchName: string): void {
+
+    }
+
+    // to do
+    sorting(sort: SortingVectorModel): void {
+        this.getPhones(sort);
+    }
+
+    private getPhones(sorted: SortingVectorModel = null): void {
         this.phoneService.getArchivList().subscribe(
             res => {
                 this.pagination.arrLength = res.length;
-                this.phonesList = res;
+
+                // default sorting is for producer,and is alphabetic
+                this.phonesList = SortingPhonesClass.sortingPhonesFunc(res, sorted);
             },
             (err: HttpErrorResponse) =>
                 this.toastr.error(err.error.message)
         );
-    }
-
-    private getPointName(): void {
-        this.pointName = this.phoneService.pointName;
-        this.searcher.pointName = this.pointName;
     }
 }

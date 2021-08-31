@@ -8,8 +8,8 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { SearcherVectorIconsDictionary } from './_dictionary/sorting-vector-icons.dictionary';
 import { SearcherPatternModel } from './_models/searcher-pattern.model';
 import { SortingVectorModel } from './_models/sorting-vector.model';
-import { SortingValueConst } from './_consts/sorting-value.const';
-import { UsingStatesConst } from '../../directory/using-states.const';
+import { SortingValueArray } from './_arrays/sorting-value.array';
+import { UsingStatesArray } from '../../array/using-states.array';
 import { Point } from '../../models/point.model';
 
 @Component({
@@ -31,12 +31,12 @@ export class SearcherComponent {
     faCaretDown = faCaretDown;
 
     // elements from stores
-    usingStatesConst = UsingStatesConst;
+    usingStatesArray = UsingStatesArray;
     searcherVectorIconsDictionary = SearcherVectorIconsDictionary;
-    sortingValueConst = SortingValueConst;
+    sortingValueArray = SortingValueArray;
 
     // setting default variables
-    selectedSorting: SortingVectorModel = this.sortingValueConst[0];
+    selectedSorting: SortingVectorModel = this.sortingValueArray[0];
     state = '';
 
     searchName(searcher: any): void {

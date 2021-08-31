@@ -1,6 +1,6 @@
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
-export const RepairsAddFieldsDirectory: PhoneFieldsModel[] = [
+export const RepairsAddFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'phoneName',
         polishName: 'Nazwa',

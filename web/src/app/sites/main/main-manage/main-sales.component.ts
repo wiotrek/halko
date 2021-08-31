@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
-import { CategoryItemSoldsDirectory } from '../_directory/catogory-item-solds.directory';
-import { EmployeesInitialDirectory } from '../_directory/employees-initial.directory';
+import { CategoryItemSoldsArray } from '../_array/catogory-item-solds.array';
+import { EmployeesInitialArray } from '../_array/employees-initial.array';
 import { Employees } from '../../../shared/models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
 import { ItemStructureEdit } from '../_models/item-structure-edit.model';
@@ -21,10 +21,10 @@ export class MainSalesComponent implements OnInit, OnDestroy {
 
     items: ItemStructure[];
 
-    category = CategoryItemSoldsDirectory;
+    category = CategoryItemSoldsArray;
 
     // assign default names
-    employees: Employees[] = EmployeesInitialDirectory;
+    employees: Employees[] = EmployeesInitialArray;
 
     // if element is -1 then none is editing
     currentlyEditedElement = -1;
@@ -72,7 +72,7 @@ export class MainSalesComponent implements OnInit, OnDestroy {
         const sub = this.mainService.getEmployees()
             .subscribe(
                 (res: Employees[]) => this.employees = res,
-                () => this.employees = EmployeesInitialDirectory
+                () => this.employees = EmployeesInitialArray
             );
 
         this.subscription = sub;

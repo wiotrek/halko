@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RepairsService } from '../repairs.service';
-import { RepairsAddFieldsDirectory } from './repairs-add-fields.directory';
+import { RepairsAddFieldsArray } from './repairs-add-fields.array';
 
 @Component({
     selector: 'app-repairs-add',
@@ -13,7 +13,7 @@ import { RepairsAddFieldsDirectory } from './repairs-add-fields.directory';
     `
 })
 export class RepairsAddComponent implements OnInit {
-    fields = RepairsAddFieldsDirectory;
+    fields = RepairsAddFieldsArray;
 
     constructor(private repairsService: RepairsService) {}
 

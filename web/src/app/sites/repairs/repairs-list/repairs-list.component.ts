@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { PhoneInListDetailsCptsDirectory } from 'src/app/shared/directory/phone-in-list-details-cpts.directory';
+import { PhoneInListDetailsCptsArray } from 'src/app/shared/array/phone-in-list-details-cpts.array';
 import { RepairsModel } from 'src/app/shared/models/repairs.model';
-import { RepairsItemDirectory } from './repairs-item.directory';
+import { RepairsItemArray } from './repairs-item.array';
 
 @Component({
     selector: 'app-repairs-list',
@@ -10,15 +10,15 @@ import { RepairsItemDirectory } from './repairs-item.directory';
             *ngFor="let phone of phonesRepairs"
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
-            [deviceFields]="repairsItemDictionary"
+            [deviceFields]="repairsItemArray"
             [componentWillUsing]="componentWillUsing"
         ></app-phone-in-list>
     `
 })
 export class RepairsListComponent {
-    repairsItemDictionary = RepairsItemDirectory;
+    repairsItemArray = RepairsItemArray;
 
-    componentWillUsing = PhoneInListDetailsCptsDirectory.RepairsToArchiveComponent;
+    componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
 
     phonesRepairs: RepairsModel[] = [
         {

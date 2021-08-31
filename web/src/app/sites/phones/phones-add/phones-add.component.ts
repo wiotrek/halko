@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PhonesService } from '../phones.service';
-import { PhoneFieldsDirectory } from '../_directory/phone-fields.directory';
-import { PhoneStatesDirectory } from '../_directory/phone-states.directory';
+import { PhoneFieldsArray } from '../_array/phone-fields.array';
+import { PhoneStatesArray } from '../_array/phone-states.array';
 import { PhoneAddModel } from '../_models/phone-add.model';
 
 @Component({
@@ -11,8 +11,8 @@ import { PhoneAddModel } from '../_models/phone-add.model';
     styleUrls: ['./phones-add.component.scss']
 })
 export class PhonesAddComponent {
-    fields = PhoneFieldsDirectory;
-    phoneStates = PhoneStatesDirectory;
+    fields = PhoneFieldsArray;
+    phoneStates = PhoneStatesArray;
 
     constructor(
         private phonesService: PhonesService,

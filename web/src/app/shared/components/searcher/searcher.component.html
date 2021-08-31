@@ -22,7 +22,7 @@
 
                 <div
                     class="searcher__left-side__sorting__dropdown__option"
-                    *ngFor="let sortVal of sortingValueConst"
+                    *ngFor="let sortVal of sortingValueArray"
                     (click)="sortingFunc(sortVal)"
                 >
                     {{sortVal.name}} <fa-icon [icon]="searcherVectorIconsDictionary[sortVal.vector]"></fa-icon>

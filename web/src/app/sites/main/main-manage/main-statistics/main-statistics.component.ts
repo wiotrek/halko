@@ -3,7 +3,7 @@ import { combineLatest, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { CategoryIconColorDictionary } from '../../_dictionary/category-icon-color.dictionary';
 import { CategoryIconDictionary } from '../../_dictionary/category-icon.dictionary';
-import { CategoryItemSoldsDirectory } from '../../_directory/catogory-item-solds.directory';
+import { CategoryItemSoldsArray } from '../../_array/catogory-item-solds.array';
 import { CategoriesAmount } from '../../_models/categories-amount.model';
 
 @Component({
@@ -18,7 +18,7 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
     // suplies from dictionary
     categoryIcon = CategoryIconDictionary;
     categoryIconColor = CategoryIconColorDictionary;
-    categories = CategoryItemSoldsDirectory;
+    categories = CategoryItemSoldsArray;
 
     categoriesAmount: CategoriesAmount[];
     subscription: Subscription;

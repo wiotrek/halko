@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 import { PhonesService } from 'src/app/sites/phones/phones.service';
-import { PhoneStatesDirectory } from 'src/app/sites/phones/_directory/phone-states.directory';
+import { PhoneStatesArray } from 'src/app/sites/phones/_array/phone-states.array';
 import { PhoneEditModel } from 'src/app/sites/phones/_models/phone-edit.model';
 import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
 import { PhonesViewEditFieldDirectory } from './phones-view-edit-field.directory';
@@ -21,7 +21,7 @@ export class PhonesViewEditComponent {
     @Output() doneAction: EventEmitter<string> = new EventEmitter();
 
     phonesItemField = PhonesViewEditFieldDirectory;
-    phoneStates = PhoneStatesDirectory;
+    phoneStates = PhoneStatesArray;
 
     constructor(
         private phoneService: PhonesService,

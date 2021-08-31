@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
-import { EmployeesInitialDirectory } from './_directory/employees-initial.directory';
+import { EmployeesInitialArray } from './_array/employees-initial.array';
 import { TransactionTypeEnum } from './_enums/transaction-type.enum';
 import { CategoriesAmount } from './_models/categories-amount.model';
 import { Employees } from '../../shared/models/employees.model';
@@ -82,7 +82,7 @@ export class MainService {
                         return res;
                     }
 
-                    return EmployeesInitialDirectory;
+                    return EmployeesInitialArray;
                 }
             )
         );

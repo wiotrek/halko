@@ -7,8 +7,7 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
 import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import { Point } from '../../../shared/models/point.model';
 import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
-import { SortingValueConst } from '../../../shared/components/searcher/_consts/sorting-value.const';
-import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
+import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class';
 
 @Component({
     selector: 'app-phones-list',

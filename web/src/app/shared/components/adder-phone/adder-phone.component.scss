@@ -25,12 +25,20 @@
                 border-bottom: 1px solid $primaryGrey;
                 font-size: .6rem;
                 text-align: center;
+
+                &--currency {
+                    width: 40px;
+                }
             }
 
             &__select {
                 background-color: transparent;
                 border: 0;
                 cursor: pointer;
+            }
+
+            &__currency {
+                margin-left: 10px;
             }
         }
 

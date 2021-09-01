@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PhonesService } from '../phones.service';
-import { PhoneFieldsArray } from '../_array/phone-fields.array';
-import { PhoneStatesArray } from '../_array/phone-states.array';
 import { PhoneAddModel } from '../_models/phone-add.model';
+import { PhonesAddFieldsArray } from './phones-add-fields.array';
 
 @Component({
     selector: 'app-phones-add',
-    templateUrl: './phones-add.component.html',
-    styleUrls: ['./phones-add.component.scss']
+    template: `
+        <app-adder-phone
+            [fields]="fields"
+            (outputElement)="addNewPhone($event)"
+        ></app-adder-phone>
+    `
 })
 export class PhonesAddComponent {
-    fields = PhoneFieldsArray;
-    phoneStates = PhoneStatesArray;
+    fields = PhonesAddFieldsArray;
 
-    constructor(
-        private phonesService: PhonesService,
-    ) {}
+    constructor(private phonesService: PhonesService) {}
 
     addNewPhone(f: NgForm): void {
         const phone: PhoneAddModel = {

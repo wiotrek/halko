@@ -17,13 +17,16 @@
         </label>
 
         <input
-            *ngIf="!field.special; else special"
-            type="text"
-            [id]="field.category"
             class="phone__fields__input"
+            type="text"
+            *ngIf="!field.special; else special"
+            [id]="field.category"
             [name]="field.category"
-            [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+            [pattern]="field.isNumber ? '[0-9]*[.]?[0-9]+' : ''"
             [required]="field?.required"
+            [ngClass]="{
+                'phone__fields__input--currency': field?.currency
+            }"
             ngModel
         >
 

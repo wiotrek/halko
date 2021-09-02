@@ -9,6 +9,7 @@ namespace Core.Enums
     /// Participant: 200 - 299
     /// Point: 300 - 399
     /// Transaction: 400 - 499
+    /// Others: 500+
     /// </summary>
     public enum EServiceResponse
     {
@@ -41,6 +42,8 @@ namespace Core.Enums
         DeviceNotExist = -106,
         [EnumMember(Value = "Urządzenie nie zostało zaktualizowane")]
         DeviceEditFailed = -107,
+        [EnumMember(Value = "Urządzenie nie zostało przyjęte do serwisu")]
+        DeviceServiceCreateFailed = -108,
         
         #endregion
         
@@ -91,6 +94,12 @@ namespace Core.Enums
         [EnumMember(Value = "Transakcja nie została usunięta")]
         TransactionDeleteFailed = -405,
         
+        #endregion
+        
+        #region Others
+        
+        [EnumMember(Value = "Pracownik lub punkt nie istnieje")]
+        ParticipantOrStateNotExist = -500
         
         #endregion
     }

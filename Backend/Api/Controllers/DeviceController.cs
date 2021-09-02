@@ -44,6 +44,20 @@ namespace Api.Controllers
             return Ok ( deviceDto );
         }
 
+        [HttpPost ( "service" )]
+        public async Task<ActionResult> CreateDeviceService(DeviceServiceCreateDto deviceServiceCreateDto)
+        {
+            var deviceService = _mapper.Map<DeviceService> ( deviceServiceCreateDto );
+            var result = await _deviceService.CreateServiceDevice ( deviceService );
+
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
+
+            var deviceServiceCreated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
+            var deviceServiceDto = _mapper.Map<DeviceServiceCreateDto> ( deviceServiceCreated );
+
+            return Ok ( deviceServiceDto );
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 

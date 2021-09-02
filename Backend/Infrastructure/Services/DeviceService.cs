@@ -55,6 +55,36 @@ namespace Infrastructure.Services
                 (EServiceResponse) device.Id;
         }
 
+
+        public async Task<EServiceResponse> CreateServiceDevice( Core.Entities.Halko.DeviceService deviceService )
+        {
+            var participantSpec = new ParticipantSpecification ( deviceService.Participant.Initial, deviceService.Participant.Point.Name );
+            var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
+
+            if( participant == null ) return EServiceResponse.ParticipantOrStateNotExist;
+
+            deviceService.Participant = null;
+            deviceService.Point = null;
+            deviceService.ParticipantId = participant.Id;
+            deviceService.PointId = participant.Point.Id;
+            deviceService.PointSubmitDate = DateTime.Now;
+
+            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Add ( deviceService );
+            var result = await _unitOfWork.CompleteAsync();
+
+            return result <= 0 ? 
+                EServiceResponse.DeviceServiceCreateFailed : 
+                (EServiceResponse) deviceService.Id;
+        }
+
+        public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );
+            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .GetEntityWithSpecAsync ( deviceServiceSpec );
+
+            return deviceService;
+        }
         
         public async Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
         {

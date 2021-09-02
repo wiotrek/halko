@@ -6,7 +6,6 @@ namespace Api.Helpers
 {
     public class MappingProfiles : Profile
     {
-        
         public MappingProfiles()
         {
             CreateMap<ParticipantPoint, ParticipantDto>();
@@ -17,6 +16,8 @@ namespace Api.Helpers
             TransactionDeletedToTransactionDeletedDto();
             DeviceDtoToDevice();
             DeviceToDeviceDisplayItemDto();
+            DeviceServiceDtoToDeviceService();
+            DeviceServiceToDeviceServiceDto();
         }
 
 
@@ -56,6 +57,16 @@ namespace Api.Helpers
         private void DeviceDtoToDevice()
         {
             CreateMap<DeviceCreateDto, Device>().ReverseMap();
+        }
+
+        private void DeviceServiceDtoToDeviceService()
+        {
+            CreateMap<DeviceServiceCreateDto, DeviceService>().ReverseMap();
+        }
+        
+        private void DeviceServiceToDeviceServiceDto()
+        {
+            CreateMap<DeviceServiceCreateDto, DeviceService>();
         }
 
         private void DeviceToDeviceDisplayItemDto()

@@ -23,5 +23,12 @@ namespace Core.Specifications
             AddInclude ( x => x.Point );
         }
         
+        public ParticipantSpecification( string initial, string pointName ) 
+            : base( x => x.Initial == initial &&  
+                         x.Point.Name == pointName)
+        {
+            AddInclude ( x => x.Point );
+        }
+        
     }
 }

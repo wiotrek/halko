@@ -9,6 +9,10 @@ namespace Core.Interfaces
     public interface IDeviceService
     {
         Task<EServiceResponse> CreateDevice( Device device );
+
+        Task<EServiceResponse> CreateServiceDevice( DeviceService deviceService );
+
+        Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
         
         /// <summary>
         /// Get device list to sell

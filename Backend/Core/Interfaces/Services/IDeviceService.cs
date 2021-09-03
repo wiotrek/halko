@@ -12,6 +12,8 @@ namespace Core.Interfaces
 
         Task<EServiceResponse> CreateServiceDevice( DeviceService deviceService );
 
+        Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id );
+
         /// <summary>
         /// Get device list with service history.
         /// </summary>

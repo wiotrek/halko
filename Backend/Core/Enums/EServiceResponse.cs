@@ -44,6 +44,10 @@ namespace Core.Enums
         DeviceEditFailed = -107,
         [EnumMember(Value = "Urządzenie nie zostało przyjęte do serwisu")]
         DeviceServiceCreateFailed = -108,
+        [EnumMember(Value = "Urządzenie nie istnieje")]
+        DeviceServiceNotExist = -109,
+        [EnumMember(Value = "Status urządzenia nie zostało zaktualizowane")]
+        DeviceServiceUpdateFailed = -110,
         
         #endregion
         

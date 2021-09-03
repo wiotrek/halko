@@ -98,6 +98,27 @@ namespace Infrastructure.Services
             return deviceServiceList;
         }
 
+        public async Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( id );
+            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .GetEntityWithSpecAsync ( deviceServiceSpec );
+
+            
+            if( deviceService == null ) return EServiceResponse.DeviceServiceNotExist;
+            deviceService.GiveBackDate = DateTime.Now;
+            deviceService.GiveBackInfo = giveBackInfo;
+
+            
+            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Update ( deviceService );
+            var result  = await _unitOfWork.CompleteAsync();
+
+
+            return result <= 0
+                ? EServiceResponse.DeviceServiceUpdateFailed
+                : (EServiceResponse) deviceService.Id;
+        }
+
         public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
         {
             var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );

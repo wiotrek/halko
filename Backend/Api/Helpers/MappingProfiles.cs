@@ -68,6 +68,8 @@ namespace Api.Helpers
         private void DeviceServiceToDeviceServiceDto()
         {
             CreateMap<DeviceServiceCreateDto, DeviceService>();
+            CreateMap<ParticipantWithPointDto, ParticipantPoint>();
+            CreateMap<PointDto, Point>();
         }
         
         private void DeviceServiceToDeviceServiceItemDto()

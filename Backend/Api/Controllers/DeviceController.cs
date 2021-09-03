@@ -59,7 +59,21 @@ namespace Api.Controllers
 
             return Ok ( deviceServiceDto );
         }
-        
+
+        [HttpPut("service")]
+        public async Task<ActionResult> ReturnDeviceService( DeviceServiceItemDto deviceServiceItemDto, [FromQuery] int id )
+        {
+            var result = await _deviceService.UpdateDeviceService ( deviceServiceItemDto.GiveBackInfo, id );
+            
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
+
+            var deviceServiceUpdated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
+            var deviceServiceDto = _mapper.Map<DeviceServiceItemDto> ( deviceServiceUpdated );
+
+            return Ok ( deviceServiceDto );
+        }
+
         [HttpGet ( "service/repairing" )]
         public async Task<ActionResult> GetServiceDevices()
         {

@@ -2,6 +2,9 @@
 
 namespace Api.Dtos
 {
+    /// <summary>
+    /// Device service contain all information
+    /// </summary>
     public class DeviceServiceItemDto : DeviceServiceCreateDto
     {
         public DateTime PointSubmitDate { get; set; }

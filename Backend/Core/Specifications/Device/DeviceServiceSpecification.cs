@@ -12,7 +12,7 @@ namespace Core.Specifications
         public DeviceServiceSpecification(int id) 
             : base(x => x.Id == id)
         {
-            AddInclude ( x => x.Participant );
+            AddInclude ( x => x.Participant.Point );
         }
     }
 }

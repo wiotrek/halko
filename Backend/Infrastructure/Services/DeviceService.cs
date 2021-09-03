@@ -77,6 +77,27 @@ namespace Infrastructure.Services
                 (EServiceResponse) deviceService.Id;
         }
 
+        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(EServiceDeviceStatus status)
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification();
+            var deviceServiceList = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .ListAsync ( deviceServiceSpec );
+
+            switch ( status )
+            {
+                case EServiceDeviceStatus.OnService:
+                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate == null ).ToList();
+                    break;
+                case EServiceDeviceStatus.ReturnedToClient:
+                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate != null ).ToList();
+                    break;
+                default:
+                    return deviceServiceList;
+            }
+
+            return deviceServiceList;
+        }
+
         public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
         {
             var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );

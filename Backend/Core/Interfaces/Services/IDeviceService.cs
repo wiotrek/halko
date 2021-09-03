@@ -12,6 +12,13 @@ namespace Core.Interfaces
 
         Task<EServiceResponse> CreateServiceDevice( DeviceService deviceService );
 
+        /// <summary>
+        /// Get device list with service history.
+        /// </summary>
+        /// <param name="status">Device servise status</param>
+        /// <returns>List of device being service if status is 'OnService' or list of device returned to client for status 'ReturnedToClient'</returns>
+        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( EServiceDeviceStatus status );
+
         Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
         
         /// <summary>

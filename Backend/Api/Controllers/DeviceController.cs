@@ -5,6 +5,7 @@ using Api.Errors;
 using AutoMapper;
 using Core.Entities.Halko;
 using Core.Entities.Identity;
+using Core.Enums;
 using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Authorization;
@@ -55,6 +56,16 @@ namespace Api.Controllers
 
             var deviceServiceCreated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
             var deviceServiceDto = _mapper.Map<DeviceServiceCreateDto> ( deviceServiceCreated );
+
+            return Ok ( deviceServiceDto );
+        }
+        
+        [HttpGet ( "service/repairing" )]
+        public async Task<ActionResult> GetServiceDevices()
+        {
+            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.OnService );
+
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
 
             return Ok ( deviceServiceDto );
         }

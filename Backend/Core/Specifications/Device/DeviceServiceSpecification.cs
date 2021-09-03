@@ -8,9 +8,15 @@ namespace Core.Specifications
         {
             AddInclude ( x => x.Participant.Point );
         }
-        
-        public DeviceServiceSpecification(int id) 
-            : base(x => x.Id == id)
+
+        public DeviceServiceSpecification( int id )
+            : base ( x => x.Id == id )
+        {
+            AddInclude ( x => x.Participant.Point );
+        }
+
+        public DeviceServiceSpecification( string name )
+            : base ( x => x.Name == name )
         {
             AddInclude ( x => x.Participant.Point );
         }

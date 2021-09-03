@@ -94,6 +94,19 @@ namespace Api.Controllers
             return Ok ( deviceServiceDto );
         }
 
+        [HttpGet ( "service" )]
+        public async Task<ActionResult<IReadOnlyList<DeviceDisplayItemDto>>> GetServiceListByName(
+            [FromQuery] string name )
+        {
+            if( string.IsNullOrEmpty ( name ) )
+                return BadRequest ( new ApiResponse ( 400, "Nazwa urządzenia jest wymagana" ) );
+            
+            var result = await _deviceService.GetDeviceServicesByName ( name );
+            var deviceServiceToReturn = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+
+            return Ok ( deviceServiceToReturn );
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 
             [FromQuery] DeviceSpecParams deviceParams )

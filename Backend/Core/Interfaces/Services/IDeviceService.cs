@@ -22,6 +22,8 @@ namespace Core.Interfaces
         Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( EServiceDeviceStatus status );
 
         Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
+
+        Task<IReadOnlyList<DeviceService>> GetDeviceServicesByName( string phoneName );
         
         /// <summary>
         /// Get device list to sell

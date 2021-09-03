@@ -119,6 +119,15 @@ namespace Infrastructure.Services
                 : (EServiceResponse) deviceService.Id;
         }
 
+        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetDeviceServicesByName( string phoneName )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( phoneName );
+
+            return await _unitOfWork
+                .Repository<Core.Entities.Halko.DeviceService>()
+                .ListAsync ( deviceServiceSpec );;
+        }
+
         public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
         {
             var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );

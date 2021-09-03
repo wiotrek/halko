@@ -83,6 +83,16 @@ namespace Api.Controllers
 
             return Ok ( deviceServiceDto );
         }
+        
+        [HttpGet ( "service/returned" )]
+        public async Task<ActionResult> GetServiceDevicesReturned()
+        {
+            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.ReturnedToClient );
+
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+
+            return Ok ( deviceServiceDto );
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 

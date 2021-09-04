@@ -29,6 +29,8 @@ namespace Api.Controllers
             _deviceService = deviceService;
         }
 
+        #region Device
+        
         [HttpPost]
         public async Task<ActionResult> CreateDevice( DeviceCreateDto deviceCreateDto )
         {
@@ -44,69 +46,7 @@ namespace Api.Controllers
             
             return Ok ( deviceDto );
         }
-
-        [HttpPost ( "service" )]
-        public async Task<ActionResult> CreateDeviceService(DeviceServiceCreateDto deviceServiceCreateDto)
-        {
-            var deviceService = _mapper.Map<DeviceService> ( deviceServiceCreateDto );
-            var result = await _deviceService.CreateServiceDevice ( deviceService );
-
-            if( result <= 0 )
-                return BadRequest ( new ApiResponse ( 400, result ) );
-
-            var deviceServiceCreated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
-            var deviceServiceDto = _mapper.Map<DeviceServiceCreateDto> ( deviceServiceCreated );
-
-            return Ok ( deviceServiceDto );
-        }
-
-        [HttpPut("service")]
-        public async Task<ActionResult> ReturnDeviceService( DeviceServiceItemDto deviceServiceItemDto, [FromQuery] int id )
-        {
-            var result = await _deviceService.UpdateDeviceService ( deviceServiceItemDto.GiveBackInfo, id );
-            
-            if( result <= 0 )
-                return BadRequest ( new ApiResponse ( 400, result ) );
-
-            var deviceServiceUpdated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
-            var deviceServiceDto = _mapper.Map<DeviceServiceItemDto> ( deviceServiceUpdated );
-
-            return Ok ( deviceServiceDto );
-        }
-
-        [HttpGet ( "service/repairing" )]
-        public async Task<ActionResult> GetServiceDevices()
-        {
-            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.OnService );
-
-            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
-
-            return Ok ( deviceServiceDto );
-        }
         
-        [HttpGet ( "service/returned" )]
-        public async Task<ActionResult> GetServiceDevicesReturned()
-        {
-            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.ReturnedToClient );
-
-            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
-
-            return Ok ( deviceServiceDto );
-        }
-
-        [HttpGet ( "service" )]
-        public async Task<ActionResult<IReadOnlyList<DeviceDisplayItemDto>>> GetServiceListByName(
-            [FromQuery] string name )
-        {
-            if( string.IsNullOrEmpty ( name ) )
-                return BadRequest ( new ApiResponse ( 400, "Nazwa urządzenia jest wymagana" ) );
-            
-            var result = await _deviceService.GetDeviceServicesByName ( name );
-            var deviceServiceToReturn = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
-
-            return Ok ( deviceServiceToReturn );
-        }
-
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 
             [FromQuery] DeviceSpecParams deviceParams )
@@ -190,5 +130,91 @@ namespace Api.Controllers
         {
             return Ok ( await _deviceService.ReadDeviceState() );
         }
+        
+        #endregion
+        
+        #region Device Service
+
+        [HttpPost ( "service" )]
+        public async Task<ActionResult> CreateDeviceService(DeviceServiceCreateDto deviceServiceCreateDto)
+        {
+            var deviceService = _mapper.Map<DeviceService> ( deviceServiceCreateDto );
+            var result = await _deviceService.CreateServiceDevice ( deviceService );
+
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
+
+            var deviceServiceCreated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
+            var deviceServiceDto = _mapper.Map<DeviceServiceCreateDto> ( deviceServiceCreated );
+
+            return Ok ( deviceServiceDto );
+        }
+
+        [HttpPut("service")]
+        public async Task<ActionResult> ReturnDeviceService( DeviceServiceItemDto deviceServiceItemDto, [FromQuery] int id )
+        {
+            var result = await _deviceService.UpdateDeviceService ( deviceServiceItemDto.GiveBackInfo, id );
+            
+            if( result <= 0 )
+                return BadRequest ( new ApiResponse ( 400, result ) );
+
+            var deviceServiceUpdated = await _deviceService.GetDeviceBeingServiceById ( (int) result );
+            var deviceServiceDto = _mapper.Map<DeviceServiceItemDto> ( deviceServiceUpdated );
+
+            return Ok ( deviceServiceDto );
+        }
+
+        [HttpGet ( "service/repairing" )]
+        public async Task<ActionResult> GetServiceDevices()
+        {
+            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.OnService );
+
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+
+            return Ok ( deviceServiceDto );
+        }
+        
+        [HttpGet ( "service/returned" )]
+        public async Task<ActionResult> GetServiceDevicesReturned()
+        {
+            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.ReturnedToClient );
+
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+
+            return Ok ( deviceServiceDto );
+        }
+
+        [HttpGet ( "service" )]
+        public async Task<ActionResult<IReadOnlyList<DeviceDisplayItemDto>>> GetServiceListByName(
+            [FromQuery] string name )
+        {
+            if( string.IsNullOrEmpty ( name ) )
+                return BadRequest ( new ApiResponse ( 400, "Nazwa urządzenia jest wymagana" ) );
+            
+            var result = await _deviceService.GetDeviceServicesByName ( name );
+            var deviceServiceToReturn = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+
+            return Ok ( deviceServiceToReturn );
+        }
+        
+        #endregion
+
+        #region Device Price List
+
+        [HttpPost("price-list")]
+        public async Task<ActionResult<DevicePrice>> CreateDevicePrice(DevicePrice devicePrice)
+        {
+            if( !await IsAdmin() )
+                return BadRequest ( new ApiResponse ( 401 ) );
+            
+            var result = await _deviceService.CreateDevicePrice ( devicePrice );
+
+            if( result == null )
+                return BadRequest ( new ApiResponse ( 400, "Dla tego urządzenia jest już zdefiniowany cennik" ) );
+
+            return Ok ( result );
+        }
+        
+        #endregion
     }
 }

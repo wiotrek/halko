@@ -28,6 +28,8 @@ namespace Infrastructure.Services
         
         #region Implemented Methods
         
+        #region Device
+        
         public async Task<EServiceResponse> CreateDevice( Device device )
         {
             var stateSpec = new DeviceStateSpecification ( device.DeviceState.State );
@@ -53,88 +55,6 @@ namespace Infrastructure.Services
             return result <= 0 ? 
                 EServiceResponse.DeviceCreateFailed : 
                 (EServiceResponse) device.Id;
-        }
-
-
-        public async Task<EServiceResponse> CreateServiceDevice( Core.Entities.Halko.DeviceService deviceService )
-        {
-            var participantSpec = new ParticipantSpecification ( deviceService.Participant.Initial, deviceService.Participant.Point.Name );
-            var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
-
-            if( participant == null ) return EServiceResponse.ParticipantOrStateNotExist;
-
-            deviceService.Participant = null;
-            deviceService.Point = null;
-            deviceService.ParticipantId = participant.Id;
-            deviceService.PointId = participant.Point.Id;
-            deviceService.PointSubmitDate = DateTime.Now;
-
-            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Add ( deviceService );
-            var result = await _unitOfWork.CompleteAsync();
-
-            return result <= 0 ? 
-                EServiceResponse.DeviceServiceCreateFailed : 
-                (EServiceResponse) deviceService.Id;
-        }
-
-        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(EServiceDeviceStatus status)
-        {
-            var deviceServiceSpec = new DeviceServiceSpecification();
-            var deviceServiceList = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
-                .ListAsync ( deviceServiceSpec );
-
-            switch ( status )
-            {
-                case EServiceDeviceStatus.OnService:
-                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate == null ).ToList();
-                    break;
-                case EServiceDeviceStatus.ReturnedToClient:
-                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate != null ).ToList();
-                    break;
-                default:
-                    return deviceServiceList;
-            }
-
-            return deviceServiceList;
-        }
-
-        public async Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id )
-        {
-            var deviceServiceSpec = new DeviceServiceSpecification ( id );
-            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
-                .GetEntityWithSpecAsync ( deviceServiceSpec );
-
-            
-            if( deviceService == null ) return EServiceResponse.DeviceServiceNotExist;
-            deviceService.GiveBackDate = DateTime.Now;
-            deviceService.GiveBackInfo = giveBackInfo;
-
-            
-            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Update ( deviceService );
-            var result  = await _unitOfWork.CompleteAsync();
-
-
-            return result <= 0
-                ? EServiceResponse.DeviceServiceUpdateFailed
-                : (EServiceResponse) deviceService.Id;
-        }
-
-        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetDeviceServicesByName( string phoneName )
-        {
-            var deviceServiceSpec = new DeviceServiceSpecification ( phoneName );
-
-            return await _unitOfWork
-                .Repository<Core.Entities.Halko.DeviceService>()
-                .ListAsync ( deviceServiceSpec );;
-        }
-
-        public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
-        {
-            var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );
-            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
-                .GetEntityWithSpecAsync ( deviceServiceSpec );
-
-            return deviceService;
         }
         
         public async Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
@@ -253,6 +173,112 @@ namespace Infrastructure.Services
         {
             return await _unitOfWork.Repository<DeviceState>().ListAllAsync();
         }
+
+        #endregion
+        
+        #region Device Service
+
+        public async Task<EServiceResponse> CreateServiceDevice( Core.Entities.Halko.DeviceService deviceService )
+        {
+            var participantSpec = new ParticipantSpecification ( deviceService.Participant.Initial, deviceService.Participant.Point.Name );
+            var participant = await _unitOfWork.Repository<ParticipantPoint>().GetEntityWithSpecAsync ( participantSpec );
+
+            if( participant == null ) return EServiceResponse.ParticipantOrStateNotExist;
+
+            deviceService.Participant = null;
+            deviceService.Point = null;
+            deviceService.ParticipantId = participant.Id;
+            deviceService.PointId = participant.Point.Id;
+            deviceService.PointSubmitDate = DateTime.Now;
+
+            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Add ( deviceService );
+            var result = await _unitOfWork.CompleteAsync();
+
+            return result <= 0 ? 
+                EServiceResponse.DeviceServiceCreateFailed : 
+                (EServiceResponse) deviceService.Id;
+        }
+
+        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(EServiceDeviceStatus status)
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification();
+            var deviceServiceList = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .ListAsync ( deviceServiceSpec );
+
+            switch ( status )
+            {
+                case EServiceDeviceStatus.OnService:
+                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate == null ).ToList();
+                    break;
+                case EServiceDeviceStatus.ReturnedToClient:
+                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate != null ).ToList();
+                    break;
+                default:
+                    return deviceServiceList;
+            }
+
+            return deviceServiceList;
+        }
+
+        public async Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( id );
+            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .GetEntityWithSpecAsync ( deviceServiceSpec );
+
+            
+            if( deviceService == null ) return EServiceResponse.DeviceServiceNotExist;
+            deviceService.GiveBackDate = DateTime.Now;
+            deviceService.GiveBackInfo = giveBackInfo;
+
+            
+            _unitOfWork.Repository<Core.Entities.Halko.DeviceService>().Update ( deviceService );
+            var result  = await _unitOfWork.CompleteAsync();
+
+
+            return result <= 0
+                ? EServiceResponse.DeviceServiceUpdateFailed
+                : (EServiceResponse) deviceService.Id;
+        }
+
+        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetDeviceServicesByName( string phoneName )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( phoneName );
+
+            return await _unitOfWork
+                .Repository<Core.Entities.Halko.DeviceService>()
+                .ListAsync ( deviceServiceSpec );;
+        }
+
+        public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
+        {
+            var deviceServiceSpec = new DeviceServiceSpecification ( deviceServiceId );
+            var deviceService = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .GetEntityWithSpecAsync ( deviceServiceSpec );
+
+            return deviceService;
+        }
+        
+        #endregion
+        
+        #region Device Price List
+
+        public async Task<DevicePrice> CreateDevicePrice( DevicePrice devicePrice )
+        {
+            var devicePriceSpec = new DevicePriceSpecification ( devicePrice.Producer, devicePrice.Model );
+            var devicePriceFromDb = await _unitOfWork.Repository<DevicePrice>()
+                .GetEntityWithSpecAsync ( devicePriceSpec );
+
+            if( devicePriceFromDb != null )
+                return null;
+            
+            _unitOfWork.Repository<DevicePrice>().Add ( devicePrice );
+            await _unitOfWork.CompleteAsync();
+            
+            return devicePrice;
+        }
+        
+        #endregion
         
         #endregion
 

@@ -8,22 +8,9 @@ namespace Core.Interfaces
 {
     public interface IDeviceService
     {
+        #region Device
+        
         Task<EServiceResponse> CreateDevice( Device device );
-
-        Task<EServiceResponse> CreateServiceDevice( DeviceService deviceService );
-
-        Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id );
-
-        /// <summary>
-        /// Get device list with service history.
-        /// </summary>
-        /// <param name="status">Device servise status</param>
-        /// <returns>List of device being service if status is 'OnService' or list of device returned to client for status 'ReturnedToClient'</returns>
-        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( EServiceDeviceStatus status );
-
-        Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
-
-        Task<IReadOnlyList<DeviceService>> GetDeviceServicesByName( string phoneName );
         
         /// <summary>
         /// Get device list to sell
@@ -66,5 +53,32 @@ namespace Core.Interfaces
         Task<EServiceResponse> EditDevice( Device device );
 
         Task<IReadOnlyList<DeviceState>> ReadDeviceState();
+        
+        #endregion
+        
+        #region Device Service
+
+        Task<EServiceResponse> CreateServiceDevice( DeviceService deviceService );
+
+        Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id );
+
+        /// <summary>
+        /// Get device list with service history.
+        /// </summary>
+        /// <param name="status">Device servise status</param>
+        /// <returns>List of device being service if status is 'OnService' or list of device returned to client for status 'ReturnedToClient'</returns>
+        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( EServiceDeviceStatus status );
+
+        Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
+
+        Task<IReadOnlyList<DeviceService>> GetDeviceServicesByName( string phoneName );
+        
+        #endregion
+        
+        #region Device Price List
+
+        Task<DevicePrice> CreateDevicePrice( DevicePrice devicePrice );
+
+        #endregion
     }
 }

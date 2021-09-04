@@ -220,6 +220,18 @@ namespace Api.Controllers
         {
             return Ok ( await _deviceService.GetDevicePriceList() );
         }
+
+        [HttpGet ( "price-list/get" )]
+        public async Task<ActionResult<DevicePrice>> GetDevicePriceListByName(
+            [FromQuery] string producer, string model )
+        {
+            if( string.IsNullOrEmpty ( producer ) || string.IsNullOrEmpty ( model ) )
+                return BadRequest ( new ApiResponse ( 400, "Nie uzupełnione pole" ) );
+
+            var result = await _deviceService.GetDevicePriceListByName ( producer, model );
+
+            return Ok ( result );
+        }
         
         #endregion
     }

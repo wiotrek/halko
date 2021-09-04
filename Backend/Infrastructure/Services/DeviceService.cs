@@ -282,7 +282,15 @@ namespace Infrastructure.Services
         {
             return await _unitOfWork.Repository<DevicePrice>().ListAllAsync();
         }
-        
+
+        public async Task<DevicePrice> GetDevicePriceListByName( string producer, string model )
+        {
+            var devicePriceSpec = new DevicePriceSpecification ( producer, model );
+            var devicePrice = await _unitOfWork.Repository<DevicePrice>().GetEntityWithSpecAsync ( devicePriceSpec );
+
+            return devicePrice;
+        }
+
         #endregion
         
         #endregion

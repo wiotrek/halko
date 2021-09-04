@@ -78,8 +78,8 @@ namespace Core.Interfaces
         #region Device Price List
 
         Task<DevicePrice> CreateDevicePrice( DevicePrice devicePrice );
-
         Task<IReadOnlyList<DevicePrice>> GetDevicePriceList();
+        Task<DevicePrice> GetDevicePriceListByName( string producer, string model );
 
         #endregion
     }

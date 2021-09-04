@@ -29,5 +29,20 @@ namespace Core.Specifications
         /// Data sorting in descending way
         /// </summary>
         Expression<Func<T, object>> OrderByDescending { get; }
+        
+        /// <summary>
+        /// Amount data to take at the same time
+        /// </summary>
+        int Take { get; }
+        
+        /// <summary>
+        /// Amount data to skip
+        /// </summary>
+        int Skip { get; }
+        
+        /// <summary>
+        /// Check if on specific page exist any data to take
+        /// </summary>
+        bool IsPagingEnabled { get; }
     }
 }

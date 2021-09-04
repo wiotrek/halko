@@ -37,6 +37,11 @@ namespace Infrastructure
                 query = query.OrderByDescending ( spec.OrderByDescending );
 
 
+            // If skip and take clause exist, add
+            if( spec.IsPagingEnabled )
+                query = query.Skip ( spec.Skip ).Take ( spec.Take );
+            
+
             // Attach all entities being part of TEntity
             query = spec.Includes.Aggregate ( query,
                 ( current, include ) => current.Include ( include ) );

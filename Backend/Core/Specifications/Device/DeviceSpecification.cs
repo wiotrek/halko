@@ -24,10 +24,11 @@ namespace Core.Specifications
             AddInclude ( x => x.Point );
         }
 
-        public DeviceSpecification( DeviceSpecParams deviceParams )
+        public DeviceSpecification( DeviceSpecParams deviceParams, bool isSold = false )
             : base ( x =>
                 ( string.IsNullOrEmpty ( deviceParams.Point ) || x.Point.Name == deviceParams.Point ) &&
                 ( string.IsNullOrEmpty ( deviceParams.DeviceState ) || x.DeviceState.State == deviceParams.DeviceState ) && 
+                ( isSold ? x.DateSold != null : x.DateSold == null ) &&
                 ( string.IsNullOrEmpty ( deviceParams.Search ) ||
                                                                          x.Producer.Contains ( deviceParams.Search ) ||
                                                                          x.Model.Contains ( deviceParams.Search ) ||
@@ -39,6 +40,7 @@ namespace Core.Specifications
         {
             AddInclude ( x => x.DeviceState );
             AddInclude ( x => x.Point );
+            ApplyPaging ( deviceParams.PageSize * ( deviceParams.PageIndex - 1 ), deviceParams.PageSize );
         }
     }
 }

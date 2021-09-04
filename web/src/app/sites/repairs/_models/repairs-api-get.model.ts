@@ -1,4 +1,4 @@
-export interface RepairsRawModel {
+export interface RepairsApiGetModel {
     giveBackDate?: string;
     giveBackInfo?: string;
     id?: number;

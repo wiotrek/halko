@@ -29,8 +29,8 @@ namespace Core.Specifications
                 ( string.IsNullOrEmpty ( deviceParams.Point ) || x.Point.Name == deviceParams.Point ) &&
                 ( string.IsNullOrEmpty ( deviceParams.DeviceState ) || x.DeviceState.State == deviceParams.DeviceState ) && 
                 ( string.IsNullOrEmpty ( deviceParams.Search ) ||
-                                                                         x.Producer == deviceParams.Search ||
-                                                                         x.Model == deviceParams.Search ||
+                                                                         x.Producer.Contains ( deviceParams.Search ) ||
+                                                                         x.Model.Contains ( deviceParams.Search ) ||
                                                                          x.Imei == deviceParams.Search ||
                                                                          x.Color == deviceParams.Search ||
                                                                          x.Comment == deviceParams.Search

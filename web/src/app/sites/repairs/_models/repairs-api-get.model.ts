@@ -1,4 +1,4 @@
-export interface RepairsModel {
+export interface RepairsApiGetModel {
     giveBackDate?: string;
     giveBackInfo?: string;
     id?: number;
@@ -10,6 +10,12 @@ export interface RepairsModel {
     imei: string;
     troubleDescription: string;
     pointSubmitDate: string;
-    employer: string;
-    point: string;
+    participant: {
+        initial: string;
+        firstName: string;
+        lastName: string;
+        point: {
+            name: string;
+        }
+    };
 }

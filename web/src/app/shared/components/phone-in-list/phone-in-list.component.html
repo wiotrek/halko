@@ -27,7 +27,15 @@
                 }"
                 [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
             >
-                {{elInList[field.category]}} {{field.currency}}
+
+                {{
+                    field.isDate
+                    ? (elInList[field.category] | slice:0:10)
+                    : elInList[field.category]
+                }}
+
+                {{field.currency}}
+
             </div>
 
         </ng-container>

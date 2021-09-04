@@ -51,7 +51,8 @@ export const RepairsFieldsArray: PhoneFieldsModel[] = [
         width: '70px',
         isNumber: false,
         isMobileRwd: true,
-        onlyInDetails: false
+        onlyInDetails: false,
+        isDate: true
     },
     {
         category: 'employer',

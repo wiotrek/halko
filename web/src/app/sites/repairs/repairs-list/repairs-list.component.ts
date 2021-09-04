@@ -12,6 +12,8 @@ import { RepairsService } from '../repairs.service';
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
             [deviceFields]="fields"
+            [componentWillUsing]="componentWillUsing"
+            (componentBeingUsingOutput)="sentToArchive($event)"
         ></app-phone-in-list>
     `
 })
@@ -20,12 +22,17 @@ export class RepairsListComponent implements OnInit {
 
     fields = RepairsFieldsArray;
 
-    // componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
+    componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
 
     constructor(private repairsService: RepairsService) {}
 
     ngOnInit(): void {
         this.getRepairsPhones();
+    }
+
+    sentToArchive(response: { isSuccess: boolean, repairsPhone: RepairsModel }): void {
+        console.log(response.repairsPhone);
+
     }
 
     private getRepairsPhones(): void {

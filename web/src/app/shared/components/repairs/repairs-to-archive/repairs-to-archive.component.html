@@ -1,5 +1,18 @@
 <div class="to-archive">
-<!--    Czy {{phone?.phoneName}} został naprawiony?-->
+    Czy {{phone?.name}} został naprawiony?
 
-    <a>Tak</a> | <a>Nie</a>
+    <button
+        class="to-archive__button"
+        (click)="sendToArchive(true)"
+    >
+        Udało się
+    </button>
+
+    <button
+        class="to-archive__button to-archive__button--defeat"
+        (click)="sendToArchive(false)"
+    >
+        Nie udało się
+    </button>
+
 </div>

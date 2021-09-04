@@ -57,4 +57,8 @@ export class RepairsService {
             (err: HttpErrorResponse) => this.toastr.error(err.error.message)
         );
     }
+
+    insertRepairArchivePhone(): void {
+        return;
+    }
 }

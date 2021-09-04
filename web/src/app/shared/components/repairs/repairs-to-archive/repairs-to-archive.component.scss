@@ -1,3 +1,20 @@
+@import "src/app/shared/global-styles/components";
+@import "src/app/shared/global-styles/variable";
+
 .to-archive {
-    font-size: .9rem;
+    font-size: .8rem;
+
+    &__button {
+        @include firstlyBtn;
+        padding: 1px 5px;
+        margin-left: 10px;
+
+        &--defeat {
+            background-color: $dangerColor;
+
+            &:hover {
+                opacity: .8;
+            }
+        }
+    }
 }

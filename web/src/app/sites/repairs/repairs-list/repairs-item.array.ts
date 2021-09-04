@@ -1,6 +1,6 @@
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
-export const RepairsItemArray: PhoneFieldsModel[] = [
+export const RepairsFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'index',
         polishName: 'Indeks',
@@ -10,7 +10,7 @@ export const RepairsItemArray: PhoneFieldsModel[] = [
         onlyInDetails: false
     },
     {
-        category: 'phoneName',
+        category: 'name',
         polishName: 'Nazwa',
         width: '150px',
         isNumber: false,
@@ -26,7 +26,7 @@ export const RepairsItemArray: PhoneFieldsModel[] = [
         onlyInDetails: false
     },
     {
-        category: 'ownerPhoneNumber',
+        category: 'ownerContact',
         polishName: 'Numer telefonu',
         width: '80px',
         isNumber: false,
@@ -40,13 +40,13 @@ export const RepairsItemArray: PhoneFieldsModel[] = [
         onlyInDetails: true
     },
     {
-        category: 'description',
+        category: 'troubleDescription',
         polishName: 'Usterka',
         isNumber: false,
         onlyInDetails: true
     },
     {
-        category: 'pickUpDate',
+        category: 'pointSubmitDate',
         polishName: 'Data przyjęcia',
         width: '70px',
         isNumber: false,
@@ -60,7 +60,7 @@ export const RepairsItemArray: PhoneFieldsModel[] = [
         onlyInDetails: true
     },
     {
-        category: 'pointName',
+        category: 'point',
         polishName: 'Punkt',
         isNumber: false,
         onlyInDetails: true

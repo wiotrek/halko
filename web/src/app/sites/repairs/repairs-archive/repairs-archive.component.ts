@@ -34,9 +34,6 @@ export class RepairsArchiveComponent implements OnInit {
     constructor(private repairsService: RepairsService) {}
 
     ngOnInit(): void {
-        this.repairsService.phonesRepairs$.subscribe(
-            res => this.phonesRepairs = res
-        );
     }
 
     searchNameFilter(searchName: string): void {

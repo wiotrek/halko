@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PhoneInListDetailsCptsArray } from 'src/app/shared/array/phone-in-list-details-cpts.array';
 import { RepairsModel } from 'src/app/shared/models/repairs.model';
-import { RepairsItemArray } from './repairs-item.array';
+import { RepairsFieldsArray } from './repairs-item.array';
+import { RepairsService } from '../repairs.service';
 
 @Component({
     selector: 'app-repairs-list',
@@ -10,26 +11,26 @@ import { RepairsItemArray } from './repairs-item.array';
             *ngFor="let phone of phonesRepairs"
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
-            [deviceFields]="repairsItemArray"
-            [componentWillUsing]="componentWillUsing"
+            [deviceFields]="fields"
         ></app-phone-in-list>
     `
 })
-export class RepairsListComponent {
-    repairsItemArray = RepairsItemArray;
+export class RepairsListComponent implements OnInit {
+    phonesRepairs: RepairsModel[];
 
-    componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
+    fields = RepairsFieldsArray;
 
-    phonesRepairs: RepairsModel[] = [
-        {
-            phoneName: 'apple iphone 7',
-            imei: '1231321312',
-            owner: 'Jan Kowlaski',
-            ownerPhoneNumber: '123123123',
-            description: 'popsuty bla bla',
-            pickUpDate: '10.10.2021',
-            employer: 'Jurek',
-            pointName: 'Karuzela Września'
-        }
-    ];
+    // componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
+
+    constructor(private repairsService: RepairsService) {}
+
+    ngOnInit(): void {
+        this.getRepairsPhones();
+    }
+
+    private getRepairsPhones(): void {
+        this.repairsService.getRepairsPhone().subscribe(
+            res => this.phonesRepairs = res
+        );
+    }
 }

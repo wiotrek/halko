@@ -214,6 +214,12 @@ namespace Api.Controllers
 
             return Ok ( result );
         }
+
+        [HttpGet ( "price-list" )]
+        public async Task<ActionResult<IReadOnlyList<DevicePrice>>> GetDevicePriceList()
+        {
+            return Ok ( await _deviceService.GetDevicePriceList() );
+        }
         
         #endregion
     }

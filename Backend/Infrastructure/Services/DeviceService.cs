@@ -277,6 +277,11 @@ namespace Infrastructure.Services
             
             return devicePrice;
         }
+
+        public async Task<IReadOnlyList<DevicePrice>> GetDevicePriceList()
+        {
+            return await _unitOfWork.Repository<DevicePrice>().ListAllAsync();
+        }
         
         #endregion
         

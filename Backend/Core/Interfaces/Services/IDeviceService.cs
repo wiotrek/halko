@@ -79,6 +79,8 @@ namespace Core.Interfaces
 
         Task<DevicePrice> CreateDevicePrice( DevicePrice devicePrice );
 
+        Task<IReadOnlyList<DevicePrice>> GetDevicePriceList();
+
         #endregion
     }
 }

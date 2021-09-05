@@ -165,19 +165,19 @@ namespace Api.Controllers
         }
 
         [HttpGet ( "service/repairing" )]
-        public async Task<ActionResult> GetServiceDevices()
+        public async Task<ActionResult> GetServiceDevices( [FromQuery] DeviceSpecParams deviceParams )
         {
-            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.OnService );
+            var result = await _deviceService.GetServiceDeviceList ( deviceParams, EServiceDeviceStatus.OnService );
 
             var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
 
             return Ok ( deviceServiceDto );
         }
-        
+
         [HttpGet ( "service/returned" )]
-        public async Task<ActionResult> GetServiceDevicesReturned()
+        public async Task<ActionResult> GetServiceDevicesReturned([FromQuery] DeviceSpecParams deviceParams)
         {
-            var result = await _deviceService.GetServiceDeviceList ( EServiceDeviceStatus.ReturnedToClient );
+            var result = await _deviceService.GetServiceDeviceList ( deviceParams, EServiceDeviceStatus.ReturnedToClient );
 
             var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
 

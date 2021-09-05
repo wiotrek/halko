@@ -199,9 +199,10 @@ namespace Infrastructure.Services
                 (EServiceResponse) deviceService.Id;
         }
 
-        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(EServiceDeviceStatus status)
+        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(
+            DeviceSpecParams deviceParams, EServiceDeviceStatus status)
         {
-            var deviceServiceSpec = new DeviceServiceSpecification();
+            var deviceServiceSpec = new DeviceServiceSpecification ( deviceParams );
             var deviceServiceList = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
                 .ListAsync ( deviceServiceSpec );
 

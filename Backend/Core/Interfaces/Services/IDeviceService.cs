@@ -67,7 +67,7 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="status">Device servise status</param>
         /// <returns>List of device being service if status is 'OnService' or list of device returned to client for status 'ReturnedToClient'</returns>
-        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( EServiceDeviceStatus status );
+        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( DeviceSpecParams deviceParams, EServiceDeviceStatus status );
 
         Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
 

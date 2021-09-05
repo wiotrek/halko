@@ -4,9 +4,13 @@ namespace Core.Specifications
 {
     public class DeviceServiceSpecification : BaseSpecification<DeviceService>
     {
-        public DeviceServiceSpecification()
+        public DeviceServiceSpecification( DeviceSpecParams deviceParams )
+            : base ( x =>
+                ( string.IsNullOrEmpty ( deviceParams.Point ) || x.Point.Name == deviceParams.Point ) &&
+                ( string.IsNullOrEmpty ( deviceParams.Search ) || x.Name == deviceParams.Search ) )
         {
             AddInclude ( x => x.Participant.Point );
+            ApplyPaging ( deviceParams.PageSize * ( deviceParams.PageIndex - 1 ), deviceParams.PageSize );
         }
 
         public DeviceServiceSpecification( int id )

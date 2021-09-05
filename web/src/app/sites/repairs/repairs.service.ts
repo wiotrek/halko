@@ -12,6 +12,8 @@ import { RepairsAddApiPostModel } from './_models/repairs-add-api-post.model';
 import { ToastrService } from 'ngx-toastr';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ResponseDictionary} from '../../shared/dictionary/response.dictionary';
+import {SearcherModel} from '../../shared/models/searcher.model';
+import {CreatorParamsClass} from '../../shared/classes/creator-params.class';
 
 @Injectable({providedIn: 'root'})
 export class RepairsService {
@@ -80,9 +82,12 @@ export class RepairsService {
         );
     }
 
-    getRepairArchivePhone(): Observable<RepairsModel[]> {
+    // repairs-list archive
+    getRepairArchivePhone(searcher: SearcherModel = null): Observable<RepairsModel[]> {
+        const params = CreatorParamsClass.createNewParam(searcher);
+
         return this.http.get<RepairsApiGetModel[]>(
-            this.apiUrl + 'api/device/service/returned'
+            this.apiUrl + 'api/device/service/returned', { params }
         ).pipe(
             map(
                 (res) =>

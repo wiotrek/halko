@@ -8,13 +8,20 @@ import { RepairsService } from '../repairs.service';
     selector: 'app-repairs-list',
     template: `
         <app-phone-in-list
-            *ngFor="let phone of phonesRepairs"
+            *ngFor="let phone of phonesRepairs | slice:pagination.start:pagination.end"
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
             [deviceFields]="fields"
             [componentWillUsing]="componentWillUsing"
             (componentBeingUsingOutput)="sentToArchive($event)"
         ></app-phone-in-list>
+
+        <app-la-pagination
+            [pageSize]="pagination.pageSize"
+            [arrLength]="pagination.arrLength"
+            [(start)]="pagination.start"
+            [(end)]="pagination.end"
+        ></app-la-pagination>
     `
 })
 export class RepairsListComponent implements OnInit {
@@ -23,6 +30,13 @@ export class RepairsListComponent implements OnInit {
     fields = RepairsFieldsArray;
 
     componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
+
+    pagination = {
+        pageSize: 10,
+        start: 0,
+        end: 10,
+        arrLength: 0
+    };
 
     constructor(private repairsService: RepairsService) {}
 

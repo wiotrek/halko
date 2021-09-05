@@ -55,6 +55,20 @@ export const RepairsFieldsArray: PhoneFieldsModel[] = [
         isDate: true
     },
     {
+        category: 'ownerCost',
+        polishName: 'Koszt właściciela',
+        isNumber: true,
+        onlyInDetails: true,
+        currency: 'zł'
+    },
+    {
+        category: 'serviceCost',
+        polishName: 'Koszt punktu',
+        isNumber: true,
+        onlyInDetails: true,
+        currency: 'zł'
+    },
+    {
         category: 'employer',
         polishName: 'Pracownik',
         isNumber: true,

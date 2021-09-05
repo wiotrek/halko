@@ -4,6 +4,8 @@ import { RepairsModel } from '../../../shared/models/repairs.model';
 import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
 import { RepairsService } from '../repairs.service';
 import { SearcherModel } from '../../../shared/models/searcher.model';
+import { NgForm } from '@angular/forms';
+import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
 
 @Component({
     selector: 'app-repairs-archive',
@@ -18,6 +20,8 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
             [ind]="phonesRepairs.indexOf(phone) + 1"
             [elInList]="phone"
             [deviceFields]="repairsArchiveItemArray"
+            [isExistEditMode]="true"
+            (updateDetails)="editRepairsArchive($event)"
         ></app-phone-in-list>
 
         <app-la-pagination
@@ -58,6 +62,14 @@ export class RepairsArchiveComponent implements OnInit {
 
     ngOnInit(): void {
         this.getRepairsArchivePhones();
+    }
+
+    editRepairsArchive(
+        response: { update: NgForm, elInList: PhoneInListType}
+    ): void {
+        console.log(response.update);
+        console.log('------------');
+        console.log(response.elInList);
     }
 
     private getRepairsArchivePhones(

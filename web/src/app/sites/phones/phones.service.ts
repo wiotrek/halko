@@ -14,6 +14,7 @@ import { PhoneEditModel } from './_models/phone-edit.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from '../../shared/models/point.model';
 import { SearcherModel } from '../../shared/models/searcher.model';
+import {CreatorParamsClass} from '../../shared/classes/creator-params.class';
 
 @Injectable({providedIn: 'root'})
 export class PhonesService {
@@ -59,21 +60,7 @@ export class PhonesService {
 
     getPhones(searcher: SearcherModel = null): Observable<PhoneModel[]> {
 
-        let params = new HttpParams();
-
-        if (searcher) {
-            if (searcher.pointName.length) {
-                params = params.append('point', searcher.pointName);
-            }
-
-            if (searcher.searchName.length) {
-                params = params.append('search', searcher.searchName);
-            }
-
-            if (searcher.state.length) {
-                params = params.append('deviceState', searcher.state);
-            }
-        }
+        const params = CreatorParamsClass.createNewParam(searcher);
 
         // if exist some parametr, then append these to params
         return this.http.get<PhoneModel[]>(

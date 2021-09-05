@@ -8,12 +8,16 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
             <a class="pagination__prev"
                 *ngIf="end - pageSize > 0"
                 (click)="previousSite()"
-            >poprzednia</a>
+            >
+                poprzednia
+            </a>
 
             <a class="pagination__next"
                 *ngIf="start + pageSize < arrLength"
                 (click)="nextSite()"
-            >następna</a>
+            >
+                następna
+            </a>
 
         </div>
     `,

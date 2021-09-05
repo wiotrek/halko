@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Type } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, Type} from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { PhoneInListType } from '../../models-union/phone-in-list.type';
@@ -17,6 +17,8 @@ export class PhoneInListComponent implements OnInit {
     @Input() ind?: number;
     @Input() isFlexStart?: boolean;
     @Input() componentWillUsing?: Type<unknown>;
+
+    @Output() componentBeingUsingOutput: EventEmitter<any> = new EventEmitter<any>();
 
     fieldsNonDetails: PhoneFieldsModel[];
 

@@ -1,3 +1,24 @@
+@import "src/app/shared/global-styles/components";
+@import "src/app/shared/global-styles/variable";
+
 .to-archive {
-    font-size: .9rem;
+    font-size: .8rem;
+    display: flex;
+    align-items: baseline;
+
+    &__confirm {
+        text-decoration: none;
+        color: $prettyGreen;
+        cursor: pointer;
+        margin-left: 10px;
+
+        &:hover {
+            opacity: .5;
+            text-decoration: underline;
+        }
+
+        &--defeat {
+            color: $dangerColor;
+        }
+    }
 }

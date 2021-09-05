@@ -10,7 +10,14 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         onlyInDetails: false
     },
     {
-        category: 'phoneName',
+        category: 'giveBackInfo',
+        polishName: 'Status',
+        isNumber: false,
+        isMobileRwd: false,
+        onlyInDetails: true
+    },
+    {
+        category: 'name',
         polishName: 'Nazwa',
         width: '150px',
         isNumber: false,
@@ -26,12 +33,11 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         onlyInDetails: false
     },
     {
-        category: 'ownerPhoneNumber',
+        category: 'ownerContact',
         polishName: 'Numer telefonu',
-        width: '80px',
         isNumber: false,
-        isMobileRwd: true,
-        onlyInDetails: false
+        isMobileRwd: false,
+        onlyInDetails: true
     },
     {
         category: 'imei',
@@ -40,17 +46,41 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         onlyInDetails: true
     },
     {
-        category: 'description',
+        category: 'ownerCost',
+        polishName: 'Koszt właściciela',
+        isNumber: true,
+        onlyInDetails: true,
+        currency: 'zł'
+    },
+    {
+        category: 'serviceCost',
+        polishName: 'Koszt punktu',
+        isNumber: true,
+        onlyInDetails: true,
+        currency: 'zł'
+    },
+    {
+        category: 'troubleDescription',
         polishName: 'Usterka',
         isNumber: false,
         onlyInDetails: true
     },
     {
-        category: 'pickUpDate',
+        category: 'pointSubmitDate',
         polishName: 'Data przyjęcia',
         width: '70px',
         isNumber: false,
-        onlyInDetails: true
+        isMobileRwd: false,
+        onlyInDetails: false,
+        isDate: true
+    },
+    {
+        category: 'giveBackDate',
+        polishName: 'Data zrealizowania',
+        isNumber: false,
+        isMobileRwd: false,
+        onlyInDetails: false,
+        isDate: true
     },
     {
         category: 'employer',
@@ -59,21 +89,8 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         onlyInDetails: true
     },
     {
-        category: 'pointName',
+        category: 'point',
         polishName: 'Punkt',
-        isNumber: false,
-        onlyInDetails: true
-    },
-    {
-        category: 'returnDate',
-        polishName: 'Data oddania',
-        isNumber: false,
-        isMobileRwd: true,
-        onlyInDetails: false
-    },
-    {
-        category: 'isSuccess',
-        polishName: 'Telefon został naprawiony',
         isNumber: false,
         onlyInDetails: true
     }

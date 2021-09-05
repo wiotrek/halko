@@ -15,7 +15,14 @@
         </div>
 
         <div class="details__field__param">
-            {{elInList[field.category]}} {{field.currency}}
+
+            {{
+                field.isDate
+                ? (elInList[field.category] | slice:0:10)
+                : elInList[field.category]
+            }}
+
+            {{field.currency}}
         </div>
 
     </div>

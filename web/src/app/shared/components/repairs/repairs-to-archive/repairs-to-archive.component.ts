@@ -19,6 +19,6 @@ export class RepairsToArchiveComponent implements OnInit {
 
     sendToArchive(isSuccess: boolean): void {
         const repairsPhone = this.elInList as RepairsModel;
-        this.messageBack.emit({isSuccess, repairsPhone});
+        this.messageBack.emit({isSuccess, id: repairsPhone.id});
     }
 }

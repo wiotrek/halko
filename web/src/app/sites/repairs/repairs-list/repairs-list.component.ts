@@ -30,9 +30,9 @@ export class RepairsListComponent implements OnInit {
         this.getRepairsPhones();
     }
 
-    sentToArchive(response: { isSuccess: boolean, repairsPhone: RepairsModel }): void {
-        console.log(response.repairsPhone);
-
+    sentToArchive(response: { isSuccess: boolean, id: number }): void {
+        const giveBackInfo = response.isSuccess ? 'Naprawiony' : 'Nie udało się';
+        this.repairsService.insertRepairArchivePhone(giveBackInfo, response.id);
     }
 
     private getRepairsPhones(): void {

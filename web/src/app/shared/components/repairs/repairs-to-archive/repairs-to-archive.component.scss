@@ -3,18 +3,22 @@
 
 .to-archive {
     font-size: .8rem;
+    display: flex;
+    align-items: baseline;
 
-    &__button {
-        @include firstlyBtn;
-        padding: 1px 5px;
+    &__confirm {
+        text-decoration: none;
+        color: $prettyGreen;
+        cursor: pointer;
         margin-left: 10px;
 
-        &--defeat {
-            background-color: $dangerColor;
+        &:hover {
+            opacity: .5;
+            text-decoration: underline;
+        }
 
-            &:hover {
-                opacity: .8;
-            }
+        &--defeat {
+            color: $dangerColor;
         }
     }
 }

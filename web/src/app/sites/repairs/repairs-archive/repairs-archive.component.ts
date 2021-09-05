@@ -3,6 +3,7 @@ import { RepairsArchiveItemArray } from './repairs-archive.array';
 import { RepairsModel } from '../../../shared/models/repairs.model';
 import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
 import { RepairsService } from '../repairs.service';
+import {RepairsMapper} from '../repairs.mapper';
 
 @Component({
     selector: 'app-repairs-archive',
@@ -34,6 +35,13 @@ export class RepairsArchiveComponent implements OnInit {
     constructor(private repairsService: RepairsService) {}
 
     ngOnInit(): void {
+        this.getRepairsArchivePhones();
+    }
+
+    private getRepairsArchivePhones(): void {
+        this.repairsService.getRepairArchivePhone().subscribe(
+            res => this.phonesRepairs = res
+        );
     }
 
     searchNameFilter(searchName: string): void {

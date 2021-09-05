@@ -1,18 +1,18 @@
 <div class="to-archive">
     Czy {{phone?.name}} został naprawiony?
 
-    <button
-        class="to-archive__button"
+    <a
+        class="to-archive__confirm"
         (click)="sendToArchive(true)"
     >
-        Udało się
-    </button>
+        Naprawiony
+    </a>
 
-    <button
-        class="to-archive__button to-archive__button--defeat"
+    <a
+        class="to-archive__confirm to-archive__confirm--defeat"
         (click)="sendToArchive(false)"
     >
         Nie udało się
-    </button>
+    </a>
 
 </div>

@@ -30,7 +30,7 @@ export const RepairsFieldsArray: PhoneFieldsModel[] = [
         polishName: 'Numer telefonu',
         width: '80px',
         isNumber: false,
-        isMobileRwd: true,
+        isMobileRwd: false,
         onlyInDetails: false
     },
     {
@@ -50,7 +50,7 @@ export const RepairsFieldsArray: PhoneFieldsModel[] = [
         polishName: 'Data przyjęcia',
         width: '70px',
         isNumber: false,
-        isMobileRwd: true,
+        isMobileRwd: false,
         onlyInDetails: false,
         isDate: true
     },

@@ -2,7 +2,7 @@ import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 export const RepairsAddFieldsArray: PhoneFieldsModel[] = [
     {
-        category: 'phoneName',
+        category: 'name',
         polishName: 'Nazwa',
         isNumber: false,
         required: true
@@ -14,10 +14,24 @@ export const RepairsAddFieldsArray: PhoneFieldsModel[] = [
         required: true
     },
     {
-        category: 'ownerPhoneNumber',
+        category: 'ownerContact',
         polishName: 'Numer telefonu',
         isNumber: false,
         required: true
+    },
+    {
+        category: 'ownerCost',
+        polishName: 'Koszt dla klienta',
+        isNumber: true,
+        required: true,
+        currency: 'zł'
+    },
+    {
+        category: 'serviceCost',
+        polishName: 'Koszt dla nas',
+        isNumber: true,
+        required: true,
+        currency: 'zł'
     },
     {
         category: 'imei',
@@ -26,7 +40,7 @@ export const RepairsAddFieldsArray: PhoneFieldsModel[] = [
         required: true
     },
     {
-        category: 'description',
+        category: 'troubleDescription',
         polishName: 'Opis zgłoszenia',
         isNumber: false,
         required: true

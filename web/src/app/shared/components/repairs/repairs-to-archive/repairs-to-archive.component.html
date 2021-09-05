@@ -1,5 +1,18 @@
 <div class="to-archive">
-    Czy {{phone?.phoneName}} został naprawiony?
+    Czy {{phone?.name}} został naprawiony?
 
-    <a>Tak</a> | <a>Nie</a>
+    <a
+        class="to-archive__confirm"
+        (click)="sendToArchive(true)"
+    >
+        Naprawiony
+    </a>
+
+    <a
+        class="to-archive__confirm to-archive__confirm--defeat"
+        (click)="sendToArchive(false)"
+    >
+        Nie udało się
+    </a>
+
 </div>

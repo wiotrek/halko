@@ -7,7 +7,9 @@ import {
     AfterViewInit,
     Injector,
     Type,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Output,
+    EventEmitter
 } from '@angular/core';
 import { PhoneInListDetailsCptsType } from 'src/app/shared/array/phone-in-list-details-cpts.array';
 import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
@@ -24,6 +26,7 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
 
     // variable for which will be assign name component
     @Input() componentWillUsing?: Type<PhoneInListDetailsCptsType>;
+    @Output() componentBeingUsingOutput: EventEmitter<any> = new EventEmitter<any>();
 
     @ViewChild('optComponent', { read: ViewContainerRef }) optComponent: ViewContainerRef;
 
@@ -45,6 +48,12 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
             const componentRef = factory.create(this.injector);
 
             componentRef.instance.elInList = this.elInList;
+
+            componentRef.instance.messageBack.subscribe(
+                res => {
+                    this.componentBeingUsingOutput.emit(res);
+                }
+            );
 
             const view = componentRef.hostView;
 

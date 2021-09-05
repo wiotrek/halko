@@ -14,7 +14,8 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         polishName: 'Status',
         isNumber: false,
         isMobileRwd: false,
-        onlyInDetails: true
+        onlyInDetails: true,
+        override: true
     },
     {
         category: 'name',
@@ -22,7 +23,8 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         width: '150px',
         isNumber: false,
         isMobileRwd: true,
-        onlyInDetails: false
+        onlyInDetails: false,
+        override: true
     },
     {
         category: 'owner',
@@ -30,27 +32,32 @@ export const RepairsArchiveItemArray: PhoneFieldsModel[] = [
         width: '100px',
         isNumber: false,
         isMobileRwd: true,
-        onlyInDetails: false
+        onlyInDetails: false,
+        override: true
     },
     {
         category: 'ownerContact',
         polishName: 'Numer telefonu',
-        isNumber: false,
+        isNumber: true,
         isMobileRwd: false,
-        onlyInDetails: true
+        onlyInDetails: true,
+        override: true
     },
     {
         category: 'imei',
         polishName: 'Imei',
-        isNumber: false,
-        onlyInDetails: true
+        isNumber: true,
+        onlyInDetails: true,
+        override: true,
+        required: true
     },
     {
         category: 'ownerCost',
         polishName: 'Koszt właściciela',
         isNumber: true,
         onlyInDetails: true,
-        currency: 'zł'
+        currency: 'zł',
+        override: true
     },
     {
         category: 'serviceCost',

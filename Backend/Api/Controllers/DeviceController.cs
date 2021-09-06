@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Api.Dtos;
 using Api.Errors;
+using Api.Helpers;
 using AutoMapper;
 using Core.Entities.Halko;
 using Core.Entities.Identity;
@@ -51,21 +52,21 @@ namespace Api.Controllers
         public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetDevices( 
             [FromQuery] DeviceSpecParams deviceParams )
         {
-            var deviceList =  await _deviceService.GetDevicesToSell ( deviceParams );
-            var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
+            var result =  await _deviceService.GetDevicesToSell ( deviceParams );
+            var deviceListToReturn = _mapper.Map<IReadOnlyList<DeviceDisplayItemDto>> ( result.Data );
 
-            return Ok ( deviceListToReturn );
+            return Ok ( new Pagination<DeviceDisplayItemDto>( result.PageIndex, result.PageSize, result.Count, deviceListToReturn ) );
         }
         
         
         [HttpGet("sold")]
-        public async Task<ActionResult<IEnumerable<DeviceDisplayItemDto>>> GetSoldDevices( 
+        public async Task<ActionResult<Pagination<DeviceDisplayItemDto>>> GetSoldDevices( 
             [FromQuery] DeviceSpecParams deviceParams )
         {
-            var deviceList =  await _deviceService.GetSoldDevices ( deviceParams );
-            var deviceListToReturn = _mapper.Map<IEnumerable<DeviceDisplayItemDto>> ( deviceList );
+            var result =  await _deviceService.GetSoldDevices ( deviceParams );
+            var deviceListToReturn = _mapper.Map<IReadOnlyList<DeviceDisplayItemDto>> ( result.Data );
 
-            return Ok ( deviceListToReturn );
+            return Ok ( new Pagination<DeviceDisplayItemDto>( result.PageIndex, result.PageSize, result.Count, deviceListToReturn ) );
         }
 
 
@@ -165,38 +166,27 @@ namespace Api.Controllers
         }
 
         [HttpGet ( "service/repairing" )]
-        public async Task<ActionResult> GetServiceDevices( [FromQuery] DeviceSpecParams deviceParams )
+        public async Task<ActionResult<Pagination<DeviceServiceItemDto>>> GetServiceDevices( [FromQuery] DeviceSpecParams deviceParams )
         {
             var result = await _deviceService.GetServiceDeviceList ( deviceParams, EServiceDeviceStatus.OnService );
 
-            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result.Data );
 
-            return Ok ( deviceServiceDto );
+            return Ok ( new Pagination<DeviceServiceItemDto> ( result.PageIndex, result.PageSize, result.Count,
+                deviceServiceDto ) );
         }
 
         [HttpGet ( "service/returned" )]
-        public async Task<ActionResult> GetServiceDevicesReturned([FromQuery] DeviceSpecParams deviceParams)
+        public async Task<ActionResult<Pagination<DeviceServiceItemDto>>> GetServiceDevicesReturned([FromQuery] DeviceSpecParams deviceParams)
         {
             var result = await _deviceService.GetServiceDeviceList ( deviceParams, EServiceDeviceStatus.ReturnedToClient );
 
-            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
+            var deviceServiceDto = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result.Data );
 
-            return Ok ( deviceServiceDto );
+            return Ok ( new Pagination<DeviceServiceItemDto> ( result.PageIndex, result.PageSize, result.Count,
+                deviceServiceDto ) );
         }
 
-        [HttpGet ( "service" )]
-        public async Task<ActionResult<IReadOnlyList<DeviceDisplayItemDto>>> GetServiceListByName(
-            [FromQuery] string name )
-        {
-            if( string.IsNullOrEmpty ( name ) )
-                return BadRequest ( new ApiResponse ( 400, "Nazwa urządzenia jest wymagana" ) );
-            
-            var result = await _deviceService.GetDeviceServicesByName ( name );
-            var deviceServiceToReturn = _mapper.Map<IReadOnlyList<DeviceServiceItemDto>> ( result );
-
-            return Ok ( deviceServiceToReturn );
-        }
-        
         #endregion
 
         #region Device Price List
@@ -216,9 +206,12 @@ namespace Api.Controllers
         }
 
         [HttpGet ( "price-list" )]
-        public async Task<ActionResult<IReadOnlyList<DevicePrice>>> GetDevicePriceList()
+        public async Task<ActionResult<Pagination<DevicePrice>>> GetDevicePriceList( 
+            [FromQuery] DeviceSpecParams deviceParams )
         {
-            return Ok ( await _deviceService.GetDevicePriceList() );
+            var result = await _deviceService.GetDevicePriceList ( deviceParams );
+
+            return Ok ( new Pagination<DevicePrice> ( result.PageIndex, result.PageSize, result.Count, result.Data ) );
         }
 
         [HttpGet ( "price-list/get" )]

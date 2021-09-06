@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Helpers;
 using Core.Entities.Halko;
 using Core.Enums;
 using Core.Interfaces;
@@ -19,15 +20,15 @@ namespace Infrastructure.Services
         
         #region Constructors
 
-        public DeviceService(IUnitOfWork unitOfWork)
+        public DeviceService( IUnitOfWork unitOfWork )
         {
             _unitOfWork = unitOfWork;
         }
-        
+
         #endregion
         
         #region Implemented Methods
-        
+
         #region Device
         
         public async Task<EServiceResponse> CreateDevice( Device device )
@@ -57,21 +58,26 @@ namespace Infrastructure.Services
                 (EServiceResponse) device.Id;
         }
         
-        public async Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
+        public async Task<Pagination<Device>> GetDevicesToSell( DeviceSpecParams deviceParams )
         {
+            var deviceCountSpec = new DeviceCountSpecification ( deviceParams );
             var deviceSpecParams = new DeviceSpecification ( deviceParams );
             var deviceListToSell = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpecParams );
+            var deviceCount = await _unitOfWork.Repository<Device>().CountAsync ( deviceCountSpec );
 
-            return deviceListToSell;
+            return new Pagination<Device> ( deviceParams.PageIndex, deviceParams.PageSize, deviceCount,
+                deviceListToSell );
         }
-        
-        
-        public async Task<IEnumerable<Device>> GetSoldDevices( DeviceSpecParams deviceParams )
+
+        public async Task<Pagination<Device>> GetSoldDevices( DeviceSpecParams deviceParams )
         {
+            var deviceCountSpec = new DeviceCountSpecification ( deviceParams, true );
             var deviceSpecParams = new DeviceSpecification ( deviceParams, true );
             var deviceListToSell = await _unitOfWork.Repository<Device>().ListAsync ( deviceSpecParams );
+            var deviceCount = await _unitOfWork.Repository<Device>().CountAsync ( deviceCountSpec );
 
-            return deviceListToSell;
+            return new Pagination<Device> ( deviceParams.PageIndex, deviceParams.PageSize, deviceCount,
+                deviceListToSell );
         }
 
         
@@ -199,26 +205,21 @@ namespace Infrastructure.Services
                 (EServiceResponse) deviceService.Id;
         }
 
-        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(
+        public async Task<Pagination<Core.Entities.Halko.DeviceService>> GetServiceDeviceList(
             DeviceSpecParams deviceParams, EServiceDeviceStatus status)
         {
-            var deviceServiceSpec = new DeviceServiceSpecification ( deviceParams );
+            var deviceServiceSpec = new DeviceServiceSpecification ( deviceParams, status );
+            var deviceCountSpec = new DeviceServiceCountSpecification ( deviceParams, status );
+            
+            
             var deviceServiceList = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
                 .ListAsync ( deviceServiceSpec );
+            var deviceCount = await _unitOfWork.Repository<Core.Entities.Halko.DeviceService>()
+                .CountAsync ( deviceCountSpec );
 
-            switch ( status )
-            {
-                case EServiceDeviceStatus.OnService:
-                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate == null ).ToList();
-                    break;
-                case EServiceDeviceStatus.ReturnedToClient:
-                    deviceServiceList = deviceServiceList.Where ( x => x.GiveBackDate != null ).ToList();
-                    break;
-                default:
-                    return deviceServiceList;
-            }
-
-            return deviceServiceList;
+            
+            return new Pagination<Core.Entities.Halko.DeviceService> (
+                deviceParams.PageIndex, deviceParams.PageSize, deviceCount, deviceServiceList );;
         }
 
         public async Task<EServiceResponse> UpdateDeviceService( string giveBackInfo, int id )
@@ -240,15 +241,6 @@ namespace Infrastructure.Services
             return result <= 0
                 ? EServiceResponse.DeviceServiceUpdateFailed
                 : (EServiceResponse) deviceService.Id;
-        }
-
-        public async Task<IReadOnlyList<Core.Entities.Halko.DeviceService>> GetDeviceServicesByName( string phoneName )
-        {
-            var deviceServiceSpec = new DeviceServiceSpecification ( phoneName );
-
-            return await _unitOfWork
-                .Repository<Core.Entities.Halko.DeviceService>()
-                .ListAsync ( deviceServiceSpec );;
         }
 
         public async Task<Core.Entities.Halko.DeviceService> GetDeviceBeingServiceById( int deviceServiceId )
@@ -279,9 +271,15 @@ namespace Infrastructure.Services
             return devicePrice;
         }
 
-        public async Task<IReadOnlyList<DevicePrice>> GetDevicePriceList()
+        public async Task<Pagination<DevicePrice>> GetDevicePriceList(DeviceSpecParams deviceParams)
         {
-            return await _unitOfWork.Repository<DevicePrice>().ListAllAsync();
+            var deviceCountSpec = new DevicePriceSpecification();
+            var deviceSpec = new DevicePriceSpecification ( deviceParams );
+            var deviceCount = await _unitOfWork.Repository<DevicePrice>().CountAsync ( deviceCountSpec );
+            var devicePriceList = await _unitOfWork.Repository<DevicePrice>().ListAsync ( deviceSpec );
+
+            return new Pagination<DevicePrice> ( deviceParams.PageIndex, deviceParams.PageSize, deviceCount,
+                devicePriceList );
         }
 
         public async Task<DevicePrice> GetDevicePriceListByName( string producer, string model )

@@ -73,6 +73,8 @@
                 [deviceFields]="deviceFields"
                 [componentWillUsing]="componentWillUsing"
                 (componentBeingUsingOutput)="componentBeingUsingOutput.emit($event)"
+                [isExistEditMode]="isExistEditMode"
+                (updateDetails)="updateDetails.emit($event)"
             ></app-phone-in-list-details>
 
         </ng-container>

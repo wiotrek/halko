@@ -2,7 +2,6 @@
 
 @media (min-width: 0) {
     .details {
-        margin-top: 10px;
 
         &__field {
             margin-top: 10px;
@@ -15,17 +14,63 @@
 
             &__param {
                 margin-left: 10px;
+
+                &--edit-mode {
+                    margin-left: 10px;
+                    border: 0;
+                    border-bottom: 1px solid black;
+                    text-align: center;
+
+                    &--currency {
+                        width: 50px;
+                    }
+                }
             }
+
+            &__param-select--edit-mode {
+                background-color: transparent;
+                border: 0;
+                border-bottom: 1px solid $primaryGrey;
+                cursor: pointer;
+                text-align: center;
+            }
+        }
+
+        &__submit {
+            margin: 10px 0;
+            font-size: .7rem;
+            border: 0;
+            background-color: transparent;
+            color: $prettyGreen;
+
+            &:hover {
+                opacity: .7;
+            }
+        }
+
+    }
+
+    .btn-edit-mode {
+        margin: 10px 0;
+        font-size: .7rem;
+        border: 0;
+        background-color: transparent;
+        color: $prettyGreen;
+
+        &:hover {
+            opacity: .7;
+        }
+
+        &--active {
+            margin-top: 5px;
+            font-size: .6rem;
+            color: $dangerColor;
         }
     }
 }
 
 @media (min-width: $minValueDesktop) {
-    .details {
-        padding-bottom: 10px;
-
-        &__field {
-            font-size:  .7rem;
-        }
+    .details__field {
+        font-size:  .7rem;
     }
 }

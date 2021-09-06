@@ -28,13 +28,6 @@ import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class
             [ind]="phonesList.indexOf(phone) + 1"
             (refreshPhoneList)="this.getPhones()"
         ></app-phones-item>
-
-        <app-la-pagination
-            [pageSize]="pageSize"
-            [arrLength]="arrLength"
-            [(start)]="start"
-            [(end)]="end"
-        ></app-la-pagination>
     `
 })
 export class PhonesListComponent implements OnInit {

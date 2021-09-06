@@ -62,7 +62,7 @@ export class PhonesService {
 
         const params = CreatorParamsClass.createNewParam(searcher);
 
-        // if exist some parametr, then append these to params
+        // if exist some parameter, then append these to params
         return this.http.get<PhoneModel[]>(
             this.apiUrl + 'api/device', { params }
         );

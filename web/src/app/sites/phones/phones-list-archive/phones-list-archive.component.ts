@@ -23,13 +23,6 @@ import {SortingPhonesClass} from '../../../shared/classes/sorting-phones.class';
             [elInList]="phone"
             [deviceFields]="phonesArchiveFieldsConst"
         ></app-phone-in-list>
-
-        <app-la-pagination
-            [pageSize]="this.pagination.pageSize"
-            [arrLength]="this.pagination.arrLength"
-            [(start)]="this.pagination.start"
-            [(end)]="this.pagination.end"
-        ></app-la-pagination>
     `
 })
 export class PhonesListArchiveComponent implements OnInit {

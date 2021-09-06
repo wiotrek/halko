@@ -48,7 +48,7 @@ export const RepairsFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'pointSubmitDate',
         polishName: 'Data przyjęcia',
-        width: '70px',
+        width: '100px',
         isNumber: false,
         isMobileRwd: false,
         onlyInDetails: false,

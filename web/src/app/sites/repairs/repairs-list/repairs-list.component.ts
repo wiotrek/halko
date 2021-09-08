@@ -43,21 +43,21 @@ export class RepairsListComponent implements OnInit {
         pageSize: 3,
     };
 
+    constructor(private repairsService: RepairsService) {}
+
+    ngOnInit(): void {
+        this.getRepairsPhones(this.searcher);
+    }
+
     countIndex(phone: RepairsModel): number {
         return (
             this.phonesRepairs.indexOf(phone) + 1
         ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
     }
 
-    constructor(private repairsService: RepairsService) {}
-
-    ngOnInit(): void {
-        this.getRepairsPhones();
-    }
-
     changeSite(pageIndex: number): void {
         this.searcher.pageIndex = pageIndex;
-        this.getRepairsPhones();
+        this.getRepairsPhones(this.searcher);
     }
 
     sentToArchive(response: { isSuccess: boolean, id: number }): void {
@@ -65,8 +65,9 @@ export class RepairsListComponent implements OnInit {
         this.repairsService.insertRepairArchivePhone(giveBackInfo, response.id);
     }
 
-    private getRepairsPhones(): void {
-        this.repairsService.getRepairsPhone(this.searcher).subscribe(
+    private getRepairsPhones(searcher: SearcherModel = this.searcher): void {
+
+        this.repairsService.getRepairsPhone(searcher).subscribe(
             (res: RepairsApiGetPagModel) => {
 
                 // unnecessary to pagination

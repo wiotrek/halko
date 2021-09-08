@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
@@ -14,7 +14,7 @@ import { PhoneEditModel } from './_models/phone-edit.model';
 import { PhoneModel } from './_models/phone.model';
 import { Point } from '../../shared/models/point.model';
 import { SearcherModel } from '../../shared/models/searcher.model';
-import {CreatorParamsClass} from '../../shared/classes/creator-params.class';
+import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
 
 @Injectable({providedIn: 'root'})
 export class PhonesService {
@@ -59,8 +59,7 @@ export class PhonesService {
     }
 
     getPhones(searcher: SearcherModel = null): Observable<PhoneModel[]> {
-
-        const params = CreatorParamsClass.createNewParam(searcher);
+        const params = ParamsCreatorHelper(searcher);
 
         // if exist some parameter, then append these to params
         return this.http.get<PhoneModel[]>(

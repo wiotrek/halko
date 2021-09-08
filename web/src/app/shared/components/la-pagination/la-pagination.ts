@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 
 @Component({
     selector: 'app-la-pagination',
@@ -6,14 +6,14 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
         <div class="pagination">
 
             <a class="pagination__prev"
-                *ngIf="end - pageSize > 0"
+                *ngIf="showPreviousSite"
                 (click)="previousSite()"
             >
                 poprzednia
             </a>
 
             <a class="pagination__next"
-                *ngIf="start + pageSize < arrLength"
+                *ngIf="showNextSite"
                 (click)="nextSite()"
             >
                 następna
@@ -23,27 +23,36 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
     `,
     styleUrls: ['./la-pagination.scss']
 })
-export class LaPaginationComponent {
+export class LaPaginationComponent implements OnChanges {
     @Input() pageSize: number;
-    @Input() arrLength: number;
+    @Input() elementsAmount: number;
 
     // two way binding
-    @Input() start: number;
-    @Input() end: number;
-    @Output() startChange: EventEmitter<number> = new EventEmitter();
-    @Output() endChange: EventEmitter<number> = new EventEmitter();
+    @Input() pageIndex: number;
+    @Output() pageIndexChange: EventEmitter<number> = new EventEmitter();
 
-    previousSite = () => {
-        this.start = this.start - this.pageSize;
-        this.end = this.end - this.pageSize;
-        this.startChange.emit(this.start);
-        this.endChange.emit(this.end);
+    // show buttons in template
+    showPreviousSite = false;
+    showNextSite = false;
+
+    ngOnChanges(): void {
+        this.showButtons();
     }
 
-    nextSite = () => {
-        this.start = this.start + this.pageSize;
-        this.end = this.end + this.pageSize;
-        this.startChange.emit(this.start);
-        this.endChange.emit(this.end);
+    previousSite(): void {
+        this.pageIndex = this.pageIndex - 1;
+        this.pageIndexChange.emit(this.pageIndex);
+        this.showButtons();
+    }
+
+    nextSite(): void {
+        this.pageIndex = this.pageIndex + 1;
+        this.pageIndexChange.emit(this.pageIndex);
+        this.showButtons();
+    }
+
+    private showButtons(): void {
+        this.showPreviousSite = this.pageIndex > 1;
+        this.showNextSite = this.pageIndex * this.pageSize < this.elementsAmount;
     }
 }

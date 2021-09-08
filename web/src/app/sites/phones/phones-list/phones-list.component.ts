@@ -23,17 +23,17 @@ import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class
         ></app-searcher>
 
         <app-phones-item
-            *ngFor="let phone of phonesList | slice:start:end"
+            *ngFor="let phone of phonesList"
             [elInList]="phone"
-            [ind]="phonesList.indexOf(phone) + 1"
+            [ind]="countIndex(phone)"
             (refreshPhoneList)="this.getPhones()"
         ></app-phones-item>
 
         <app-la-pagination
-            [pageSize]="pageSize"
-            [arrLength]="arrLength"
-            [(start)]="start"
-            [(end)]="end"
+            [pageSize]="searcher.pageSize"
+            [pageIndex]="searcher.pageIndex"
+            [elementsAmount]="phonesAmount"
+            (pageIndexChange)="changeSite($event)"
         ></app-la-pagination>
     `
 })
@@ -41,6 +41,9 @@ export class PhonesListComponent implements OnInit {
 
     // main list
     phonesList: PhoneModel[];
+
+    // information about amount getting from api
+    phonesAmount: number;
 
     // for points
     pointName: string;
@@ -58,14 +61,10 @@ export class PhonesListComponent implements OnInit {
     searcher: SearcherModel = {
         pointName: '',
         searchName: '',
-        state: ''
+        state: '',
+        pageIndex: 1,
+        pageSize: 10,
     };
-
-    // pagination
-    readonly pageSize = 10;
-    start = 0;
-    end = 10;
-    arrLength = 0;
 
     constructor(
         private phoneService: PhonesService,
@@ -74,6 +73,17 @@ export class PhonesListComponent implements OnInit {
 
     ngOnInit(): void {
         this.getPoints();
+        this.getPhones(this.searcher);
+    }
+
+    countIndex(phone: PhoneModel): number {
+        return (
+            this.phonesList.indexOf(phone) + 1
+        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+    }
+
+    changeSite(pageIndex: number): void {
+        this.searcher.pageIndex = pageIndex;
         this.getPhones(this.searcher);
     }
 
@@ -102,10 +112,13 @@ export class PhonesListComponent implements OnInit {
     ): void {
         this.phoneService.getPhones(searcher).subscribe(
             res => {
-                this.arrLength = res.length;
+
+                // unnecessery values to setting pagination
+                this.searcher.pageIndex = res.pageIndex;
+                this.phonesAmount = res.count;
 
                 // default sorting is for producer,and is alphabetic
-                this.phonesList = SortingPhonesClass.sortingPhonesFunc(res, sorted);
+                this.phonesList = res.data;
             },
             (err: HttpErrorResponse) =>
                 this.toastr.error(err.error.message)

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Api.Helpers;
 using Core.Entities.Halko;
 using Core.Enums;
 using Core.Specifications;
@@ -17,14 +18,14 @@ namespace Core.Interfaces
         /// </summary>
         /// <param name="deviceParams">The params contain filter properties to find devices by them</param>
         /// <returns>If each item of params is null return all devices, otherwise get devices finding by specific no empty and correct params</returns>
-        Task<IEnumerable<Device>> GetDevicesToSell( DeviceSpecParams deviceParams );
+        Task<Pagination<Device>> GetDevicesToSell( DeviceSpecParams deviceParams );
         
         /// <summary>
         /// Get sold list of devices
         /// </summary>
         /// <param name="deviceParams">The params contain filter properties to find devices by them</param>
         /// <returns>If each item of params is null return all devices being sold, otherwise get sold devices finding by specific no empty and correct params</returns>
-        Task<IEnumerable<Device>> GetSoldDevices( DeviceSpecParams deviceParams );
+        Task<Pagination<Device>> GetSoldDevices( DeviceSpecParams deviceParams );
         Task<Device> GetDeviceToSellById( int deviceId );
         Task<Device> GetSoldDeviceById( int deviceId );
         
@@ -65,20 +66,19 @@ namespace Core.Interfaces
         /// <summary>
         /// Get device list with service history.
         /// </summary>
+        /// <param name="deviceParams">Specifications</param>
         /// <param name="status">Device servise status</param>
         /// <returns>List of device being service if status is 'OnService' or list of device returned to client for status 'ReturnedToClient'</returns>
-        Task<IReadOnlyList<DeviceService>> GetServiceDeviceList( DeviceSpecParams deviceParams, EServiceDeviceStatus status );
+        Task<Pagination<DeviceService>> GetServiceDeviceList( DeviceSpecParams deviceParams, EServiceDeviceStatus status );
 
         Task<DeviceService> GetDeviceBeingServiceById( int deviceServiceId );
 
-        Task<IReadOnlyList<DeviceService>> GetDeviceServicesByName( string phoneName );
-        
         #endregion
         
         #region Device Price List
 
         Task<DevicePrice> CreateDevicePrice( DevicePrice devicePrice );
-        Task<IReadOnlyList<DevicePrice>> GetDevicePriceList();
+        Task<Pagination<DevicePrice>> GetDevicePriceList(DeviceSpecParams deviceParams);
         Task<DevicePrice> GetDevicePriceListByName( string producer, string model );
 
         #endregion

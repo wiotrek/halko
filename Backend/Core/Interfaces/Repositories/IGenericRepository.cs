@@ -35,6 +35,13 @@ namespace Core.Interfaces
         /// </summary>
         /// <returns>All row from db of specific T without specification</returns>
         Task<IReadOnlyList<T>> ListAllAsync();
+        
+        /// <summary>
+        /// Select count(*) fromt T
+        /// </summary>
+        /// <param name="spec">The filtered data to count</param>
+        /// <returns>Amount of data after filtered by spec</returns>
+        Task<int> CountAsync( ISpecification<T> spec );
 
         /// <summary>
         /// Local store entites before saving to database

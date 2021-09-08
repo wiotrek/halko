@@ -48,6 +48,11 @@ namespace Infrastructure.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
+        public async Task<int> CountAsync( ISpecification<T> spec )
+        {
+            return await ApplySpecification ( spec ).CountAsync();
+        }
+
         public void Add( T entity )
         {
             _context.Set<T>().Add ( entity );

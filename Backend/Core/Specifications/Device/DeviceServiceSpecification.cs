@@ -1,13 +1,15 @@
 ﻿using Core.Entities.Halko;
+using Core.Enums;
 
 namespace Core.Specifications
 {
     public class DeviceServiceSpecification : BaseSpecification<DeviceService>
     {
-        public DeviceServiceSpecification( DeviceSpecParams deviceParams )
+        public DeviceServiceSpecification( DeviceSpecParams deviceParams, EServiceDeviceStatus status )
             : base ( x =>
                 ( string.IsNullOrEmpty ( deviceParams.Point ) || x.Point.Name == deviceParams.Point ) &&
-                ( string.IsNullOrEmpty ( deviceParams.Search ) || x.Name == deviceParams.Search ) )
+                ( string.IsNullOrEmpty ( deviceParams.Search ) || x.Name == deviceParams.Search ) &&
+                ( status == EServiceDeviceStatus.OnService ? x.GiveBackDate == null : x.GiveBackDate != null ) )
         {
             AddInclude ( x => x.Participant.Point );
             ApplyPaging ( deviceParams.PageSize * ( deviceParams.PageIndex - 1 ), deviceParams.PageSize );

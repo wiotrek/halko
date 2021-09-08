@@ -14,6 +14,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ResponseDictionary} from '../../shared/dictionary/response.dictionary';
 import {SearcherModel} from '../../shared/models/searcher.model';
 import {CreatorParamsClass} from '../../shared/classes/creator-params.class';
+import {RepairsApiGetPagModel} from './_models/_models-pagination/repairs-api-get-pag.model';
+import {ParamsCreatorHelper} from '../../shared/helpers/params-creator.helper';
 
 @Injectable({providedIn: 'root'})
 export class RepairsService {
@@ -36,16 +38,13 @@ export class RepairsService {
     }
 
     // repairs-list component
-    getRepairsPhone(): Observable<RepairsModel[]> {
-        return this.http.get<RepairsApiGetModel[]>(
-            this.apiUrl + 'api/device/service/repairing'
-        ).pipe(
-            map(
-        (res) =>
-                    res.map(
-                        repairPhoneRaw => RepairsMapper.repairRawModelToRepairModel(repairPhoneRaw)
-                    )
-            )
+    getRepairsPhone(searcher: SearcherModel): Observable<RepairsApiGetPagModel> {
+        // setting current point name
+        searcher.pointName = this.getPointName();
+
+        const params = ParamsCreatorHelper(searcher);
+        return this.http.get<RepairsApiGetPagModel>(
+            this.apiUrl + 'api/device/service/repairing', { params }
         );
     }
 

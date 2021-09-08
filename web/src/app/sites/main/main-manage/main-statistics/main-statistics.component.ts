@@ -15,7 +15,7 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
     today: Date;
     choiceDay: Date;
 
-    // suplies from dictionary
+    // supplies from dictionary
     categoryIcon = CategoryIconDictionary;
     categoryIconColor = CategoryIconColorDictionary;
     categories = CategoryItemSoldsArray;
@@ -25,8 +25,7 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
 
     balanceValue = 0;
 
-    constructor(
-        private mainService: MainService){}
+    constructor(private mainService: MainService){}
 
     ngOnInit(): void {
 

@@ -23,13 +23,6 @@ import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type'
             [isExistEditMode]="true"
             (updateDetails)="editRepairsArchive($event)"
         ></app-phone-in-list>
-
-        <app-la-pagination
-            [pageSize]="pagination.pageSize"
-            [arrLength]="pagination.arrLength"
-            [(start)]="pagination.start"
-            [(end)]="pagination.end"
-        ></app-la-pagination>
     `
 })
 export class RepairsArchiveComponent implements OnInit {

@@ -12,7 +12,7 @@ import {SearcherModel} from '../../../shared/models/searcher.model';
     template: `
         <app-phone-in-list
             *ngFor="let phone of phonesRepairs"
-            [ind]="(phonesRepairs.indexOf(phone) + 1 ) * searcher.pageIndex"
+            [ind]="countIndex(phone)"
             [elInList]="phone"
             [deviceFields]="fields"
             [componentWillUsing]="componentWillUsing"
@@ -21,15 +21,15 @@ import {SearcherModel} from '../../../shared/models/searcher.model';
 
         <app-la-pagination
             [pageSize]="searcher.pageSize"
-            [amount]="amount"
             [pageIndex]="searcher.pageIndex"
+            [elementsAmount]="phoneRepairsAmount"
             (pageIndexChange)="changeSite($event)"
         ></app-la-pagination>
     `
 })
 export class RepairsListComponent implements OnInit {
     phonesRepairs: RepairsModel[];
-    amount = 0;
+    phoneRepairsAmount: number;
 
     fields = RepairsFieldsArray;
 
@@ -42,6 +42,12 @@ export class RepairsListComponent implements OnInit {
         pageIndex: 1,
         pageSize: 3,
     };
+
+    countIndex(phone: RepairsModel): number {
+        return (
+            this.phonesRepairs.indexOf(phone) + 1
+        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+    }
 
     constructor(private repairsService: RepairsService) {}
 
@@ -63,10 +69,9 @@ export class RepairsListComponent implements OnInit {
         this.repairsService.getRepairsPhone(this.searcher).subscribe(
             (res: RepairsApiGetPagModel) => {
 
-                console.log(res.count);
                 // unnecessary to pagination
                 this.searcher.pageIndex = res.pageIndex;
-                this.amount = res.count;
+                this.phoneRepairsAmount = res.count;
 
                 this.phonesRepairs = res.data.map(
                     repair => RepairsMapper.repairRawModelToRepairModel(repair)

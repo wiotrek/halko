@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 
 @Component({
     selector: 'app-la-pagination',
@@ -23,9 +23,9 @@ import {Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
     `,
     styleUrls: ['./la-pagination.scss']
 })
-export class LaPaginationComponent implements OnInit{
+export class LaPaginationComponent implements OnChanges {
     @Input() pageSize: number;
-    @Input() amount: number;
+    @Input() elementsAmount: number;
 
     // two way binding
     @Input() pageIndex: number;
@@ -35,9 +35,8 @@ export class LaPaginationComponent implements OnInit{
     showPreviousSite = false;
     showNextSite = false;
 
-    ngOnInit(): void {
+    ngOnChanges(): void {
         this.showButtons();
-        console.log(this.amount);
     }
 
     previousSite(): void {
@@ -54,6 +53,6 @@ export class LaPaginationComponent implements OnInit{
 
     private showButtons(): void {
         this.showPreviousSite = this.pageIndex > 1;
-        this.showNextSite = this.pageIndex * this.pageSize < this.amount;
+        this.showNextSite = this.pageIndex * this.pageSize < this.elementsAmount;
     }
 }

@@ -3,9 +3,9 @@ import { PhoneInListDetailsCptsArray } from 'src/app/shared/array/phone-in-list-
 import { RepairsModel } from 'src/app/shared/models/repairs.model';
 import { RepairsFieldsArray } from './repairs-item.array';
 import { RepairsService } from '../repairs.service';
-import {RepairsApiGetPagModel} from '../_models/_models-pagination/repairs-api-get-pag.model';
-import {RepairsMapper} from '../repairs.mapper';
-import {SearcherModel} from '../../../shared/models/searcher.model';
+import { RepairsApiGetPagModel } from '../_models/_models-pagination/repairs-api-get-pag.model';
+import { RepairsMapper } from '../repairs.mapper';
+import { SearcherModel } from '../../../shared/models/searcher.model';
 
 @Component({
     selector: 'app-repairs-list',

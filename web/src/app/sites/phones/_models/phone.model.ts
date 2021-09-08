@@ -1,7 +1,7 @@
 export interface PhoneModel {
     id: string;
     dateBuyed: string;
-    dateSold: string;
+    dateSold: string | null;
     state: string;
     name: string;
     producer: string;

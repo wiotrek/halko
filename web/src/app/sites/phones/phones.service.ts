@@ -15,6 +15,7 @@ import { PhoneModel } from './_models/phone.model';
 import { Point } from '../../shared/models/point.model';
 import { SearcherModel } from '../../shared/models/searcher.model';
 import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
+import { PhonesApiGetPagModel } from './_models/_models-pagination/phones-api-get-pag.model';
 
 @Injectable({providedIn: 'root'})
 export class PhonesService {
@@ -58,11 +59,11 @@ export class PhonesService {
         );
     }
 
-    getPhones(searcher: SearcherModel = null): Observable<PhoneModel[]> {
+    getPhones(searcher: SearcherModel = null): Observable<PhonesApiGetPagModel> {
         const params = ParamsCreatorHelper(searcher);
 
         // if exist some parameter, then append these to params
-        return this.http.get<PhoneModel[]>(
+        return this.http.get<PhonesApiGetPagModel>(
             this.apiUrl + 'api/device', { params }
         );
     }
@@ -124,11 +125,11 @@ export class PhonesService {
         );
     }
 
-    getArchivList(): Observable<PhoneModel[]> {
-        let params = new HttpParams();
-        params = params.set('point', this.pointName);
+    getArchivList(searcher: SearcherModel): Observable<PhonesApiGetPagModel> {
+        searcher.pointName = this.pointName;
+        const params = ParamsCreatorHelper(searcher);
 
-        return this.http.get<PhoneModel[]>(
+        return this.http.get<PhonesApiGetPagModel>(
             this.apiUrl + 'api/device/sold', { params }
         );
     }

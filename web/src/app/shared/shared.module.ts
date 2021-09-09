@@ -10,9 +10,10 @@ import { LaPaginationComponent } from './components/la-pagination/la-pagination'
 import { SubNavComponent } from './components/sub-nav/sub-nav.component';
 import { PhoneInListComponent } from './components/phone-in-list/phone-in-list.component';
 import { PhoneInListDetailsComponent } from './components/phone-in-list/phone-in-list-details/phone-in-list-details.component';
-import { RepairsToArchiveComponent } from './components/repairs/repairs-to-archive/repairs-to-archive.component';
+import { RepairsToArchiveComponent } from './components-specific/repairs-to-archive/repairs-to-archive.component';
 import { AdderPhoneComponent } from './components/adder-phone/adder-phone.component';
 import { SearcherComponent } from './components/searcher/searcher.component';
+import { PhonesExtendComponent } from './components-specific/phones-extend/phones-extend.component';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { SearcherComponent } from './components/searcher/searcher.component';
         PhoneInListDetailsComponent,
         RepairsToArchiveComponent,
         AdderPhoneComponent,
-        SearcherComponent
+        SearcherComponent,
+        PhonesExtendComponent
     ],
     imports: [
         CommonModule,

@@ -8,6 +8,9 @@ import { SearcherPatternModel } from '../../../shared/components/searcher/_model
 import { Point } from '../../../shared/models/point.model';
 import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
 import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class';
+import {PhoneFieldsArray} from './_arrays/phones-fields.array';
+import {PhoneInListDetailsCptsArray} from '../../../shared/array/phone-in-list-details-cpts.array';
+import {PhonesExtendComponent} from '../../../shared/components-specific/phones-extend/phones-extend.component';
 
 @Component({
     selector: 'app-phones-list',
@@ -22,12 +25,15 @@ import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class
             (sorting)="sorting($event)"
         ></app-searcher>
 
-        <app-phones-item
+        <app-phone-in-list
             *ngFor="let phone of phonesList"
-            [elInList]="phone"
             [ind]="countIndex(phone)"
-            (refreshPhoneList)="this.getPhones()"
-        ></app-phones-item>
+            [elInList]="phone"
+            [deviceFields]="fields"
+            [isExistEditMode]="true"
+            [componentWillUsing]="componentWillUsing"
+            (componentBeingUsingOutput)="updatePhone($event)"
+        ></app-phone-in-list>
 
         <app-la-pagination
             [pageSize]="searcher.pageSize"
@@ -38,12 +44,18 @@ import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class
     `
 })
 export class PhonesListComponent implements OnInit {
-
     // main list
     phonesList: PhoneModel[];
 
+    // list of fields will be using to generate component
+    fields = PhoneFieldsArray;
+
     // information about amount getting from api
     phonesAmount: number;
+
+    // comopnent using in phone in list details to display options
+    // like sell or send phone
+    componentWillUsing = PhoneInListDetailsCptsArray.PhonesExtendComponent;
 
     // for points
     pointName: string;
@@ -51,7 +63,7 @@ export class PhonesListComponent implements OnInit {
 
     // setting property which searcher must be using
     searcherPattern: SearcherPatternModel = {
-        sorting: true,
+        sorting: false,
         filterNewUsed: true,
         filterPoints: true
     };
@@ -104,6 +116,10 @@ export class PhonesListComponent implements OnInit {
 
     sorting(val: SortingVectorModel): void {
         this.getPhones(this.searcher, val);
+    }
+
+    updatePhone(phone: any): void {
+        return;
     }
 
     private getPhones(

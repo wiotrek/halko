@@ -3,7 +3,6 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { PhoneFieldsArray } from '../../_array/phone-fields.array';
 import { PhoneModel } from '../../_models/phone.model';
-import { PhonesItemFieldsDirectory } from './phones-item-fields.directory';
 
 @Component({
     selector: 'app-phones-item',
@@ -18,7 +17,7 @@ export class PhonesItemComponent {
     // after edit, transfer or sold phone is refresh list
     @Output() refreshPhoneList: EventEmitter<any> = new EventEmitter();
 
-    phonesItemField = PhonesItemFieldsDirectory;
+    phonesItemField = PhoneFieldsArray;
 
     phoneFields = PhoneFieldsArray;
 

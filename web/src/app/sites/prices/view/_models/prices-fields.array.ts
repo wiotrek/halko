@@ -1,4 +1,4 @@
-import {PhoneFieldsModel} from '../../shared/models/phone-fields.model';
+import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 export const PricesFieldsArray: PhoneFieldsModel[] = [
     {
@@ -28,7 +28,7 @@ export const PricesFieldsArray: PhoneFieldsModel[] = [
         override: true,
     },
     {
-        category: 'priceBought',
+        category: 'boughtPrice',
         polishName: 'Cena zakupu',
         isNumber: true,
         onlyInDetails: true,
@@ -36,7 +36,7 @@ export const PricesFieldsArray: PhoneFieldsModel[] = [
         currency: 'zł'
     },
     {
-        category: 'priceSell',
+        category: 'sellPrice',
         polishName: 'Cena sprzedaży',
         isNumber: true,
         onlyInDetails: true,
@@ -44,7 +44,7 @@ export const PricesFieldsArray: PhoneFieldsModel[] = [
         currency: 'zł'
     },
     {
-        category: 'changeScreen',
+        category: 'screenChangeCost',
         polishName: 'Wymiana ekranu',
         isNumber: true,
         onlyInDetails: true,
@@ -52,7 +52,7 @@ export const PricesFieldsArray: PhoneFieldsModel[] = [
         currency: 'zł'
     },
     {
-        category: 'changeCamera',
+        category: 'cameraChangeCost',
         polishName: 'Wymiana aparatu',
         isNumber: true,
         onlyInDetails: true,

@@ -1,8 +1,8 @@
 export interface PricesModel {
     producer: string;
     model: string;
-    priceBought: number;
-    priceSell: number;
-    changeScreen?: number;
-    changeCamera?: number;
+    boughtPrice: number;
+    sellPrice: number;
+    screenChangeCost?: number;
+    cameraChangeCost?: number;
 }

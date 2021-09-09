@@ -17,6 +17,13 @@
             [ind]="phonePrices.indexOf(phone) + 1"
         ></app-phone-in-list>
 
+        <app-la-pagination
+        [pageSize]="searcher.pageSize"
+        [pageIndex]="searcher.pageIndex"
+        [elementsAmount]="phonesAmount"
+        (pageIndexChange)="changeSite($event)"
+    ></app-la-pagination>
+
     </div>
 
 </div>

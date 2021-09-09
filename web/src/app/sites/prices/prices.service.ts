@@ -1,33 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {PricesModel} from '../../shared/models/prices.model';
+import { environment } from 'environments/environment';
+import { Observable } from 'rxjs';
+import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
+import { SearcherModel } from 'src/app/shared/models/searcher.model';
+import { PricesApiGetPagModel } from './_models-pagination/prices-api-get-pag.model';
 
 @Injectable({providedIn: 'root'})
 export class PricesService {
-    private pricesList: PricesModel[] = [
-        {
-            producer: 'Apple',
-            model: 'Iphone 7',
-            priceBought: 100,
-            priceSell: 300,
-            changeScreen: 400,
-            changeCamera: 200
-        },
-        {
-            producer: 'Apple',
-            model: 'Iphone X',
-            priceBought: 100,
-            priceSell: 300,
-            changeScreen: 400,
-            changeCamera: 200
-        }
-    ];
+    apiUrl = environment.api;
 
-    private pricesListChanged = new BehaviorSubject<PricesModel[]>(this.pricesList);
-    public pricesList$ = this.pricesListChanged.asObservable();
+    constructor(private http: HttpClient) {}
 
-    getPricesList(): PricesModel[] {
-        this.pricesListChanged.next(this.pricesList);
-        return this.pricesList;
+    // repairs-list component
+    getPrices(searcher: SearcherModel): Observable<PricesApiGetPagModel> {
+        const params = ParamsCreatorHelper(searcher);
+        return this.http.get<PricesApiGetPagModel>(
+            this.apiUrl + 'api/device/price-list', { params }
+        );
     }
 }

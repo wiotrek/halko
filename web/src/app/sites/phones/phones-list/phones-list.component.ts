@@ -1,18 +1,18 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {ToastrService} from 'ngx-toastr';
-import {PhonesService} from '../phones.service';
-import {PhoneModel} from '../_models/phone.model';
-import {SearcherModel} from 'src/app/shared/models/searcher.model';
-import {SearcherPatternModel} from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
-import {Point} from 'src/app/shared/models/point.model';
-import {SortingVectorModel} from 'src/app/shared/components/searcher/_models/sorting-vector.model';
-import {PhoneFieldsArray} from './_arrays/phones-fields.array';
-import {PhoneInListDetailsCptsArray} from 'src/app/shared/array/phone-in-list-details-cpts.array';
-import {PhonesExtendResultsModel} from '../../../shared/components-specific/phones-extend/_models/phones-extend-results.model';
-import {OperationsNameEnum} from '../../../shared/components-specific/phones-extend/_enums/operations-name.enum';
-import {ResponseDictionary} from '../../../shared/dictionary/response.dictionary';
-import {ErrorsDictionary} from '../../../shared/dictionary/errors.dictionary';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { PhonesService } from '../phones.service';
+import { PhoneModel } from '../_models/phone.model';
+import { SearcherModel } from 'src/app/shared/models/searcher.model';
+import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
+import { Point } from 'src/app/shared/models/point.model';
+import { SortingVectorModel } from 'src/app/shared/components/searcher/_models/sorting-vector.model';
+import { PhoneFieldsArray } from './_arrays/phones-fields.array';
+import { PhoneInListDetailsCptsArray } from 'src/app/shared/array/phone-in-list-details-cpts.array';
+import { PhonesExtendResultsModel } from '../../../shared/components-specific/phones-extend/_models/phones-extend-results.model';
+import { OperationsNameEnum } from '../../../shared/components-specific/phones-extend/_enums/operations-name.enum';
+import { ResponseDictionary } from '../../../shared/dictionary/response.dictionary';
+import { ErrorsDictionary } from '../../../shared/dictionary/errors.dictionary';
 
 @Component({
     selector: 'app-phones-list',

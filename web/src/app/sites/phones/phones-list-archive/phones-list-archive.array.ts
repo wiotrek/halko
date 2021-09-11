@@ -1,7 +1,7 @@
 import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 
-export const PhonesArchiveFieldsConst: PhoneFieldsModel[] = [
+export const PhonesArchiveFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'index',
         polishName: 'Indeks',

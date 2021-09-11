@@ -1,4 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, Type} from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    Type
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +29,9 @@ export class PhoneInListComponent implements OnInit {
     // if may edit fields set true
     @Input() isExistEditMode?: boolean;
 
+    // additionally variables, not must be using
+    @Input() additionally?: any;
+
     @Output() componentBeingUsingOutput: EventEmitter<any> = new EventEmitter<any>();
 
     // if fields will update then sending old version, and new version
@@ -39,7 +49,6 @@ export class PhoneInListComponent implements OnInit {
     faUndo = faUndo;
 
     ngOnInit(): void {
-
         // separated fields which will only in details mode
         this.fieldsNonDetails = [...this.deviceFields].filter(
             x => !x.onlyInDetails

@@ -25,6 +25,9 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
     @Input() deviceFields: PhoneFieldsModel[];
     @Input() elInList: PhoneInListType;
 
+    // additionally variables, not must be using
+    @Input() additionally?: any;
+
     // if may edit fields set true
     @Input() isExistEditMode?: boolean;
 
@@ -79,7 +82,11 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
 
             componentRef.instance.elInList = this.elInList;
 
-            componentRef.instance.messageBack.subscribe(
+            if (this.additionally) {
+                componentRef.instance.additionally = this.additionally;
+            }
+
+            componentRef.instance.componentBeingUsingOutput.subscribe(
                 res => {
                     this.componentBeingUsingOutput.emit(res);
                 }

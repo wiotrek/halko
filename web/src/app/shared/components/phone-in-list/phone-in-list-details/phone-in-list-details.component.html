@@ -3,6 +3,7 @@
     [ngStyle]="{'display': editModeActive ? 'none' : ''}"
 >
     <ng-container #optComponent></ng-container>
+    <hr />
 </div>
 
 <form
@@ -59,7 +60,7 @@
                     *ngIf="!field.special; else special"
                     type="text"
                     [name]="field.category"
-                    [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+                    [pattern]="field.isNumber ? '[0-9]*[.]?[0-9]+' : ''"
                     [ngModel]="elInList[field.category]"
                     [ngClass]="{
                         'details__field__param--edit-mode--currency': field?.currency
@@ -72,7 +73,7 @@
 
                     <select
                         [id]="field.category"
-                        class="phone__field__param-select--edit-mode"
+                        class="details__field__param-select--edit-mode"
                         [name]="field.category"
                         [ngModel]="field.forOptSelect[0]"
                     >

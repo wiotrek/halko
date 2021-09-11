@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
-import { PhoneModel } from '../_models/phone.model';
-import { PhonesArchiveFieldsConst } from './phones-list-archive.const';
+import { PhoneModel } from '../../../shared/models/phone.model';
+import { PhonesArchiveFieldsArray } from './phones-list-archive.array';
 import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
 import { SearcherModel } from 'src/app/shared/models/searcher.model';
@@ -38,7 +38,7 @@ export class PhonesListArchiveComponent implements OnInit {
     // information about amount getting from api
     phonesAmount: number;
 
-    phonesArchiveFieldsConst = PhonesArchiveFieldsConst;
+    phonesArchiveFieldsConst = PhonesArchiveFieldsArray;
 
     // setting property which searcher must be using
     searcherPattern: SearcherPatternModel = {

@@ -1,6 +1,7 @@
-import { PhoneFieldsModel } from '../../../../shared/models/phone-fields.model';
+import { UsingStatesArray } from 'src/app/shared/array/using-states.array';
+import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
-export const PhonesItemFieldsDirectory: PhoneFieldsModel[] = [
+export const PhoneFieldsArray: PhoneFieldsModel[] = [
     {
         category: 'index',
         polishName: 'Indeks',
@@ -55,8 +56,16 @@ export const PhonesItemFieldsDirectory: PhoneFieldsModel[] = [
         width: '55px',
         isNumber: false,
         isMobileRwd: false,
-        override: false,
-        special: true
+        override: true,
+        special: true,
+        forOptSelect: UsingStatesArray
+    },
+    {
+        category: 'comment',
+        polishName: 'Uwagi',
+        isNumber: false,
+        onlyInDetails: true,
+        override: true
     },
     {
         category: 'priceBuyed',

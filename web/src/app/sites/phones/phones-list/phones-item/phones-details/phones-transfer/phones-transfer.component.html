@@ -1,45 +1,6 @@
 <div class="wrapper" *ngIf="show; else lackPoints">
 
-    <div class="header">
-        Przekazujesz {{elInList.producer +' '+elInList.model}}
-    </div>
 
-    <form
-        class="form-transfer"
-        #transferPhone="ngForm"
-        (ngSubmit)="transferPhone.valid && transferPhoneFunc(transferPhone)"
-    >
-
-        <label
-            class="form-transfer__label-place"
-            for="place"
-        >
-            Wybierz punkt:
-        </label>
-
-        <select
-            class="form-transfer__select-place"
-            id="place"
-            name="point"
-            [ngModel]="points[0].name"
-            required
-        >
-            <option
-                *ngFor="let point of points"
-                [value]="point.name"
-            >
-                {{point.name}}
-            </option>
-        </select>
-
-        <button
-            class="form-transfer__btn"
-            type="submit"
-        >
-            Potwierdź
-        </button>
-
-    </form>
 
 </div>
 

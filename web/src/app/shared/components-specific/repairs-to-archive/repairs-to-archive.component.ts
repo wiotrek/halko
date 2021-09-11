@@ -9,7 +9,10 @@ import { RepairsModel } from 'src/app/shared/models/repairs.model';
 })
 export class RepairsToArchiveComponent implements OnInit {
     @Input() elInList: PhoneInListType | RepairsModel;
-    @Output() messageBack: EventEmitter<any> = new EventEmitter<any>();
+    @Output() componentBeingUsingOutput: EventEmitter<any> = new EventEmitter<any>();
+
+    // additionally variables, not must be using
+    @Input() additionally?: any;
 
     phone: RepairsModel;
 
@@ -19,6 +22,6 @@ export class RepairsToArchiveComponent implements OnInit {
 
     sendToArchive(isSuccess: boolean): void {
         const repairsPhone = this.elInList as RepairsModel;
-        this.messageBack.emit({isSuccess, id: repairsPhone.id});
+        this.componentBeingUsingOutput.emit({isSuccess, id: repairsPhone.id});
     }
 }

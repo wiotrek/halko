@@ -1,26 +1,69 @@
 @import 'src/app/shared/global-styles/variable';
 
 @media (min-width: 0) {
+
+    @mixin btn-option {
+        font-size: .7rem;
+        cursor: pointer;
+        padding: 2px 10px;
+        margin-right: 10px;
+        background-color: $prettyGreen;
+        color: white;
+        font-weight: bolder;
+        border: 0;
+        border-radius: 1px;
+
+        &:hover {
+            opacity: .9;
+        }
+
+        &:disabled {
+            opacity: .7;
+            cursor: not-allowed;
+        }
+    }
+
+    .undo-btn {
+        @include btn-option;
+        background-color: $dangerColor;
+    }
+
     .button-options {
         margin-bottom: 10px;
 
         &__choice-btn {
-            cursor: pointer;
-            padding: 2px 10px;
-            margin-right: 10px;
-            background-color: $prettyGreen;
-            color: white;
-            font-weight: bolder;
-            border: 0;
-            border-radius: 1px;
-
-            &:hover {
-                opacity: .9;
-            }
+            @include btn-option;
         }
     }
 
     .show-template {
-        border-bottom: 1px solid black;
+        display: flex;
+
+        &__header {
+            font-size: 1rem;
+            color: $prettyGreen;
+            margin-bottom: 10px;
+        }
+
+        &__input, &__select {
+            margin: 10px;
+            width: 50px;
+            border: 0;
+            border-bottom: 1px solid $primaryGrey;
+            text-align: center;
+        }
+
+        &__select {
+            width: 200px;
+            cursor: pointer;
+        }
+
+        &__span {
+            margin-right: 10px;
+        }
+
+        &__submit-btn {
+            @include btn-option;
+        }
     }
 }

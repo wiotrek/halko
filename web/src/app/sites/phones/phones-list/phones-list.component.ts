@@ -1,16 +1,18 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { PhonesService } from '../phones.service';
-import { PhoneModel } from '../_models/phone.model';
-import { SearcherModel } from '../../../shared/models/searcher.model';
-import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
-import { Point } from '../../../shared/models/point.model';
-import { SortingVectorModel } from '../../../shared/components/searcher/_models/sorting-vector.model';
-import { SortingPhonesClass } from '../../../shared/classes/sorting-phones.class';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {PhonesService} from '../phones.service';
+import {PhoneModel} from '../_models/phone.model';
+import {SearcherModel} from 'src/app/shared/models/searcher.model';
+import {SearcherPatternModel} from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
+import {Point} from 'src/app/shared/models/point.model';
+import {SortingVectorModel} from 'src/app/shared/components/searcher/_models/sorting-vector.model';
 import {PhoneFieldsArray} from './_arrays/phones-fields.array';
-import {PhoneInListDetailsCptsArray} from '../../../shared/array/phone-in-list-details-cpts.array';
-import {PhonesExtendComponent} from '../../../shared/components-specific/phones-extend/phones-extend.component';
+import {PhoneInListDetailsCptsArray} from 'src/app/shared/array/phone-in-list-details-cpts.array';
+import {PhonesExtendResultsModel} from '../../../shared/components-specific/phones-extend/_models/phones-extend-results.model';
+import {OperationsNameEnum} from '../../../shared/components-specific/phones-extend/_enums/operations-name.enum';
+import {ResponseDictionary} from '../../../shared/dictionary/response.dictionary';
+import {ErrorsDictionary} from '../../../shared/dictionary/errors.dictionary';
 
 @Component({
     selector: 'app-phones-list',
@@ -31,8 +33,11 @@ import {PhonesExtendComponent} from '../../../shared/components-specific/phones-
             [elInList]="phone"
             [deviceFields]="fields"
             [isExistEditMode]="true"
+            [additionally]="pointListMapPointListString(this.pointsList)"
             [componentWillUsing]="componentWillUsing"
-            (componentBeingUsingOutput)="updatePhone($event)"
+            (componentBeingUsingOutput)="phoneBeingSoldOrSend($event)"
+            (updateDetails)="updatePhone($event)"
+
         ></app-phone-in-list>
 
         <app-la-pagination
@@ -53,7 +58,7 @@ export class PhonesListComponent implements OnInit {
     // information about amount getting from api
     phonesAmount: number;
 
-    // comopnent using in phone in list details to display options
+    // component using in phone in list details to display options
     // like sell or send phone
     componentWillUsing = PhoneInListDetailsCptsArray.PhonesExtendComponent;
 
@@ -120,6 +125,48 @@ export class PhonesListComponent implements OnInit {
 
     updatePhone(phone: any): void {
         return;
+    }
+
+    // operations from phones extend
+    // may sell phones or move to another point
+    phoneBeingSoldOrSend(result: PhonesExtendResultsModel): void {
+
+        // operation sell phone
+        if (result.operationName === OperationsNameEnum.sellPhone) {
+            this.phoneService.sellPhone(
+                result.phoneId, result.priceSold
+            ).subscribe(
+                () => {
+                    this.getPhones(this.searcher);
+                    this.toastr.success(ResponseDictionary.archive);
+                },
+                (err: HttpErrorResponse) => err
+                    ? this.toastr.error(err.error.message)
+                    : this.toastr.error(ErrorsDictionary.bad)
+            );
+        }
+
+        // operation move phone to another point
+        else if (result.operationName === OperationsNameEnum.movePhone) {
+            this.phoneService.movePhone(
+                result.phoneId, result.pointName
+            ).subscribe(
+                () => {
+                    this.getPhones(this.searcher);
+                    this.toastr.success(ResponseDictionary.move);
+                },
+                (err: HttpErrorResponse) => err
+                    ? this.toastr.error(err.error.message)
+                    : this.toastr.error(ErrorsDictionary.bad)
+            );
+        }
+    }
+
+    // this function is using only in phones extend
+    pointListMapPointListString(pointList: Point[]): string[] {
+        return pointList.filter(
+                x => x.id > 0 && x.name !== this.pointName
+        ).map(x => x.name);
     }
 
     private getPhones(

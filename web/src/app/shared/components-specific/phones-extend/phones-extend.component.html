@@ -1,6 +1,6 @@
 <div class="button-options">
 
-    <ng-container *ngIf="choiceButton; else undoButton">
+    <ng-container *ngIf="choiceButton">
 
         <button
             class="button-options__choice-btn"
@@ -12,22 +12,12 @@
         <button
             class="button-options__choice-btn"
             (click)="switchBlock('movePhone')"
+            *ngIf="additionally.length > 0"
         >
             Przekaż
         </button>
 
     </ng-container>
-
-    <ng-template #undoButton>
-
-        <button
-            class="button-options__choice-btn"
-            (click)="switchBlock()"
-        >
-            Cofnij
-        </button>
-
-    </ng-template>
 
 </div>
 
@@ -39,11 +29,109 @@
 
 <ng-template #sellPhone>
 
-    sprzedaz
+    <h3 class="show-template__header">
+        Sprzedajesz {{elInList.producer +' '+elInList.model}}
+        <fa-icon [icon]="faMobileAlt"></fa-icon>
+    </h3>
+
+    <form
+        #sellPhoneForm="ngForm"
+        (ngSubmit)="sellPhoneForm.valid && sellPhoneFunc(sellPhoneForm)"
+    >
+
+        <label
+            class="show-template__label"
+            for="price"
+        >
+            Cena:
+        </label>
+
+        <input
+            class="show-template__input"
+            type="text"
+            id="price"
+            name="price"
+            pattern="[0-9]*[.]?[0-9]+"
+            [ngModel]="elInList.price"
+            required
+        >
+
+        <span class="show-template__span">zł</span>
+
+        <button
+            class="show-template__submit-btn"
+            type="submit"
+            [disabled]="!sellPhoneForm.valid"
+        >
+            Potwierdź
+        </button>
+
+        <ng-template [ngTemplateOutlet]="undoButton"></ng-template>
+
+    </form>
 
 </ng-template>
 
 
 <ng-template #movePhone>
-    Wysylka
+
+    <div class="show-template__header">
+        <fa-icon [icon]="faMobileAlt"></fa-icon>
+        Przekazujesz {{elInList.producer + ' ' + elInList.model}}
+    </div>
+
+    <form
+        #transferPhoneForm="ngForm"
+        (ngSubmit)="transferPhoneForm.valid && transferPhoneFunc(transferPhoneForm)"
+    >
+
+        <label
+            class="show-template__label"
+            for="place"
+        >
+            Wybierz punkt:
+        </label>
+
+        <select
+            class="show-template__select"
+            id="place"
+            name="point"
+            [ngModel]="additionally[0]"
+            required
+        >
+            <option
+                *ngFor="let point of additionally"
+                [value]="point"
+            >
+                {{point}}
+            </option>
+        </select>
+
+        <button
+            class="show-template__submit-btn"
+            type="submit"
+            [disabled]="!transferPhoneForm.valid"
+        >
+            Potwierdź
+        </button>
+
+        <ng-template [ngTemplateOutlet]="undoButton"></ng-template>
+
+    </form>
+
 </ng-template>
+
+
+<!--this button appear in few places-->
+<ng-template #undoButton>
+
+    <a
+        class="undo-btn"
+        (click)="switchBlock()"
+    >
+        Anuluj
+    </a>
+
+</ng-template>
+
+<hr />

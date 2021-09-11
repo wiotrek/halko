@@ -59,7 +59,7 @@
                     *ngIf="!field.special; else special"
                     type="text"
                     [name]="field.category"
-                    [pattern]="isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+                    [pattern]="field.isNumber ? '[0-9]*[.]?[0-9]+' : ''"
                     [ngModel]="elInList[field.category]"
                     [ngClass]="{
                         'details__field__param--edit-mode--currency': field?.currency

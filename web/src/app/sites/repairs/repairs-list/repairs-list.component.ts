@@ -16,6 +16,7 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
             [elInList]="phone"
             [deviceFields]="fields"
             [componentWillUsing]="componentWillUsing"
+            [elInListAllowedEdit]="true"
             (componentBeingUsingOutput)="sentToArchive($event)"
         ></app-phone-in-list>
 

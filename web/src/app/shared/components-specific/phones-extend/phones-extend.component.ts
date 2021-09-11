@@ -9,7 +9,7 @@ import {
 import { faMobileAlt } from '@fortawesome/free-solid-svg-icons';
 import { PhoneInListType } from '../../models-union/phone-in-list.type';
 import { NgForm } from '@angular/forms';
-import { PhoneModel } from '../../../sites/phones/_models/phone.model';
+import { PhoneModel } from '../../models/phone.model';
 import { PhonesExtendResultsModel } from './_models/phones-extend-results.model';
 import { OperationsNameEnum } from './_enums/operations-name.enum';
 

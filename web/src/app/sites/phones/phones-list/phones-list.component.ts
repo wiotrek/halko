@@ -2,17 +2,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { PhonesService } from '../phones.service';
-import { PhoneModel } from '../_models/phone.model';
+import { PhoneModel } from '../../../shared/models/phone.model';
 import { SearcherModel } from 'src/app/shared/models/searcher.model';
 import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
 import { Point } from 'src/app/shared/models/point.model';
 import { SortingVectorModel } from 'src/app/shared/components/searcher/_models/sorting-vector.model';
-import { PhoneFieldsArray } from './_arrays/phones-fields.array';
+import { PhoneFieldsArray } from './phones-fields.array';
 import { PhoneInListDetailsCptsArray } from 'src/app/shared/array/phone-in-list-details-cpts.array';
-import { PhonesExtendResultsModel } from '../../../shared/components-specific/phones-extend/_models/phones-extend-results.model';
-import { OperationsNameEnum } from '../../../shared/components-specific/phones-extend/_enums/operations-name.enum';
-import { ResponseDictionary } from '../../../shared/dictionary/response.dictionary';
-import { ErrorsDictionary } from '../../../shared/dictionary/errors.dictionary';
+import { PhonesExtendResultsModel } from 'src/app/shared/components-specific/phones-extend/_models/phones-extend-results.model';
+import { OperationsNameEnum } from 'src/app/shared/components-specific/phones-extend/_enums/operations-name.enum';
+import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
+import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
+import { NgForm } from '@angular/forms';
+import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
+import { PhoneEditModel } from '../_models/phone-edit.model';
 
 @Component({
     selector: 'app-phones-list',
@@ -93,6 +96,8 @@ export class PhonesListComponent implements OnInit {
         this.getPhones(this.searcher);
     }
 
+
+    // for pagination
     countIndex(phone: PhoneModel): number {
         return (
             this.phonesList.indexOf(phone) + 1
@@ -104,6 +109,8 @@ export class PhonesListComponent implements OnInit {
         this.getPhones(this.searcher);
     }
 
+
+    // for filter and sorting
     searchNameFilter(name: string): void {
         this.searcher.searchName = name;
         this.getPhones(this.searcher);
@@ -123,8 +130,34 @@ export class PhonesListComponent implements OnInit {
         this.getPhones(this.searcher, val);
     }
 
-    updatePhone(phone: any): void {
-        return;
+
+    // for phone in list component
+    updatePhone(
+        response: { update: NgForm, elInList: PhoneInListType }
+    ): void {
+        const editPhone: PhoneEditModel = {
+            producer: response.update.value.producer,
+            model: response.update.value.model,
+            color: response.update.value.model,
+            comment: response.update.value.comment,
+            priceBuyed: response.update.value.priceBuyed,
+            price: response.update.value.price,
+            deviceState: {
+                state: response.update.value.state
+            }
+        };
+
+        const oldPhone = response.elInList as PhoneModel;
+
+        this.phoneService.editPhone(editPhone, oldPhone.id).subscribe(
+            () => {
+                this.getPhones(this.searcher);
+                this.toastr.success(ResponseDictionary.change);
+            },
+            (err: HttpErrorResponse) => err
+                ? this.toastr.error(err.error.message)
+                : this.toastr.error(ErrorsDictionary.bad)
+        );
     }
 
     // operations from phones extend

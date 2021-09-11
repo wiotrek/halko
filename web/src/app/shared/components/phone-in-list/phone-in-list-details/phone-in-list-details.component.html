@@ -3,6 +3,7 @@
     [ngStyle]="{'display': editModeActive ? 'none' : ''}"
 >
     <ng-container #optComponent></ng-container>
+    <hr />
 </div>
 
 <form
@@ -72,7 +73,7 @@
 
                     <select
                         [id]="field.category"
-                        class="phone__field__param-select--edit-mode"
+                        class="details__field__param-select--edit-mode"
                         [name]="field.category"
                         [ngModel]="field.forOptSelect[0]"
                     >

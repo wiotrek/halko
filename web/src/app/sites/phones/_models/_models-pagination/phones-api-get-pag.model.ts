@@ -1,4 +1,4 @@
-import { PhoneModel } from '../phone.model';
+import { PhoneModel } from '../../../../shared/models/phone.model';
 
 export interface PhonesApiGetPagModel {
     pageIndex: number;

@@ -11,7 +11,7 @@ import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneEditModel } from './_models/phone-edit.model';
-import { PhoneModel } from './_models/phone.model';
+import { PhoneModel } from '../../shared/models/phone.model';
 import { Point } from '../../shared/models/point.model';
 import { SearcherModel } from '../../shared/models/searcher.model';
 import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';

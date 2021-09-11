@@ -1,4 +1,4 @@
-import { PhoneModel } from 'src/app/sites/phones/_models/phone.model';
+import { PhoneModel } from 'src/app/shared/models/phone.model';
 import { SortingValueArray } from 'src/app/shared/components/searcher/_arrays/sorting-value.array';
 import { SortingVectorModel } from 'src/app/shared/components/searcher/_models/sorting-vector.model';
 

@@ -30,7 +30,7 @@
 <ng-template #sellPhone>
 
     <h3 class="show-template__header">
-        Sprzedajesz {{elInList.producer +' '+elInList.model}}
+        Sprzedajesz {{elInList.producer + ' ' + elInList.model}}
         <fa-icon [icon]="faMobileAlt"></fa-icon>
     </h3>
 
@@ -76,8 +76,8 @@
 <ng-template #movePhone>
 
     <div class="show-template__header">
-        <fa-icon [icon]="faMobileAlt"></fa-icon>
         Przekazujesz {{elInList.producer + ' ' + elInList.model}}
+        <fa-icon [icon]="faMobileAlt"></fa-icon>
     </div>
 
     <form
@@ -125,13 +125,6 @@
 <!--this button appear in few places-->
 <ng-template #undoButton>
 
-    <a
-        class="undo-btn"
-        (click)="switchBlock()"
-    >
-        Anuluj
-    </a>
+    <a class="undo-btn" (click)="switchBlock()">Anuluj</a>
 
 </ng-template>
-
-<hr />

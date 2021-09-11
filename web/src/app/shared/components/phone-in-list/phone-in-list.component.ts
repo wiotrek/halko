@@ -21,17 +21,19 @@ export class PhoneInListComponent implements OnInit {
     @Input() elInList: PhoneInListType;
     @Input() deviceFields: PhoneFieldsModel[];
 
+    // if element in list is not from current point
+    // then we cant edit this
+    @Input() elInListAllowedEdit?: boolean;
+
     // optionals members
     @Input() ind?: number;
     @Input() isFlexStart?: boolean;
     @Input() componentWillUsing?: Type<unknown>;
 
-    // if may edit fields set true
-    @Input() isExistEditMode?: boolean;
-
     // additionally variables, not must be using
     @Input() additionally?: any;
 
+    // response from additionally component
     @Output() componentBeingUsingOutput: EventEmitter<any> = new EventEmitter<any>();
 
     // if fields will update then sending old version, and new version

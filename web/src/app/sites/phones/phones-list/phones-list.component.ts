@@ -36,6 +36,7 @@ import { PhoneEditModel } from '../_models/phone-edit.model';
             [elInList]="phone"
             [deviceFields]="fields"
             [isExistEditMode]="true"
+            [elInListAllowedEdit]="checkElInListAllowedEdit(phone)"
             [additionally]="pointListMapPointListString(this.pointsList)"
             [componentWillUsing]="componentWillUsing"
             (componentBeingUsingOutput)="phoneBeingSoldOrSend($event)"
@@ -109,6 +110,12 @@ export class PhonesListComponent implements OnInit {
         this.getPhones(this.searcher);
     }
 
+
+    // check whether phone is from currently point
+    // if it not, then we cant edit this
+    checkElInListAllowedEdit(phone: PhoneModel): boolean {
+        return phone.name === this.pointName;
+    }
 
     // for filter and sorting
     searchNameFilter(name: string): void {

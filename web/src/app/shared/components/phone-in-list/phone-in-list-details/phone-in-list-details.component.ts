@@ -25,11 +25,10 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
     @Input() deviceFields: PhoneFieldsModel[];
     @Input() elInList: PhoneInListType;
 
+    @Input() elInListAllowedEdit?: boolean;
+
     // additionally variables, not must be using
     @Input() additionally?: any;
-
-    // if may edit fields set true
-    @Input() isExistEditMode?: boolean;
 
     // variable for which will be assign name component
     @Input() componentWillUsing?: Type<PhoneInListDetailsCptsType>;
@@ -70,8 +69,12 @@ export class PhoneInListDetailsComponent implements AfterViewInit {
         this.editModeActive = !this.editModeActive;
     }
 
+    isPossibleEditFields(): boolean {
+        return this.deviceFields.filter(x => x.override).length > 0;
+    }
+
     private createOptionalComponent(): void {
-        if (this.componentWillUsing) {
+        if (this.componentWillUsing && this.elInListAllowedEdit) {
 
             // prepare choosen component to display on template
             const factory = this.componentFactoryResolver.resolveComponentFactory(

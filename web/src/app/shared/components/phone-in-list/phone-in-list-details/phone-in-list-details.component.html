@@ -1,6 +1,7 @@
 <div
     class="opt-component"
     [ngStyle]="{'display': editModeActive ? 'none' : ''}"
+    *ngIf="elInListAllowedEdit"
 >
     <ng-container #optComponent></ng-container>
     <hr />
@@ -107,7 +108,7 @@
 
 <button
     class="btn-edit-mode"
-    *ngIf="isExistEditMode"
+    *ngIf="elInListAllowedEdit && isPossibleEditFields()"
     (click)="toggleEditModeActive()"
     [ngClass]="{ 'btn-edit-mode--active': editModeActive }"
 >

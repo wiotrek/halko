@@ -1,3 +1,49 @@
-<div class="openSellTem">
-    Czy chcesz sprzedać telefon?
+<div class="button-options">
+
+    <ng-container *ngIf="choiceButton; else undoButton">
+
+        <button
+            class="button-options__choice-btn"
+            (click)="switchBlock('sellPhone')"
+        >
+            Sprzedaj
+        </button>
+
+        <button
+            class="button-options__choice-btn"
+            (click)="switchBlock('movePhone')"
+        >
+            Przekaż
+        </button>
+
+    </ng-container>
+
+    <ng-template #undoButton>
+
+        <button
+            class="button-options__choice-btn"
+            (click)="switchBlock()"
+        >
+            Cofnij
+        </button>
+
+    </ng-template>
+
 </div>
+
+<!-- this place is for block example view, sold or send -->
+<div
+    class="show-template"
+    *ngIf="!choiceButton; then showBlock"
+></div>
+
+<ng-template #sellPhone>
+
+    sprzedaz
+
+</ng-template>
+
+
+<ng-template #movePhone>
+    Wysylka
+</ng-template>

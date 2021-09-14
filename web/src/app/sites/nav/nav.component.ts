@@ -19,7 +19,6 @@ export class NavComponent implements OnInit, OnDestroy {
     links: Links[] = [
         { caption: 'Strona główna', path: '' },
         { caption: 'Spis telefonów', path: 'telefony' },
-        { caption: 'Rozliczenia', path: 'rozliczenia' },
         { caption: 'Serwis', path: 'serwis' },
         { caption: 'Cennik', path: 'cennik' }
     ];

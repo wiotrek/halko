@@ -1,4 +1,7 @@
-<div class="elInList">
+<div
+    class="elInList"
+    [ngClass]="{'elInList--booked': checkBooking()}"
+>
 
     <div
         class="elInList__upward"
@@ -73,7 +76,6 @@
                 [deviceFields]="deviceFields"
                 [componentWillUsing]="componentWillUsing"
                 (componentBeingUsingOutput)="componentBeingUsingOutput.emit($event)"
-                [isExistEditMode]="isExistEditMode"
                 [elInListAllowedEdit]="elInListAllowedEdit"
                 [additionally]="additionally"
                 (updateDetails)="updateDetails.emit($event)"

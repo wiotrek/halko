@@ -16,10 +16,6 @@ const routes: Routes = [
                 loadChildren: () => import('./sites/phones/phones.module').then(m => m.PhonesModule)
             },
             {
-                path: 'rozliczenia',
-                loadChildren: () => import('./sites/settlements/settlements.module').then(m => m.SettlementsModule)
-            },
-            {
                 path: 'serwis',
                 loadChildren: () => import('./sites/repairs/repairs.module').then(m => m.RepairsModule)
             },

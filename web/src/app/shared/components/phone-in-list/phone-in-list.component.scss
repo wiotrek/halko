@@ -9,6 +9,10 @@
         margin-top: 10px;
         border-radius: 5px;
 
+        &--booked {
+            background-color: ghostwhite;
+        }
+
         &__upward {
             display: flex;
             justify-content: space-between;

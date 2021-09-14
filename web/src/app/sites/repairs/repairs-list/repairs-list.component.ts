@@ -41,7 +41,7 @@ export class RepairsListComponent implements OnInit {
         searchName: '',
         state: '',
         pageIndex: 1,
-        pageSize: 3,
+        pageSize: 10,
     };
 
     constructor(private repairsService: RepairsService) {}

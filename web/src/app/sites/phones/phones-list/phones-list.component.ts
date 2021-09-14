@@ -238,4 +238,47 @@ export class PhonesListComponent implements OnInit {
             res => this.pointsList = res
         );
     }
+
+
+
+    sequence = {
+        sequence: '1',
+        sequenceType: 'Loading',
+        scheduleTime: '12.05.21 08:00',
+        destination: 'PL 91-747, Łódź',
+        receiver: 'Master Sport',
+        orderNumber: '112233',
+        deliveryNumber: '223311'
+    };
+  
+    fieldsy = [
+      {
+        nameField: 'sequence',
+        caption: 'Sequence',
+      },
+      {
+        nameField: 'sequenceType',
+        caption: 'Type',
+      },
+      {
+        nameField: 'scheduleTime',
+        caption: 'Schedule Time',
+      },
+      {
+        nameField: 'destination',
+        caption: 'Destination',
+      },
+      {
+        nameField: 'receiver',
+        caption: 'Receiver',
+      },
+      {
+        nameField: 'orderNumber',
+        caption: 'OrderNo',
+      },
+      {
+        nameField: 'deliveryNumber',
+        caption: 'DeliveryNo',
+      },
+    ];
 }

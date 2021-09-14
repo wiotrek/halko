@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SettlementsComponent } from './settlements.component';
+import { SettlementsComponent } from './view/settlements.component';
 
 @NgModule({
     declarations: [

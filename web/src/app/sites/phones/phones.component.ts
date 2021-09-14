@@ -18,10 +18,8 @@ import { Links } from 'src/app/shared/models/links.model';
         </div>
 
     </div>
-
     `,
     styles: [`
-
         .middle {
             max-width: 850px;
             margin: 0 auto;

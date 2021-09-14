@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PricesFieldsArray } from './_models/prices-fields.array';
+import { PricesFieldsArray } from './prices-fields.array';
 import { PricesModel } from '../../../shared/models/prices.model';
 import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
 import { SearcherModel } from '../../../shared/models/searcher.model';

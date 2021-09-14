@@ -20,7 +20,7 @@ export const PricesFieldsArray: PhoneFieldsModel[] = [
     },
     {
         category: 'model',
-        polishName: 'Nazwa',
+        polishName: 'Model',
         isNumber: false,
         width: '100px',
         onlyInDetails: false,

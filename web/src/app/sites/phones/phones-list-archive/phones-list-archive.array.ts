@@ -38,6 +38,14 @@ export const PhonesArchiveFieldsArray: PhoneFieldsModel[] = [
         isMobileRwd: false
     },
     {
+        category: 'dateSold',
+        polishName: 'Data sprzedaży',
+        isNumber: false,
+        isMobileRwd: false,
+        onlyInDetails: true,
+        isDate: true
+    },
+    {
         category: 'name',
         polishName: 'Punkt',
         width: '120px',

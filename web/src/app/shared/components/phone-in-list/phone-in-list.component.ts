@@ -11,6 +11,7 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { PhoneInListType } from '../../models-union/phone-in-list.type';
 import { PhoneFieldsModel } from '../../models/phone-fields.model';
+import {PhoneModel} from '../../models/phone.model';
 
 @Component({
     selector: 'app-phone-in-list',
@@ -55,5 +56,14 @@ export class PhoneInListComponent implements OnInit {
         this.fieldsNonDetails = [...this.deviceFields].filter(
             x => !x.onlyInDetails
         );
+    }
+
+    checkBooking(): boolean {
+        const phone = this.elInList as PhoneModel;
+
+        if (phone.comment) {
+            return !!phone.comment.includes('rezerwacja');
+        }
+        return false;
     }
 }

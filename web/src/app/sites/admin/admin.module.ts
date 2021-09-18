@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AdminComponent } from './admin.component';
+import { AdminMainComponent } from './view/admin-main/admin-main.component';
 
 @NgModule({
     declarations: [
-        AdminComponent
+        AdminMainComponent
     ],
     imports: [
         SharedModule,
         RouterModule.forChild([
             {
                 path: '',
-                component: AdminComponent
+                component: AdminMainComponent
             }
         ]),
     ]

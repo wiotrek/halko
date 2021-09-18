@@ -27,4 +27,8 @@ export class User {
     get loginFunc(): string {
         return this.login;
     }
+
+    get pointList(): string[] {
+        return this.pointNames;
+    }
 }

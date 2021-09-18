@@ -1,0 +1,30 @@
+@import 'src/app/shared/global-styles/variable';
+
+@media (min-width: 0) {
+    .choice {
+        &__caption {
+            color: $prettyGreen;
+        }
+
+        &__filters {
+            display: flex;
+            font-size: .9rem;
+
+            &__calendar {
+                margin-right: 20px;
+
+                input {
+                    background-color: transparent;
+                    border: 0;
+                    cursor: pointer;
+                }
+            }
+
+            &__point select{
+                background-color: transparent;
+                border: 0;
+                cursor: pointer;
+            }
+        }
+    }
+}

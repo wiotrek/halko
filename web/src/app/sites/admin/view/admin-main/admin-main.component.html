@@ -1,0 +1,43 @@
+<div class="choice">
+
+    <h5 class="choice__caption">
+        Ustaw filtry
+    </h5>
+
+    <div class="choice__filters">
+
+        <div class="choice__filters__calendar">
+
+            <input
+                class="choice__filters__calendar__input"
+                type="date"
+                [(ngModel)]="choiceDay | date:'yyyy-MM-dd'"
+                [max]="today | date:'yyyy-MM-dd'"
+            />
+
+        </div>
+
+        <div class="choice__filters__point">
+
+            <select
+                [(ngModel)]="pointCurrent"
+                (change)="setCurrentlyPoint()"
+            >
+
+                <option
+                    *ngFor="let point of pointList"
+                    [value]="point"
+                >
+                    {{point}}
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{pointCurrent + ' ' + choiceDay | json}}

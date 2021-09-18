@@ -16,7 +16,7 @@ import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructureEdit } from './_models/item-structure-edit.model';
 import { ItemStructure } from './_models/item-structure.model';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class MainService {
     apiUrl = environment.api;
     pointName: string;
@@ -177,7 +177,7 @@ export class MainService {
     }
 
 
-    // get solds items and expenses item
+    // get sold items and expenses item
     private getAllItemsInitialFunc(): void {
 
         let params = new HttpParams();

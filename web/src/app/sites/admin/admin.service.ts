@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ItemStructure } from '../main/_models/item-structure.model';
-import { ErrorsDictionary } from '../../shared/dictionary/errors.dictionary';
 import { environment } from 'environments/environment';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -20,24 +19,20 @@ export class AdminService {
     constructor(
         private authService: AuthService,
         private toastr: ToastrService,
-        private http: HttpClient,
+        private http: HttpClient
     ) {
         this.getPointList();
     }
 
     soldItems(pointName: string, date: string): Observable<ItemStructure[]> {
         return this.getItemsList(pointName, date).pipe(
-            map(
-                (res: ItemStructure[]) => res.filter(x => x.type === 'Sprzedaż').reverse()
-            )
+            map((res: ItemStructure[]) => res.filter(x => x.type === 'Sprzedaż').reverse())
         );
     }
 
     expenseItems(pointName: string, date: string): Observable<ItemStructure[]> {
         return this.getItemsList(pointName, date).pipe(
-            map(
-                (res: ItemStructure[]) => res.filter(x => x.type === 'Zakup').reverse()
-            )
+            map((res: ItemStructure[]) => res.filter(x => x.type === 'Zakup').reverse())
         );
     }
 
@@ -58,14 +53,8 @@ export class AdminService {
     }
 
     private getPointList(): void {
-        this.authService.user.subscribe(
-            (user: User) => {
-                this.pointList = user.pointList;
-            },
-            (err: HttpErrorResponse) => {
-                this.toastr.error(err.error.message);
-                this.pointList = ['Karuzela Września'];
-            }
+        this.authService.user.pipe(take(1)).subscribe(
+            (res: User) => this.pointList = res.pointList
         );
     }
 }

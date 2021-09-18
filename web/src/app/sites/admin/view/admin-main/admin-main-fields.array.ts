@@ -2,6 +2,14 @@ import { PhoneFieldsModel } from 'src/app/shared/models/phone-fields.model';
 
 export const AdminMainFields: PhoneFieldsModel[] = [
     {
+        category: 'ind',
+        polishName: 'Index',
+        isNumber: false,
+        width: '25px',
+        onlyInDetails: false,
+        isMobileRwd: true
+    },
+    {
         category: 'productName',
         polishName: 'Nazwa',
         isNumber: false,
@@ -19,10 +27,18 @@ export const AdminMainFields: PhoneFieldsModel[] = [
         currency: ' zł'
     },
     {
+        category: 'category',
+        polishName: 'Kategoria sprzedaży',
+        width: '150px',
+        isNumber: false,
+        onlyInDetails: false
+    },
+    {
         category: 'insertedDateTime',
         polishName: 'Data dodania',
         isNumber: false,
-        onlyInDetails: true
+        width: '140px',
+        onlyInDetails: false
     },
     {
         category: 'editedDateTime',
@@ -34,21 +50,8 @@ export const AdminMainFields: PhoneFieldsModel[] = [
         category: 'initial',
         polishName: 'Pracownik',
         isNumber: false,
+        width: '80px',
         onlyInDetails: false,
         isMobileRwd: true
-    },
-    {
-        category: 'category',
-        polishName: 'Kategoria sprzedaży',
-        isNumber: false,
-        onlyInDetails: true
-    },
-    {
-        category: 'cameraChangeCost',
-        polishName: 'Wymiana aparatu',
-        isNumber: true,
-        onlyInDetails: true,
-        override: true,
-        currency: 'zł'
     }
 ];

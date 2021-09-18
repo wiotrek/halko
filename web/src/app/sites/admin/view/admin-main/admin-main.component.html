@@ -43,13 +43,12 @@
 
     <div class="list" *ngIf="soldItems.length; else lackList">
 
-        <h5>Sprzedane</h5>
+        <h5>Sprzedaż - {{sumPrice(soldItems)}} zł</h5>
 
         <app-phone-in-list
             *ngFor="let item of soldItems"
             [deviceFields]="fields"
             [elInList]="item"
-            [isFlexStart]="isFlexStart"
             [ind]="soldItems.indexOf(item) + 1"
         ></app-phone-in-list>
 
@@ -57,13 +56,12 @@
 
     <div class="list" *ngIf="expenseItems.length">
 
-        <h5>Wydatki</h5>
+        <h5>Wydatki - {{sumPrice(expenseItems)}} zł</h5>
 
         <app-phone-in-list
             *ngFor="let item of expenseItems"
             [deviceFields]="fields"
             [elInList]="item"
-            [isFlexStart]="isFlexStart"
             [ind]="expenseItems.indexOf(item) + 1"
         ></app-phone-in-list>
 

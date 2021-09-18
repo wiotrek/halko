@@ -1,30 +1,42 @@
 @import 'src/app/shared/global-styles/variable';
 
+h5 {
+    color: $prettyGreen;
+}
+
 @media (min-width: 0) {
-    .choice {
-        &__caption {
-            color: $prettyGreen;
-        }
+    .wrapper {
+        max-width: 850px;
+        margin: 0 auto;
 
-        &__filters {
-            display: flex;
-            font-size: .9rem;
+        .choice {
+            margin: 20px 0;
 
-            &__calendar {
-                margin-right: 20px;
+            &__filters {
+                display: flex;
+                font-size: .9rem;
 
-                input {
+                &__calendar {
+                    margin-right: 20px;
+
+                    input {
+                        background-color: transparent;
+                        border: 0;
+                        cursor: pointer;
+                    }
+                }
+
+                &__point select{
                     background-color: transparent;
                     border: 0;
                     cursor: pointer;
                 }
             }
+        }
 
-            &__point select{
-                background-color: transparent;
-                border: 0;
-                cursor: pointer;
-            }
+        .list {
+            margin: 20px 0;
         }
     }
+
 }

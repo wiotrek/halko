@@ -2,13 +2,20 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
-import {ItemStructure} from '../main/_models/item-structure.model';
-import {ErrorsDictionary} from '../../shared/dictionary/errors.dictionary';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { ItemStructure } from '../main/_models/item-structure.model';
+import { ErrorsDictionary } from '../../shared/dictionary/errors.dictionary';
+import { environment } from 'environments/environment';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
+    apiUrl = environment.api;
+
     pointList: string[];
+
+    itemsListCache = new Map();
 
     constructor(
         private authService: AuthService,
@@ -18,8 +25,36 @@ export class AdminService {
         this.getPointList();
     }
 
-    getSoldsItem(): void {
-        return;
+    soldItems(pointName: string, date: string): Observable<ItemStructure[]> {
+        return this.getItemsList(pointName, date).pipe(
+            map(
+                (res: ItemStructure[]) => res.filter(x => x.type === 'Sprzedaż').reverse()
+            )
+        );
+    }
+
+    expenseItems(pointName: string, date: string): Observable<ItemStructure[]> {
+        return this.getItemsList(pointName, date).pipe(
+            map(
+                (res: ItemStructure[]) => res.filter(x => x.type === 'Zakup').reverse()
+            )
+        );
+    }
+
+    private getItemsList(pointName: string, date: string): Observable<ItemStructure[]> {
+        // check in cache
+        const keyInMap = `${pointName} ${date}`;
+        const response = this.itemsListCache.get(Object.values(keyInMap).join('-'));
+        if (response) { return of (response); }
+
+        // if dont have in cache then search in backend
+        let params = new HttpParams();
+        params = params.set('date', date);
+        params = params.append('pointName', pointName);
+
+        return this.http.get<ItemStructure[]>(
+            this.apiUrl + 'api/transaction', { params }
+        );
     }
 
     private getPointList(): void {
@@ -32,27 +67,5 @@ export class AdminService {
                 this.pointList = ['Karuzela Września'];
             }
         );
-    }
-
-    // get sold items and expenses item
-    private getAllItemsInitialFunc(): void {
-        //
-        // let params = new HttpParams();
-        // params = params.set('date', this.todayDate);
-        // params = params.append('pointName', this.pointName);
-        //
-        // this.http.get(
-        //     this.apiUrl + 'api/transaction',
-        //     { params }
-        // ).subscribe(
-        //     (res: ItemStructure[]) => {
-        //         this.soldsItems = res.filter(x => x.type === 'Sprzedaż').reverse();
-        //         this.soldsItemsChanged.next(this.soldsItems);
-        //
-        //         this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
-        //         this.expensesItemsChanged.next(this.expensesItems);
-        //     },
-        //     () => this.toastr.error(ErrorsDictionary.server)
-        // );
     }
 }

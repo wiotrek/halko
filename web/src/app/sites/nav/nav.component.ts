@@ -14,6 +14,7 @@ export class NavComponent implements OnInit, OnDestroy {
     faSignInAlt = faSignInAlt;
     faBars = faBars;
 
+    // if something goes wrong, then assign default name
     singInUser = 'Punkt';
 
     links: Links[] = [
@@ -45,7 +46,19 @@ export class NavComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscription = this.authService.user.subscribe(
-            (user: User) => this.singInUser = user.displayName,
+            (user: User) => {
+                this.singInUser = user.displayName;
+
+                // admin has own views
+                if (user.displayName === 'Admin') {
+                    this.links = [
+                        { caption: 'Strona główna', path: 'admin' },
+                        { caption: 'Spis telefonów', path: 'admin/telefony' },
+                        { caption: 'Serwis', path: 'admin/serwis' },
+                        { caption: 'Cennik', path: 'admin/cennik' }
+                    ];
+                }
+            },
             () => this.singInUser = 'Punkt'
         );
     }

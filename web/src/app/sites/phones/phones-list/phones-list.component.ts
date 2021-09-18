@@ -35,7 +35,6 @@ import { PhoneEditModel } from '../_models/phone-edit.model';
             [ind]="countIndex(phone)"
             [elInList]="phone"
             [deviceFields]="fields"
-            [isExistEditMode]="true"
             [elInListAllowedEdit]="checkElInListAllowedEdit(phone)"
             [additionally]="pointListMapPointListString(this.pointsList)"
             [componentWillUsing]="componentWillUsing"
@@ -216,7 +215,7 @@ export class PhonesListComponent implements OnInit {
         this.phoneService.getPhones(searcher).subscribe(
             res => {
 
-                // unnecessery values to setting pagination
+                // unnecessary values to setting pagination
                 this.searcher.pageIndex = res.pageIndex;
                 this.phonesAmount = res.count;
 
@@ -238,47 +237,4 @@ export class PhonesListComponent implements OnInit {
             res => this.pointsList = res
         );
     }
-
-
-
-    sequence = {
-        sequence: '1',
-        sequenceType: 'Loading',
-        scheduleTime: '12.05.21 08:00',
-        destination: 'PL 91-747, Łódź',
-        receiver: 'Master Sport',
-        orderNumber: '112233',
-        deliveryNumber: '223311'
-    };
-  
-    fieldsy = [
-      {
-        nameField: 'sequence',
-        caption: 'Sequence',
-      },
-      {
-        nameField: 'sequenceType',
-        caption: 'Type',
-      },
-      {
-        nameField: 'scheduleTime',
-        caption: 'Schedule Time',
-      },
-      {
-        nameField: 'destination',
-        caption: 'Destination',
-      },
-      {
-        nameField: 'receiver',
-        caption: 'Receiver',
-      },
-      {
-        nameField: 'orderNumber',
-        caption: 'OrderNo',
-      },
-      {
-        nameField: 'deliveryNumber',
-        caption: 'DeliveryNo',
-      },
-    ];
 }

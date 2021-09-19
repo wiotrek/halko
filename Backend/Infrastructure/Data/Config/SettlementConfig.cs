@@ -8,12 +8,12 @@ namespace Infrastructure.Data.Config
     {
         public void Configure( EntityTypeBuilder<Settlement> builder )
         {
-            builder.Property ( d => d.StartCash ).HasColumnType ( "decimal(18, 2)" );
             builder.Property ( d => d.DayBilans ).HasColumnType ( "decimal(18, 2)" );
             builder.Property ( d => d.DayBilansInCash ).HasColumnType ( "decimal(18, 2)" );
             builder.Property ( d => d.DayBilansInCart ).HasColumnType ( "decimal(18, 2)" );
             builder.Property ( d => d.MonthBilansInCart ).HasColumnType ( "decimal(18, 2)" );
-            builder.Property ( d => d.BilansTotal ).HasColumnType ( "decimal(18, 2)" );
+            builder.Property ( d => d.Income ).HasColumnType ( "decimal(18, 2)" );
+            builder.Property ( d => d.Outcome ).HasColumnType ( "decimal(18, 2)" );
             
             builder.HasOne ( d => d.Point )
                 .WithMany()

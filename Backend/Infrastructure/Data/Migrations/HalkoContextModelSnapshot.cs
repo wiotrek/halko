@@ -258,9 +258,6 @@ namespace Infrastructure.Data.Migrations
                     b.Property<int>("AccessoryAmountBilans")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("BilansTotal")
-                        .HasColumnType("decimal(18, 2)");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("TEXT");
 
@@ -273,7 +270,13 @@ namespace Infrastructure.Data.Migrations
                     b.Property<double>("DayBilansInCash")
                         .HasColumnType("decimal(18, 2)");
 
+                    b.Property<double>("Income")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.Property<double>("MonthBilansInCart")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<double>("Outcome")
                         .HasColumnType("decimal(18, 2)");
 
                     b.Property<int>("PhoneAmountBilans")
@@ -284,9 +287,6 @@ namespace Infrastructure.Data.Migrations
 
                     b.Property<int>("ServiceAmountBilans")
                         .HasColumnType("INTEGER");
-
-                    b.Property<double>("StartCash")
-                        .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 

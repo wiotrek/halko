@@ -6,7 +6,7 @@ import { EmployeesInitialArray } from '../_array/employees-initial.array';
 import { Employees } from '../../../shared/models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
 import { ItemStructureEdit } from '../_models/item-structure-edit.model';
-import { ItemStructure } from '../_models/item-structure.model';
+import { ItemStructure } from '../../../shared/models/item-structure.model';
 
 @Component({
     selector: 'app-main-sales',

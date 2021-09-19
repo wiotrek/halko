@@ -13,6 +13,14 @@
             background-color: ghostwhite;
         }
 
+        &--deleted {
+            color: $dangerColor;
+        }
+
+        &--edited {
+            color: $waringColor;
+        }
+
         &__upward {
             display: flex;
             justify-content: space-between;

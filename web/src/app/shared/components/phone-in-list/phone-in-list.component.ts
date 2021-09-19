@@ -12,6 +12,7 @@ import { faUndo, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { PhoneInListType } from '../../models-union/phone-in-list.type';
 import { PhoneFieldsModel } from '../../models/phone-fields.model';
 import {PhoneModel} from '../../models/phone.model';
+import {ItemStructure} from '../../models/item-structure.model';
 
 @Component({
     selector: 'app-phone-in-list',
@@ -58,12 +59,16 @@ export class PhoneInListComponent implements OnInit {
         );
     }
 
-    checkBooking(): boolean {
+    addProperty(): string {
         const phone = this.elInList as PhoneModel;
+        const itemStructure = this.elInList as ItemStructure;
 
-        if (phone.comment) {
-            return !!phone.comment.includes('rezerwacja');
+        if (phone?.comment && phone?.comment.includes('rezerwacja')) {
+            return 'elInList--booked';
+        } else if (itemStructure?.deletedDateTime) {
+            return 'elInList--deleted';
+        } else if (itemStructure?.editedDateTime) {
+            return 'elInList--edited';
         }
-        return false;
     }
 }

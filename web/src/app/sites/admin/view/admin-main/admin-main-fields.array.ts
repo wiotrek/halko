@@ -34,6 +34,14 @@ export const AdminMainFields: PhoneFieldsModel[] = [
         onlyInDetails: false
     },
     {
+        category: 'initial',
+        polishName: 'Pracownik',
+        isNumber: false,
+        width: '80px',
+        onlyInDetails: false,
+        isMobileRwd: true
+    },
+    {
         category: 'insertedDateTime',
         polishName: 'Data dodania',
         isNumber: false,
@@ -47,11 +55,9 @@ export const AdminMainFields: PhoneFieldsModel[] = [
         onlyInDetails: true
     },
     {
-        category: 'initial',
-        polishName: 'Pracownik',
+        category: 'deletedDateTime',
+        polishName: 'Data usuniecia',
         isNumber: false,
-        width: '80px',
-        onlyInDetails: false,
-        isMobileRwd: true
+        onlyInDetails: true
     }
 ];

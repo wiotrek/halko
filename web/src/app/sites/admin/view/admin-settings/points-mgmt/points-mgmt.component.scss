@@ -1,0 +1,25 @@
+@import "src/app/shared/global-styles/variable";
+@import "src/app/shared/global-styles/components";
+
+@media (min-width: 0) {
+    h6 {
+        margin: 15px 0;
+    }
+    .new-point {
+        font-size: .9rem;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            text-align: center;
+            width: 200px;
+            margin-top: 5px;
+        }
+
+        &__submit {
+            @include firstlyBtn;
+            margin: 20px 0;
+            width: 100px;
+        }
+    }
+}

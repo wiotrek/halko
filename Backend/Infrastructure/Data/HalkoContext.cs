@@ -21,6 +21,7 @@ namespace Infrastructure.Data
         public DbSet<DeviceState> DeviceStates { get; set; }
         public DbSet<DeviceService> DeviceServices { get; set; }
         public DbSet<DevicePrice> DevicePrices { get; set; }
+        public DbSet<Settlement> Settlements { get; set; }
         
         #endregion
         

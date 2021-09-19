@@ -10,6 +10,7 @@ namespace Api.Helpers
         {
             CreateMap<ParticipantPoint, ParticipantDto>();
             CreateMap<ParticipantDto, ParticipantPoint>().ReverseMap();
+            CreateMap<SettlementDto, Settlement>().ReverseMap();
             
             ProductCategoryToProductCategoryDto();
             TransactionToTransactionDto();

@@ -11,7 +11,6 @@ import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 import { PhoneAddModel } from './_models/phone-add.model';
 import { PhoneEditModel } from './_models/phone-edit.model';
-import { PhoneModel } from '../../shared/models/phone.model';
 import { Point } from '../../shared/models/point.model';
 import { SearcherModel } from '../../shared/models/searcher.model';
 import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
@@ -25,8 +24,6 @@ export class PhonesService {
     errorsDictionary = ErrorsDictionary;
 
     points: Point[] = [];
-
-    archivPhoneList: PhoneModel[] = [];
 
     constructor(
         private authService: AuthService,
@@ -43,14 +40,12 @@ export class PhonesService {
     }
 
     getListPoints(): Observable<Point[]> {
-
         if (this.points.length >  0) { return of(this.points); }
 
         return this.http.get<Point[]>(
             this.apiUrl + 'api/point'
         ).pipe(
-            map(
-                (res: Point[]) => {
+            map((res: Point[]) => {
                     this.points = res;
                     this.points.push({id: -1, name: 'Wszystkie'});
                     return this.points;
@@ -71,15 +66,13 @@ export class PhonesService {
     insertNewPhone(phone: PhoneAddModel): void {
         let params = new HttpParams();
         params = params.set('point', this.pointName);
-
         phone.point.name = this.pointName;
 
         this.http.post(
-            this.apiUrl + 'api/device',
-            phone, { params }
+            this.apiUrl + 'api/device', phone, { params }
         ).subscribe(
             () => {
-                this.router.navigate([`./telefony`], { relativeTo: this.route });
+                this.router.navigate([`./telefony`], { relativeTo: this.route }).then();
                 this.toastr.success(ResponseDictionary.added);
             },
             (err: HttpErrorResponse) =>
@@ -88,7 +81,6 @@ export class PhonesService {
     }
 
     editPhone(phone: PhoneEditModel, idPhone: string): Observable<any> {
-
         let params = new HttpParams();
         params = params.set('id', idPhone);
 
@@ -100,7 +92,6 @@ export class PhonesService {
     // this fuction agree transfer phone to another point.
     // if point is same as loged point then return toastr error
     movePhone(phoneId: string, pointToTransfer: string): Observable<any> {
-
         if (this.pointName === pointToTransfer) {
             this.toastr.error(this.errorsDictionary.operation);
             return;

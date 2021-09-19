@@ -14,7 +14,7 @@ import { Employees } from '../../shared/models/employees.model';
 import { ItemStructureAddBackend } from './_models/item-structure-add-backend.model';
 import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructureEdit } from './_models/item-structure-edit.model';
-import { ItemStructure } from './_models/item-structure.model';
+import { ItemStructure } from '../../shared/models/item-structure.model';
 
 @Injectable({ providedIn: 'root' })
 export class MainService {
@@ -144,12 +144,12 @@ export class MainService {
     // count how much specific items were sold
     getCategoriesAmountChange(): Observable<CategoriesAmount[]> {
 
-        const ACCESORIERS = { item: 'akcesoria', sum: 0 };
+        const ACCESSORIES = { item: 'akcesoria', sum: 0 };
         const PHONE = { item: 'telefon', sum: 0 };
         const SERVICE = { item: 'serwis', sum: 0 };
 
         const categories = [
-            ACCESORIERS,
+            ACCESSORIES,
             PHONE,
             SERVICE
         ];
@@ -159,8 +159,8 @@ export class MainService {
                 (res: ItemStructure[]) => {
 
                     categories[
-                        categories.indexOf(ACCESORIERS)
-                    ].sum = res.filter(x => x.category === ACCESORIERS.item).length;
+                        categories.indexOf(ACCESSORIES)
+                    ].sum = res.filter(x => x.category === ACCESSORIES.item).length;
 
                     categories[
                         categories.indexOf(PHONE)

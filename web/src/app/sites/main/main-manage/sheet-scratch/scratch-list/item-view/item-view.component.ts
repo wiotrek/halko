@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
 import { CategoryIconColorDictionary } from 'src/app/sites/main/_dictionary/category-icon-color.dictionary';
 import { CategoryIconDictionary } from 'src/app/sites/main/_dictionary/category-icon.dictionary';
-import { ItemStructure } from 'src/app/sites/main/_models/item-structure.model';
+import { ItemStructure } from 'src/app/shared/models/item-structure.model';
 
 @Component({
     selector: 'app-item-view',

@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {AdminService} from '../../admin.service';
-import {DatePipe} from '@angular/common';
-import {ItemStructure} from 'src/app/shared/models/item-structure.model';
-import {AdminMainFields} from './admin-main-fields.array';
-import {map} from 'rxjs/operators';
-import {ItemOperationEnum} from '../../_enums/item-operation.enum';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { AdminService } from '../../admin.service';
+import { DatePipe } from '@angular/common';
+import { ItemStructure } from 'src/app/shared/models/item-structure.model';
+import { AdminMainFields } from './_arrays/admin-main-fields.array';
+import { map} from 'rxjs/operators';
+import { ItemOperationEnum } from '../../_enums/item-operation.enum';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-admin',

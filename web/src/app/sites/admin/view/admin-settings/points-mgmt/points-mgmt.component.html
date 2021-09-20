@@ -1,0 +1,46 @@
+<h6 (click)="pointCreatorMod = !pointCreatorMod">
+    {{pointCreatorMod ? 'Anuluj' : 'Dodaj nowy punkt'}}
+</h6>
+
+<form
+    *ngIf="pointCreatorMod"
+    #f="ngForm"
+    (ngSubmit)="addNewPoint(f)"
+    class="new-point"
+>
+    <input
+        type="text"
+        placeholder="nazwa logowania"
+        name="login"
+        ngModel
+        required
+    >
+
+    <input
+        type="password"
+        placeholder="hasło"
+        name="password"
+        ngModel
+        required
+    >
+
+    <input
+        type="text"
+        placeholder="Nazwa punktu"
+        name="pointName"
+        ngModel
+        required
+    >
+
+    <button
+        type="submit"
+        class="new-point__submit"
+    >
+        Zapisz
+    </button>
+
+</form>
+
+<ul *ngIf="!pointCreatorMod">
+    <li *ngFor="let point of pointsList">{{point}}</li>
+</ul>

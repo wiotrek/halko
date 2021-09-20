@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../../../admin.service';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import Validation from 'src/app/shared/classes/validation.class';
 
 @Component({
     selector: 'app-points-mgmt',
@@ -11,11 +12,25 @@ export class PointsMgmtComponent {
     pointCreatorMod = false;
     pointsList: string[];
 
-    constructor(private adminService: AdminService) {
+    pointForm: FormGroup;
+
+    constructor(
+        private adminService: AdminService,
+        private fb: FormBuilder
+    ) {
         this.pointsList = this.adminService.pointList;
+
+        this.pointForm = fb.group({
+            login: ['', [Validators.required]],
+            pointName: ['', [Validators.required]],
+            password: ['', [
+                Validators.required,
+                Validators.minLength(6)
+            ]]
+        });
     }
 
-    addNewPoint(f: NgForm): void {
-        this.adminService.addNewPoint(f.value);
+    addNewPoint(): void {
+        this.adminService.addNewPoint(this.pointForm.value);
     }
 }

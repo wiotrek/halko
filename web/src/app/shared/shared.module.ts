@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './directives/dropdown.directive';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ToastrModule } from 'ngx-toastr';
@@ -31,6 +31,7 @@ import { PhonesExtendComponent } from './components-specific/phones-extend/phone
     imports: [
         CommonModule,
         HttpClientModule,
+        ReactiveFormsModule,
         FormsModule,
         FontAwesomeModule,
         ToastrModule.forRoot()
@@ -38,6 +39,7 @@ import { PhonesExtendComponent } from './components-specific/phones-extend/phone
     exports: [
         CommonModule,
         HttpClientModule,
+        ReactiveFormsModule,
         FormsModule,
         FontAwesomeModule,
         LoadingSpinnerComponent,

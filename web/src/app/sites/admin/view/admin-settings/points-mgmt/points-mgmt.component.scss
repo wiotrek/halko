@@ -2,9 +2,13 @@
 @import "src/app/shared/global-styles/components";
 
 @media (min-width: 0) {
-    h6 {
+    .point-mod-btn {
+        @include firstlyBtn;
+        font-size: .9rem;
         margin: 15px 0;
+        padding: 4px 5px;
     }
+
     .new-point {
         font-size: .9rem;
         display: flex;
@@ -17,9 +21,15 @@
         }
 
         &__submit {
-            @include firstlyBtn;
             margin: 20px 0;
             width: 100px;
+            cursor: pointer;
+            border: 0;
+            background-color: transparent;
+
+            &:hover {
+                color: $prettyGreen;
+            }
         }
     }
 }

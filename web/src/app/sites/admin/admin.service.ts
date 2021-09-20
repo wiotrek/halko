@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ItemStructure } from '../../shared/models/item-structure.model';
 import { environment } from 'environments/environment';
-import {combineLatest, Observable, of} from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { combineLatest, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ItemOperationEnum } from './_enums/item-operation.enum';
-import {ResponseDictionary} from '../../shared/dictionary/response.dictionary';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ResponseDictionary } from '../../shared/dictionary/response.dictionary';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -47,12 +47,12 @@ export class AdminService {
     }
 
     addNewPoint(point: { login: string, password: string, pointName: string }): void {
-        this.http.post<ItemStructure[]>(
+        this.http.post(
             this.apiUrl + 'api/auth/register-point', point
         ).subscribe(
             () => {
-                this.router.navigate([`./ustawienia/punkty`], { relativeTo: this.route }).then(
-                    () => this.toastr.success(ResponseDictionary.archive)
+                this.router.navigate([`./admin/ustawienia/punkty`], { relativeTo: this.route }).then(
+                    () => this.toastr.success(ResponseDictionary.added)
                 );
             },
             (err: HttpErrorResponse) => this.toastr.error(err.error.message)
@@ -92,7 +92,7 @@ export class AdminService {
     }
 
     private getPointList(): void {
-        this.authService.user.pipe(take(1)).subscribe(
+        this.authService.user.subscribe(
             (res: User) => this.pointList = res.pointList
         );
     }

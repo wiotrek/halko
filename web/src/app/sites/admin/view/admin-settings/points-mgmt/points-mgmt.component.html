@@ -1,35 +1,33 @@
-<h6 (click)="pointCreatorMod = !pointCreatorMod">
-    {{pointCreatorMod ? 'Anuluj' : 'Dodaj nowy punkt'}}
-</h6>
+<button
+    class="point-mod-btn"
+    (click)="pointCreatorMod = !pointCreatorMod"
+>
+    {{pointCreatorMod ? 'Cofnij' : 'Dodaj nowy punkt'}}
+</button>
 
 <form
     *ngIf="pointCreatorMod"
-    #f="ngForm"
-    (ngSubmit)="addNewPoint(f)"
+    [formGroup]="pointForm"
+    (ngSubmit)="pointForm.valid && addNewPoint()"
     class="new-point"
 >
     <input
         type="text"
         placeholder="nazwa logowania"
-        name="login"
-        ngModel
+        formControlName="login"
+    >
+
+    <input
+        type="text"
+        placeholder="Nazwa punktu"
+        formControlName="pointName"
         required
     >
 
     <input
         type="password"
         placeholder="hasło"
-        name="password"
-        ngModel
-        required
-    >
-
-    <input
-        type="text"
-        placeholder="Nazwa punktu"
-        name="pointName"
-        ngModel
-        required
+        formControlName="password"
     >
 
     <button

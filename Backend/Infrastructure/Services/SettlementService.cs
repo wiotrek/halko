@@ -19,13 +19,16 @@ namespace Infrastructure.Services
         public async Task<int> CreateSettlement( Settlement settlement )
         {
             if( settlement.DayBilansInCash + settlement.MonthBilansInCart > settlement.DayBilans )
-                settlement.DayBilansInCart = await GetMonthSumCartPayment ( settlement.Point.Name ) -
-                                             settlement.DayBilans - settlement.DayBilansInCash;
+                settlement.DayBilansInCart = settlement.MonthBilansInCart - await GetMonthSumCartPayment ( settlement.Point.Name );
             else
                 settlement.DayBilansInCart = settlement.DayBilans - settlement.DayBilansInCash;
 
+            var pointSpec = new PointSpecification ( settlement.Point.Name );
+            var point = await _unitOfWork.Repository<Point>().GetEntityWithSpecAsync ( pointSpec );
+            if( point == null ) return -1;
+
             settlement.Point = null;
-            
+            settlement.PointId = point.Id;
             _unitOfWork.Repository<Settlement>().Add ( settlement );
             return await _unitOfWork.CompleteAsync();
         }

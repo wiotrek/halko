@@ -12,24 +12,23 @@
         type="text"
         placeholder="nazwa logowania"
         name="login"
+        ngModel
         required
     >
 
     <input
         type="password"
         placeholder="hasło"
+        name="password"
+        ngModel
         required
-    >
-
-    <input
-        type="password"
-        placeholder="potwierdź hasło"
     >
 
     <input
         type="text"
         placeholder="Nazwa punktu"
         name="pointName"
+        ngModel
         required
     >
 
@@ -39,6 +38,7 @@
     >
         Zapisz
     </button>
+
 </form>
 
 <ul *ngIf="!pointCreatorMod">

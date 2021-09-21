@@ -34,6 +34,15 @@ namespace Infrastructure.Services
         }
 
         
+        public async Task<double> GetAmountCashByPoint( string pointName )
+        {
+            var settlementSpec = new SettlementSpecification ( pointName );
+            var settlements = await  _unitOfWork.Repository<Settlement>().ListAsync ( settlementSpec );
+
+            return settlements.Count == 0 ? 0 : settlements.OrderByDescending ( x => x.DateTime ).First().DayBilansInCash;
+        }
+
+        
         private async Task<double> GetMonthSumCartPayment(string pointName, int month = 0)
         {
             if( month == 0 ) month = DateTime.Now.Month;

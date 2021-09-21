@@ -9,5 +9,11 @@ namespace Core.Specifications
         {
 
         }
+        
+        public SettlementSpecification( string pointName ) :
+            base ( x => x.Point.Name == pointName )
+        {
+
+        }
     }
 }

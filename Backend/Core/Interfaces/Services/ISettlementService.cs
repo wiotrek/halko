@@ -6,5 +6,6 @@ namespace Core.Interfaces
     public interface ISettlementService
     {
         Task<int> CreateSettlement( Settlement settlement );
+        Task<double> GetAmountCashByPoint( string pointName );
     }
 }

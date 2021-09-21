@@ -35,5 +35,11 @@ namespace Api.Controllers
                 ? BadRequest ( new ApiResponse ( 400, "Nie zamknięto dnia" ) ) 
                 : Ok();
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAmountCash( [FromQuery] string point )
+        {
+            return Ok ( await _settlementService.GetAmountCashByPoint ( point ) );
+        }
     }
 }

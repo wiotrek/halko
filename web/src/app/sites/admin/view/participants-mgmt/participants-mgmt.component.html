@@ -1,0 +1,38 @@
+<button
+    class="creator-btn"
+    (click)="creatorMod = !creatorMod"
+>
+    {{creatorMod ? 'Cofnij' : 'Dodaj pracownika'}}
+</button>
+
+<app-adder-phone
+    *ngIf="creatorMod; else list"
+    [fields]="participantsMgmtFieldsArray"
+    (outputElement)="addParticipants($event)"
+></app-adder-phone>
+
+
+<ng-template #list>
+
+    <select
+        class="changer"
+        [(ngModel)]="currentPoint"
+        (change)="getParticipantsList()"
+    >
+
+        <option
+            *ngFor="let point of pointList"
+            [value]="point"
+        >
+            {{point}}
+        </option>
+
+    </select>
+
+    <app-phone-in-list
+        *ngFor="let employer of employees"
+        [elInList]="employer"
+        [deviceFields]="participantsMgmtListFieldsArray"
+    ></app-phone-in-list>
+
+</ng-template>

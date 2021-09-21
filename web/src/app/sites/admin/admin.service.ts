@@ -10,6 +10,7 @@ import { ItemOperationEnum } from './_enums/item-operation.enum';
 import { ResponseDictionary } from '../../shared/dictionary/response.dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Point } from '../../shared/models/point.model';
+import {Employees} from '../../shared/models/employees.model';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -48,6 +49,13 @@ export class AdminService {
         );
     }
 
+    getParticipantsList(pointName: string): Observable<Employees[]> {
+        const params = new HttpParams().set('pointName', pointName);
+        return this.http.get<Employees[]>(
+            this.apiUrl + 'api/participant', { params }
+        );
+    }
+
     addNewPoint(point: { login: string, password: string, pointName: string }): void {
         this.http.post(
             this.apiUrl + 'api/auth/register-point', point
@@ -57,6 +65,26 @@ export class AdminService {
                     () => {
                         this.toastr.success(ResponseDictionary.added);
                         this.getPointList();
+                    }
+                );
+            },
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+        );
+    }
+
+    addParticipant(employer: {
+        pointName: string,
+        initial: string,
+        firstName: string,
+        lastName: string
+    }): void {
+        this.http.post(
+            this.apiUrl + 'api/participant', employer
+        ).subscribe(
+            () => {
+                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
+                    () => {
+                        this.toastr.success(ResponseDictionary.added);
                     }
                 );
             },

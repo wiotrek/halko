@@ -13,6 +13,9 @@ import { PhonesComponent } from './phones.component';
         PhonesListArchiveComponent,
         PhonesAddComponent
     ],
+    exports: [
+        PhonesAddComponent
+    ],
     imports: [
         SharedModule,
         RouterModule.forChild([

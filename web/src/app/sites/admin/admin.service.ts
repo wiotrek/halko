@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from 'src/app/auth/auth.service';
-import { User } from 'src/app/auth/_models/user.model';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ItemStructure } from '../../shared/models/item-structure.model';
@@ -10,12 +9,11 @@ import { map } from 'rxjs/operators';
 import { ItemOperationEnum } from './_enums/item-operation.enum';
 import { ResponseDictionary } from '../../shared/dictionary/response.dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Point } from '../../shared/models/point.model';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
     apiUrl = environment.api;
-
-    pointList: string[];
 
     itemsListCache = new Map();
     itemsDeletedListCache = new Map();
@@ -26,8 +24,12 @@ export class AdminService {
         private http: HttpClient,
         private route: ActivatedRoute,
         private router: Router,
-    ) {
-        this.getPointList();
+    ) {}
+
+    getPointList(): Observable<string[]> {
+        return this.http.get<Point[]>(
+            this.apiUrl + 'api/point'
+        ).pipe(map((res: Point[]) => res.map(x => x.name)));
     }
 
     // display items, and delete items
@@ -51,8 +53,11 @@ export class AdminService {
             this.apiUrl + 'api/auth/register-point', point
         ).subscribe(
             () => {
-                this.router.navigate([`./admin/ustawienia/punkty`], { relativeTo: this.route }).then(
-                    () => this.toastr.success(ResponseDictionary.added)
+                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
+                    () => {
+                        this.toastr.success(ResponseDictionary.added);
+                        this.getPointList();
+                    }
                 );
             },
             (err: HttpErrorResponse) => this.toastr.error(err.error.message)
@@ -88,12 +93,6 @@ export class AdminService {
 
         return this.http.get<ItemStructure[]>(
             this.apiUrl + 'api/transaction', { params }
-        );
-    }
-
-    private getPointList(): void {
-        this.authService.user.subscribe(
-            (res: User) => this.pointList = res.pointList
         );
     }
 }

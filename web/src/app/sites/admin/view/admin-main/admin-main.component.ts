@@ -24,7 +24,7 @@ export class AdminMainComponent implements OnInit {
     pointCurrent = 'Karuzela Września';
 
     // main members to config
-    pointList: string[];
+    pointList: string[] = [];
     soldItems: ItemStructure[] = [];
     expenseItems: ItemStructure[] = [];
 
@@ -32,9 +32,6 @@ export class AdminMainComponent implements OnInit {
         private adminService: AdminService,
         private datePipe: DatePipe
     ) {
-        this.pointList = this.adminService.pointList;
-        this.pointCurrent = this.pointList[0];
-
         // set calendar
         this.today = new Date();
         this.choiceDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -42,6 +39,13 @@ export class AdminMainComponent implements OnInit {
 
     ngOnInit(): void {
         this.getItems();
+
+        this.adminService.getPointList().subscribe(
+            (res: string[]) => {
+                this.pointList = res;
+                this.pointCurrent = res[0];
+            }
+        );
     }
 
     getItems(): void {
@@ -70,5 +74,4 @@ export class AdminMainComponent implements OnInit {
     sumPrice = (arr: ItemStructure[]): number =>
         arr.filter(x => x.deletedDateTime ? false : x)
             .reduce((acc: number, curr: ItemStructure) => acc + curr.price, 0)
-
 }

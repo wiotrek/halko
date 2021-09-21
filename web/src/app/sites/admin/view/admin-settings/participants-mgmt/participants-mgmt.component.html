@@ -1,0 +1,41 @@
+<button
+    class="point-mod-btn"
+    (click)="creatorMod = !creatorMod"
+>
+    {{creatorMod ? 'Cofnij' : 'Dodaj nowy punkt'}}
+</button>
+
+<app-adder-phone
+    *ngIf="creatorMod; else list"
+    [fields]="participantsMgmtFieldsArray"
+    (outputElement)="addParticipants($event)"
+></app-adder-phone>
+
+
+<ng-template #list>
+
+    <div class="choice__filters__point">
+
+        <select
+            [(ngModel)]="currentPoint"
+            (change)="getParticipantsList()"
+        >
+
+            <option
+                *ngFor="let point of pointList"
+                [value]="point"
+            >
+                {{point}}
+            </option>
+
+        </select>
+
+    </div>
+
+    <app-phone-in-list
+        *ngFor="let employer of employees"
+        [elInList]="employer"
+        [deviceFields]="participantsMgmtListFieldsArray"
+    ></app-phone-in-list>
+
+</ng-template>

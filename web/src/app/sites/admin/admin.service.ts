@@ -10,6 +10,7 @@ import { ItemOperationEnum } from './_enums/item-operation.enum';
 import { ResponseDictionary } from '../../shared/dictionary/response.dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Point } from '../../shared/models/point.model';
+import {Employees} from '../../shared/models/employees.model';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -45,6 +46,13 @@ export class AdminService {
             map(res => res[0].concat(res[1])),
             map((res: ItemStructure[]) => res.filter(x => x.type === operation)),
             map(res => res.sort((a: ItemStructure, b: ItemStructure) => b.insertedDateTime.localeCompare(a.insertedDateTime)))
+        );
+    }
+
+    getParticipantsList(pointName: string): Observable<Employees[]> {
+        const params = new HttpParams().set('pointName', pointName);
+        return this.http.get<Employees[]>(
+            this.apiUrl + 'api/participant', { params }
         );
     }
 

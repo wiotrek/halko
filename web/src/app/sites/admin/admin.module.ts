@@ -26,22 +26,21 @@ import { StatisticsMgmtComponent } from './view/admin-settings/statistics-mgmt/s
                 path: '',
                 component: AdminComponent,
                 children: [
-                    { path: '', component: AdminMainComponent },
+                    {path: '', component: AdminMainComponent},
                     {
                         path: 'ustawienia',
                         component: AdminSettingsComponent,
                         children: [
-                            { path: '', redirectTo: 'punkty' },
-                            { path: 'punkty', component: PointsMgmtComponent },
-                            { path: 'pracownicy', component: ParticipantsMgmtComponent },
-                            { path: 'admini', component: AdminsMgmtComponent },
-                            { path: 'statystyki', component: StatisticsMgmtComponent }
-
+                            {path: '', redirectTo: 'punkty'},
+                            {path: 'punkty', component: PointsMgmtComponent},
+                            {path: 'pracownicy', component: ParticipantsMgmtComponent},
+                            {path: 'admini', component: AdminsMgmtComponent},
+                            {path: 'statystyki', component: StatisticsMgmtComponent}
                         ]
                     }
                 ]
             }
-        ]),
+        ])
     ]
 })
 export class AdminModule {}

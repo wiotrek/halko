@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
         : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree>  {
         return this.authService.user.pipe(
             take(1),
-            map(user => user.displayName === 'Admin' ? true : this.router.createUrlTree(['']))
+            map(user => user.showRole === 'Admin' ? true : this.router.createUrlTree(['']))
         );
     }
 }

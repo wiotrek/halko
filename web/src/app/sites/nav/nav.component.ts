@@ -53,8 +53,6 @@ export class NavComponent implements OnInit, OnDestroy {
                 if (user.displayName === 'Admin') {
                     this.links = [
                         { caption: 'Strona główna', path: 'admin' },
-                        { caption: 'Spis telefonów', path: 'admin/telefony' },
-                        { caption: 'Serwis', path: 'admin/serwis' },
                         { caption: 'Cennik', path: 'admin/cennik' },
                         { caption: 'Ustawienia', path: 'admin/ustawienia' }
                     ];

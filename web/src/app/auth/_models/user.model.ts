@@ -31,4 +31,8 @@ export class User {
     get pointList(): string[] {
         return this.pointNames;
     }
+
+    get showRole(): string {
+        return this.role;
+    }
 }

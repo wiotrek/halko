@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../admin.service';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import Validation from 'src/app/shared/classes/validation.class';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'app-points-mgmt',
     templateUrl: './points-mgmt.component.html',
     styleUrls: ['./points-mgmt.component.scss']
 })
-export class PointsMgmtComponent {
+export class PointsMgmtComponent implements OnInit{
     pointCreatorMod = false;
     pointsList: string[];
 
@@ -18,8 +17,6 @@ export class PointsMgmtComponent {
         private adminService: AdminService,
         private fb: FormBuilder
     ) {
-        this.pointsList = this.adminService.pointList;
-
         this.pointForm = fb.group({
             login: ['', [Validators.required]],
             pointName: ['', [Validators.required]],
@@ -28,6 +25,12 @@ export class PointsMgmtComponent {
                 Validators.minLength(6)
             ]]
         });
+    }
+
+    ngOnInit(): void {
+        this.adminService.getPointList().subscribe(
+            (res: string[]) => this.pointsList = res
+        );
     }
 
     addNewPoint(): void {

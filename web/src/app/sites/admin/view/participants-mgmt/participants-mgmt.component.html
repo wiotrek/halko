@@ -1,8 +1,8 @@
 <button
-    class="point-mod-btn"
+    class="creator-btn"
     (click)="creatorMod = !creatorMod"
 >
-    {{creatorMod ? 'Cofnij' : 'Dodaj nowy punkt'}}
+    {{creatorMod ? 'Cofnij' : 'Dodaj pracownika'}}
 </button>
 
 <app-adder-phone
@@ -14,23 +14,20 @@
 
 <ng-template #list>
 
-    <div class="choice__filters__point">
+    <select
+        class="changer"
+        [(ngModel)]="currentPoint"
+        (change)="getParticipantsList()"
+    >
 
-        <select
-            [(ngModel)]="currentPoint"
-            (change)="getParticipantsList()"
+        <option
+            *ngFor="let point of pointList"
+            [value]="point"
         >
+            {{point}}
+        </option>
 
-            <option
-                *ngFor="let point of pointList"
-                [value]="point"
-            >
-                {{point}}
-            </option>
-
-        </select>
-
-    </div>
+    </select>
 
     <app-phone-in-list
         *ngFor="let employer of employees"

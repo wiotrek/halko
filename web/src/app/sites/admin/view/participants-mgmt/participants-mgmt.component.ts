@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import { ParticipantsMgmtFieldsArray } from './participants-mgmt-fields.array';
+import { ParticipantsMgmtFieldsArray } from './_arrays/participants-mgmt-fields.array';
 import { NgForm } from '@angular/forms';
-import { AdminService } from '../../../admin.service';
+import { AdminService } from '../../admin.service';
 import { Employees } from 'src/app/shared/models/employees.model';
-import {ParticipantsMgmtListFieldsArray} from './participants-mgmt-list-fields.array';
+import { ParticipantsMgmtListFieldsArray } from './_arrays/participants-mgmt-list-fields.array';
 
 @Component({
     selector: 'app-participants-mgmt',
-    templateUrl: './participants-mgmt.component.html'
+    templateUrl: './participants-mgmt.component.html',
+    styleUrls: ['../_style/mgmt.scss']
 })
 export class ParticipantsMgmtComponent implements OnInit {
     creatorMod = false;
@@ -46,6 +47,7 @@ export class ParticipantsMgmtComponent implements OnInit {
     }
 
     addParticipants(f: NgForm): void {
-        console.log(f.value);
+        this.adminService.addParticipant(f.value);
+        this.getParticipantsList();
     }
 }

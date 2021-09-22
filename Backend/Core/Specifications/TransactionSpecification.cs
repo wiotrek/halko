@@ -23,5 +23,14 @@ namespace Core.Specifications
             AddInclude ( x => x.TransactionType );
             AddInclude ( x => x.Point );
         }
+        
+        public TransactionSpecification( string pointName ) 
+            : base( x =>  x.Point.Name == pointName )
+        {
+            AddInclude ( x => x.Participant );
+            AddInclude ( x => x.ProductCategory );
+            AddInclude ( x => x.TransactionType );
+            AddInclude ( x => x.Point );
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Api.Errors;
+using Api.Extensions;
 using Core.Entities.Identity;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -25,6 +27,19 @@ namespace Api.Controllers
         public async Task<ActionResult<IReadOnlyList<Point>>> GetPoints()
         {
             return Ok ( await _pointService.ListPointsAsync() );
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeletePoint( [FromQuery] string name )
+        {
+            if( !await IsAdmin() ) 
+                return Unauthorized ( new ApiResponse ( 401, ApiErrorMessage.AdminContent.GetnEnumMemberValue() ) );
+
+            var result = await _pointService.DeletePointAsync ( name );
+
+            return result
+                ? Ok()
+                : BadRequest ( new ApiResponse ( 400, "Nie powiodło się usunięcie punktu" ) );
         }
     }
 }

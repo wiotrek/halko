@@ -15,6 +15,14 @@ namespace Core.Interfaces
 
 
         /// <summary>
+        /// Delete point from halko and identity with all references
+        /// </summary>
+        /// <param name="name">The point name</param>
+        /// <returns>True if point deleted successfully, false otherwise</returns>
+        Task<bool> DeletePointAsync( string name );
+
+
+        /// <summary>
         /// Get all points
         /// </summary>
         /// <returns>All points</returns>

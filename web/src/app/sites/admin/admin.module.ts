@@ -4,9 +4,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminMainComponent } from './view/admin-main/admin-main.component';
 import { AdminComponent } from './view/admin.component';
 import { PointsMgmtComponent } from './view/points-mgmt/points-mgmt.component';
-import { AdminsMgmtComponent } from './view/admins-mgmt/admins-mgmt.component';
 import { ParticipantsMgmtComponent } from './view/participants-mgmt/participants-mgmt.component';
 import { StatisticsMgmtComponent } from './view/statistics-mgmt/statistics-mgmt.component';
+import { ParticipantsAddComponent } from './view/participants-mgmt/participants-add/participants-add.component';
+import { AdminAddComponent } from './view/participants-mgmt/admin-add/admin-add.component';
+import { ParticipantsListComponent } from './view/participants-mgmt/participants-list/participants-list.component';
 
 @NgModule({
     declarations: [
@@ -14,7 +16,9 @@ import { StatisticsMgmtComponent } from './view/statistics-mgmt/statistics-mgmt.
         AdminMainComponent,
         PointsMgmtComponent,
         ParticipantsMgmtComponent,
-        AdminsMgmtComponent,
+        ParticipantsAddComponent,
+        ParticipantsListComponent,
+        AdminAddComponent,
         StatisticsMgmtComponent
     ],
     imports: [
@@ -25,10 +29,16 @@ import { StatisticsMgmtComponent } from './view/statistics-mgmt/statistics-mgmt.
                 component: AdminComponent,
                 children: [
                     { path: '', component: AdminMainComponent },
-                    {path: 'punkty', component: PointsMgmtComponent},
-                    {path: 'pracownicy', component: ParticipantsMgmtComponent},
-                    {path: 'admini', component: AdminsMgmtComponent},
-                    {path: 'statystyki', component: StatisticsMgmtComponent}
+                    { path: 'punkty', component: PointsMgmtComponent},
+                    {
+                        path: 'pracownicy',
+                        component: ParticipantsMgmtComponent,
+                        children: [
+                            { path: '', component: ParticipantsListComponent },
+                            { path: 'dodaj-pracownika', component: ParticipantsAddComponent },
+                            { path: 'dodaj-admina', component: AdminAddComponent }
+                        ]
+                    },
                 ]
             }
         ])

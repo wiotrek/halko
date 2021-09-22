@@ -92,6 +92,24 @@ export class AdminService {
         );
     }
 
+    addAdmin(admin: {
+        name: string;
+        password: string;
+    }): void {
+        this.http.post(
+            this.apiUrl + 'api/auth/register-admin', admin
+        ).subscribe(
+            () => {
+                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
+                    () => {
+                        this.toastr.success(ResponseDictionary.added);
+                    }
+                );
+            },
+            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+        );
+    }
+
     private getDeleteItems(pointName: string, date: string): Observable<ItemStructure[]> {
         // check in cache
         const keyInMap = `${pointName} ${date}`;

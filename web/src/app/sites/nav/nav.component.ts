@@ -55,8 +55,7 @@ export class NavComponent implements OnInit, OnDestroy {
                         { caption: 'Strona główna', path: 'admin' },
                         { caption: 'Cennik', path: 'admin/cennik' },
                         { caption: 'Punkty', path: 'admin/punkty' },
-                        { caption: 'Pracownicy', path: 'admin/pracownicy' },
-                        { caption: 'Admini', path: 'admin/admini' },
+                        { caption: 'Pracownicy', path: 'admin/pracownicy' }
                     ];
                 }
             },

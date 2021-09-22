@@ -33,8 +33,8 @@ import { Links } from 'src/app/shared/models/links.model';
     `]
 })
 export class RepairsComponent {
+    // for sub nav component
     nameModule = 'serwis';
-
     paths: Links[] = [
         { caption: 'Aktualne serwisy', path: '' },
         { caption: 'Archiwum', path: 'archiwum'},

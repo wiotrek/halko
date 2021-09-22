@@ -11,9 +11,10 @@ export class SubNavComponent implements DoCheck {
     @Input() paths = {} as Links[];
 
     // name module like telefony or serwis
-    // params is unnecessery because is using to slice
+    // params is unnecessary because is using to slice
     // this name.length + 2 in current url
     @Input() nameModule = '';
+    @Input() parent = '';
 
     activeSite: Links;
     leftOption: Links;
@@ -33,12 +34,14 @@ export class SubNavComponent implements DoCheck {
         this.setPropertyNav(this.router.url);
     }
 
-    setPropertyNav = (currenturl: string) => {
+    setPropertyNav = (currentUrl: string) => {
 
         // check which path is now
         const currentlyLink = this.paths.find(
-            x => x.path === currenturl.slice(
+            x => x.path === currentUrl.slice(
                 this.nameModule.length + 2
+            ) || x.path === currentUrl.slice(
+                this.parent.length + this.nameModule.length + 3
             )
         );
 

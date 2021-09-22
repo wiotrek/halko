@@ -50,12 +50,12 @@ export class NavComponent implements OnInit, OnDestroy {
                 this.singInUser = user.displayName;
 
                 // admin has own views
-                if (user.displayName === 'Admin') {
+                if (user.showRole === 'Admin') {
                     this.links = [
                         { caption: 'Strona główna', path: 'admin' },
-                        { caption: 'Spis telefonów', path: 'admin/telefony' },
-                        { caption: 'Serwis', path: 'admin/serwis' },
-                        { caption: 'Cennik', path: 'admin/cennik' }
+                        { caption: 'Cennik', path: 'admin/cennik' },
+                        { caption: 'Punkty', path: 'admin/punkty' },
+                        { caption: 'Pracownicy', path: 'admin/pracownicy' }
                     ];
                 }
             },

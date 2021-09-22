@@ -1,74 +1,70 @@
-<div class="wrapper">
+<div class="choice">
 
-    <div class="choice">
+    <h5 class="choice__caption">Ustaw filtry</h5>
 
-        <h5 class="choice__caption">Ustaw filtry</h5>
+    <div class="choice__filters">
 
-        <div class="choice__filters">
+        <div class="choice__filters__calendar">
 
-            <div class="choice__filters__calendar">
+            <input
+                class="choice__filters__calendar__input"
+                type="date"
+                [(ngModel)]="choiceDay"
+                [max]="today | date:'yyyy-MM-dd'"
+                (change)="getItems()"
+            />
 
-                <input
-                    class="choice__filters__calendar__input"
-                    type="date"
-                    [(ngModel)]="choiceDay"
-                    [max]="today | date:'yyyy-MM-dd'"
-                    (change)="getItems()"
-                />
+        </div>
 
-            </div>
+        <div class="choice__filters__point">
 
-            <div class="choice__filters__point">
+            <select
+                [(ngModel)]="pointCurrent"
+                (change)="getItems()"
+            >
 
-                <select
-                    [(ngModel)]="pointCurrent"
-                    (change)="getItems()"
+                <option
+                    *ngFor="let point of pointList"
+                    [value]="point"
                 >
+                    {{point}}
+                </option>
 
-                    <option
-                        *ngFor="let point of pointList"
-                        [value]="point"
-                    >
-                        {{point}}
-                    </option>
-
-                </select>
-
-            </div>
+            </select>
 
         </div>
 
     </div>
 
+</div>
 
-    <div class="list" *ngIf="soldItems.length; else lackList">
 
-        <h5>Sprzedaż - {{sumPrice(soldItems)}} zł</h5>
+<div class="list" *ngIf="soldItems.length; else lackList">
 
-        <app-phone-in-list
-            *ngFor="let item of soldItems"
-            [deviceFields]="fields"
-            [elInList]="item"
-            [ind]="soldItems.indexOf(item) + 1"
-        ></app-phone-in-list>
+    <h5>Sprzedaż - {{sumPrice(soldItems)}} zł</h5>
 
-    </div>
-
-    <div class="list" *ngIf="expenseItems.length">
-
-        <h5>Wydatki - {{sumPrice(expenseItems)}} zł</h5>
-
-        <app-phone-in-list
-            *ngFor="let item of expenseItems"
-            [deviceFields]="fields"
-            [elInList]="item"
-            [ind]="expenseItems.indexOf(item) + 1"
-        ></app-phone-in-list>
-
-    </div>
-
-    <ng-template #lackList>
-        <h5>Brak elementów</h5>
-    </ng-template>
+    <app-phone-in-list
+        *ngFor="let item of soldItems"
+        [deviceFields]="fields"
+        [elInList]="item"
+        [ind]="soldItems.indexOf(item) + 1"
+    ></app-phone-in-list>
 
 </div>
+
+<div class="list" *ngIf="expenseItems.length">
+
+    <h5>Wydatki - {{sumPrice(expenseItems)}} zł</h5>
+
+    <app-phone-in-list
+        *ngFor="let item of expenseItems"
+        [deviceFields]="fields"
+        [elInList]="item"
+        [ind]="expenseItems.indexOf(item) + 1"
+    ></app-phone-in-list>
+
+</div>
+
+<ng-template #lackList>
+    <h5>Brak elementów</h5>
+</ng-template>

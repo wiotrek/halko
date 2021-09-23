@@ -11,6 +11,7 @@ import { ResponseDictionary } from '../../shared/dictionary/response.dictionary'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Point } from '../../shared/models/point.model';
 import {Employees} from '../../shared/models/employees.model';
+import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 
 @Injectable({ providedIn: 'root' })
 export class AdminService {
@@ -92,10 +93,7 @@ export class AdminService {
         );
     }
 
-    addAdmin(admin: {
-        name: string;
-        password: string;
-    }): void {
+    addAdmin(admin: { name: string; password: string; }): void {
         this.http.post(
             this.apiUrl + 'api/auth/register-admin', admin
         ).subscribe(
@@ -107,6 +105,25 @@ export class AdminService {
                 );
             },
             (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+        );
+    }
+
+    changeUserPassword(dateToChange: {
+        login: string;
+        currentPassword: string;
+        newPassword: string;
+    }): void {
+        this.http.put(
+            this.apiUrl + 'api/auth/change-password', dateToChange
+        ).subscribe(
+            () => {
+                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
+                    () => {
+                        this.toastr.success(ResponseDictionary.change);
+                    }
+                );
+            },
+            () => this.toastr.error(ErrorsDictionary.bad)
         );
     }
 

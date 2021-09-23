@@ -13,6 +13,8 @@ import { AdminService } from '../../../admin.service';
     `
 })
 export class AdminAddComponent {
+    creatorMod = false;
+
     adminAddFieldsArray = AdminAddFieldsArray;
 
     constructor(private adminService: AdminService) {}

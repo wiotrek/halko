@@ -6,7 +6,6 @@ p {
     padding: 0;
 }
 
-
 @media (min-width: 0) {
 
     @mixin blockInList {
@@ -37,38 +36,12 @@ p {
             }
         }
 
-        &__prev-day {
+        &__prev-day, &__balance-day {
             @include blockInList;
 
             p:last-child {
                 color: $primaryGrey;
                 font-size: .7rem;
-            }
-        }
-
-        &__balance-day {
-            @include blockInList;
-
-            &__phoneToUp {
-                margin-top: 7px;
-                font-size: .6rem;
-
-                input {
-                    display: inline;
-                    width: 45px;
-                    margin-right: 10px;
-                    text-align: center;
-                }
-            }
-
-            &__summary {
-                margin-top: 15px;
-                font-size: .7rem;
-
-                p:last-child {
-                    color: $primaryGrey;
-                    font-size: .6rem;
-                }
             }
         }
 
@@ -119,7 +92,7 @@ p {
 
         &__save-day {
             margin: 10px 0 15px 0;
-            
+
             display: flex;
 
             &__confirm {
@@ -151,24 +124,9 @@ p {
             }
         }
 
-        &__prev-day {
+        &__prev-day, &__balance-day {
             p:last-child {
                 font-size: .8rem;
-            }
-        }
-
-        &__balance-day {
-
-            &__phoneToUp {
-                font-size: .7rem;
-            }
-
-            &__summary {
-                font-size: .8rem;
-
-                p:last-child {
-                    font-size: .7rem;
-                }
             }
         }
 

@@ -11,7 +11,7 @@ import { CategoriesAmount } from '../../_models/categories-amount.model';
     templateUrl: 'main-statistics.component.html',
     styleUrls: ['main-statistics.component.scss'],
 })
-export class MainStatisticsComponent implements OnInit, OnDestroy{
+export class MainStatisticsComponent implements OnInit, OnDestroy {
     today: Date;
     choiceDay: Date;
 
@@ -20,38 +20,61 @@ export class MainStatisticsComponent implements OnInit, OnDestroy{
     categoryIconColor = CategoryIconColorDictionary;
     categories = CategoryItemSoldsArray;
 
+    // wrap-up as icon and amount
     categoriesAmount: CategoriesAmount[];
-    subscription: Subscription;
 
+    // subtraction sold sum and expense sum
     balanceValue = 0;
 
-    constructor(private mainService: MainService){}
+    // cash from previous day
+    startCash = 0;
+
+    // getting from service
+    soldSum = 0;
+    expenseSum = 0;
+
+    // values input for user
+    cash = 0;
+    creditCard = 0;
+
+    // active subscriptions
+    subscription: Subscription;
+
+    constructor(private mainService: MainService) {
+        this.startCash = this.mainService.getStartCash();
+    }
 
     ngOnInit(): void {
-
         this.today = new Date();
         this.choiceDay = new Date();
 
         this.getCategoriesAmount();
-        this.getBalanaceDay();
+        this.getBalanceDay();
     }
 
     getCategoriesAmount(): void {
-        this.subscription = this.mainService.getCategoriesAmountChange()
-            .subscribe(
-                (res: CategoriesAmount[]) => this.categoriesAmount = res
-            );
+        this.subscription = this.mainService.getCategoriesAmountChange().subscribe(
+        (res: CategoriesAmount[]) => this.categoriesAmount = res
+        );
     }
 
-    getBalanaceDay(): void {
+    getBalanceDay(): void {
         const sub = combineLatest([
             this.mainService.displaySoldsSum(),
             this.mainService.displayExpensesSum()
         ]).subscribe(
-            res => this.balanceValue = res[0] - res[1]
+            res => {
+                this.soldSum = res[0];
+                this.expenseSum = res[1];
+                this.balanceValue = res[0] - res[1];
+            }
         );
 
         this.subscription.add(sub);
+    }
+
+    checkSum(): void {
+
     }
 
     ngOnDestroy(): void {

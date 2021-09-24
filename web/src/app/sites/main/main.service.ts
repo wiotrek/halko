@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
@@ -33,14 +33,19 @@ export class MainService {
     private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
     public expensesItem$ = this.expensesItemsChanged.asObservable();
 
+    // employees save in cache
     private employeesCache = new Map();
+
+    // cash from prev day
+    private startCashCache = new Map();
 
     constructor(
         private http: HttpClient,
         private authService: AuthService,
         private toastr: ToastrService
     ) {
-        this.authService.user.subscribe(
+        this.authService.user
+            .subscribe(
             (user: User) =>  {
                 user
                 ? this.pointName = user.pointName
@@ -57,9 +62,7 @@ export class MainService {
 
 
     // for employees
-
     getEmployees(): Observable<Employees[]> {
-
         const response = this.employeesCache.get(
             Object.values(this.pointName).join('-')
         );
@@ -89,7 +92,7 @@ export class MainService {
     }
 
 
-    // for solds items
+    // for sold items
 
     addNewSoldItem(el: ItemStructureAdd): void {
         this.addNewItem(el, TransactionTypeEnum.solds);
@@ -176,6 +179,30 @@ export class MainService {
         );
     }
 
+    getStartCash(): number {
+        const response = this.startCashCache.get(
+            Object.values(this.pointName).join('-')
+        );
+        if (response) { return response; }
+
+        const params = new HttpParams().set('point', this.pointName);
+
+        this.http.get<number>(
+            this.apiUrl + 'api/settlement', { params }
+        ).pipe(
+            map(
+                (res: number) => {
+                    if (res > 0) {
+                        this.startCashCache.set(
+                            Object.values(this.pointName).join('-'), res
+                        );
+                        return res;
+                    }
+                    return res;
+                }
+            )
+        );
+    }
 
     // get sold items and expenses item
     private getAllItemsInitialFunc(): void {

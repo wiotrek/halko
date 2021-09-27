@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/_models/user.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
@@ -35,9 +35,6 @@ export class MainService {
 
     // employees save in cache
     private employeesCache = new Map();
-
-    // cash from prev day
-    private startCashCache = new Map();
 
     constructor(
         private http: HttpClient,
@@ -117,7 +114,7 @@ export class MainService {
     }
 
 
-    // for expneses items
+    // for expenses items
 
     addNewExpenseItem(el: ItemStructureAdd): void {
         this.addNewItem(el, TransactionTypeEnum.expenses);
@@ -179,28 +176,11 @@ export class MainService {
         );
     }
 
-    getStartCash(): number {
-        const response = this.startCashCache.get(
-            Object.values(this.pointName).join('-')
-        );
-        if (response) { return response; }
-
+    getStartCash(): Observable<number> {
         const params = new HttpParams().set('point', this.pointName);
 
-        this.http.get<number>(
+        return this.http.get<number>(
             this.apiUrl + 'api/settlement', { params }
-        ).pipe(
-            map(
-                (res: number) => {
-                    if (res > 0) {
-                        this.startCashCache.set(
-                            Object.values(this.pointName).join('-'), res
-                        );
-                        return res;
-                    }
-                    return res;
-                }
-            )
         );
     }
 

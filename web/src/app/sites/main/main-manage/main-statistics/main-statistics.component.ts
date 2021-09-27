@@ -5,6 +5,7 @@ import { CategoryIconColorDictionary } from '../../_dictionary/category-icon-col
 import { CategoryIconDictionary } from '../../_dictionary/category-icon.dictionary';
 import { CategoryItemSoldsArray } from '../../_array/catogory-item-solds.array';
 import { CategoriesAmount } from '../../_models/categories-amount.model';
+import { take } from 'rxjs/operators';
 
 @Component({
     selector: 'app-main-statistics',
@@ -37,11 +38,16 @@ export class MainStatisticsComponent implements OnInit, OnDestroy {
     cash = 0;
     creditCard = 0;
 
+    // all sum
+    sum = 0;
+
     // active subscriptions
     subscription: Subscription;
 
     constructor(private mainService: MainService) {
-        this.startCash = this.mainService.getStartCash();
+        this.mainService.getStartCash().pipe(take(1)).subscribe(
+            (cash: number) => this.startCash = cash
+        );
     }
 
     ngOnInit(): void {
@@ -67,6 +73,7 @@ export class MainStatisticsComponent implements OnInit, OnDestroy {
                 this.soldSum = res[0];
                 this.expenseSum = res[1];
                 this.balanceValue = res[0] - res[1];
+                this.checkSum();
             }
         );
 
@@ -74,7 +81,9 @@ export class MainStatisticsComponent implements OnInit, OnDestroy {
     }
 
     checkSum(): void {
-
+        this.sum = +this.startCash
+            + (+this.soldSum - +this.expenseSum)
+            - (+this.creditCard + +this.cash);
     }
 
     ngOnDestroy(): void {

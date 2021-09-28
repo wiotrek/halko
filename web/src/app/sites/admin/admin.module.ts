@@ -9,6 +9,7 @@ import { StatisticsMgmtComponent } from './view/statistics-mgmt/statistics-mgmt.
 import { ParticipantsAddComponent } from './view/participants-mgmt/participants-add/participants-add.component';
 import { AdminAddComponent } from './view/participants-mgmt/admin-add/admin-add.component';
 import { ParticipantsListComponent } from './view/participants-mgmt/participants-list/participants-list.component';
+import {PricesComponent} from 'src/app/sites/prices/view/prices.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { ParticipantsListComponent } from './view/participants-mgmt/participants
                 component: AdminComponent,
                 children: [
                     { path: '', component: AdminMainComponent },
+                    { path: 'cennik', component: PricesComponent },
                     { path: 'punkty', component: PointsMgmtComponent},
                     {
                         path: 'pracownicy',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PricesFieldsArray } from './prices-fields.array';
-import { PricesModel } from '../../../shared/models/prices.model';
-import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
-import { SearcherModel } from '../../../shared/models/searcher.model';
+import { PricesFieldsArray } from './_arrays/prices-fields.array';
+import { PricesModel } from 'src/app/shared/models/prices.model';
+import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
+import { SearcherModel } from 'src/app/shared/models/searcher.model';
 import { PricesService } from '../prices.service';
 import { PricesApiGetPagModel } from '../_models-pagination/prices-api-get-pag.model';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -22,7 +22,7 @@ export class PricesComponent implements OnInit {
     // amount getting elements from api
     phonesAmount: number;
 
-    // field unnecessery to generate component
+    // field unnecessary to generate component
     pricesFieldsArray = PricesFieldsArray;
 
     // elements in phone in list will display from left to right,
@@ -37,7 +37,7 @@ export class PricesComponent implements OnInit {
     };
 
     // searcher property will for getting from api
-    // choice filter, from whichers will be create params
+    // choice filter, where will be create params
     searcher: SearcherModel = {
         pointName: '',
         searchName: '',
@@ -77,7 +77,7 @@ export class PricesComponent implements OnInit {
                 // amount all objects getting api
                 this.phonesAmount = res.count;
 
-                // unnecessery values to setting pagination
+                // unnecessary values to setting pagination
                 this.searcher.pageIndex = res.pageIndex;
 
                 // default sorting is for producer,and is alphabetic

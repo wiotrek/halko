@@ -36,7 +36,7 @@ export class AdminService {
 
     // display items, and delete items
     // 1 step get two subscribers
-    // 2 step connect two arrays
+    // 2 step connect two _arrays
     // 3 step get only sold items
     // 4 step sort array for insert time
     getItems(pointName: string, date: string, operation: ItemOperationEnum): Observable<ItemStructure[]> {

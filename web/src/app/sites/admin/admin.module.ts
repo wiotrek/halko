@@ -9,41 +9,44 @@ import { StatisticsMgmtComponent } from './view/statistics-mgmt/statistics-mgmt.
 import { ParticipantsAddComponent } from './view/participants-mgmt/participants-add/participants-add.component';
 import { AdminAddComponent } from './view/participants-mgmt/admin-add/admin-add.component';
 import { ParticipantsListComponent } from './view/participants-mgmt/participants-list/participants-list.component';
-import {PricesComponent} from 'src/app/sites/prices/view/prices.component';
 
 @NgModule({
-    declarations: [
-        AdminComponent,
-        AdminMainComponent,
-        PointsMgmtComponent,
-        ParticipantsMgmtComponent,
-        ParticipantsAddComponent,
-        ParticipantsListComponent,
-        AdminAddComponent,
-        StatisticsMgmtComponent
-    ],
-    imports: [
-        SharedModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: AdminComponent,
-                children: [
-                    { path: '', component: AdminMainComponent },
-                    { path: 'cennik', component: PricesComponent },
-                    { path: 'punkty', component: PointsMgmtComponent},
-                    {
-                        path: 'pracownicy',
-                        component: ParticipantsMgmtComponent,
-                        children: [
-                            { path: '', component: ParticipantsListComponent },
-                            { path: 'dodaj-pracownika', component: ParticipantsAddComponent },
-                            { path: 'dodaj-admina', component: AdminAddComponent }
-                        ]
-                    },
-                ]
-            }
-        ])
-    ]
+  declarations: [
+    AdminComponent,
+    AdminMainComponent,
+    PointsMgmtComponent,
+    ParticipantsMgmtComponent,
+    ParticipantsAddComponent,
+    ParticipantsListComponent,
+    AdminAddComponent,
+    StatisticsMgmtComponent
+  ],
+  imports: [
+    SharedModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: AdminComponent,
+        children: [
+          { path: '', component: AdminMainComponent },
+          { path: 'punkty', component: PointsMgmtComponent},
+          {
+            path: 'pracownicy',
+            component: ParticipantsMgmtComponent,
+            children: [
+              { path: '', component: ParticipantsListComponent },
+              { path: 'dodaj-pracownika', component: ParticipantsAddComponent },
+              { path: 'dodaj-admina', component: AdminAddComponent }
+            ]
+          },
+          {
+            path: 'cennik',
+            loadChildren: () =>
+              import('src/app/sites/prices/prices.module').then(m => m.PricesModule)
+          },
+        ]
+      }
+    ])
+  ]
 })
 export class AdminModule {}

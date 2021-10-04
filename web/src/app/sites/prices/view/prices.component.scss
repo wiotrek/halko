@@ -5,6 +5,7 @@
   .headline {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
 
     &__title, &__mew-price {
       font-size: 1.5rem;

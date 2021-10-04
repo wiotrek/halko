@@ -104,5 +104,4 @@ export class PricesListComponent implements OnInit {
         this.toastr.error(err.error.message)
     );
   }
-
 }

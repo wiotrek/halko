@@ -26,7 +26,7 @@ import { AdminGuard } from 'src/app/auth/_guards/admin.guard';
             canActivate: [AdminGuard],
           }
         ]
-      },
+      }
     ])
   ]
 })

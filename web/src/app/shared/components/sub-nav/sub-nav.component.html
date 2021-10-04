@@ -1,22 +1,23 @@
 <div class="header">
 
-    <h3 class="header__headline">{{activeSite.caption}}</h3>
+  <h3 class="header__headline">{{activeSite.caption}}</h3>
 
-    <div class="header__right-side">
+  <div class="header__right-side">
 
-        <a 
-            class="header__right-side__option-left"
-            (click)="switchSiteNav(leftOption.path)"
-        >
-            {{leftOption.caption}}
-        </a>
-        /
-        <a 
-            class="header__right-side__option-right"
-            (click)="switchSiteNav(rightOption.path)"
-        >
-            {{rightOption.caption}}
-        </a>
-    </div>
+    <a
+      class="header__right-side__option-left"
+      (click)="switchSiteNav(leftOption.path)"
+    >
+      {{leftOption.caption}}
+    </a>
+    /
+    <a
+      class="header__right-side__option-right"
+      (click)="switchSiteNav(rightOption.path)"
+    >
+      {{rightOption.caption}}
+    </a>
+
+  </div>
 
 </div>

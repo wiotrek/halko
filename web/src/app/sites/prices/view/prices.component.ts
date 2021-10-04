@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-prices',
@@ -13,10 +14,10 @@ import { Component } from '@angular/core';
 
           <a
             class="headline__new-price"
-            routerLink="dodaj-telefon"
+            routerLink="{{isAdderMode ? 'dodaj-telefon' : ''}}"
             *appHasRole="['Admin']"
           >
-            Dodaj informacje o telefonie
+            {{isAdderMode ? 'Cofnij' : 'Dodaj informacje o telefonie'}}
           </a>
 
         </div>
@@ -29,6 +30,19 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['prices.component.scss']
 })
-export class PricesComponent {
-    headline = 'Cennik';
+export class PricesComponent implements OnInit {
+  headline = 'Cennik';
+
+  isAdderMode = false;
+
+  constructor(private router: Router) {
+    this.checkUrl();
+  }
+
+  ngOnInit(): void {
+    this.checkUrl();
+  }
+
+  checkUrl = () =>
+    this.isAdderMode = this.router.url.includes('dodaj-telefon')
 }

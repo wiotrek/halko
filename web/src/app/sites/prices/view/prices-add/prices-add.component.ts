@@ -14,7 +14,7 @@ import { PricesService } from 'src/app/sites/prices/prices.service';
   `
 })
 export class PricesAddComponent {
-  fields = PricesFieldsArray;
+  fields = PricesFieldsArray.filter(x => x.category !== 'index');
 
   constructor(private pricesService: PricesService) {}
 

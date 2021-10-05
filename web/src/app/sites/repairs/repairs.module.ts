@@ -7,25 +7,25 @@ import { RepairsListComponent } from './repairs-list/repairs-list.component';
 import { RepairsComponent } from './repairs.component';
 
 @NgModule({
-    declarations: [
-        RepairsComponent,
-        RepairsListComponent,
-        RepairsAddComponent,
-        RepairsArchiveComponent
-    ],
-    imports: [
-        SharedModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: RepairsComponent,
-                children: [
-                    { path: '', component: RepairsListComponent },
-                    { path: 'archiwum', component: RepairsArchiveComponent },
-                    { path: 'dodaj-serwis', component: RepairsAddComponent }
-                ]
-            }
-        ]),
-    ]
+  declarations: [
+    RepairsComponent,
+    RepairsListComponent,
+    RepairsAddComponent,
+    RepairsArchiveComponent
+  ],
+  imports: [
+    SharedModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: RepairsComponent,
+        children: [
+          { path: '', component: RepairsListComponent },
+          { path: 'archiwum', component: RepairsArchiveComponent },
+          { path: 'dodaj-serwis', component: RepairsAddComponent }
+        ]
+      }
+    ])
+  ]
 })
 export class RepairsModule {}

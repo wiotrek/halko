@@ -1,90 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { PricesFieldsArray } from './prices-fields.array';
-import { PricesModel } from '../../../shared/models/prices.model';
-import { SearcherPatternModel } from '../../../shared/components/searcher/_models/searcher-pattern.model';
-import { SearcherModel } from '../../../shared/models/searcher.model';
-import { PricesService } from '../prices.service';
-import { PricesApiGetPagModel } from '../_models-pagination/prices-api-get-pag.model';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-    selector: 'app-prices',
-    templateUrl: './prices.component.html',
-    styleUrls: ['prices.component.scss']
+  selector: 'app-prices',
+  template: `
+    <div class="wrapper">
+
+      <div class="middle">
+
+        <div class="headline">
+
+          <div class="headline__title">{{headline}}</div>
+
+          <a
+            class="headline__new-price"
+            (click)="setUrl()"
+            *appHasRole="['Admin']"
+          >
+            {{isAdderMode ? 'Cofnij' : 'Dodaj informacje o telefonie'}}
+          </a>
+
+        </div>
+
+        <router-outlet></router-outlet>
+
+      </div>
+
+    </div>
+  `,
+  styleUrls: ['prices.component.scss']
 })
 export class PricesComponent implements OnInit {
-    headline = 'Cennik';
+  headline = 'Cennik';
 
-    // main list
-    phonePrices: PricesModel[];
+  isAdderMode = false;
 
-    // amount getting elements from api
-    phonesAmount: number;
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-    // field unnecessery to generate component
-    pricesFieldsArray = PricesFieldsArray;
+  ngOnInit(): void {
+    this.checkUrl();
+  }
 
-    // elements in phone in list will display from left to right,
-    // but not in center
-    isFlexStart = true;
+  checkUrl = () =>
+    this.isAdderMode = this.router.url.includes('dodaj-telefon')
 
-    // choice elements on searcher component
-    searcherPattern: SearcherPatternModel = {
-        sorting: false,
-        filterNewUsed: false,
-        filterPoints: false
-    };
-
-    // searcher property will for getting from api
-    // choice filter, from whichers will be create params
-    searcher: SearcherModel = {
-        pointName: '',
-        searchName: '',
-        state: '',
-        pageIndex: 1,
-        pageSize: 10,
-    };
-
-    constructor(
-        private pricesService: PricesService,
-        private toastr: ToastrService
-    ) {}
-
-    ngOnInit(): void {
-        this.getPrices(this.searcher);
-    }
-
-    searchNameFilter(name: string): void {
-        this.searcher.searchName = name;
-        this.getPrices(this.searcher);
-    }
-
-    countIndex(phone: PricesModel): number {
-        return (
-            this.phonePrices.indexOf(phone) + 1
-        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
-    }
-
-    changeSite(pageIndex: number): void {
-        this.searcher.pageIndex = pageIndex;
-        this.getPrices(this.searcher);
-    }
-
-    private getPrices(searcher: SearcherModel = this.searcher): void {
-        this.pricesService.getPrices(searcher).subscribe(
-            (res: PricesApiGetPagModel) => {
-                // amount all objects getting api
-                this.phonesAmount = res.count;
-
-                // unnecessery values to setting pagination
-                this.searcher.pageIndex = res.pageIndex;
-
-                // default sorting is for producer,and is alphabetic
-                this.phonePrices = res.data;
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
-        );
-    }
+  setUrl(): void {
+    this.router.navigate([
+      this.isAdderMode ? '/admin/cennik' : 'dodaj-telefon'
+    ], { relativeTo: this.route })
+    .then(() => this.checkUrl());
+  }
 }

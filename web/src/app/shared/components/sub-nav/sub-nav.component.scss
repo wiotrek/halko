@@ -1,29 +1,39 @@
 @import 'src/app/shared/global-styles/variable.scss';
 
 @media (min-width: 0) {
-    .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    
-        &__headline {
-            font-size: 1.5rem;
-            margin-right: 15px;
-            display: inline;
-        }
-    
-        &__right-side {
-            font-size: .9rem;
-            color: $primaryGrey;
-    
-            a {
-                cursor: pointer;
-    
-                &:hover {
-                    text-decoration: underline;
-                    color: $prettyGreen;
-                }
-            }
-        }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    &__headline {
+      font-size: 1.2rem;
+      margin-right: 15px;
+      display: inline;
     }
+
+    &__right-side {
+      font-size: .8rem;
+      color: $primaryGrey;
+
+      a {
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+          color: $prettyGreen;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $minValueDesktop) {
+  .header__headline {
+    font-size: 1.5rem;
+  }
+
+  .header__right-side {
+    font-size: .9rem;
+  }
 }

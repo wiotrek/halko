@@ -1,10 +1,40 @@
-.headline {
-    font-size: 1.5rem;
-    margin-right: 15px;
-    display: inline;
-}
+@import 'src/app/shared/global-styles/variable.scss';
 
-.middle {
+@media (min-width: 0) {
+  .middle {
     max-width: 850px;
     margin: 0 auto;
+
+    .headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+
+      &__title {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        display: inline;
+      }
+
+      &__new-price {
+        font-size: .8rem;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+          color: $prettyGreen;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: $minValueDesktop) {
+  .headline__title {
+    font-size: 1.5rem;
+  }
+
+  .headline__new-price {
+    font-size: .9rem;
+  }
 }

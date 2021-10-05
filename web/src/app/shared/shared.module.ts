@@ -14,11 +14,13 @@ import { RepairsToArchiveComponent } from './components-specific/repairs-to-arch
 import { AdderPhoneComponent } from './components/adder-phone/adder-phone.component';
 import { SearcherComponent } from './components/searcher/searcher.component';
 import { PhonesExtendComponent } from './components-specific/phones-extend/phones-extend.component';
+import {HasRoleDirective} from 'src/app/shared/directives/has-role.directive';
 
 @NgModule({
     declarations: [
         LoadingSpinnerComponent,
         DropdownDirective,
+        HasRoleDirective,
         LaPaginationComponent,
         SubNavComponent,
         PhoneInListComponent,
@@ -44,6 +46,7 @@ import { PhonesExtendComponent } from './components-specific/phones-extend/phone
         FontAwesomeModule,
         LoadingSpinnerComponent,
         DropdownDirective,
+        HasRoleDirective,
         LaPaginationComponent,
         SubNavComponent,
         PhoneInListComponent,

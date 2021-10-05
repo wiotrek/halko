@@ -38,9 +38,7 @@ export class PricesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute
-  ) {
-    this.checkUrl();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.checkUrl();

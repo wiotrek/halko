@@ -7,6 +7,8 @@ import { PricesService } from 'src/app/sites/prices/prices.service';
 import { ToastrService } from 'ngx-toastr';
 import { PricesApiGetPagModel } from 'src/app/sites/prices/_models-pagination/prices-api-get-pag.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-prices-list',
@@ -22,6 +24,8 @@ import { HttpErrorResponse } from '@angular/common/http';
       [elInList]="phone"
       [isFlexStart]="isFlexStart"
       [ind]="phonePrices.indexOf(phone) + 1"
+      [elInListAllowedEdit]="true"
+      (updateDetails)="updatePrice($event)"
     ></app-phone-in-list>
 
     <app-la-pagination
@@ -86,6 +90,13 @@ export class PricesListComponent implements OnInit {
   changeSite(pageIndex: number): void {
     this.searcher.pageIndex = pageIndex;
     this.getPrices(this.searcher);
+  }
+
+  updatePrice(price: {update: NgForm, elInList: PhoneInListType}): void {
+    this.pricesService.editPrice(
+      price.update.value as PricesModel,
+      (price.elInList as PricesModel).id
+    );
   }
 
   private getPrices(searcher: SearcherModel = this.searcher): void {

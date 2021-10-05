@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-prices',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 
           <a
             class="headline__new-price"
-            routerLink="{{isAdderMode ? 'dodaj-telefon' : ''}}"
+            (click)="setUrl()"
             *appHasRole="['Admin']"
           >
             {{isAdderMode ? 'Cofnij' : 'Dodaj informacje o telefonie'}}
@@ -35,7 +35,10 @@ export class PricesComponent implements OnInit {
 
   isAdderMode = false;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.checkUrl();
   }
 
@@ -45,4 +48,11 @@ export class PricesComponent implements OnInit {
 
   checkUrl = () =>
     this.isAdderMode = this.router.url.includes('dodaj-telefon')
+
+  setUrl(): void {
+    this.router.navigate([
+      this.isAdderMode ? '/admin/cennik' : 'dodaj-telefon'
+    ], { relativeTo: this.route })
+    .then(() => this.checkUrl());
+  }
 }

@@ -1,36 +1,36 @@
 @import 'src/app/shared/global-styles/variable';
 
 h5 {
-    color: $prettyGreen;
+  color: $prettyGreen;
 }
 
 @media (min-width: 0) {
-    .choice {
-        margin: 20px 0;
+  .choice {
+    margin: 20px 0;
 
-        &__filters {
-            display: flex;
-            font-size: .9rem;
+    &__filters {
+      display: flex;
+      font-size: .9rem;
 
-            &__calendar {
-                margin-right: 20px;
+      &__calendar {
+        margin-right: 20px;
 
-                input {
-                    background-color: transparent;
-                    border: 0;
-                    cursor: pointer;
-                }
-            }
-
-            &__point select{
-                background-color: transparent;
-                border: 0;
-                cursor: pointer;
-            }
+        input {
+          background-color: transparent;
+          border: 0;
+          cursor: pointer;
         }
-    }
+      }
 
-    .list {
-        margin: 20px 0;
+      &__point select {
+        background-color: transparent;
+        border: 0;
+        cursor: pointer;
+      }
     }
+  }
+
+  .list {
+    margin: 20px 0;
+  }
 }

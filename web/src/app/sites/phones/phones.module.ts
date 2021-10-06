@@ -7,28 +7,29 @@ import { PhonesListComponent } from './phones-list/phones-list.component';
 import { PhonesComponent } from './phones.component';
 
 @NgModule({
-    declarations: [
-        PhonesComponent,
-        PhonesListComponent,
-        PhonesListArchiveComponent,
-        PhonesAddComponent
-    ],
-    exports: [
-        PhonesAddComponent
-    ],
-    imports: [
-        SharedModule,
-        RouterModule.forChild([
-            {
-                path: '',
-                component: PhonesComponent,
-                children: [
-                    {path: '', component: PhonesListComponent},
-                    {path: 'archiwum', component: PhonesListArchiveComponent},
-                    {path: 'dodaj-telefon', component: PhonesAddComponent}
-                ]
-            }
-        ])
-    ]
+  declarations: [
+    PhonesComponent,
+    PhonesListComponent,
+    PhonesListArchiveComponent,
+    PhonesAddComponent
+  ],
+  exports: [
+    PhonesAddComponent
+  ],
+  imports: [
+    SharedModule,
+    RouterModule.forChild([
+      {
+        path: '',
+        component: PhonesComponent,
+        children: [
+          {path: '', component: PhonesListComponent},
+          {path: 'archiwum', component: PhonesListArchiveComponent},
+          {path: 'dodaj-telefon', component: PhonesAddComponent}
+        ]
+      }
+    ])
+  ]
 })
-export class PhonesModule {}
+export class PhonesModule {
+}

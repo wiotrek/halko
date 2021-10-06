@@ -2,56 +2,56 @@
 @import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
-    .view {
-        margin-top: 30px;
-        @include setElementsInItem;
+  .view {
+    margin-top: 30px;
+    @include setElementsInItem;
 
-        &__index, &__ini, &__category {
-            width: 22px;
-        }
-
-        &__index, &__ini, &__category, &__name, &__price {
-            text-align: center;
-            @include oneOfElementsInItem;
-        }
-
-        &__name {
-            min-width: 80px;
-            max-width: 160px;
-            overflow: hidden;
-        }
-
-        &__price {
-            min-width: 45px;
-            overflow: hidden;
-        }
-
-        &__edit {
-            @include oneOfElementsInItem;
-            border: 0;
-            transition: transform 0s .2 ease-in-out;
-
-            &:hover {
-                transform: translateY(-2px);
-            }
-
-            &__icon {
-                color: $waringColor;
-            }
-        }
+    &__index, &__ini, &__category {
+      width: 22px;
     }
+
+    &__index, &__ini, &__category, &__name, &__price {
+      text-align: center;
+      @include oneOfElementsInItem;
+    }
+
+    &__name {
+      min-width: 80px;
+      max-width: 160px;
+      overflow: hidden;
+    }
+
+    &__price {
+      min-width: 45px;
+      overflow: hidden;
+    }
+
+    &__edit {
+      @include oneOfElementsInItem;
+      border: 0;
+      transition: transform 0s .2 ease-in-out;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &__icon {
+        color: $waringColor;
+      }
+    }
+  }
 }
 
 @media (min-width: $minValueTablet) {
-    .view {
-        margin: 8px auto;
-        font-size: .7rem;
-        background-color: white;
+  .view {
+    margin: 8px auto;
+    font-size: .7rem;
+    background-color: white;
 
-        &__name {
-            min-width: 200px;
-            max-width: 230px;
-            overflow: hidden;
-        }
+    &__name {
+      min-width: 200px;
+      max-width: 230px;
+      overflow: hidden;
     }
+  }
 }

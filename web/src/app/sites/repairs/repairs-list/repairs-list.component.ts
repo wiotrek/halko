@@ -8,8 +8,8 @@ import { RepairsMapper } from '../repairs.mapper';
 import { SearcherModel } from '../../../shared/models/searcher.model';
 
 @Component({
-    selector: 'app-repairs-list',
-    template: `
+  selector: 'app-repairs-list',
+  template: `
         <app-phone-in-list
             *ngFor="let phone of phonesRepairs"
             [ind]="countIndex(phone)"
@@ -29,56 +29,56 @@ import { SearcherModel } from '../../../shared/models/searcher.model';
     `
 })
 export class RepairsListComponent implements OnInit {
-    phonesRepairs: RepairsModel[];
-    phoneRepairsAmount: number;
+  phonesRepairs: RepairsModel[];
+  phoneRepairsAmount: number;
 
-    fields = RepairsFieldsArray;
+  fields = RepairsFieldsArray;
 
-    componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
+  componentWillUsing = PhoneInListDetailsCptsArray.RepairsToArchiveComponent;
 
-    searcher: SearcherModel = {
-        pointName: '',
-        searchName: '',
-        state: '',
-        pageIndex: 1,
-        pageSize: 10,
-    };
+  searcher: SearcherModel = {
+    pointName: '',
+    searchName: '',
+    state: '',
+    pageIndex: 1,
+    pageSize: 10,
+  };
 
-    constructor(private repairsService: RepairsService) {}
+  constructor(private repairsService: RepairsService) {}
 
-    ngOnInit(): void {
-        this.getRepairsPhones(this.searcher);
-    }
+  ngOnInit(): void {
+    this.getRepairsPhones(this.searcher);
+  }
 
-    countIndex(phone: RepairsModel): number {
-        return (
-            this.phonesRepairs.indexOf(phone) + 1
-        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
-    }
+  countIndex(phone: RepairsModel): number {
+    return (
+      this.phonesRepairs.indexOf(phone) + 1
+    ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+  }
 
-    changeSite(pageIndex: number): void {
-        this.searcher.pageIndex = pageIndex;
-        this.getRepairsPhones(this.searcher);
-    }
+  changeSite(pageIndex: number): void {
+    this.searcher.pageIndex = pageIndex;
+    this.getRepairsPhones(this.searcher);
+  }
 
-    sentToArchive(response: { isSuccess: boolean, id: number }): void {
-        const giveBackInfo = response.isSuccess ? 'Naprawiony' : 'Nie udało się';
-        this.repairsService.insertRepairArchivePhone(giveBackInfo, response.id);
-    }
+  sentToArchive(response: { isSuccess: boolean, id: number }): void {
+    const giveBackInfo = response.isSuccess ? 'Naprawiony' : 'Nie udało się';
+    this.repairsService.insertRepairArchivePhone(giveBackInfo, response.id);
+  }
 
-    private getRepairsPhones(searcher: SearcherModel = this.searcher): void {
+  private getRepairsPhones(searcher: SearcherModel = this.searcher): void {
 
-        this.repairsService.getRepairsPhone(searcher).subscribe(
-            (res: RepairsApiGetPagModel) => {
+    this.repairsService.getRepairsPhone(searcher).subscribe(
+      (res: RepairsApiGetPagModel) => {
 
-                // unnecessary to pagination
-                this.searcher.pageIndex = res.pageIndex;
-                this.phoneRepairsAmount = res.count;
+        // unnecessary to pagination
+        this.searcher.pageIndex = res.pageIndex;
+        this.phoneRepairsAmount = res.count;
 
-                this.phonesRepairs = res.data.map(
-                    repair => RepairsMapper.repairRawModelToRepairModel(repair)
-                );
-            }
+        this.phonesRepairs = res.data.map(
+          repair => RepairsMapper.repairRawModelToRepairModel(repair)
         );
-    }
+      }
+    );
+  }
 }

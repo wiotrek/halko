@@ -1,21 +1,21 @@
 <button
-    class="creator-btn"
-    (click)="creatorMod = !creatorMod"
+  class="creator-btn"
+  (click)="creatorMod = !creatorMod"
 >
-    {{creatorMod ? 'Cofnij' : 'Dodaj nowy punkt'}}
+  {{creatorMod ? 'Cofnij' : 'Dodaj nowy punkt'}}
 </button>
 
 <app-adder-phone
-    *ngIf="creatorMod; else list"
-    [fields]="pointsMgmtFieldsAdderArray"
-    (outputElement)="addNewPoint($event)"
+  *ngIf="creatorMod; else list"
+  [fields]="pointsMgmtFieldsAdderArray"
+  (outputElement)="addNewPoint($event)"
 ></app-adder-phone>
 
 
 <ng-template #list>
 
-    <div *ngFor="let point of pointsList">
-        {{point}}
-    </div>
+  <div *ngFor="let point of pointsList">
+    {{point}}
+  </div>
 
 </ng-template>

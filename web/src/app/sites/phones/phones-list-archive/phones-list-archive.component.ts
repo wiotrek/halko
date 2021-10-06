@@ -9,8 +9,8 @@ import { SortingVectorModel } from '../../../shared/components/searcher/_models/
 import { SearcherModel } from 'src/app/shared/models/searcher.model';
 
 @Component({
-    selector: 'app-phones-list-archive',
-    template: `
+  selector: 'app-phones-list-archive',
+  template: `
         <app-searcher
             [searcherPattern]="searcherPattern"
             (searchNameFilter)="searchNameFilter($event)"
@@ -33,73 +33,73 @@ import { SearcherModel } from 'src/app/shared/models/searcher.model';
     `
 })
 export class PhonesListArchiveComponent implements OnInit {
-    phonesList: PhoneModel[];
+  phonesList: PhoneModel[];
 
-    // information about amount getting from api
-    phonesAmount: number;
+  // information about amount getting from api
+  phonesAmount: number;
 
-    phonesArchiveFieldsConst = PhonesArchiveFieldsArray;
+  phonesArchiveFieldsConst = PhonesArchiveFieldsArray;
 
-    // setting property which searcher must be using
-    searcherPattern: SearcherPatternModel = {
-        sorting: true,
-        filterNewUsed: false,
-        filterPoints: false
-    };
+  // setting property which searcher must be using
+  searcherPattern: SearcherPatternModel = {
+    sorting: true,
+    filterNewUsed: false,
+    filterPoints: false
+  };
 
-    // searcher property will for getting from api
-    // searcher is using in every functions
-    searcher: SearcherModel = {
-        pointName: '',
-        searchName: '',
-        state: '',
-        pageIndex: 1,
-        pageSize: 10,
-    };
+  // searcher property will for getting from api
+  // searcher is using in every functions
+  searcher: SearcherModel = {
+    pointName: '',
+    searchName: '',
+    state: '',
+    pageIndex: 1,
+    pageSize: 10,
+  };
 
-    constructor(
-        private phoneService: PhonesService,
-        private toastr: ToastrService
-    ) {}
+  constructor(
+    private phoneService: PhonesService,
+    private toastr: ToastrService
+  ) {}
 
-    ngOnInit(): void {
-        this.getPhones();
-    }
+  ngOnInit(): void {
+    this.getPhones();
+  }
 
-    countIndex(phone: PhoneModel): number {
-        return (
-            this.phonesList.indexOf(phone) + 1
-        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
-    }
+  countIndex(phone: PhoneModel): number {
+    return (
+      this.phonesList.indexOf(phone) + 1
+    ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+  }
 
-    changeSite(pageIndex: number): void {
-        this.searcher.pageIndex = pageIndex;
-        this.getPhones(this.searcher);
-    }
+  changeSite(pageIndex: number): void {
+    this.searcher.pageIndex = pageIndex;
+    this.getPhones(this.searcher);
+  }
 
-    // to do
-    searchNameFilter(searchName: string): void {
-        this.searcher.searchName = searchName;
-        this.getPhones(this.searcher);
-    }
+  // to do
+  searchNameFilter(searchName: string): void {
+    this.searcher.searchName = searchName;
+    this.getPhones(this.searcher);
+  }
 
-    // to do
-    sorting(sort: SortingVectorModel): void {
-        // this.getPhones(sort);
-    }
+  // to do
+  sorting(sort: SortingVectorModel): void {
+    // this.getPhones(sort);
+  }
 
-    private getPhones(searcher: SearcherModel = this.searcher): void {
-        this.phoneService.getArchivList(searcher).subscribe(
-            res => {
-                // unnecessery values to setting pagination
-                this.searcher.pageIndex = res.pageIndex;
-                this.phonesAmount = res.count;
+  private getPhones(searcher: SearcherModel = this.searcher): void {
+    this.phoneService.getArchivList(searcher).subscribe(
+      res => {
+        // unnecessery values to setting pagination
+        this.searcher.pageIndex = res.pageIndex;
+        this.phonesAmount = res.count;
 
-                // default sorting is for producer,and is alphabetic
-                this.phonesList = res.data;
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
-        );
-    }
+        // default sorting is for producer,and is alphabetic
+        this.phonesList = res.data;
+      },
+      (err: HttpErrorResponse) =>
+        this.toastr.error(err.error.message)
+    );
+  }
 }

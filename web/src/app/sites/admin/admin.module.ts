@@ -28,15 +28,15 @@ import { ParticipantsListComponent } from './view/participants-mgmt/participants
         path: '',
         component: AdminComponent,
         children: [
-          { path: '', component: AdminMainComponent },
-          { path: 'punkty', component: PointsMgmtComponent},
+          {path: '', component: AdminMainComponent},
+          {path: 'punkty', component: PointsMgmtComponent},
           {
             path: 'pracownicy',
             component: ParticipantsMgmtComponent,
             children: [
-              { path: '', component: ParticipantsListComponent },
-              { path: 'dodaj-pracownika', component: ParticipantsAddComponent },
-              { path: 'dodaj-admina', component: AdminAddComponent }
+              {path: '', component: ParticipantsListComponent},
+              {path: 'dodaj-pracownika', component: ParticipantsAddComponent},
+              {path: 'dodaj-admina', component: AdminAddComponent}
             ]
           },
           {
@@ -49,4 +49,5 @@ import { ParticipantsListComponent } from './view/participants-mgmt/participants
     ])
   ]
 })
-export class AdminModule {}
+export class AdminModule {
+}

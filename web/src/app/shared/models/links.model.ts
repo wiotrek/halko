@@ -1,4 +1,4 @@
 export interface Links {
-    caption: string;
-    path: string;
+  caption: string;
+  path: string;
 }

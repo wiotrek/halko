@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Links } from 'src/app/shared/models/links.model';
 
 @Component({
-    selector: 'app-sub-nav',
-    templateUrl: './sub-nav.component.html',
-    styleUrls: ['./sub-nav.component.scss']
+  selector: 'app-sub-nav',
+  templateUrl: './sub-nav.component.html',
+  styleUrls: [ './sub-nav.component.scss' ]
 })
 export class SubNavComponent implements DoCheck {
   @Input() paths = {} as Links[];
@@ -49,15 +49,15 @@ export class SubNavComponent implements DoCheck {
 
     // set left link button
     this.leftOption = this.paths[2] === currentlyLink
-    ? this.paths[0]
-    : this.paths[2];
+      ? this.paths[0]
+      : this.paths[2];
 
     // set right link button
     this.rightOption = this.paths[1] === currentlyLink
-    ? this.paths[0] : this.paths[1];
-  }
+      ? this.paths[0] : this.paths[1];
+  };
 
   switchSiteNav = (link: string) => {
-    this.router.navigate([`./${link}`], { relativeTo: this.route });
-  }
+    this.router.navigate([ `./${link}` ], {relativeTo: this.route});
+  };
 }

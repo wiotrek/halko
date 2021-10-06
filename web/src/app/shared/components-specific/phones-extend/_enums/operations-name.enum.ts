@@ -1,4 +1,4 @@
 export enum OperationsNameEnum {
-    sellPhone,
-    movePhone
+  sellPhone,
+  movePhone
 }

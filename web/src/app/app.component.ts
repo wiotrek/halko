@@ -5,7 +5,7 @@ import { AuthService } from './auth/auth.service';
   selector: 'app-root',
   template: '<router-outlet></router-outlet>'
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   constructor(private authService: AuthService) {}
 

@@ -1,4 +1,4 @@
 export enum TransactionTypeEnum {
-    expenses = 'Zakup',
-    solds = 'Sprzedaż'
+  expenses = 'Zakup',
+  solds = 'Sprzedaż'
 }

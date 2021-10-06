@@ -14,45 +14,46 @@ import { RepairsToArchiveComponent } from './components-specific/repairs-to-arch
 import { AdderPhoneComponent } from './components/adder-phone/adder-phone.component';
 import { SearcherComponent } from './components/searcher/searcher.component';
 import { PhonesExtendComponent } from './components-specific/phones-extend/phones-extend.component';
-import {HasRoleDirective} from 'src/app/shared/directives/has-role.directive';
+import { HasRoleDirective } from 'src/app/shared/directives/has-role.directive';
 
 @NgModule({
-    declarations: [
-        LoadingSpinnerComponent,
-        DropdownDirective,
-        HasRoleDirective,
-        LaPaginationComponent,
-        SubNavComponent,
-        PhoneInListComponent,
-        PhoneInListDetailsComponent,
-        RepairsToArchiveComponent,
-        AdderPhoneComponent,
-        SearcherComponent,
-        PhonesExtendComponent
-    ],
-    imports: [
-        CommonModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule,
-        FontAwesomeModule,
-        ToastrModule.forRoot()
-    ],
-    exports: [
-        CommonModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        FormsModule,
-        FontAwesomeModule,
-        LoadingSpinnerComponent,
-        DropdownDirective,
-        HasRoleDirective,
-        LaPaginationComponent,
-        SubNavComponent,
-        PhoneInListComponent,
-        PhoneInListDetailsComponent,
-        AdderPhoneComponent,
-        SearcherComponent
-    ]
+  declarations: [
+    LoadingSpinnerComponent,
+    DropdownDirective,
+    HasRoleDirective,
+    LaPaginationComponent,
+    SubNavComponent,
+    PhoneInListComponent,
+    PhoneInListDetailsComponent,
+    RepairsToArchiveComponent,
+    AdderPhoneComponent,
+    SearcherComponent,
+    PhonesExtendComponent
+  ],
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule,
+    ToastrModule.forRoot()
+  ],
+  exports: [
+    CommonModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule,
+    LoadingSpinnerComponent,
+    DropdownDirective,
+    HasRoleDirective,
+    LaPaginationComponent,
+    SubNavComponent,
+    PhoneInListComponent,
+    PhoneInListDetailsComponent,
+    AdderPhoneComponent,
+    SearcherComponent
+  ]
 })
-export class SharedModule {}
+export class SharedModule {
+}

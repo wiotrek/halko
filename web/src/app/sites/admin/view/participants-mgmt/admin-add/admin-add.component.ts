@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { AdminService } from '../../../admin.service';
 
 @Component({
-    selector: 'app-admin-add',
-    template: `
+  selector: 'app-admin-add',
+  template: `
         <app-adder-phone
             [fields]="adminAddFieldsArray"
             (outputElement)="addAdmin($event)"
@@ -13,13 +13,13 @@ import { AdminService } from '../../../admin.service';
     `
 })
 export class AdminAddComponent {
-    creatorMod = false;
+  creatorMod = false;
 
-    adminAddFieldsArray = AdminAddFieldsArray;
+  adminAddFieldsArray = AdminAddFieldsArray;
 
-    constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService) {}
 
-    addAdmin(admin: NgForm): void {
-        this.adminService.addAdmin(admin.value);
-    }
+  addAdmin(admin: NgForm): void {
+    this.adminService.addAdmin(admin.value);
+  }
 }

@@ -6,8 +6,8 @@ import { ChangeUserPswdFieldsArray } from './change-user-pswd-fields.array';
 import { NgForm } from '@angular/forms';
 
 @Component({
-    selector: 'app-participants-list',
-    template: `
+  selector: 'app-participants-list',
+  template: `
         <button
             class="creator-btn"
             (click)="listEmployessMod = !listEmployessMod"
@@ -51,40 +51,40 @@ import { NgForm } from '@angular/forms';
 
         </ng-template>
     `,
-    styleUrls: ['../../_style/mgmt.scss']
+  styleUrls: [ '../../_style/mgmt.scss' ]
 })
 export class ParticipantsListComponent implements OnInit {
-    // fields to list
-    participantsMgmtListFieldsArray = ParticipantsMgmtListFieldsArray;
+  // fields to list
+  participantsMgmtListFieldsArray = ParticipantsMgmtListFieldsArray;
 
-    // fields to edit password
-    changeUserPswdFieldsArray = ChangeUserPswdFieldsArray;
+  // fields to edit password
+  changeUserPswdFieldsArray = ChangeUserPswdFieldsArray;
 
-    listEmployessMod = true;
+  listEmployessMod = true;
 
-    employees: Employees[] = [];
-    pointList: string[] = [];
-    currentPoint = 'Karuzela Września';
+  employees: Employees[] = [];
+  pointList: string[] = [];
+  currentPoint = 'Karuzela Września';
 
-    constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService) {}
 
-    ngOnInit(): void {
-        this.adminService.getPointList().subscribe(
-            points => {
-                this.pointList = points;
-                this.currentPoint = points[0];
-                this.getParticipantsList();
-            }
-        );
-    }
+  ngOnInit(): void {
+    this.adminService.getPointList().subscribe(
+      points => {
+        this.pointList = points;
+        this.currentPoint = points[0];
+        this.getParticipantsList();
+      }
+    );
+  }
 
-    getParticipantsList(): void {
-        this.adminService.getParticipantsList(this.currentPoint).subscribe(
-            res => this.employees = res
-        );
-    }
+  getParticipantsList(): void {
+    this.adminService.getParticipantsList(this.currentPoint).subscribe(
+      res => this.employees = res
+    );
+  }
 
-    changeUserPswd(dateToChange: NgForm): void {
-        this.adminService.changeUserPassword(dateToChange.value);
-    }
+  changeUserPswd(dateToChange: NgForm): void {
+    this.adminService.changeUserPassword(dateToChange.value);
+  }
 }

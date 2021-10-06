@@ -1,6 +1,6 @@
 export const CategoryItemExpensesArray = [
-    'paczka',
-    'zwrot',
-    'telefon',
-    'zaliczka'
+  'paczka',
+  'zwrot',
+  'telefon',
+  'zaliczka'
 ];

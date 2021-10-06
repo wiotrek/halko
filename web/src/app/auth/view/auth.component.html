@@ -1,60 +1,61 @@
 <div class="wrapper">
 
-    <div class="greeting">
+  <div class="greeting">
 
-        <h1 class="greeting__icon-hand">
-            <fa-icon [icon]="faHandPeace"></fa-icon>
-        </h1>
+    <h1 class="greeting__icon-hand">
+      <fa-icon [icon]="faHandPeace"></fa-icon>
+    </h1>
 
-        <h2 class="greeting__title">Logowanie</h2>
+    <h2 class="greeting__title">Logowanie</h2>
 
-    </div>
+  </div>
 
-    <form class="logging" #authForm="ngForm" *ngIf="!isLoadingSpinner else showSpinner"
+  <form class="logging" #authForm="ngForm" *ngIf="!isLoadingSpinner else showSpinner"
         (ngSubmit)="authForm.valid && onSubmit(authForm)">
 
-        <div class="logging__login form-group">
-            <label for="login">Wprowadź login</label>
-            <input
-                type="text"
-                name="login"
-                id="login"
-                class="form-control"
-                required
-                minlength="3"
-                maxlength="64"
-                ngModel
-            >            
-        </div>
+    <div class="logging__login form-group">
+      <label for="login">Wprowadź login</label>
+      <input
+        type="text"
+        name="login"
+        id="login"
+        class="form-control"
+        required
+        minlength="3"
+        maxlength="64"
+        ngModel
+      >
+    </div>
 
-        <div class="logging__password form-group">
-            <label for="password">Wprowadź hasło</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                class="form-control"
-                required
-                minlength="3"
-                maxlength="256"
-                ngModel
-            >
-        </div>
+    <div class="logging__password form-group">
+      <label for="password">Wprowadź hasło</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        class="form-control"
+        required
+        minlength="3"
+        maxlength="256"
+        ngModel
+      >
+    </div>
 
-        <div class="logging__setting-button">
-            <button
-                type="submit"
-                class="btn logging__button"
-                [disabled]="!authForm.valid">Zaloguj się</button>
-        </div>
+    <div class="logging__setting-button">
+      <button
+        type="submit"
+        class="btn logging__button"
+        [disabled]="!authForm.valid">Zaloguj się
+      </button>
+    </div>
 
-    </form>
+  </form>
 
-    <ng-template #showSpinner>
-        <div style="text-align: center;">
-            <app-spinner-loading></app-spinner-loading>
-        </div>
-    </ng-template>
-   
+  <ng-template #showSpinner>
+    <div style="text-align: center;">
+      <app-spinner-loading></app-spinner-loading>
+    </div>
+  </ng-template>
+
 
 </div>

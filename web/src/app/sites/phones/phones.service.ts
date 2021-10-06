@@ -1,8 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
@@ -20,7 +16,7 @@ import { SearcherModel } from '../../shared/models/searcher.model';
 import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
 import { PhonesApiGetPagModel } from './_models/_models-pagination/phones-api-get-pag.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class PhonesService {
   pointName: string;
   apiUrl = environment.api;
@@ -49,7 +45,7 @@ export class PhonesService {
     return this.http.get<Point[]>(this.apiUrl + 'api/point').pipe(
       map((res: Point[]) => {
         this.points = res;
-        this.points.push({ id: -1, name: 'Wszystkie' });
+        this.points.push({id: -1, name: 'Wszystkie'});
         return this.points;
       })
     );
@@ -69,9 +65,9 @@ export class PhonesService {
     params = params.set('point', this.pointName);
     phone.point.name = this.pointName;
 
-    this.http.post(this.apiUrl + 'api/device', phone, { params }).subscribe(
+    this.http.post(this.apiUrl + 'api/device', phone, {params}).subscribe(
       () => {
-        this.router.navigate([`./telefony`], { relativeTo: this.route }).then();
+        this.router.navigate([ `./telefony` ], {relativeTo: this.route}).then();
         this.toastr.success(ResponseDictionary.added);
       },
       (err: HttpErrorResponse) => this.toastr.error(err.error.message)
@@ -82,7 +78,7 @@ export class PhonesService {
     let params = new HttpParams();
     params = params.set('id', idPhone);
 
-    return this.http.put(this.apiUrl + 'api/device', phone, { params });
+    return this.http.put(this.apiUrl + 'api/device', phone, {params});
   }
 
   // this fuction agree transfer phone to another point.
@@ -97,7 +93,7 @@ export class PhonesService {
     params = params.set('id', phoneId);
     params = params.append('point', pointToTransfer);
 
-    return this.http.put(this.apiUrl + 'api/device/move', {}, { params });
+    return this.http.put(this.apiUrl + 'api/device/move', {}, {params});
   }
 
   sellPhone(phoneId: string, price: number): Observable<any> {
@@ -105,7 +101,7 @@ export class PhonesService {
     params = params.set('id', phoneId);
     params = params.append('price', price.toString());
 
-    return this.http.put(this.apiUrl + 'api/device/sell', {}, { params });
+    return this.http.put(this.apiUrl + 'api/device/sell', {}, {params});
   }
 
   getArchivList(searcher: SearcherModel): Observable<PhonesApiGetPagModel> {
@@ -114,7 +110,7 @@ export class PhonesService {
 
     return this.http.get<PhonesApiGetPagModel>(
       this.apiUrl + 'api/device/sold',
-      { params }
+      {params}
     );
   }
 }

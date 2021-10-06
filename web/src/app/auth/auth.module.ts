@@ -6,14 +6,15 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthComponent } from './view/auth.component';
 
 @NgModule({
-    declarations: [AuthComponent],
-    imports: [
-        CommonModule,
-        FontAwesomeModule,
-        RouterModule.forChild([
-            { path: '', component: AuthComponent }
-        ]),
-        SharedModule
-    ]
+  declarations: [ AuthComponent ],
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    RouterModule.forChild([
+      {path: '', component: AuthComponent}
+    ]),
+    SharedModule
+  ]
 })
-export class AuthModule {}
+export class AuthModule {
+}

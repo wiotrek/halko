@@ -4,8 +4,8 @@ import { NgForm } from '@angular/forms';
 import { AdminService } from '../../../admin.service';
 
 @Component({
-    selector: 'app-participants-add',
-    template: `
+  selector: 'app-participants-add',
+  template: `
         <app-adder-phone
             [fields]="participantsMgmtFieldsArray"
             (outputElement)="addParticipants($event)"
@@ -13,25 +13,25 @@ import { AdminService } from '../../../admin.service';
     `
 })
 export class ParticipantsAddComponent implements OnInit {
-    // fields to adder
-    participantsMgmtFieldsArray = ParticipantsMgmtFieldsArray;
+  // fields to adder
+  participantsMgmtFieldsArray = ParticipantsMgmtFieldsArray;
 
-    pointList: string[] = [];
+  pointList: string[] = [];
 
-    constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService) {}
 
-    ngOnInit(): void {
-        this.adminService.getPointList().subscribe(
-            points => {
-                this.participantsMgmtFieldsArray.find(
-                    x => x.category === 'pointName'
-                ).forOptSelect = points;
-                this.pointList = points;
-            }
-        );
-    }
+  ngOnInit(): void {
+    this.adminService.getPointList().subscribe(
+      points => {
+        this.participantsMgmtFieldsArray.find(
+          x => x.category === 'pointName'
+        ).forOptSelect = points;
+        this.pointList = points;
+      }
+    );
+  }
 
-    addParticipants(f: NgForm): void {
-        this.adminService.addParticipant(f.value);
-    }
+  addParticipants(f: NgForm): void {
+    this.adminService.addParticipant(f.value);
+  }
 }

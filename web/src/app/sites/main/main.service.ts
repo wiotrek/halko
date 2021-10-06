@@ -16,253 +16,255 @@ import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructureEdit } from './_models/item-structure-edit.model';
 import { ItemStructure } from '../../shared/models/item-structure.model';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class MainService {
-    apiUrl = environment.api;
-    pointName: string;
-    todayDate = new Date().toISOString().slice(0, 10);
+  apiUrl = environment.api;
+  pointName: string;
+  todayDate = new Date().toISOString().slice(0, 10);
 
-    // for solds items
-    private soldsItems: ItemStructure[] = [];
-    private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItems);
-    public soldsItem$ = this.soldsItemsChanged.asObservable();
+  // for solds items
+  private soldsItems: ItemStructure[] = [];
+  private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItems);
+  public soldsItem$ = this.soldsItemsChanged.asObservable();
 
 
-    // for expenses items
-    private expensesItems: ItemStructure[] = [];
-    private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
-    public expensesItem$ = this.expensesItemsChanged.asObservable();
+  // for expenses items
+  private expensesItems: ItemStructure[] = [];
+  private expensesItemsChanged = new BehaviorSubject<ItemStructure[]>(this.expensesItems);
+  public expensesItem$ = this.expensesItemsChanged.asObservable();
 
-    // employees save in cache
-    private employeesCache = new Map();
+  // employees save in cache
+  private employeesCache = new Map();
 
-    constructor(
-        private http: HttpClient,
-        private authService: AuthService,
-        private toastr: ToastrService
-    ) {
-        this.authService.user
-            .subscribe(
-            (user: User) =>  {
-                user
-                ? this.pointName = user.pointName
-                : this.pointName = 'Punkt';
-            },
-            (err: HttpErrorResponse) => {
-                this.toastr.error(err.error.message);
-                this.pointName = 'Punkt';
-            }
-        );
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {
+    this.authService.user
+      .subscribe(
+        (user: User) => {
+          user
+            ? this.pointName = user.pointName
+            : this.pointName = 'Punkt';
+        },
+        (err: HttpErrorResponse) => {
+          this.toastr.error(err.error.message);
+          this.pointName = 'Punkt';
+        }
+      );
 
-        this.getAllItemsInitialFunc();
+    this.getAllItemsInitialFunc();
+  }
+
+
+  // for employees
+  getEmployees(): Observable<Employees[]> {
+    const response = this.employeesCache.get(
+      Object.values(this.pointName).join('-')
+    );
+
+    if (response) {
+      return of(response);
     }
 
+    let params = new HttpParams();
+    params = params.set('pointName', this.pointName);
 
-    // for employees
-    getEmployees(): Observable<Employees[]> {
-        const response = this.employeesCache.get(
-            Object.values(this.pointName).join('-')
-        );
+    return this.http.get<Employees[]>(
+      this.apiUrl + 'api/participant', {params}
+    ).pipe(
+      map(
+        (res: Employees[]) => {
+          if (res.length > 0) {
+            this.employeesCache.set(
+              Object.values(this.pointName).join('-'), res
+            );
 
-        if (response) { return of (response); }
+            return res;
+          }
 
-        let params = new HttpParams();
-        params = params.set('pointName', this.pointName);
-
-        return this.http.get<Employees[]>(
-            this.apiUrl + 'api/participant', { params }
-        ).pipe(
-            map(
-                (res: Employees[]) => {
-                    if (res.length > 0) {
-                        this.employeesCache.set(
-                            Object.values(this.pointName).join('-'), res
-                        );
-
-                        return res;
-                    }
-
-                    return EmployeesInitialArray;
-                }
-            )
-        );
-    }
+          return EmployeesInitialArray;
+        }
+      )
+    );
+  }
 
 
-    // for sold items
+  // for sold items
 
-    addNewSoldItem(el: ItemStructureAdd): void {
-        this.addNewItem(el, TransactionTypeEnum.solds);
-    }
+  addNewSoldItem(el: ItemStructureAdd): void {
+    this.addNewItem(el, TransactionTypeEnum.solds);
+  }
 
-    EditSoldItem(el: ItemStructureEdit, ind: number): void {
-        this.editItem(el, ind, TransactionTypeEnum.solds);
-    }
+  EditSoldItem(el: ItemStructureEdit, ind: number): void {
+    this.editItem(el, ind, TransactionTypeEnum.solds);
+  }
 
-    removeSoldItem(indBackend: string, ind: number): void {
-        this.removeItem(indBackend, ind, TransactionTypeEnum.solds);
-    }
+  removeSoldItem(indBackend: string, ind: number): void {
+    this.removeItem(indBackend, ind, TransactionTypeEnum.solds);
+  }
 
-    displaySoldsSum(): Observable<number> {
-        return this.soldsItem$.pipe(
-            map(
-                res => res.reduce(
-                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
-                )
-            )
-        );
-    }
-
-
-    // for expenses items
-
-    addNewExpenseItem(el: ItemStructureAdd): void {
-        this.addNewItem(el, TransactionTypeEnum.expenses);
-    }
-
-    EditExpenseItem(el: ItemStructureEdit, ind: number): void {
-        this.editItem(el, ind, TransactionTypeEnum.expenses);
-    }
-
-    removeExpenseItem(indBackend: string, ind: number): void {
-        this.removeItem(indBackend, ind, TransactionTypeEnum.expenses);
-    }
-
-    displayExpensesSum(): Observable<number> {
-        return this.expensesItem$.pipe(
-            map(
-                res => res.reduce(
-                    (acc: number, curr: ItemStructure) => acc + +curr.price, 0
-                )
-            )
-        );
-    }
+  displaySoldsSum(): Observable<number> {
+    return this.soldsItem$.pipe(
+      map(
+        res => res.reduce(
+          (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+        )
+      )
+    );
+  }
 
 
-    // for statistics
+  // for expenses items
 
-    // count how much specific items were sold
-    getCategoriesAmountChange(): Observable<CategoriesAmount[]> {
+  addNewExpenseItem(el: ItemStructureAdd): void {
+    this.addNewItem(el, TransactionTypeEnum.expenses);
+  }
 
-        const ACCESSORIES = { item: 'akcesoria', sum: 0 };
-        const PHONE = { item: 'telefon', sum: 0 };
-        const SERVICE = { item: 'serwis', sum: 0 };
+  EditExpenseItem(el: ItemStructureEdit, ind: number): void {
+    this.editItem(el, ind, TransactionTypeEnum.expenses);
+  }
 
-        const categories = [
-            ACCESSORIES,
-            PHONE,
-            SERVICE
-        ];
+  removeExpenseItem(indBackend: string, ind: number): void {
+    this.removeItem(indBackend, ind, TransactionTypeEnum.expenses);
+  }
 
-        return this.soldsItem$.pipe(
-            map(
-                (res: ItemStructure[]) => {
+  displayExpensesSum(): Observable<number> {
+    return this.expensesItem$.pipe(
+      map(
+        res => res.reduce(
+          (acc: number, curr: ItemStructure) => acc + +curr.price, 0
+        )
+      )
+    );
+  }
 
-                    categories[
-                        categories.indexOf(ACCESSORIES)
-                    ].sum = res.filter(x => x.category === ACCESSORIES.item).length;
 
-                    categories[
-                        categories.indexOf(PHONE)
-                    ].sum = res.filter(x => x.category === PHONE.item).length;
+  // for statistics
 
-                    categories[
-                        categories.indexOf(SERVICE)
-                    ].sum = res.filter(x => x.category === SERVICE.item).length;
+  // count how much specific items were sold
+  getCategoriesAmountChange(): Observable<CategoriesAmount[]> {
 
-                    return categories;
-                }
-            )
-        );
-    }
+    const ACCESSORIES = {item: 'akcesoria', sum: 0};
+    const PHONE = {item: 'telefon', sum: 0};
+    const SERVICE = {item: 'serwis', sum: 0};
 
-    getStartCash(): Observable<number> {
-        const params = new HttpParams().set('point', this.pointName);
+    const categories = [
+      ACCESSORIES,
+      PHONE,
+      SERVICE
+    ];
 
-        return this.http.get<number>(
-            this.apiUrl + 'api/settlement', { params }
-        );
-    }
+    return this.soldsItem$.pipe(
+      map(
+        (res: ItemStructure[]) => {
 
-    // get sold items and expenses item
-    private getAllItemsInitialFunc(): void {
+          categories[
+            categories.indexOf(ACCESSORIES)
+            ].sum = res.filter(x => x.category === ACCESSORIES.item).length;
 
-        let params = new HttpParams();
-        params = params.set('date', this.todayDate);
-        params = params.append('pointName', this.pointName);
+          categories[
+            categories.indexOf(PHONE)
+            ].sum = res.filter(x => x.category === PHONE.item).length;
 
-        this.http.get(
-            this.apiUrl + 'api/transaction',
-            { params }
-        ).subscribe(
-            (res: ItemStructure[]) => {
-                this.soldsItems = res.filter(x => x.type === 'Sprzedaż').reverse();
-                this.soldsItemsChanged.next(this.soldsItems);
+          categories[
+            categories.indexOf(SERVICE)
+            ].sum = res.filter(x => x.category === SERVICE.item).length;
 
-                this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
-                this.expensesItemsChanged.next(this.expensesItems);
-            },
-            () => this.toastr.error(ErrorsDictionary.server)
-        );
-    }
+          return categories;
+        }
+      )
+    );
+  }
 
-    private addNewItem(el: ItemStructureAdd, transactionTypeEnum: TransactionTypeEnum): void {
-        const elOnBackend = el as ItemStructureAddBackend;
-        elOnBackend.pointName = this.pointName;
-        elOnBackend.transactionType = transactionTypeEnum;
+  getStartCash(): Observable<number> {
+    const params = new HttpParams().set('point', this.pointName);
 
-        this.http.post(
-            this.apiUrl + 'api/transaction', elOnBackend
-        ).subscribe(
-            (res: ItemStructure) => {
-                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
-                    this.expensesItems.unshift(res);
-                    this.expensesItemsChanged.next(this.expensesItems);
-                } else {
-                    this.soldsItems.unshift(res);
-                    this.soldsItemsChanged.next(this.soldsItems);
-                }
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
-        );
-    }
+    return this.http.get<number>(
+      this.apiUrl + 'api/settlement', {params}
+    );
+  }
 
-    private editItem(el: ItemStructureEdit, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
+  // get sold items and expenses item
+  private getAllItemsInitialFunc(): void {
 
-        this.http.put(
-            this.apiUrl + 'api/transaction', el
-        ).subscribe(
-            (res: ItemStructure) => {
-                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
-                    this.expensesItems[ind] = res;
-                    this.expensesItemsChanged.next(this.expensesItems);
-                } else {
-                    this.soldsItems[ind] = res;
-                    this.soldsItemsChanged.next(this.soldsItems);
-                }
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
-        );
-    }
+    let params = new HttpParams();
+    params = params.set('date', this.todayDate);
+    params = params.append('pointName', this.pointName);
 
-    private removeItem(indBackend: string, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
-        let params = new HttpParams();
-        params = params.set('id', indBackend);
+    this.http.get(
+      this.apiUrl + 'api/transaction',
+      {params}
+    ).subscribe(
+      (res: ItemStructure[]) => {
+        this.soldsItems = res.filter(x => x.type === 'Sprzedaż').reverse();
+        this.soldsItemsChanged.next(this.soldsItems);
 
-        this.http.delete(
-            this.apiUrl + 'api/transaction',
-            { params }
-        ).subscribe(
-            () => {
-                if (transactionTypeEnum === TransactionTypeEnum.expenses) {
-                    this.expensesItems.splice(ind, 1);
-                    this.expensesItemsChanged.next(this.expensesItems);
-                } else {
-                    this.soldsItems.splice(ind, 1);
-                    this.soldsItemsChanged.next(this.soldsItems);
-                }
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
-        );
-    }
+        this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
+        this.expensesItemsChanged.next(this.expensesItems);
+      },
+      () => this.toastr.error(ErrorsDictionary.server)
+    );
+  }
+
+  private addNewItem(el: ItemStructureAdd, transactionTypeEnum: TransactionTypeEnum): void {
+    const elOnBackend = el as ItemStructureAddBackend;
+    elOnBackend.pointName = this.pointName;
+    elOnBackend.transactionType = transactionTypeEnum;
+
+    this.http.post(
+      this.apiUrl + 'api/transaction', elOnBackend
+    ).subscribe(
+      (res: ItemStructure) => {
+        if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+          this.expensesItems.unshift(res);
+          this.expensesItemsChanged.next(this.expensesItems);
+        } else {
+          this.soldsItems.unshift(res);
+          this.soldsItemsChanged.next(this.soldsItems);
+        }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
+
+  private editItem(el: ItemStructureEdit, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
+
+    this.http.put(
+      this.apiUrl + 'api/transaction', el
+    ).subscribe(
+      (res: ItemStructure) => {
+        if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+          this.expensesItems[ind] = res;
+          this.expensesItemsChanged.next(this.expensesItems);
+        } else {
+          this.soldsItems[ind] = res;
+          this.soldsItemsChanged.next(this.soldsItems);
+        }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
+
+  private removeItem(indBackend: string, ind: number, transactionTypeEnum: TransactionTypeEnum): void {
+    let params = new HttpParams();
+    params = params.set('id', indBackend);
+
+    this.http.delete(
+      this.apiUrl + 'api/transaction',
+      {params}
+    ).subscribe(
+      () => {
+        if (transactionTypeEnum === TransactionTypeEnum.expenses) {
+          this.expensesItems.splice(ind, 1);
+          this.expensesItemsChanged.next(this.expensesItems);
+        } else {
+          this.soldsItems.splice(ind, 1);
+          this.soldsItemsChanged.next(this.soldsItems);
+        }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RepairsArchiveItemArray } from './repairs-archive.array';
 import { RepairsModel } from '../../../shared/models/repairs.model';
 import { SearcherPatternModel } from 'src/app/shared/components/searcher/_models/searcher-pattern.model';
@@ -66,7 +66,7 @@ export class RepairsArchiveComponent implements OnInit {
 
   countIndex(phone: RepairsModel): number {
     return (
-        this.phonesRepairs.indexOf(phone) + 1
+      this.phonesRepairs.indexOf(phone) + 1
     ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
   }
 
@@ -97,7 +97,7 @@ export class RepairsArchiveComponent implements OnInit {
         this.phoneRepairsAmount = res.count;
 
         this.phonesRepairs = res.data.map(
-            repair => RepairsMapper.repairRawModelToRepairModel(repair)
+          repair => RepairsMapper.repairRawModelToRepairModel(repair)
         );
       }
     );

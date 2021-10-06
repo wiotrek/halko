@@ -1,4 +1,4 @@
 export interface SortingVectorModel {
-    name: string;
-    vector: string;
+  name: string;
+  vector: string;
 }

@@ -2,30 +2,31 @@
 @import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
-    .pagination {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-    
-        &__prev, &__next {
-            margin: auto 5px;
-            cursor: pointer;
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
 
-            &:hover {
-                text-decoration: underline;
-                color: $prettyGreen;
-            }
-        }
+    &__prev, &__next {
+      margin: auto 5px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        color: $prettyGreen;
+      }
     }
+  }
 }
+
 @media (min-width: $minValueTablet) {
-    .pagination {
+  .pagination {
 
-        &__prev, &__next {
+    &__prev, &__next {
 
-            a {
-                margin: auto 10px;
-            }
-        }
+      a {
+        margin: auto 10px;
+      }
     }
+  }
 }

@@ -3,75 +3,75 @@ import { AdminService } from '../../admin.service';
 import { DatePipe } from '@angular/common';
 import { ItemStructure } from 'src/app/shared/models/item-structure.model';
 import { AdminMainFields } from './_arrays/admin-main-fields.array';
-import { map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ItemOperationEnum } from '../../_enums/item-operation.enum';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-admin',
-    templateUrl: './admin-main.component.html',
-    styleUrls: ['./admin-main.component.scss'],
-    providers: [DatePipe]
+  selector: 'app-admin',
+  templateUrl: './admin-main.component.html',
+  styleUrls: [ './admin-main.component.scss' ],
+  providers: [ DatePipe ]
 })
 export class AdminMainComponent implements OnInit {
-    // fields to generate template
-    fields = AdminMainFields;
+  // fields to generate template
+  fields = AdminMainFields;
 
-    // members for calendar
-    today: Date;
-    choiceDay: string;
+  // members for calendar
+  today: Date;
+  choiceDay: string;
 
-    pointCurrent = 'Karuzela Września';
+  pointCurrent = 'Karuzela Września';
 
-    // main members to config
-    pointList: string[] = [];
-    soldItems: ItemStructure[] = [];
-    expenseItems: ItemStructure[] = [];
+  // main members to config
+  pointList: string[] = [];
+  soldItems: ItemStructure[] = [];
+  expenseItems: ItemStructure[] = [];
 
-    constructor(
-        private adminService: AdminService,
-        private datePipe: DatePipe
-    ) {
-        // set calendar
-        this.today = new Date();
-        this.choiceDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    }
+  constructor(
+    private adminService: AdminService,
+    private datePipe: DatePipe
+  ) {
+    // set calendar
+    this.today = new Date();
+    this.choiceDay = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  }
 
-    ngOnInit(): void {
-        this.getItems();
+  ngOnInit(): void {
+    this.getItems();
 
-        this.adminService.getPointList().subscribe(
-            (res: string[]) => {
-                this.pointList = res;
-                this.pointCurrent = res[0];
-            }
-        );
-    }
+    this.adminService.getPointList().subscribe(
+      (res: string[]) => {
+        this.pointList = res;
+        this.pointCurrent = res[0];
+      }
+    );
+  }
 
-    getItems(): void {
-        this.getItemsFromService(ItemOperationEnum.sold).subscribe(
-            res => this.soldItems = res
-        );
+  getItems(): void {
+    this.getItemsFromService(ItemOperationEnum.sold).subscribe(
+      res => this.soldItems = res
+    );
 
-        this.getItemsFromService(ItemOperationEnum.expense).subscribe(
-            res => this.expenseItems = res
-        );
-    }
+    this.getItemsFromService(ItemOperationEnum.expense).subscribe(
+      res => this.expenseItems = res
+    );
+  }
 
-    private getItemsFromService(operation: ItemOperationEnum): Observable<ItemStructure[]> {
-        return this.adminService.getItems(this.pointCurrent, this.choiceDay, operation)
-            .pipe(
-                map(res => res.map(item => {
-                    item.insertedDateTime = this.datePipe.transform(item.insertedDateTime, 'yyyy-MM-dd HH:mm');
-                    item.editedDateTime = this.datePipe.transform(item.editedDateTime, 'yyyy-MM-dd HH:mm');
-                    item.deletedDateTime = this.datePipe.transform(item.deletedDateTime, 'yyyy-MM-dd HH:mm');
-                    return item;
-                }))
-            );
-    }
+  private getItemsFromService(operation: ItemOperationEnum): Observable<ItemStructure[]> {
+    return this.adminService.getItems(this.pointCurrent, this.choiceDay, operation)
+      .pipe(
+        map(res => res.map(item => {
+          item.insertedDateTime = this.datePipe.transform(item.insertedDateTime, 'yyyy-MM-dd HH:mm');
+          item.editedDateTime = this.datePipe.transform(item.editedDateTime, 'yyyy-MM-dd HH:mm');
+          item.deletedDateTime = this.datePipe.transform(item.deletedDateTime, 'yyyy-MM-dd HH:mm');
+          return item;
+        }))
+      );
+  }
 
-    // count sum price without deleted items
-    sumPrice = (arr: ItemStructure[]): number =>
-        arr.filter(x => x.deletedDateTime ? false : x)
-            .reduce((acc: number, curr: ItemStructure) => acc + curr.price, 0)
+  // count sum price without deleted items
+  sumPrice = (arr: ItemStructure[]): number =>
+    arr.filter(x => x.deletedDateTime ? false : x)
+      .reduce((acc: number, curr: ItemStructure) => acc + curr.price, 0);
 }

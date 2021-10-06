@@ -19,7 +19,7 @@ import { Links } from 'src/app/shared/models/links.model';
 
     </div>
   `,
-  styles: [`
+  styles: [ `
 
     .wrapper {
       margin-top: 30px;
@@ -30,7 +30,7 @@ import { Links } from 'src/app/shared/models/links.model';
       margin: 0 auto;
     }
 
-  `]
+  ` ]
 })
 export class RepairsComponent {
   // for sub nav component
@@ -38,8 +38,8 @@ export class RepairsComponent {
 
   // used links
   paths: Links[] = [
-    { caption: 'Aktualne serwisy', path: '' },
-    { caption: 'Archiwum', path: 'archiwum'},
-    { caption: 'Dodaj serwis', path: 'dodaj-serwis' }
+    {caption: 'Aktualne serwisy', path: ''},
+    {caption: 'Archiwum', path: 'archiwum'},
+    {caption: 'Dodaj serwis', path: 'dodaj-serwis'}
   ];
 }

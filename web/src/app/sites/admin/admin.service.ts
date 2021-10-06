@@ -10,152 +10,156 @@ import { ItemOperationEnum } from './_enums/item-operation.enum';
 import { ResponseDictionary } from '../../shared/dictionary/response.dictionary';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Point } from '../../shared/models/point.model';
-import {Employees} from '../../shared/models/employees.model';
+import { Employees } from '../../shared/models/employees.model';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AdminService {
-    apiUrl = environment.api;
+  apiUrl = environment.api;
 
-    itemsListCache = new Map();
-    itemsDeletedListCache = new Map();
+  itemsListCache = new Map();
+  itemsDeletedListCache = new Map();
 
-    constructor(
-        private authService: AuthService,
-        private toastr: ToastrService,
-        private http: HttpClient,
-        private route: ActivatedRoute,
-        private router: Router,
-    ) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
-    getPointList(): Observable<string[]> {
-        return this.http.get<Point[]>(
-            this.apiUrl + 'api/point'
-        ).pipe(map((res: Point[]) => res.map(x => x.name)));
-    }
+  getPointList(): Observable<string[]> {
+    return this.http.get<Point[]>(
+      this.apiUrl + 'api/point'
+    ).pipe(map((res: Point[]) => res.map(x => x.name)));
+  }
 
-    // display items, and delete items
-    // 1 step get two subscribers
-    // 2 step connect two _arrays
-    // 3 step get only sold items
-    // 4 step sort array for insert time
-    getItems(pointName: string, date: string, operation: ItemOperationEnum): Observable<ItemStructure[]> {
-        return combineLatest([
-            this.getItemsList(pointName, date),
-            this.getDeleteItems(pointName, date)
-        ]).pipe(
-            map(res => res[0].concat(res[1])),
-            map((res: ItemStructure[]) => res.filter(x => x.type === operation)),
-            map(res => res.sort((a: ItemStructure, b: ItemStructure) => b.insertedDateTime.localeCompare(a.insertedDateTime)))
+  // display items, and delete items
+  // 1 step get two subscribers
+  // 2 step connect two _arrays
+  // 3 step get only sold items
+  // 4 step sort array for insert time
+  getItems(pointName: string, date: string, operation: ItemOperationEnum): Observable<ItemStructure[]> {
+    return combineLatest([
+      this.getItemsList(pointName, date),
+      this.getDeleteItems(pointName, date)
+    ]).pipe(
+      map(res => res[0].concat(res[1])),
+      map((res: ItemStructure[]) => res.filter(x => x.type === operation)),
+      map(res => res.sort((a: ItemStructure, b: ItemStructure) => b.insertedDateTime.localeCompare(a.insertedDateTime)))
+    );
+  }
+
+  getParticipantsList(pointName: string): Observable<Employees[]> {
+    const params = new HttpParams().set('pointName', pointName);
+    return this.http.get<Employees[]>(
+      this.apiUrl + 'api/participant', {params}
+    );
+  }
+
+  addNewPoint(point: { login: string, password: string, pointName: string }): void {
+    this.http.post(
+      this.apiUrl + 'api/auth/register-point', point
+    ).subscribe(
+      () => {
+        this.router.navigate([ `./admin` ], {relativeTo: this.route}).then(
+          () => {
+            this.toastr.success(ResponseDictionary.added);
+            this.getPointList();
+          }
         );
-    }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
 
-    getParticipantsList(pointName: string): Observable<Employees[]> {
-        const params = new HttpParams().set('pointName', pointName);
-        return this.http.get<Employees[]>(
-            this.apiUrl + 'api/participant', { params }
+  addParticipant(employer: {
+    pointName: string,
+    initial: string,
+    firstName: string,
+    lastName: string
+  }): void {
+    this.http.post(
+      this.apiUrl + 'api/participant', employer
+    ).subscribe(
+      () => {
+        this.router.navigate([ `./admin` ], {relativeTo: this.route}).then(
+          () => {
+            this.toastr.success(ResponseDictionary.added);
+          }
         );
-    }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
 
-    addNewPoint(point: { login: string, password: string, pointName: string }): void {
-        this.http.post(
-            this.apiUrl + 'api/auth/register-point', point
-        ).subscribe(
-            () => {
-                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
-                    () => {
-                        this.toastr.success(ResponseDictionary.added);
-                        this.getPointList();
-                    }
-                );
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+  addAdmin(admin: { name: string; password: string; }): void {
+    this.http.post(
+      this.apiUrl + 'api/auth/register-admin', admin
+    ).subscribe(
+      () => {
+        this.router.navigate([ `./admin` ], {relativeTo: this.route}).then(
+          () => {
+            this.toastr.success(ResponseDictionary.added);
+          }
         );
-    }
+      },
+      (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+    );
+  }
 
-    addParticipant(employer: {
-        pointName: string,
-        initial: string,
-        firstName: string,
-        lastName: string
-    }): void {
-        this.http.post(
-            this.apiUrl + 'api/participant', employer
-        ).subscribe(
-            () => {
-                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
-                    () => {
-                        this.toastr.success(ResponseDictionary.added);
-                    }
-                );
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
+  changeUserPassword(dateToChange: {
+    login: string;
+    currentPassword: string;
+    newPassword: string;
+  }): void {
+    this.http.put(
+      this.apiUrl + 'api/auth/change-password', dateToChange
+    ).subscribe(
+      () => {
+        this.router.navigate([ `./admin` ], {relativeTo: this.route}).then(
+          () => {
+            this.toastr.success(ResponseDictionary.change);
+          }
         );
+      },
+      () => this.toastr.error(ErrorsDictionary.bad)
+    );
+  }
+
+  private getDeleteItems(pointName: string, date: string): Observable<ItemStructure[]> {
+    // check in cache
+    const keyInMap = `${pointName} ${date}`;
+    const response = this.itemsDeletedListCache.get(Object.values(keyInMap).join('-'));
+    if (response) {
+      return of(response);
     }
 
-    addAdmin(admin: { name: string; password: string; }): void {
-        this.http.post(
-            this.apiUrl + 'api/auth/register-admin', admin
-        ).subscribe(
-            () => {
-                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
-                    () => {
-                        this.toastr.success(ResponseDictionary.added);
-                    }
-                );
-            },
-            (err: HttpErrorResponse) => this.toastr.error(err.error.message)
-        );
+    // if dont have in cache then search in backend
+    let params = new HttpParams();
+    params = params.set('insertedDate', date);
+    params = params.append('pointName', pointName);
+
+    return this.http.get<ItemStructure[]>(
+      this.apiUrl + 'api/transaction/deleted', {params}
+    );
+  }
+
+  private getItemsList(pointName: string, date: string): Observable<ItemStructure[]> {
+    // check in cache
+    const keyInMap = `${pointName} ${date}`;
+    const response = this.itemsListCache.get(Object.values(keyInMap).join('-'));
+    if (response) {
+      return of(response);
     }
 
-    changeUserPassword(dateToChange: {
-        login: string;
-        currentPassword: string;
-        newPassword: string;
-    }): void {
-        this.http.put(
-            this.apiUrl + 'api/auth/change-password', dateToChange
-        ).subscribe(
-            () => {
-                this.router.navigate([`./admin`], { relativeTo: this.route }).then(
-                    () => {
-                        this.toastr.success(ResponseDictionary.change);
-                    }
-                );
-            },
-            () => this.toastr.error(ErrorsDictionary.bad)
-        );
-    }
+    // if dont have in cache then search in backend
+    let params = new HttpParams();
+    params = params.set('date', date);
+    params = params.append('pointName', pointName);
 
-    private getDeleteItems(pointName: string, date: string): Observable<ItemStructure[]> {
-        // check in cache
-        const keyInMap = `${pointName} ${date}`;
-        const response = this.itemsDeletedListCache.get(Object.values(keyInMap).join('-'));
-        if (response) { return of (response); }
-
-        // if dont have in cache then search in backend
-        let params = new HttpParams();
-        params = params.set('insertedDate', date);
-        params = params.append('pointName', pointName);
-
-        return this.http.get<ItemStructure[]>(
-            this.apiUrl + 'api/transaction/deleted', { params }
-        );
-    }
-
-    private getItemsList(pointName: string, date: string): Observable<ItemStructure[]> {
-        // check in cache
-        const keyInMap = `${pointName} ${date}`;
-        const response = this.itemsListCache.get(Object.values(keyInMap).join('-'));
-        if (response) { return of (response); }
-
-        // if dont have in cache then search in backend
-        let params = new HttpParams();
-        params = params.set('date', date);
-        params = params.append('pointName', pointName);
-
-        return this.http.get<ItemStructure[]>(
-            this.apiUrl + 'api/transaction', { params }
-        );
-    }
+    return this.http.get<ItemStructure[]>(
+      this.apiUrl + 'api/transaction', {params}
+    );
+  }
 }

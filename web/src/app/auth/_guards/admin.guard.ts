@@ -6,15 +6,15 @@ import { AuthService } from '../auth.service';
 
 @Injectable({providedIn: 'root'})
 export class AdminGuard implements CanActivate {
-    constructor(
-        private authService: AuthService,
-        private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router) {}
 
-    canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot)
-        : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree>  {
-        return this.authService.user.pipe(
-            take(1),
-            map(user => user.showRole === 'Admin' ? true : this.router.createUrlTree(['']))
-        );
-    }
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot)
+    : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    return this.authService.user.pipe(
+      take(1),
+      map(user => user.showRole === 'Admin' ? true : this.router.createUrlTree([ '' ]))
+    );
+  }
 }

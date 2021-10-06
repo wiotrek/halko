@@ -1,32 +1,32 @@
 @import 'src/app/shared/global-styles/variable.scss';
 
 @media (min-width: 0) {
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-    }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (min-width: $minValueTablet) {
-    .wrapper {
-        flex-wrap: wrap;
+  .wrapper {
+    flex-wrap: wrap;
 
-        div {
-            margin: 15px auto;
-        }
+    div {
+      margin: 15px auto;
     }
+  }
 }
 
-@media (min-width: 1286px ) {
-    .wrapper {
-        margin-top: 50px;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: baseline;
+@media (min-width: 1286px) {
+  .wrapper {
+    margin-top: 50px;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: baseline;
 
-        div {
-            margin: 0;
-            margin-top: 15px;
-        }
+    div {
+      margin: 0;
+      margin-top: 15px;
     }
+  }
 }

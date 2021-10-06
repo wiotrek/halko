@@ -1,72 +1,72 @@
-<form 
-    #editElementForm="ngForm" 
-    class="editMode"
+<form
+  #editElementForm="ngForm"
+  class="editMode"
 >
 
-    <div class="editMode__index">{{indexOfElement + 1}}.</div>
+  <div class="editMode__index">{{indexOfElement + 1}}.</div>
 
-    <select
-        class="editMode__ini"
-        name="participantInitial"
-        [ngModel]="ourItem.initial"
+  <select
+    class="editMode__ini"
+    name="participantInitial"
+    [ngModel]="ourItem.initial"
+  >
+    <option
+      *ngFor="let human of employees"
+      [value]="human.initial"
+    >{{human.initial}}</option>
+  </select>
+
+  <select
+    class="editMode__category"
+    name="productCategoryName"
+    [ngModel]="ourItem.category"
+  >
+    <option
+      *ngFor="let oneOfCategory of category"
+      [value]="oneOfCategory"
     >
-        <option
-            *ngFor="let human of employees"
-            [value]="human.initial"
-        >{{human.initial}}</option>
-    </select>
+      {{oneOfCategory}}
+    </option>
+  </select>
 
-    <select
-        class="editMode__category"
-        name="productCategoryName"
-        [ngModel]="ourItem.category"
-    >
-        <option
-            *ngFor="let oneOfCategory of category"
-            [value]="oneOfCategory"
-        >
-            {{oneOfCategory}}
-        </option>
-    </select>
+  <input
+    type="text"
+    class="editMode__name"
+    name="productName"
+    [ngModel]="ourItem.productName"
+  >
 
-    <input
-        type="text"
-        class="editMode__name"
-        name="productName"
-        [ngModel]="ourItem.productName"
-    >
+  <input
+    type="text"
+    class="editMode__price"
+    name="price"
+    pattern="[0-9]*[.]?[0-9]+"
+    [ngModel]="ourItem.price"
+  >
 
-    <input
-        type="text"
-        class="editMode__price"
-        name="price"
-        pattern="[0-9]*[.]?[0-9]+"
-        [ngModel]="ourItem.price"
-    >
+  <div class="editMode__edit">
 
-    <div class="editMode__edit">
-
-        <button class="editMode__edit__option"
+    <button class="editMode__edit__option"
             type="button"
             (click)="deleteElementFunc()"
-        >
-            <fa-icon [icon]="faTrashAlt"></fa-icon>
-        </button>
+    >
+      <fa-icon [icon]="faTrashAlt"></fa-icon>
+    </button>
 
-        <button
-            class="editMode__edit__option"
-            (click)="editElementForm.valid && editElementFunc(editElementForm)"
-        >
-            <fa-icon [icon]="faSave"></fa-icon>
-        </button>
+    <button
+      class="editMode__edit__option"
+      (click)="editElementForm.valid && editElementFunc(editElementForm)"
+    >
+      <fa-icon [icon]="faSave"></fa-icon>
+    </button>
 
-        <button class="editMode__edit__option"
+    <button class="editMode__edit__option"
             type="button"
             (click)="editElementModeToggleFunc()"
-        >
-            <fa-icon [icon]="faUndoAlt"></fa-icon>
-        </button>
+    >
+      <fa-icon [icon]="faUndoAlt"></fa-icon>
+    </button>
 
-    </div>
+  </div>
 
 </form>

@@ -28,7 +28,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
     </div>
   `,
-  styleUrls: ['prices.component.scss']
+  styleUrls: [ 'prices.component.scss' ]
 })
 export class PricesComponent implements OnInit {
   headline = 'Cennik';
@@ -45,12 +45,12 @@ export class PricesComponent implements OnInit {
   }
 
   checkUrl = () =>
-    this.isAdderMode = this.router.url.includes('dodaj-telefon')
+    this.isAdderMode = this.router.url.includes('dodaj-telefon');
 
   setUrl(): void {
     this.router.navigate([
-      this.isAdderMode ? '/admin/cennik' : 'dodaj-telefon'
-    ], { relativeTo: this.route })
-    .then(() => this.checkUrl());
+        this.isAdderMode ? '/admin/cennik' : 'dodaj-telefon'
+      ], {relativeTo: this.route})
+      .then(() => this.checkUrl());
   }
 }

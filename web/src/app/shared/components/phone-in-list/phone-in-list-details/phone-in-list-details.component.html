@@ -1,116 +1,116 @@
 <div
-    class="opt-component"
-    [ngStyle]="{'display': editModeActive ? 'none' : ''}"
-    *ngIf="elInListAllowedEdit"
+  class="opt-component"
+  [ngStyle]="{'display': editModeActive ? 'none' : ''}"
+  *ngIf="elInListAllowedEdit"
 >
-    <ng-container #optComponent></ng-container>
-    <hr />
+  <ng-container #optComponent></ng-container>
+  <hr/>
 </div>
 
 <form
-    class="details"
-    #update="ngForm"
-    (ngSubmit)="update.valid && updateElement(update)"
+  class="details"
+  #update="ngForm"
+  (ngSubmit)="update.valid && updateElement(update)"
 >
 
-    <ng-container *ngFor="let field of deviceFields">
+  <ng-container *ngFor="let field of deviceFields">
 
-        <div
-            class="details__field"
-            *ngIf="!editModeActive else editModeTem"
-            [ngStyle]="{
+    <div
+      class="details__field"
+      *ngIf="!editModeActive else editModeTem"
+      [ngStyle]="{
                 'display': elInList[field.category] ? '' : 'none'
             }"
-        >
+    >
 
-            <div class="details__field__category">
-                {{field.polishName | titlecase}}:
-            </div>
+      <div class="details__field__category">
+        {{field.polishName | titlecase}}:
+      </div>
 
-            <div
-                class="details__field__param"
-            >
+      <div
+        class="details__field__param"
+      >
 
-                {{
-                    field.isDate
-                    ? (elInList[field.category] | slice:0:10)
-                    : elInList[field.category]
-                }}
+        {{
+        field.isDate
+          ? (elInList[field.category] | slice:0:10)
+          : elInList[field.category]
+        }}
 
-                {{field.currency}}
-            </div>
+        {{field.currency}}
+      </div>
 
-        </div>
+    </div>
 
-        <ng-template #editModeTem>
+    <ng-template #editModeTem>
 
-            <div
-                class="details__field details__field--edit-mode"
-                *ngIf="field.override"
-                [ngStyle]="{
+      <div
+        class="details__field details__field--edit-mode"
+        *ngIf="field.override"
+        [ngStyle]="{
                     'display': elInList[field.category] ? '' : 'none'
                 }"
-            >
+      >
 
-                <div class="details__field__category">
-                    {{field.polishName | titlecase}}:
-                </div>
+        <div class="details__field__category">
+          {{field.polishName | titlecase}}:
+        </div>
 
-                <input
-                    class="details__field__param--edit-mode"
-                    *ngIf="!field.special; else special"
-                    type="text"
-                    [name]="field.category"
-                    [pattern]="field.isNumber ? '[0-9]*[.]?[0-9]+' : ''"
-                    [ngModel]="elInList[field.category]"
-                    [ngClass]="{
+        <input
+          class="details__field__param--edit-mode"
+          *ngIf="!field.special; else special"
+          type="text"
+          [name]="field.category"
+          [pattern]="field.isNumber ? '[0-9]*[.]?[0-9]+' : ''"
+          [ngModel]="elInList[field.category]"
+          [ngClass]="{
                         'details__field__param--edit-mode--currency': field?.currency
                     }"
-                >
+        >
 
-                {{field?.currency}}
+        {{field?.currency}}
 
-                <ng-template #special>
+        <ng-template #special>
 
-                    <select
-                        [id]="field.category"
-                        class="details__field__param-select--edit-mode"
-                        [name]="field.category"
-                        [ngModel]="field.forOptSelect[0]"
-                    >
+          <select
+            [id]="field.category"
+            class="details__field__param-select--edit-mode"
+            [name]="field.category"
+            [ngModel]="field.forOptSelect[0]"
+          >
 
-                        <option
-                            *ngFor="let opt of field.forOptSelect"
-                            [value]="opt"
-                        >
-                            {{opt}}
-                        </option>
+            <option
+              *ngFor="let opt of field.forOptSelect"
+              [value]="opt"
+            >
+              {{opt}}
+            </option>
 
-                    </select>
-
-                </ng-template>
-
-            </div>
+          </select>
 
         </ng-template>
 
-    </ng-container>
+      </div>
 
-    <button
-        *ngIf="editModeActive"
-        class="details__submit"
-        type="submit"
-    >
-        Zapisz
-    </button>
+    </ng-template>
+
+  </ng-container>
+
+  <button
+    *ngIf="editModeActive"
+    class="details__submit"
+    type="submit"
+  >
+    Zapisz
+  </button>
 
 </form>
 
 <button
-    class="btn-edit-mode"
-    *ngIf="elInListAllowedEdit && isPossibleEditFields()"
-    (click)="toggleEditModeActive()"
-    [ngClass]="{ 'btn-edit-mode--active': editModeActive }"
+  class="btn-edit-mode"
+  *ngIf="elInListAllowedEdit && isPossibleEditFields()"
+  (click)="toggleEditModeActive()"
+  [ngClass]="{ 'btn-edit-mode--active': editModeActive }"
 >
-    {{editModeActive ? 'Anuluj' : 'Edytuj'}}
+  {{editModeActive ? 'Anuluj' : 'Edytuj'}}
 </button>

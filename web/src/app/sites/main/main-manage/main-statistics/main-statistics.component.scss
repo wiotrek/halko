@@ -2,169 +2,170 @@
 @import 'src/app/shared/global-styles/components.scss';
 
 p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 @media (min-width: 0) {
 
-    @mixin blockInList {
-        background-color: white;
-        margin-top: 10px;
-        font-size: .8rem;
-        padding: 15px 10px;
-        color: black;
+  @mixin blockInList {
+    background-color: white;
+    margin-top: 10px;
+    font-size: .8rem;
+    padding: 15px 10px;
+    color: black;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+
+  .wrapper {
+    max-width: 480px;
+
+    &__calendar {
+      display: flex;
+      justify-content: center;
+      height: 40px;
+
+      &__input {
+        border: 0;
+        width: 100%;
+        font-size: 1rem;
+        text-align: center;
         font-weight: bold;
-        border-radius: 5px;
+        cursor: pointer;
+      }
     }
 
-    .wrapper {
-        max-width: 480px;
+    &__prev-day, &__balance-day {
+      @include blockInList;
 
-        &__calendar {
-            display: flex;
-            justify-content: center;
-            height: 40px;
-
-            &__input {
-                border: 0;
-                width: 100%;
-                font-size: 1rem;
-                text-align: center;
-                font-weight: bold;
-                cursor: pointer;
-            }
-        }
-
-        &__prev-day, &__balance-day {
-            @include blockInList;
-
-            p:last-child {
-                color: $primaryGrey;
-                font-size: .7rem;
-            }
-        }
-
-        &__state-cash {
-            @include blockInList;
-
-            &__cash, &__credit-card {
-                margin-top: 7px;
-                font-size: .6rem;
-
-                input {
-                    display: inline;
-                    width: 60px;
-                    margin-right: 10px;
-                    text-align: center;
-                }
-            }
-
-            &__summary {
-                margin-top: 15px;
-                font-size: .7rem;
-
-                p:last-child {
-                    color: $primaryGrey;
-                    font-size: .6rem;
-                }
-            }
-        }
-
-        &__summary {
-            @include blockInList;
-
-            &__items {
-                display: flex;
-                justify-content: space-around;
-                margin-top: 10px;
-
-                &__item {
-                    font-size: .7rem;
-                    color: $primaryGrey;
-
-                    &__icon {
-                        margin-right: 5px;
-                    }
-                }
-            }
-        }
-
-        &__save-day {
-            margin: 10px 0 15px 0;
-
-            display: flex;
-
-            &__confirm {
-                @include firstlyBtn;
-                font-weight: bold;
-                font-size: .7rem;
-                width: 100%;
-            }
-        }
+      p:last-child {
+        color: $primaryGrey;
+        font-size: .7rem;
+      }
     }
+
+    &__state-cash {
+      @include blockInList;
+
+      &__cash, &__credit-card {
+        margin-top: 7px;
+        font-size: .6rem;
+
+        input {
+          display: inline;
+          width: 60px;
+          margin-right: 10px;
+          text-align: center;
+        }
+      }
+
+      &__summary {
+        margin-top: 15px;
+        font-size: .7rem;
+
+        p:last-child {
+          color: $primaryGrey;
+          font-size: .6rem;
+        }
+      }
+    }
+
+    &__summary {
+      @include blockInList;
+
+      &__items {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+
+        &__item {
+          font-size: .7rem;
+          color: $primaryGrey;
+
+          &__icon {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+
+    &__save-day {
+      margin: 10px 0 15px 0;
+
+      display: flex;
+
+      &__confirm {
+        @include firstlyBtn;
+        font-weight: bold;
+        font-size: .7rem;
+        width: 100%;
+      }
+    }
+  }
 }
+
 @media (min-width: $minValueTablet) {
-    @mixin blockInList {
+  @mixin blockInList {
+    font-size: .9rem;
+  }
+
+  h3 {
+    display: none;
+  }
+
+  .wrapper {
+    width: 480px;
+
+    &__calendar {
+
+      &__input {
+        font-size: 1.1rem;
+      }
+    }
+
+    &__prev-day, &__balance-day {
+      p:last-child {
+        font-size: .8rem;
+      }
+    }
+
+    &__state-cash {
+
+      &__cash, &__credit-card {
+        font-size: .7rem;
+      }
+
+      &__summary {
+        font-size: .8rem;
+
+        p:last-child {
+          font-size: .7rem;
+        }
+      }
+    }
+
+    &__summary {
+
+      &__items {
+
+        &__item {
+          font-size: .8rem;
+        }
+      }
+    }
+
+    &__save-day {
+
+      &__confirm {
         font-size: .9rem;
+      }
     }
-
-    h3 {
-        display: none;
-    }
-
-    .wrapper {
-        width: 480px;
-
-        &__calendar {
-
-            &__input {
-                font-size: 1.1rem;
-            }
-        }
-
-        &__prev-day, &__balance-day {
-            p:last-child {
-                font-size: .8rem;
-            }
-        }
-
-        &__state-cash {
-
-            &__cash, &__credit-card {
-                font-size: .7rem;
-            }
-
-            &__summary {
-                font-size: .8rem;
-
-                p:last-child {
-                    font-size: .7rem;
-                }
-            }
-        }
-
-        &__summary {
-
-            &__items {
-
-                &__item {
-                    font-size: .8rem;
-                }
-            }
-        }
-
-        &__save-day {
-
-            &__confirm {
-                font-size: .9rem;
-            }
-        }
-    }
+  }
 }
 
 @media (min-width: 1286px) {
-    .wrapper {
-        width: 280px;
-    }
+  .wrapper {
+    width: 280px;
+  }
 }

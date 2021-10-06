@@ -5,8 +5,8 @@ import { ItemStructure } from '../models/item-structure.model';
 import { Employees } from '../models/employees.model';
 
 export type PhoneInListType
-    = PhoneModel
-    | RepairsModel
-    | PricesModel
-    | ItemStructure
-    | Employees;
+  = PhoneModel
+  | RepairsModel
+  | PricesModel
+  | ItemStructure
+  | Employees;

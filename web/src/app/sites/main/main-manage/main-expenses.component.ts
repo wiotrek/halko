@@ -9,90 +9,90 @@ import { ItemStructureEdit } from '../_models/item-structure-edit.model';
 import { ItemStructure } from '../../../shared/models/item-structure.model';
 
 @Component({
-    selector: 'app-main-expenses',
-    templateUrl: 'sheet-scratch/sheet-template/sheet-template.html',
-    styleUrls: ['sheet-scratch/sheet-template/sheet-template.scss']
+  selector: 'app-main-expenses',
+  templateUrl: 'sheet-scratch/sheet-template/sheet-template.html',
+  styleUrls: [ 'sheet-scratch/sheet-template/sheet-template.scss' ]
 })
 
 export class MainExpensesComponent implements OnInit, OnDestroy {
-    title = 'Wydatki';
-    isSetDanger = true;
+  title = 'Wydatki';
+  isSetDanger = true;
 
-    subscription: Subscription;
+  subscription: Subscription;
 
-    items: ItemStructure[];
+  items: ItemStructure[];
 
-    category = CategoryItemExpensesArray;
+  category = CategoryItemExpensesArray;
 
-    // assign default values
-    employees: Employees[] = EmployeesInitialArray;
+  // assign default values
+  employees: Employees[] = EmployeesInitialArray;
 
-    // if element is -1 then none is editing
-    currentlyEditedElement = -1;
+  // if element is -1 then none is editing
+  currentlyEditedElement = -1;
 
-    // paginations
-    readonly pageSize = 5;
-    start = 0;
-    end = 5;
+  // paginations
+  readonly pageSize = 5;
+  start = 0;
+  end = 5;
 
-    sum: number;
+  sum: number;
 
-    constructor(private mainService: MainService) {}
+  constructor(private mainService: MainService) {}
 
-    ngOnInit(): void {
-        this.getEmployees();
-        this.getElements();
-        this.displaySum();
-    }
+  ngOnInit(): void {
+    this.getEmployees();
+    this.getElements();
+    this.displaySum();
+  }
 
-    editElementModeToggleFunc = (ind: number) => {
-        this.currentlyEditedElement = ind === this.currentlyEditedElement
-        ? -1
-        : ind;
-    }
+  editElementModeToggleFunc = (ind: number) => {
+    this.currentlyEditedElement = ind === this.currentlyEditedElement
+      ? -1
+      : ind;
+  };
 
-    addNewElementFunc = (newElement: ItemStructureAdd) => {
-        this.mainService.addNewExpenseItem(newElement);
-    }
+  addNewElementFunc = (newElement: ItemStructureAdd) => {
+    this.mainService.addNewExpenseItem(newElement);
+  };
 
-    editElementFunc(elementToEdit: {newElement: ItemStructureEdit, ind: number}): void {
-        this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
-        this.currentlyEditedElement = -1;
-    }
+  editElementFunc(elementToEdit: { newElement: ItemStructureEdit, ind: number }): void {
+    this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
+    this.currentlyEditedElement = -1;
+  }
 
-    deleteElementFunc = (el: {indexBackend: string, indexArr: number}) => {
-        this.mainService.removeExpenseItem(
-            el.indexBackend, el.indexArr
-        );
+  deleteElementFunc = (el: { indexBackend: string, indexArr: number }) => {
+    this.mainService.removeExpenseItem(
+      el.indexBackend, el.indexArr
+    );
 
-        // because next element inherit editmode
-        this.currentlyEditedElement = -1;
-    }
+    // because next element inherit editmode
+    this.currentlyEditedElement = -1;
+  };
 
-    private getEmployees(): void {
+  private getEmployees(): void {
 
-        const sub = this.mainService.getEmployees()
-            .subscribe(
-                (res: Employees[]) => this.employees = res,
-                () => this.employees = EmployeesInitialArray
-            );
+    const sub = this.mainService.getEmployees()
+      .subscribe(
+        (res: Employees[]) => this.employees = res,
+        () => this.employees = EmployeesInitialArray
+      );
 
-        this.subscription = sub;
-    }
+    this.subscription = sub;
+  }
 
-    private getElements(): void {
-        this.mainService.expensesItem$.subscribe(
-            (res: ItemStructure[]) => this.items = res
-        );
-    }
+  private getElements(): void {
+    this.mainService.expensesItem$.subscribe(
+      (res: ItemStructure[]) => this.items = res
+    );
+  }
 
-    private displaySum(): void {
-        this.mainService.displayExpensesSum().subscribe(
-            res => this.sum = res
-        );
-    }
+  private displaySum(): void {
+    this.mainService.displayExpensesSum().subscribe(
+      res => this.sum = res
+    );
+  }
 
-    ngOnDestroy(): void {
-        this.subscription.unsubscribe();
-    }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 }

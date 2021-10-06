@@ -20,12 +20,13 @@ import { RepairsComponent } from './repairs.component';
         path: '',
         component: RepairsComponent,
         children: [
-          { path: '', component: RepairsListComponent },
-          { path: 'archiwum', component: RepairsArchiveComponent },
-          { path: 'dodaj-serwis', component: RepairsAddComponent }
+          {path: '', component: RepairsListComponent},
+          {path: 'archiwum', component: RepairsArchiveComponent},
+          {path: 'dodaj-serwis', component: RepairsAddComponent}
         ]
       }
     ])
   ]
 })
-export class RepairsModule {}
+export class RepairsModule {
+}

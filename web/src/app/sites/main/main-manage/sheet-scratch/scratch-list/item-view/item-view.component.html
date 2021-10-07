@@ -15,8 +15,10 @@
 
   <div class="view__price">{{ourItem.price}} zł</div>
 
-  <button class="view__edit"
-          (click)="editModeToggleFunc(indexOfElement)"
+  <button
+    class="view__edit"
+    *ngIf="editModeOn"
+    (click)="editModeToggleFunc(indexOfElement)"
   >
     <fa-icon
       class="view__edit__icon"

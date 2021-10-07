@@ -13,15 +13,16 @@ import { ItemStructure } from 'src/app/shared/models/item-structure.model';
 export class ItemViewComponent {
   @Input() ourItem: ItemStructure;
   @Input() indexOfElement: number;
+  @Input() editModeOn = true;
   @Output() editModeToggle: EventEmitter<number> = new EventEmitter();
 
   faEdit = faEdit;
 
-  // suplies from dictionary
+  // supplies from dictionary
   categoryIcon = CategoryIconDictionary;
   categoryIconColor = CategoryIconColorDictionary;
 
   editModeToggleFunc = (ind: number) => {
     this.editModeToggle.emit(ind);
-  };
+  }
 }

@@ -36,12 +36,16 @@ export class MainSalesComponent implements OnInit, OnDestroy {
 
   sum: number;
 
+  // if choice date is equal with today, then is edit mode on
+  editModeOn = true;
+
   constructor(private mainService: MainService) {}
 
   ngOnInit(): void {
     this.getEmployees();
     this.getElements();
     this.displaySum();
+    this.checkChoiceDate();
   }
 
   editElementModeToggleFunc = (ind: number) =>
@@ -84,6 +88,12 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     this.mainService.displaySoldsSum().subscribe(
       res => this.sum = res
     );
+  }
+
+  private checkChoiceDate(): void {
+    this.mainService.editModeOn.subscribe(res => {
+      this.editModeOn = res;
+    });
   }
 
   ngOnDestroy(): void {

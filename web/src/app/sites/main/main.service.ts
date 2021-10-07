@@ -27,6 +27,8 @@ export class MainService {
   private soldsItemsChanged = new BehaviorSubject<ItemStructure[]>(this.soldsItems);
   public soldsItem$ = this.soldsItemsChanged.asObservable();
 
+  // set off edit mode
+  editModeOn = new BehaviorSubject<boolean>(true);
 
   // for expenses items
   private expensesItems: ItemStructure[] = [];
@@ -187,10 +189,14 @@ export class MainService {
   }
 
   // get sold items and expenses item
-  private getAllItemsInitialFunc(): void {
+  getAllItemsInitialFunc(date: string = this.todayDate): void {
 
-    let params = new HttpParams();
-    params = params.set('date', this.todayDate);
+    // if choice date is equal with today date then edit mode is active
+    this.editModeOn.next(
+      this.todayDate === date
+    );
+
+    let params = new HttpParams().set('date', date);
     params = params.append('pointName', this.pointName);
 
     this.http.get(

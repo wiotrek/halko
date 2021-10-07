@@ -3,6 +3,7 @@
   <app-scratch-header [title]="title"></app-scratch-header>
 
   <app-scratch-adder
+    *ngIf="editModeOn"
     [setDanger]="isSetDanger"
     [category]="category"
     [employees]="employees"
@@ -11,13 +12,11 @@
 
   <div class="list">
 
-    <div
-      class="item"
-      *ngFor="let item of items | slice:start:end"
-    >
+    <div class="item" *ngFor="let item of items | slice:start:end">
       <app-item-view
         *ngIf="this.currentlyEditedElement !== items.indexOf(item) else editModeActive"
         [ourItem]="item"
+        [editModeOn]="editModeOn"
         [indexOfElement]="items.indexOf(item)"
         (editModeToggle)="editElementModeToggleFunc($event)"
       ></app-item-view>

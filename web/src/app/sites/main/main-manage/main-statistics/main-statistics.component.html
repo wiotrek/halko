@@ -8,7 +8,7 @@
       class="wrapper__calendar__input"
       type="date"
       [ngModel]="choiceDay | date:'yyyy-MM-dd'"
-      (ngModelChange)=""
+      (ngModelChange)="changeItems($event)"
       [max]="today | date:'yyyy-MM-dd'"
       required
     >

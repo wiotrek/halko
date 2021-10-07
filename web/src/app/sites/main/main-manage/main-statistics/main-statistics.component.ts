@@ -58,6 +58,10 @@ export class MainStatisticsComponent implements OnInit, OnDestroy {
     this.getBalanceDay();
   }
 
+  changeItems(date: any): void {
+    this.mainService.getAllItemsInitialFunc(date);
+  }
+
   getCategoriesAmount(): void {
     this.subscription = this.mainService.getCategoriesAmountChange().subscribe(
       (res: CategoriesAmount[]) => this.categoriesAmount = res

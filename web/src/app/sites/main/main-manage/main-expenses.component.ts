@@ -30,12 +30,15 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
   // if element is -1 then none is editing
   currentlyEditedElement = -1;
 
-  // paginations
+  // pagination
   readonly pageSize = 5;
   start = 0;
   end = 5;
 
   sum: number;
+
+  // if choice date is equal with today, then is edit mode on
+  editModeOn = true;
 
   constructor(private mainService: MainService) {}
 
@@ -43,17 +46,16 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     this.getEmployees();
     this.getElements();
     this.displaySum();
+    this.checkChoiceDate();
   }
 
-  editElementModeToggleFunc = (ind: number) => {
+  editElementModeToggleFunc = (ind: number) =>
     this.currentlyEditedElement = ind === this.currentlyEditedElement
-      ? -1
-      : ind;
-  };
+      ? -1 : ind
 
   addNewElementFunc = (newElement: ItemStructureAdd) => {
     this.mainService.addNewExpenseItem(newElement);
-  };
+  }
 
   editElementFunc(elementToEdit: { newElement: ItemStructureEdit, ind: number }): void {
     this.mainService.EditExpenseItem(elementToEdit.newElement, elementToEdit.ind);
@@ -65,19 +67,16 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
       el.indexBackend, el.indexArr
     );
 
-    // because next element inherit editmode
+    // because next element inherit edited
     this.currentlyEditedElement = -1;
-  };
+  }
 
   private getEmployees(): void {
-
-    const sub = this.mainService.getEmployees()
+    this.subscription = this.mainService.getEmployees()
       .subscribe(
         (res: Employees[]) => this.employees = res,
         () => this.employees = EmployeesInitialArray
       );
-
-    this.subscription = sub;
   }
 
   private getElements(): void {
@@ -90,6 +89,12 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     this.mainService.displayExpensesSum().subscribe(
       res => this.sum = res
     );
+  }
+
+  private checkChoiceDate(): void {
+    this.mainService.editModeOn.subscribe(res => {
+      this.editModeOn = res;
+    });
   }
 
   ngOnDestroy(): void {

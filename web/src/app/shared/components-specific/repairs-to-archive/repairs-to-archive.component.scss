@@ -2,23 +2,23 @@
 @import "../../global-styles/variable";
 
 .to-archive {
-    font-size: .8rem;
-    display: flex;
-    align-items: baseline;
+  font-size: .8rem;
+  display: flex;
+  align-items: baseline;
 
-    &__confirm {
-        text-decoration: none;
-        color: $prettyGreen;
-        cursor: pointer;
-        margin-left: 10px;
+  &__confirm {
+    text-decoration: none;
+    color: $prettyGreen;
+    cursor: pointer;
+    margin-left: 10px;
 
-        &:hover {
-            opacity: .5;
-            text-decoration: underline;
-        }
-
-        &--defeat {
-            color: $dangerColor;
-        }
+    &:hover {
+      opacity: .5;
+      text-decoration: underline;
     }
+
+    &--defeat {
+      color: $dangerColor;
+    }
+  }
 }

@@ -19,15 +19,16 @@ import { AdminGuard } from 'src/app/auth/_guards/admin.guard';
         path: '',
         component: PricesComponent,
         children: [
-          { path: '', component: PricesListComponent },
+          {path: '', component: PricesListComponent},
           {
             path: 'dodaj-telefon',
             component: PricesAddComponent,
-            canActivate: [AdminGuard],
+            canActivate: [ AdminGuard ],
           }
         ]
       }
     ])
   ]
 })
-export class PricesModule {}
+export class PricesModule {
+}

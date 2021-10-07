@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
 @Component({
-    selector: 'app-sites',
-    template: `
+  selector: 'app-sites',
+  template: `
 
     <div class="container">
         <app-nav></app-nav>
@@ -10,8 +10,9 @@ import { Component } from '@angular/core';
     </div>
 
     `,
-    styles: [
-        '.container { margin: 0 auto; max-width: 1600px; }'
-    ]
+  styles: [
+    '.container { margin: 0 auto; max-width: 1600px; }'
+  ]
 })
-export class SitesComponent {}
+export class SitesComponent {
+}

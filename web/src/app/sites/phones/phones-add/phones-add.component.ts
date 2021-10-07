@@ -28,10 +28,10 @@ export class PhonesAddComponent {
       priceBuyed: f.value.priceBuyed,
       price: f.value.price,
       deviceState: {
-          state: f.value.state,
+        state: f.value.state,
       },
       point: {
-          name: 'Punkt'
+        name: 'Punkt'
       }
     };
 

@@ -1,5 +1,5 @@
 export interface SearcherPatternModel {
-    sorting?: boolean;
-    filterNewUsed?: boolean;
-    filterPoints?: boolean;
+  sorting?: boolean;
+  filterNewUsed?: boolean;
+  filterPoints?: boolean;
 }

@@ -1,67 +1,67 @@
 @mixin firstlyBtn {
-    background-color: #008B8B;
-    color: white;
-    border-radius: 5px;
-    padding: 8px;
-    border: 0;
+  background-color: #008B8B;
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+  border: 0;
 
-    &:hover {
-        opacity: .9;
-    }
+  &:hover {
+    opacity: .9;
+  }
 
-    &:disabled {
-        opacity: .6;
-    }
+  &:disabled {
+    opacity: .6;
+  }
 }
 
 @mixin wrapperForSheetInMain {
-    width: 490px;
-    margin: 0 2px;
+  width: 490px;
+  margin: 0 2px;
 }
 
 
 // elements for sheet in Main
 @mixin oneOfElementsInItem {
-    background-color: transparent;
-    border: 0;
-    margin: auto 4px;
-    color: $primaryGrey;
-    border-bottom: 2px solid $primaryGrey;
-    text-align: center;
+  background-color: transparent;
+  border: 0;
+  margin: auto 4px;
+  color: $primaryGrey;
+  border-bottom: 2px solid $primaryGrey;
+  text-align: center;
 }
 
 @mixin setElementsInItem {
-    display: flex;
-    justify-content: space-evenly;
-    margin: 8px auto;
-    background-color: white;
-    min-height: 35px;
-    border-radius: 5px;
-    font-size: .7rem;
-    align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 8px auto;
+  background-color: white;
+  min-height: 35px;
+  border-radius: 5px;
+  font-size: .7rem;
+  align-items: center;
 }
 
 
 // for display phones elements
 @mixin elInList {
-    padding: 3px 10px;
-    font-size: .7rem;
-    background-color: white;
-    margin-top: 10px;
-    border-radius: 5px;
+  padding: 3px 10px;
+  font-size: .7rem;
+  background-color: white;
+  margin-top: 10px;
+  border-radius: 5px;
 
-    &__upward {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+  &__upward {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        &__field {
-            text-align: center;
-            overflow: hidden;
-        }
-
-        &:hover {
-            color: $prettyGreen;
-        }
+    &__field {
+      text-align: center;
+      overflow: hidden;
     }
+
+    &:hover {
+      color: $prettyGreen;
+    }
+  }
 }

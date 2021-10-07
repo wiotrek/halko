@@ -1,4 +1,4 @@
 export interface CategoriesAmount {
-    item: string;
-    sum: number;
+  item: string;
+  sum: number;
 }

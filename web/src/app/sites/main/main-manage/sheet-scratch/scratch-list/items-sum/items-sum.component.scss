@@ -2,51 +2,52 @@
 @import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
-    .wrap-up {
-        margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    
-        div {
-            display: inline-block;
-        }
-    
-        &__change-site {
-    
-            &__rewind {
-                margin: auto 5px;
-                cursor: pointer;
-    
-                &:hover {
-                    text-decoration: underline;
-                    color: $prettyGreen;
-                }
-            }
-        }
-    
-        &__value {
-            color: $successColor;
-            border-bottom: 2px solid $successColor;
-            padding: 0 5px;
-            margin-right: 10px;
-        }
+  .wrap-up {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        &__value--danger {
-            color: $dangerColor;
-            border-bottom: 2px solid $dangerColor;
-        }
+    div {
+      display: inline-block;
     }
+
+    &__change-site {
+
+      &__rewind {
+        margin: auto 5px;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+          color: $prettyGreen;
+        }
+      }
+    }
+
+    &__value {
+      color: $successColor;
+      border-bottom: 2px solid $successColor;
+      padding: 0 5px;
+      margin-right: 10px;
+    }
+
+    &__value--danger {
+      color: $dangerColor;
+      border-bottom: 2px solid $dangerColor;
+    }
+  }
 }
+
 @media (min-width: $minValueTablet) {
-    .wrap-up {
-        margin-top: 40px;
+  .wrap-up {
+    margin-top: 40px;
 
-        &__change-site {
+    &__change-site {
 
-            a {
-                margin: auto 10px;
-            }
-        }
+      a {
+        margin: auto 10px;
+      }
     }
+  }
 }

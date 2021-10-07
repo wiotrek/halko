@@ -1,5 +1,5 @@
 export const CategoryItemSoldsArray = [
-    'akcesoria',
-    'telefon',
-    'serwis'
+  'akcesoria',
+  'telefon',
+  'serwis'
 ];

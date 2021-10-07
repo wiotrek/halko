@@ -1,94 +1,97 @@
 <div class="searcher">
 
-    <div class="searcher__left-side">
+  <div class="searcher__left-side">
 
-        <input
-            class="searcher__left-side__main-searcher"
-            placeholder="np. producent"
-            #searcher
-            (keyup.enter)="searchName(searcher)"
-        >
+    <input
+      class="searcher__left-side__main-searcher"
+      placeholder="np. producent"
+      #searcher
+      (keyup.enter)="searchName(searcher)"
+    >
+
+    <div
+      *ngIf="searcherPattern.sorting"
+      class="searcher__left-side__sorting"
+      appDropdown
+      #s="appDropdown"
+    >
+      <fa-icon [icon]="faCaretDown"></fa-icon>
+      {{selectedSorting.name}}
+      <fa-icon [icon]="searcherVectorIconsDictionary[selectedSorting.vector]"></fa-icon>
+
+      <div class="searcher__left-side__sorting__dropdown" *ngIf="s.isOpen">
 
         <div
-            *ngIf="searcherPattern.sorting"
-            class="searcher__left-side__sorting"
-            appDropdown
-            #s="appDropdown"
+          class="searcher__left-side__sorting__dropdown__option"
+          *ngFor="let sortVal of sortingValueArray"
+          (click)="sortingFunc(sortVal)"
         >
-            <fa-icon [icon]="faCaretDown"></fa-icon> {{selectedSorting.name}}
-            <fa-icon [icon]="searcherVectorIconsDictionary[selectedSorting.vector]"></fa-icon>
-
-            <div class="searcher__left-side__sorting__dropdown" *ngIf="s.isOpen">
-
-                <div
-                    class="searcher__left-side__sorting__dropdown__option"
-                    *ngFor="let sortVal of sortingValueArray"
-                    (click)="sortingFunc(sortVal)"
-                >
-                    {{sortVal.name}} <fa-icon [icon]="searcherVectorIconsDictionary[sortVal.vector]"></fa-icon>
-                </div>
-
-            </div>
-
+          {{sortVal.name}}
+          <fa-icon [icon]="searcherVectorIconsDictionary[sortVal.vector]"></fa-icon>
         </div>
 
-        <div class="searcher__left-side__states" *ngIf="searcherPattern.filterNewUsed">
-
-            <input
-                type="radio"
-                id="allOfThem"
-                value=""
-                [(ngModel)]="state"
-                (ngModelChange)="stateFilterFunc(state)"
-            >
-            <label for="allOfThem">Wszystkie</label>
-
-            <input
-                type="radio"
-                id="onlyNew"
-                value="Nowy"
-                [(ngModel)]="state"
-                (ngModelChange)="stateFilterFunc(state)"
-            >
-            <label for="onlyNew">Nowe</label>
-
-            <input
-                type="radio"
-                id="onlyUsed"
-                value="Używany"
-                [(ngModel)]="state"
-                (ngModelChange)="stateFilterFunc(state)"
-            >
-            <label for="onlyUsed">Używane</label>
-
-        </div>
+      </div>
 
     </div>
 
-    <div class="searcher__right-side">
+    <div class="searcher__left-side__states" *ngIf="searcherPattern.filterNewUsed">
 
-        <div
-            *ngIf="searcherPattern.filterPoints"
-            class="searcher__right-side__points-names"
-            appDropdown
-            #p="appDropdown"
-        >
-            <fa-icon [icon]="faCaretDown"></fa-icon> {{defaultPoint}}
+      <input
+        type="radio"
+        id="allOfThem"
+        value=""
+        [(ngModel)]="state"
+        (ngModelChange)="stateFilterFunc(state)"
+      >
+      <label for="allOfThem">Wszystkie</label>
 
-            <div class="searcher__right-side__points-names__dropdown" *ngIf="p.isOpen">
+      <input
+        type="radio"
+        id="onlyNew"
+        value="Nowy"
+        [(ngModel)]="state"
+        (ngModelChange)="stateFilterFunc(state)"
+      >
+      <label for="onlyNew">Nowe</label>
 
-                <div
-                    class="searcher__right-side__points-names__dropdown__option"
-                    *ngFor="let point of points"
-                    (click)="pointFilterFunc(point.name)"
-                >
-                    {{point.name}}
-                </div>
-
-            </div>
-
-        </div>
+      <input
+        type="radio"
+        id="onlyUsed"
+        value="Używany"
+        [(ngModel)]="state"
+        (ngModelChange)="stateFilterFunc(state)"
+      >
+      <label for="onlyUsed">Używane</label>
 
     </div>
+
+  </div>
+
+  <div class="searcher__right-side">
+
+    <div
+      *ngIf="searcherPattern.filterPoints"
+      class="searcher__right-side__points-names"
+      appDropdown
+      #p="appDropdown"
+    >
+      <fa-icon [icon]="faCaretDown"></fa-icon>
+      {{defaultPoint}}
+
+      <div class="searcher__right-side__points-names__dropdown" *ngIf="p.isOpen">
+
+        <div
+          class="searcher__right-side__points-names__dropdown__option"
+          *ngFor="let point of points"
+          (click)="pointFilterFunc(point.name)"
+        >
+          {{point.name}}
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </div>

@@ -1,6 +1,6 @@
 export interface ItemStructureAdd {
-    productName: string;
-    participantInitial: string;
-    productCategoryName: string;
-    price: number;
+  productName: string;
+  participantInitial: string;
+  productCategoryName: string;
+  price: number;
 }

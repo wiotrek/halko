@@ -1,4 +1,4 @@
 export enum ItemOperationEnum {
-    sold = 'Sprzedaż',
-    expense = 'Zakup'
+  sold = 'Sprzedaż',
+  expense = 'Zakup'
 }

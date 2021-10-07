@@ -18,8 +18,8 @@ import { PhoneInListType } from 'src/app/shared/models-union/phone-in-list.type'
 import { PhoneEditModel } from '../_models/phone-edit.model';
 
 @Component({
-    selector: 'app-phones-list',
-    template: `
+  selector: 'app-phones-list',
+  template: `
         <app-searcher
             [searcherPattern]="searcherPattern"
             [points]="pointsList"
@@ -52,189 +52,189 @@ import { PhoneEditModel } from '../_models/phone-edit.model';
     `
 })
 export class PhonesListComponent implements OnInit {
-    // main list
-    phonesList: PhoneModel[];
+  // main list
+  phonesList: PhoneModel[];
 
-    // list of fields will be using to generate component
-    fields = PhoneFieldsArray;
+  // list of fields will be using to generate component
+  fields = PhoneFieldsArray;
 
-    // information about amount getting from api
-    phonesAmount: number;
+  // information about amount getting from api
+  phonesAmount: number;
 
-    // component using in phone in list details to display options
-    // like sell or send phone
-    componentWillUsing = PhoneInListDetailsCptsArray.PhonesExtendComponent;
+  // component using in phone in list details to display options
+  // like sell or send phone
+  componentWillUsing = PhoneInListDetailsCptsArray.PhonesExtendComponent;
 
-    // for points
-    pointName: string;
-    pointsList: Point[];
+  // for points
+  pointName: string;
+  pointsList: Point[];
 
-    // setting property which searcher must be using
-    searcherPattern: SearcherPatternModel = {
-        sorting: false,
-        filterNewUsed: true,
-        filterPoints: true
+  // setting property which searcher must be using
+  searcherPattern: SearcherPatternModel = {
+    sorting: false,
+    filterNewUsed: true,
+    filterPoints: true
+  };
+
+  // searcher property will for getting from api
+  // searcher is using in every functions
+  searcher: SearcherModel = {
+    pointName: '',
+    searchName: '',
+    state: '',
+    pageIndex: 1,
+    pageSize: 10,
+  };
+
+  constructor(
+    private phoneService: PhonesService,
+    private toastr: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.getPoints();
+    this.getPhones(this.searcher);
+  }
+
+
+  // for pagination
+  countIndex(phone: PhoneModel): number {
+    return (
+      this.phonesList.indexOf(phone) + 1
+    ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+  }
+
+  changeSite(pageIndex: number): void {
+    this.searcher.pageIndex = pageIndex;
+    this.getPhones(this.searcher);
+  }
+
+
+  // check whether phone is from currently point
+  // if it not, then we cant edit this
+  checkElInListAllowedEdit(phone: PhoneModel): boolean {
+    return phone.name === this.pointName;
+  }
+
+  // for filter and sorting
+  searchNameFilter(name: string): void {
+    this.searcher.searchName = name;
+    this.getPhones(this.searcher);
+  }
+
+  pointFilter(pointString: string): void {
+    this.searcher.pointName = pointString;
+    this.getPhones(this.searcher);
+  }
+
+  stateFilter(stateString: string): void {
+    this.searcher.state = stateString;
+    this.getPhones(this.searcher);
+  }
+
+  sorting(val: SortingVectorModel): void {
+    this.getPhones(this.searcher, val);
+  }
+
+
+  // for phone in list component
+  updatePhone(
+    response: { update: NgForm, elInList: PhoneInListType }
+  ): void {
+    const editPhone: PhoneEditModel = {
+      producer: response.update.value.producer,
+      model: response.update.value.model,
+      color: response.update.value.model,
+      comment: response.update.value.comment,
+      priceBuyed: response.update.value.priceBuyed,
+      price: response.update.value.price,
+      deviceState: {
+        state: response.update.value.state
+      }
     };
 
-    // searcher property will for getting from api
-    // searcher is using in every functions
-    searcher: SearcherModel = {
-        pointName: '',
-        searchName: '',
-        state: '',
-        pageIndex: 1,
-        pageSize: 10,
-    };
+    const oldPhone = response.elInList as PhoneModel;
 
-    constructor(
-        private phoneService: PhonesService,
-        private toastr: ToastrService
-    ) {}
-
-    ngOnInit(): void {
-        this.getPoints();
+    this.phoneService.editPhone(editPhone, oldPhone.id).subscribe(
+      () => {
         this.getPhones(this.searcher);
+        this.toastr.success(ResponseDictionary.change);
+      },
+      (err: HttpErrorResponse) => err
+        ? this.toastr.error(err.error.message)
+        : this.toastr.error(ErrorsDictionary.bad)
+    );
+  }
+
+  // operations from phones extend
+  // may sell phones or move to another point
+  phoneBeingSoldOrSend(result: PhonesExtendResultsModel): void {
+
+    // operation sell phone
+    if (result.operationName === OperationsNameEnum.sellPhone) {
+      this.phoneService.sellPhone(
+        result.phoneId, result.priceSold
+      ).subscribe(
+        () => {
+          this.getPhones(this.searcher);
+          this.toastr.success(ResponseDictionary.archive);
+        },
+        (err: HttpErrorResponse) => err
+          ? this.toastr.error(err.error.message)
+          : this.toastr.error(ErrorsDictionary.bad)
+      );
     }
 
-
-    // for pagination
-    countIndex(phone: PhoneModel): number {
-        return (
-            this.phonesList.indexOf(phone) + 1
-        ) + this.searcher.pageSize * (this.searcher.pageIndex - 1);
+    // operation move phone to another point
+    else if (result.operationName === OperationsNameEnum.movePhone) {
+      this.phoneService.movePhone(
+        result.phoneId, result.pointName
+      ).subscribe(
+        () => {
+          this.getPhones(this.searcher);
+          this.toastr.success(ResponseDictionary.move);
+        },
+        (err: HttpErrorResponse) => err
+          ? this.toastr.error(err.error.message)
+          : this.toastr.error(ErrorsDictionary.bad)
+      );
     }
+  }
 
-    changeSite(pageIndex: number): void {
-        this.searcher.pageIndex = pageIndex;
-        this.getPhones(this.searcher);
-    }
+  // this function is using only in phones extend
+  pointListMapPointListString(pointList: Point[]): string[] {
+    return pointList.filter(
+      x => x.id > 0 && x.name !== this.pointName
+    ).map(x => x.name);
+  }
 
+  private getPhones(
+    searcher: SearcherModel = this.searcher,
+    sorted: SortingVectorModel = null
+  ): void {
+    this.phoneService.getPhones(searcher).subscribe(
+      res => {
 
-    // check whether phone is from currently point
-    // if it not, then we cant edit this
-    checkElInListAllowedEdit(phone: PhoneModel): boolean {
-        return phone.name === this.pointName;
-    }
+        // unnecessary values to setting pagination
+        this.searcher.pageIndex = res.pageIndex;
+        this.phonesAmount = res.count;
 
-    // for filter and sorting
-    searchNameFilter(name: string): void {
-        this.searcher.searchName = name;
-        this.getPhones(this.searcher);
-    }
+        // default sorting is for producer,and is alphabetic
+        this.phonesList = res.data;
+      },
+      (err: HttpErrorResponse) =>
+        this.toastr.error(err.error.message)
+    );
+  }
 
-    pointFilter(pointString: string): void {
-        this.searcher.pointName = pointString;
-        this.getPhones(this.searcher);
-    }
+  private getPoints(): void {
+    // set current point name
+    this.pointName = this.phoneService.pointName;
+    this.searcher.pointName = this.pointName;
 
-    stateFilter(stateString: string): void {
-        this.searcher.state = stateString;
-        this.getPhones(this.searcher);
-    }
-
-    sorting(val: SortingVectorModel): void {
-        this.getPhones(this.searcher, val);
-    }
-
-
-    // for phone in list component
-    updatePhone(
-        response: { update: NgForm, elInList: PhoneInListType }
-    ): void {
-        const editPhone: PhoneEditModel = {
-            producer: response.update.value.producer,
-            model: response.update.value.model,
-            color: response.update.value.model,
-            comment: response.update.value.comment,
-            priceBuyed: response.update.value.priceBuyed,
-            price: response.update.value.price,
-            deviceState: {
-                state: response.update.value.state
-            }
-        };
-
-        const oldPhone = response.elInList as PhoneModel;
-
-        this.phoneService.editPhone(editPhone, oldPhone.id).subscribe(
-            () => {
-                this.getPhones(this.searcher);
-                this.toastr.success(ResponseDictionary.change);
-            },
-            (err: HttpErrorResponse) => err
-                ? this.toastr.error(err.error.message)
-                : this.toastr.error(ErrorsDictionary.bad)
-        );
-    }
-
-    // operations from phones extend
-    // may sell phones or move to another point
-    phoneBeingSoldOrSend(result: PhonesExtendResultsModel): void {
-
-        // operation sell phone
-        if (result.operationName === OperationsNameEnum.sellPhone) {
-            this.phoneService.sellPhone(
-                result.phoneId, result.priceSold
-            ).subscribe(
-                () => {
-                    this.getPhones(this.searcher);
-                    this.toastr.success(ResponseDictionary.archive);
-                },
-                (err: HttpErrorResponse) => err
-                    ? this.toastr.error(err.error.message)
-                    : this.toastr.error(ErrorsDictionary.bad)
-            );
-        }
-
-        // operation move phone to another point
-        else if (result.operationName === OperationsNameEnum.movePhone) {
-            this.phoneService.movePhone(
-                result.phoneId, result.pointName
-            ).subscribe(
-                () => {
-                    this.getPhones(this.searcher);
-                    this.toastr.success(ResponseDictionary.move);
-                },
-                (err: HttpErrorResponse) => err
-                    ? this.toastr.error(err.error.message)
-                    : this.toastr.error(ErrorsDictionary.bad)
-            );
-        }
-    }
-
-    // this function is using only in phones extend
-    pointListMapPointListString(pointList: Point[]): string[] {
-        return pointList.filter(
-                x => x.id > 0 && x.name !== this.pointName
-        ).map(x => x.name);
-    }
-
-    private getPhones(
-        searcher: SearcherModel = this.searcher,
-        sorted: SortingVectorModel = null
-    ): void {
-        this.phoneService.getPhones(searcher).subscribe(
-            res => {
-
-                // unnecessary values to setting pagination
-                this.searcher.pageIndex = res.pageIndex;
-                this.phonesAmount = res.count;
-
-                // default sorting is for producer,and is alphabetic
-                this.phonesList = res.data;
-            },
-            (err: HttpErrorResponse) =>
-                this.toastr.error(err.error.message)
-        );
-    }
-
-    private getPoints(): void {
-        // set current point name
-        this.pointName = this.phoneService.pointName;
-        this.searcher.pointName = this.pointName;
-
-        // set points list
-        this.phoneService.getListPoints().subscribe(
-            res => this.pointsList = res
-        );
-    }
+    // set points list
+    this.phoneService.getListPoints().subscribe(
+      res => this.pointsList = res
+    );
+  }
 }

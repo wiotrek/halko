@@ -1,8 +1,8 @@
-import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
 @Component({
-    selector: 'app-la-pagination',
-    template: `
+  selector: 'app-la-pagination',
+  template: `
         <div class="pagination">
 
             <a class="pagination__prev"
@@ -21,38 +21,38 @@ import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core';
 
         </div>
     `,
-    styleUrls: ['./la-pagination.scss']
+  styleUrls: [ './la-pagination.scss' ]
 })
 export class LaPaginationComponent implements OnChanges {
-    @Input() pageSize: number;
-    @Input() elementsAmount: number;
+  @Input() pageSize: number;
+  @Input() elementsAmount: number;
 
-    // two way binding
-    @Input() pageIndex: number;
-    @Output() pageIndexChange: EventEmitter<number> = new EventEmitter();
+  // two way binding
+  @Input() pageIndex: number;
+  @Output() pageIndexChange: EventEmitter<number> = new EventEmitter();
 
-    // show buttons in template
-    showPreviousSite = false;
-    showNextSite = false;
+  // show buttons in template
+  showPreviousSite = false;
+  showNextSite = false;
 
-    ngOnChanges(): void {
-        this.showButtons();
-    }
+  ngOnChanges(): void {
+    this.showButtons();
+  }
 
-    previousSite(): void {
-        this.pageIndex = this.pageIndex - 1;
-        this.pageIndexChange.emit(this.pageIndex);
-        this.showButtons();
-    }
+  previousSite(): void {
+    this.pageIndex = this.pageIndex - 1;
+    this.pageIndexChange.emit(this.pageIndex);
+    this.showButtons();
+  }
 
-    nextSite(): void {
-        this.pageIndex = this.pageIndex + 1;
-        this.pageIndexChange.emit(this.pageIndex);
-        this.showButtons();
-    }
+  nextSite(): void {
+    this.pageIndex = this.pageIndex + 1;
+    this.pageIndexChange.emit(this.pageIndex);
+    this.showButtons();
+  }
 
-    private showButtons(): void {
-        this.showPreviousSite = this.pageIndex > 1;
-        this.showNextSite = this.pageIndex * this.pageSize < this.elementsAmount;
-    }
+  private showButtons(): void {
+    this.showPreviousSite = this.pageIndex > 1;
+    this.showNextSite = this.pageIndex * this.pageSize < this.elementsAmount;
+  }
 }

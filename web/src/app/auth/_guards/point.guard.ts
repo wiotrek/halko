@@ -6,15 +6,15 @@ import { AuthService } from '../auth.service';
 
 @Injectable({providedIn: 'root'})
 export class PointGuard implements CanActivate {
-    constructor(
-        private authService: AuthService,
-        private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router) {}
 
-    canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot)
-        : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree>  {
-        return this.authService.user.pipe(
-            take(1),
-            map(user => user.showRole === 'Point' ? true : this.router.createUrlTree(['/admin']))
-        );
-    }
+  canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot)
+    : boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
+    return this.authService.user.pipe(
+      take(1),
+      map(user => user.showRole === 'Point' ? true : this.router.createUrlTree([ '/admin' ]))
+    );
+  }
 }

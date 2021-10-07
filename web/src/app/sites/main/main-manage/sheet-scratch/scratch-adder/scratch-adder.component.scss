@@ -3,68 +3,69 @@
 
 
 @media (min-width: 0) {
-    .addition-item {
-        @include setElementsInItem;
-        margin-top: 20px;
-        font-size: .8rem;
-        justify-content: space-between;
+  .addition-item {
+    @include setElementsInItem;
+    margin-top: 20px;
+    font-size: .8rem;
+    justify-content: space-between;
 
 
-        select, input {
-            @include oneOfElementsInItem;
-            cursor: pointer;
-            
-            &:hover {
-                border-bottom: 2px solid $prettyGreen;
-            }
-        }
+    select, input {
+      @include oneOfElementsInItem;
+      cursor: pointer;
 
-        &__category {
-            width: 3ch;
-        }
-
-        &__name, &__price {
-            text-align: center;
-        }
-
-        &__name {
-            min-width: 80px;
-            max-width: 140px;
-        }
-
-        &__price {
-            width: 35px;
-        }
-
-        &__confirm {
-            @include firstlyBtn;
-            border: 0;
-            padding: 0;
-            min-width: 60px;
-            max-width: 100px;
-            height: 32px;
-            margin: 0 5px;
-
-            &__icon {
-                color: white;
-            }
-        }
-        &__confirm--danger {
-            background-color: $dangerColor;
-        }
+      &:hover {
+        border-bottom: 2px solid $prettyGreen;
+      }
     }
+
+    &__category {
+      width: 3ch;
+    }
+
+    &__name, &__price {
+      text-align: center;
+    }
+
+    &__name {
+      min-width: 80px;
+      max-width: 140px;
+    }
+
+    &__price {
+      width: 35px;
+    }
+
+    &__confirm {
+      @include firstlyBtn;
+      border: 0;
+      padding: 0;
+      min-width: 60px;
+      max-width: 100px;
+      height: 32px;
+      margin: 0 5px;
+
+      &__icon {
+        color: white;
+      }
+    }
+
+    &__confirm--danger {
+      background-color: $dangerColor;
+    }
+  }
 }
 
 @media (min-width: $minValueTablet) {
-    .addition-item {
-        font-size: .8rem;
+  .addition-item {
+    font-size: .8rem;
 
-        &__category {
-            width: auto;
-        }
-
-        &__price {
-            width: 50px;
-        }
+    &__category {
+      width: auto;
     }
+
+    &__price {
+      width: 50px;
+    }
+  }
 }

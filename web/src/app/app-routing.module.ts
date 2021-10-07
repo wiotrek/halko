@@ -7,48 +7,49 @@ import { AdminGuard } from './auth/_guards/admin.guard';
 import { PointGuard } from './auth/_guards/point.guard';
 
 const routes: Routes = [
-    {
+  {
+    path: '',
+    canActivate: [ AuthGuard ],
+    component: SitesComponent,
+    children: [
+      {
         path: '',
-        canActivate: [AuthGuard],
-        component: SitesComponent,
-        children: [
-            {
-                path: '',
-                canActivate: [PointGuard],
-                component: MainComponent
-            },
-            {
-                path: 'telefony',
-                canActivate: [PointGuard],
-                loadChildren: () => import('./sites/phones/phones.module').then(m => m.PhonesModule)
-            },
-            {
-                path: 'serwis',
-                canActivate: [PointGuard],
-                loadChildren: () => import('./sites/repairs/repairs.module').then(m => m.RepairsModule)
-            },
-            {
-                path: 'cennik',
-                canActivate: [PointGuard],
-                loadChildren: () => import('./sites/prices/prices.module').then(m => m.PricesModule)
-            },
-            {
-                path: 'admin',
-                canActivate: [AdminGuard],
-                loadChildren: () => import('./sites/admin/admin.module').then(m => m.AdminModule)
-            }
-        ]
-    },
-    {
-        path: 'logowanie',
-        loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
-    }
+        canActivate: [ PointGuard ],
+        component: MainComponent
+      },
+      {
+        path: 'telefony',
+        canActivate: [ PointGuard ],
+        loadChildren: () => import('./sites/phones/phones.module').then(m => m.PhonesModule)
+      },
+      {
+        path: 'serwis',
+        canActivate: [ PointGuard ],
+        loadChildren: () => import('./sites/repairs/repairs.module').then(m => m.RepairsModule)
+      },
+      {
+        path: 'cennik',
+        canActivate: [ PointGuard ],
+        loadChildren: () => import('./sites/prices/prices.module').then(m => m.PricesModule)
+      },
+      {
+        path: 'admin',
+        canActivate: [ AdminGuard ],
+        loadChildren: () => import('./sites/admin/admin.module').then(m => m.AdminModule)
+      }
+    ]
+  },
+  {
+    path: 'logowanie',
+    loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+  }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules})
   ],
-  exports: [RouterModule]
+  exports: [ RouterModule ]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

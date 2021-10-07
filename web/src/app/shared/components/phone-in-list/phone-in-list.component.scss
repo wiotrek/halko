@@ -2,97 +2,97 @@
 @import 'src/app/shared/global-styles/components.scss';
 
 @media (min-width: 0) {
-    .elInList {
-        padding: 3px 10px;
-        font-size: .7rem;
-        background-color: white;
-        margin-top: 10px;
-        border-radius: 5px;
+  .elInList {
+    padding: 3px 10px;
+    font-size: .7rem;
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 5px;
 
-        &--booked {
-            background-color: ghostwhite;
-        }
-
-        &--deleted {
-            color: $dangerColor;
-        }
-
-        &--edited {
-            color: $waringColor;
-        }
-
-        &__upward {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            &__field {
-                text-align: center;
-                overflow: hidden;
-
-                &--hide {
-                    display: none;
-                }
-
-                &:hover {
-                    color: $prettyGreen;
-                }
-            }
-
-            &__info-btn {
-                border: 0;
-                background-color: transparent;
-                color: $prettyGreen;
-                transition: transform 0s .1s ease-in-out;
-
-                &:hover {
-                    transform: translateY(-1px);
-                }
-
-                &.details-mode {
-                    color: $waringColor;
-                }
-
-                &.flex-start {
-                    margin-left: auto;
-                }
-            }
-
-            &:hover &__editing {
-                color: $waringColor;
-            }
-
-            &.details-mode {
-                justify-content: flex-end;
-            }
-
-            &.flex-start {
-                justify-content: flex-start;
-            }
-        }
+    &--booked {
+      background-color: ghostwhite;
     }
-}
 
-@media (min-width: $minValueDesktop) {
-    .elInList__upward {
-        font-size: .7rem;
+    &--deleted {
+      color: $dangerColor;
+    }
 
-        &__field--hide {
-            display: initial;
-        }
+    &--edited {
+      color: $waringColor;
+    }
 
-        &__info-btn {
-            border: 0;
-            background-color: transparent;
-            color: $prettyGreen;
+    &__upward {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &__field {
+        text-align: center;
+        overflow: hidden;
+
+        &--hide {
+          display: none;
         }
 
         &:hover {
-            color: $prettyGreen;
+          color: $prettyGreen;
+        }
+      }
+
+      &__info-btn {
+        border: 0;
+        background-color: transparent;
+        color: $prettyGreen;
+        transition: transform 0s .1s ease-in-out;
+
+        &:hover {
+          transform: translateY(-1px);
         }
 
-        &:hover &__info-btn {
-            color: $waringColor;
+        &.details-mode {
+          color: $waringColor;
         }
+
+        &.flex-start {
+          margin-left: auto;
+        }
+      }
+
+      &:hover &__editing {
+        color: $waringColor;
+      }
+
+      &.details-mode {
+        justify-content: flex-end;
+      }
+
+      &.flex-start {
+        justify-content: flex-start;
+      }
     }
+  }
+}
+
+@media (min-width: $minValueDesktop) {
+  .elInList__upward {
+    font-size: .7rem;
+
+    &__field--hide {
+      display: initial;
+    }
+
+    &__info-btn {
+      border: 0;
+      background-color: transparent;
+      color: $prettyGreen;
+    }
+
+    &:hover {
+      color: $prettyGreen;
+    }
+
+    &:hover &__info-btn {
+      color: $waringColor;
+    }
+  }
 }

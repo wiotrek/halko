@@ -1,88 +1,88 @@
 <div
-    class="elInList"
-    [ngClass]="addProperty()"
+  class="elInList"
+  [ngClass]="addProperty()"
 >
 
-    <div
-        class="elInList__upward"
-        [ngClass]="{
+  <div
+    class="elInList__upward"
+    [ngClass]="{
             'details-mode': detailsMode,
             'flex-start': isFlexStart
         }"
-    >
+  >
 
-        <ng-container *ngIf="!detailsMode">
+    <ng-container *ngIf="!detailsMode">
 
-            <div
-                class="elInList__upward__field"
-                *ngIf="ind"
-                [ngStyle]="{ width: fieldsNonDetails[0].width }"
-            >
-                {{ind}}.
-            </div>
+      <div
+        class="elInList__upward__field"
+        *ngIf="ind"
+        [ngStyle]="{ width: fieldsNonDetails[0].width }"
+      >
+        {{ind}}.
+      </div>
 
-            <div
-                class="elInList__upward__field"
-                *ngFor="let field of fieldsNonDetails"
-                [ngStyle]="{
+      <div
+        class="elInList__upward__field"
+        *ngFor="let field of fieldsNonDetails"
+        [ngStyle]="{
                     'width': field.width,
                     'display': elInList[field.category] ? '' : 'none'
                 }"
-                [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
-            >
+        [ngClass]="{ 'elInList__upward__field--hide': !field.isMobileRwd }"
+      >
 
-                {{
-                    field.isDate
-                    ? (elInList[field.category] | slice:0:10)
-                    : elInList[field.category]
-                }}
+        {{
+        field.isDate
+          ? (elInList[field.category] | slice:0:10)
+          : elInList[field.category]
+        }}
 
-                {{field.currency}}
+        {{field.currency}}
 
-            </div>
+      </div>
 
-        </ng-container>
+    </ng-container>
 
-        <button
-            class="elInList__upward__info-btn"
-            (click)="detailsMode = !detailsMode"
-            [ngClass]="{
+    <button
+      class="elInList__upward__info-btn"
+      (click)="detailsMode = !detailsMode"
+      [ngClass]="{
                 'details-mode': detailsMode,
                 'flex-start': isFlexStart
             }"
-        >
+    >
 
-            <fa-icon
-                [icon]="faInfoCircle"
-                *ngIf="!detailsMode; else detailsModeActive"
-            ></fa-icon>
+      <fa-icon
+        [icon]="faInfoCircle"
+        *ngIf="!detailsMode; else detailsModeActive"
+      ></fa-icon>
 
-            <ng-template #detailsModeActive>
+      <ng-template #detailsModeActive>
 
-                <fa-icon [icon]="faUndo"></fa-icon>
+        <fa-icon [icon]="faUndo"></fa-icon>
 
-            </ng-template>
+      </ng-template>
 
-        </button>
+    </button>
 
-    </div>
+  </div>
 
-    <div class="elInList__inner">
+  <div class="elInList__inner">
 
-        <ng-container *ngIf="detailsMode">
+    <ng-container *ngIf="detailsMode">
 
-            <app-phone-in-list-details
-                [elInList]="elInList"
-                [deviceFields]="deviceFields"
-                [componentWillUsing]="componentWillUsing"
-                (componentBeingUsingOutput)="componentBeingUsingOutput.emit($event)"
-                [elInListAllowedEdit]="elInListAllowedEdit"
-                [additionally]="additionally"
-                (updateDetails)="updateDetails.emit($event)"
-            ></app-phone-in-list-details>
+      <app-phone-in-list-details
+        [elInList]="elInList"
+        [deviceFields]="deviceFields"
+        [componentWillUsing]="componentWillUsing"
+        (componentBeingUsingOutput)="componentBeingUsingOutput.emit($event)"
+        [elInListAllowedEdit]="elInListAllowedEdit"
+        [additionally]="additionally"
+        (updateDetails)="updateDetails.emit($event)"
+      ></app-phone-in-list-details>
 
-        </ng-container>
+    </ng-container>
 
-    </div>
+  </div>
 
 </div>

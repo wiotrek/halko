@@ -1,66 +1,66 @@
-<form 
-    class="addition-item"
-    #addItem="ngForm"
-    (ngSubmit)="addItem.valid && addElement(addItem)"
-    
+<form
+  class="addition-item"
+  #addItem="ngForm"
+  (ngSubmit)="addItem.valid && addElement(addItem)"
+
 >
-    <select
-        name="participantInitial"
-        class="addition-item__ini"
-        required
-        [ngModel]="employees[0].initial"
-    >
+  <select
+    name="participantInitial"
+    class="addition-item__ini"
+    required
+    [ngModel]="employees[0].initial"
+  >
     <option
-        *ngFor="let employee of employees"
-        [value]="employee.initial"
+      *ngFor="let employee of employees"
+      [value]="employee.initial"
     >
-        {{employee.initial}}
+      {{employee.initial}}
     </option>
 
-    </select>
+  </select>
 
-    <select
-        name="productCategoryName"
-        class="addition-item__category"
-        required
-        [ngModel]="category[0]"
+  <select
+    name="productCategoryName"
+    class="addition-item__category"
+    required
+    [ngModel]="category[0]"
+  >
+    <option
+      *ngFor="let oneOfCategory of category"
+      [value]="oneOfCategory"
     >
-        <option
-            *ngFor="let oneOfCategory of category"
-            [value]="oneOfCategory"
-        >
-            {{oneOfCategory}}
-        </option>
-    </select>
+      {{oneOfCategory}}
+    </option>
+  </select>
 
-    <input
-        type="text"
-        class="addition-item__name"
-        placeholder="nazwa"
-        name="productName"
-        required
-        ngModel
-    >
+  <input
+    type="text"
+    class="addition-item__name"
+    placeholder="nazwa"
+    name="productName"
+    required
+    ngModel
+  >
 
-    <input
-        type="text"
-        class="addition-item__price"
-        name="price"
-        placeholder="cena"
-        pattern="[0-9]*[.]?[0-9]+"
-        required
-        ngModel
-    >
+  <input
+    type="text"
+    class="addition-item__price"
+    name="price"
+    placeholder="cena"
+    pattern="[0-9]*[.]?[0-9]+"
+    required
+    ngModel
+  >
 
-    <button 
-        class="addition-item__confirm"
-        [ngClass]="{'addition-item__confirm--danger': setDanger}"
-        type="submit"
-    >
-        <fa-icon
-            class="addition-item__confirm__icon"
-            [icon]="faCheckCircle">
-        </fa-icon>
-    </button>
+  <button
+    class="addition-item__confirm"
+    [ngClass]="{'addition-item__confirm--danger': setDanger}"
+    type="submit"
+  >
+    <fa-icon
+      class="addition-item__confirm__icon"
+      [icon]="faCheckCircle">
+    </fa-icon>
+  </button>
 
 </form>

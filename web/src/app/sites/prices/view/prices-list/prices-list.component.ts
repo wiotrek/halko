@@ -92,7 +92,7 @@ export class PricesListComponent implements OnInit {
     this.getPrices(this.searcher);
   }
 
-  updatePrice(price: {update: NgForm, elInList: PhoneInListType}): void {
+  updatePrice(price: { update: NgForm, elInList: PhoneInListType }): void {
     this.pricesService.editPrice(
       price.update.value as PricesModel,
       (price.elInList as PricesModel).id

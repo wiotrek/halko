@@ -10,107 +10,109 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-    user = new BehaviorSubject<User | null>(null);
-    apiUrl = environment.api;
+  user = new BehaviorSubject<User | null>(null);
+  apiUrl = environment.api;
 
-    private jwtHelper = new JwtHelperService();
-    private tokenExpirationTimer: any;
+  private jwtHelper = new JwtHelperService();
+  private tokenExpirationTimer: any;
 
-    constructor(
-        private http: HttpClient,
-        private router: Router
-    ) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
-    login(login: string, password: string): Observable<AuthResponseData> {
-        return this.http.post<AuthResponseData>(
-            this.apiUrl + 'api/auth/login',
-            {
-                login,
-                password,
-            }
-        ).pipe(
-            catchError(
-                (err: HttpErrorResponse) => throwError(err.error.message)
-            ),
-            tap((res: AuthResponseData) => {
-                this.handleAuthentication(
-                    res.login,
-                    res.role,
-                    res.pointNames,
-                    res.token,
-                    this.jwtHelper.decodeToken(res.token).exp
-                );
-            })
+  login(login: string, password: string): Observable<AuthResponseData> {
+    return this.http.post<AuthResponseData>(
+      this.apiUrl + 'api/auth/login',
+      {
+        login,
+        password,
+      }
+    ).pipe(
+      catchError(
+        (err: HttpErrorResponse) => throwError(err.error.message)
+      ),
+      tap((res: AuthResponseData) => {
+        this.handleAuthentication(
+          res.login,
+          res.role,
+          res.pointNames,
+          res.token,
+          this.jwtHelper.decodeToken(res.token).exp
         );
+      })
+    );
+  }
+
+  logout(): void {
+    this.user.next(null);
+    localStorage.removeItem('userData');
+    this.router.navigate([ '/logowanie' ]);
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    window.location.reload();
+  }
+
+  autoLogin(): void {
+
+    const userData: {
+      login: string;
+      role: string;
+      pointNames: string[];
+      token: string;
+      tokenExpirationDate: string;
+    } = JSON.parse(localStorage.getItem('userData'));
+
+    if (!userData) {
+      return;
     }
 
-    logout(): void {
-        this.user.next(null);
-        localStorage.removeItem('userData');
-        this.router.navigate(['/logowanie']);
-        if (this.tokenExpirationTimer) {
-            clearTimeout(this.tokenExpirationTimer);
-        }
-        window.location.reload();
+    const loadedUser = new User(
+      userData.login,
+      userData.role,
+      userData.pointNames,
+      userData.token,
+      new Date(userData.tokenExpirationDate)
+    );
+
+    if (loadedUser.tokenFunc) {
+      this.user.next(loadedUser);
     }
 
-    autoLogin(): void {
+    const expirationDateInMs = new Date(
+      userData.tokenExpirationDate
+    ).getTime();
 
-        const userData: {
-            login: string;
-            role: string;
-            pointNames: string[];
-            token: string;
-            tokenExpirationDate: string;
-        } = JSON.parse(localStorage.getItem('userData'));
+    const expirationDuration = expirationDateInMs - new Date().getTime();
+    this.autoLogout(expirationDuration);
+  }
 
-        if (!userData) { return; }
+  autoLogout(expirationDuration: number): void {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
+  }
 
-        const loadedUser = new User(
-            userData.login,
-            userData.role,
-            userData.pointNames,
-            userData.token,
-            new Date(userData.tokenExpirationDate)
-        );
+  private handleAuthentication(
+    login: string, role: string, pointNames: string[],
+    token: string, expiresIn: number
+  ): void {
 
-        if (loadedUser.tokenFunc) {
-            this.user.next(loadedUser);
-        }
+    const expirationDate = new Date(
+      new Date().getTime() + expiresIn
+    );
 
-        const expirationDateInMs = new Date(
-            userData.tokenExpirationDate
-          ).getTime();
+    const user = new User(
+      login,
+      role,
+      pointNames,
+      token,
+      expirationDate
+    );
 
-        const expirationDuration = expirationDateInMs - new Date().getTime();
-        this.autoLogout(expirationDuration);
-    }
-
-    autoLogout(expirationDuration: number): void {
-        this.tokenExpirationTimer = setTimeout(() => {
-            this.logout();
-        }, expirationDuration);
-    }
-
-    private handleAuthentication(
-            login: string, role: string, pointNames: string[],
-            token: string, expiresIn: number
-        ): void {
-
-        const expirationDate = new Date(
-            new Date().getTime() + expiresIn
-        );
-
-        const user = new User(
-            login,
-            role,
-            pointNames,
-            token,
-            expirationDate
-        );
-
-        this.user.next(user);
-        this.autoLogout(expiresIn);
-        localStorage.setItem('userData', JSON.stringify(user));
-    }
+    this.user.next(user);
+    this.autoLogout(expiresIn);
+    localStorage.setItem('userData', JSON.stringify(user));
+  }
 }

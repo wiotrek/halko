@@ -2,169 +2,169 @@
 
 
 @media (min-width: 0) {
-    .nav {
-        background-color: white;
-        margin-bottom: 30px;
+  .nav {
+    background-color: white;
+    margin-bottom: 30px;
 
-        &__left-side {
-            display: none;
+    &__left-side {
+      display: none;
 
-            &__logo {
-                display: none;
-            }
+      &__logo {
+        display: none;
+      }
 
-            &__sites {
-                display: none;
-            }
-        }
-
-        &__right-side {
-            display: flex;
-            flex-direction: row-reverse;
-            position: relative;
-            padding: 10px;
-
-            &__name {
-                font-size: 1.3rem;
-            }
-
-            &__dropdown {
-
-                &__bars {
-                    display: inline-block;
-                    margin: auto 15px;
-                    font-size: 1.3rem;
-                    cursor: pointer;
-
-                    &:hover, &.active {
-                        color: $prettyGreen;
-                    }
-                }
-
-                &__menu {
-                    position: absolute;
-                    background-color: white;
-                    color: $prettyGreen;
-                    height: 100vh;
-                    width: 100%;
-                    top: 50px;
-                    left: 0;
-
-
-                    &__option {
-
-                        &__a {
-                            padding: 2px;
-                            margin: 5px auto;
-                            display: block;
-                            color: $prettyGreen;
-                            cursor: pointer;
-                            font-size: .8rem;
-                            text-align: center;
-
-                            &:hover {
-                                background-color: $prettyGreen;
-                                color: white;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      &__sites {
+        display: none;
+      }
     }
+
+    &__right-side {
+      display: flex;
+      flex-direction: row-reverse;
+      position: relative;
+      padding: 10px;
+
+      &__name {
+        font-size: 1.3rem;
+      }
+
+      &__dropdown {
+
+        &__bars {
+          display: inline-block;
+          margin: auto 15px;
+          font-size: 1.3rem;
+          cursor: pointer;
+
+          &:hover, &.active {
+            color: $prettyGreen;
+          }
+        }
+
+        &__menu {
+          position: absolute;
+          background-color: white;
+          color: $prettyGreen;
+          height: 100vh;
+          width: 100%;
+          top: 50px;
+          left: 0;
+
+
+          &__option {
+
+            &__a {
+              padding: 2px;
+              margin: 5px auto;
+              display: block;
+              color: $prettyGreen;
+              cursor: pointer;
+              font-size: .8rem;
+              text-align: center;
+
+              &:hover {
+                background-color: $prettyGreen;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1208px) {
-    .nav {
-        background-color: white;
-        display: flex;
-        justify-content: space-between;
+  .nav {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
 
-        &__left-side {
-            display: flex;
-            flex-direction: row;
-            align-items: baseline;
+    &__left-side {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
 
-            &__logo {
-                display: initial;
-                width: 200px;
-                height: 40px;
-                margin: 10px 30px;
-            }
+      &__logo {
+        display: initial;
+        width: 200px;
+        height: 40px;
+        margin: 10px 30px;
+      }
 
-            &__sites {
-                display: initial;
-                padding-bottom: 5px;
+      &__sites {
+        display: initial;
+        padding-bottom: 5px;
 
-                &__link {
-                    font-size: 1rem;
-                    font-weight: lighter;
-                    margin: 0 8px;
-                    color: $lightGrey;
+        &__link {
+          font-size: 1rem;
+          font-weight: lighter;
+          margin: 0 8px;
+          color: $lightGrey;
 
-                    &.active {
-                        color: $primaryGrey;
-                    }
-                }
-            }
+          &.active {
+            color: $primaryGrey;
+          }
         }
-
-        &__right-side {
-            display: flex;
-            flex-direction: row;
-            align-self: center;
-            margin-right: 30px;
-            position: relative;
-
-            &__name {
-                font-size: 1.3rem;
-            }
-
-            &__dropdown {
-
-                &__bars {
-                    margin: auto 15px;
-                    font-size: 1.3rem;
-                    cursor: pointer;
-
-                    &:hover, &.active {
-                        color: $prettyGreen;
-                    }
-                }
-
-                &__menu {
-                    position: absolute;
-                    background-color: white;
-                    color: $prettyGreen;
-                    top: 50px;
-                    width: 100%;
-                    height: initial;
-                    text-align: center;
-                    border-radius: 2px;
-
-
-                    &__option {
-
-                        &__a {
-                            display: none;
-                        }
-
-                        &__a:last-child {
-                            padding: 2px;
-                            margin: 2px auto;
-                            display: block;
-                            color: $prettyGreen;
-                            cursor: pointer;
-                            font-size: .8rem;
-
-                            &:hover {
-                                background-color: $prettyGreen;
-                                color: white;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      }
     }
+
+    &__right-side {
+      display: flex;
+      flex-direction: row;
+      align-self: center;
+      margin-right: 30px;
+      position: relative;
+
+      &__name {
+        font-size: 1.3rem;
+      }
+
+      &__dropdown {
+
+        &__bars {
+          margin: auto 15px;
+          font-size: 1.3rem;
+          cursor: pointer;
+
+          &:hover, &.active {
+            color: $prettyGreen;
+          }
+        }
+
+        &__menu {
+          position: absolute;
+          background-color: white;
+          color: $prettyGreen;
+          top: 50px;
+          width: 100%;
+          height: initial;
+          text-align: center;
+          border-radius: 2px;
+
+
+          &__option {
+
+            &__a {
+              display: none;
+            }
+
+            &__a:last-child {
+              padding: 2px;
+              margin: 2px auto;
+              display: block;
+              color: $prettyGreen;
+              cursor: pointer;
+              font-size: .8rem;
+
+              &:hover {
+                background-color: $prettyGreen;
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -26,7 +26,7 @@ export class PricesService {
   getPrices(searcher: SearcherModel): Observable<PricesApiGetPagModel> {
     const params = ParamsCreatorHelper(searcher);
     return this.http.get<PricesApiGetPagModel>(
-        this.apiUrl + 'api/device/price-list', { params }
+      this.apiUrl + 'api/device/price-list', {params}
     );
   }
 
@@ -35,7 +35,7 @@ export class PricesService {
       this.apiUrl + 'api/device/price-list', price
     ).subscribe(
       () => {
-        this.router.navigate([`/admin/cennik`], { relativeTo: this.route }).then();
+        this.router.navigate([ `/admin/cennik` ], {relativeTo: this.route}).then();
         this.toastr.success(ResponseDictionary.added);
       },
       (err: HttpErrorResponse) =>
@@ -47,10 +47,10 @@ export class PricesService {
     const params = new HttpParams().append('id', id.toString());
 
     this.http.put(
-      this.apiUrl + 'api/device/price-list', price, { params }
+      this.apiUrl + 'api/device/price-list', price, {params}
     ).subscribe(
       () => {
-        this.router.navigate([`./cennik`], { relativeTo: this.route }).then();
+        this.router.navigate([ `./cennik` ], {relativeTo: this.route}).then();
         this.toastr.success(ResponseDictionary.change);
       },
       () => this.toastr.error(ErrorsDictionary.operation)

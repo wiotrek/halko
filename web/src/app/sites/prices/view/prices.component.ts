@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
         <div class="headline">
 
-          <div class="headline__title">{{headline}}</div>
+          <div class="headline__title">Cennik</div>
 
           <a
             class="headline__new-price"
@@ -31,8 +31,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: [ 'prices.component.scss' ]
 })
 export class PricesComponent implements OnInit {
-  headline = 'Cennik';
-
   isAdderMode = false;
 
   constructor(
@@ -45,7 +43,7 @@ export class PricesComponent implements OnInit {
   }
 
   checkUrl = () =>
-    this.isAdderMode = this.router.url.includes('dodaj-telefon');
+    this.isAdderMode = this.router.url.includes('dodaj-telefon')
 
   setUrl(): void {
     this.router.navigate([

@@ -11,6 +11,8 @@ import { ItemStructureAdd } from '../../../_models/item-structure-add.model';
 })
 
 export class ScratchAdderComponent {
+  // if choice date is equal with today, then is edit mode on
+  @Input() editModeOn = true;
   @Input() setDanger?: boolean;
   @Input() category: string[];
   @Input() employees: Employees[];

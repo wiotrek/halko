@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Subscription } from 'rxjs';
 import { MainService } from '../../main.service';
 import { CategoryIconColorDictionary } from '../../_dictionary/category-icon-color.dictionary';
@@ -6,6 +6,7 @@ import { CategoryIconDictionary } from '../../_dictionary/category-icon.dictiona
 import { CategoryItemSoldsArray } from '../../_array/catogory-item-solds.array';
 import { CategoriesAmount } from '../../_models/categories-amount.model';
 import { take } from 'rxjs/operators';
+import { CloseDayModel } from 'src/app/sites/main/_models/close-day.model';
 
 @Component({
   selector: 'app-main-statistics',
@@ -15,6 +16,9 @@ import { take } from 'rxjs/operators';
 export class MainStatisticsComponent implements OnInit, OnDestroy {
   today: Date;
   choiceDay: Date;
+
+  // if is previous day then user can't edited fields
+  @Input() editModeOn = true;
 
   // supplies from dictionary
   categoryIcon = CategoryIconDictionary;
@@ -88,6 +92,22 @@ export class MainStatisticsComponent implements OnInit, OnDestroy {
     this.sum = +this.startCash
       + (+this.soldSum - +this.expenseSum)
       - (+this.creditCard + +this.cash);
+  }
+
+  closeDay(): void {
+    this.mainService.closeDay({
+      dayBilans: this.balanceValue,
+      dayBilansInCash: +this.startCash + (+this.soldSum - +this.expenseSum) - +this.creditCard,
+      monthBilansInCart: +this.creditCard,
+      income: this.soldSum,
+      outcome: this.expenseSum,
+      accessoryAmountBilans: [...this.categoriesAmount].find(x => x.item === 'akcesoria').sum,
+      phoneAmountBilans: [...this.categoriesAmount].find(x => x.item === 'telefon').sum,
+      serviceAmountBilans: [...this.categoriesAmount].find(x => x.item === 'serwis').sum,
+      point: {
+        name: ''
+      }
+    } as CloseDayModel);
   }
 
   ngOnDestroy(): void {

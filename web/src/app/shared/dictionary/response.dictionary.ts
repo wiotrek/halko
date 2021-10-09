@@ -4,5 +4,6 @@ export const ResponseDictionary: Dictionary<string> = {
   added: 'Dodano',
   change: 'Zmieniono',
   move: 'Przesłano',
-  archive: 'Zarchiwizowano'
+  archive: 'Zarchiwizowano',
+  closeDay: 'Zamknieto dzień'
 };

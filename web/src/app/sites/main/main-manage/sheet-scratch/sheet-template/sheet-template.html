@@ -3,7 +3,7 @@
   <app-scratch-header [title]="title"></app-scratch-header>
 
   <app-scratch-adder
-    *ngIf="editModeOn"
+    [editModeOn]="editModeOn"
     [setDanger]="isSetDanger"
     [category]="category"
     [employees]="employees"

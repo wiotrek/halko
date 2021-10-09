@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
 import { CategoryItemSoldsArray } from '../_array/catogory-item-solds.array';
@@ -14,6 +14,9 @@ import { ItemStructure } from 'src/app/shared/models/item-structure.model';
   styleUrls: [ 'sheet-scratch/sheet-template/sheet-template.scss' ]
 })
 export class MainSalesComponent implements OnInit, OnDestroy {
+  // if choice date is equal with today, then is edit mode on
+  @Input() editModeOn = true;
+
   title = 'Sprzedaż';
   isSetDanger = false;
 
@@ -36,16 +39,12 @@ export class MainSalesComponent implements OnInit, OnDestroy {
 
   sum: number;
 
-  // if choice date is equal with today, then is edit mode on
-  editModeOn = true;
-
   constructor(private mainService: MainService) {}
 
   ngOnInit(): void {
     this.getEmployees();
     this.getElements();
     this.displaySum();
-    this.checkChoiceDate();
   }
 
   editElementModeToggleFunc = (ind: number) =>
@@ -88,12 +87,6 @@ export class MainSalesComponent implements OnInit, OnDestroy {
     this.mainService.displaySoldsSum().subscribe(
       res => this.sum = res
     );
-  }
-
-  private checkChoiceDate(): void {
-    this.mainService.editModeOn.subscribe(res => {
-      this.editModeOn = res;
-    });
   }
 
   ngOnDestroy(): void {

@@ -24,7 +24,7 @@ import { NgForm } from '@angular/forms';
       [elInList]="phone"
       [isFlexStart]="isFlexStart"
       [ind]="phonePrices.indexOf(phone) + 1"
-      [elInListAllowedEdit]="true"
+      [elInListAllowedEdit]="this.allowedEdit"
       (updateDetails)="updatePrice($event)"
     ></app-phone-in-list>
 
@@ -67,6 +67,8 @@ export class PricesListComponent implements OnInit {
     pageSize: 10,
   };
 
+  allowedEdit = false;
+
   constructor(
     private pricesService: PricesService,
     private toastr: ToastrService
@@ -74,6 +76,7 @@ export class PricesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getPrices(this.searcher);
+    this.allowedEdit = this.pricesService.isLoggedAdmin;
   }
 
   searchNameFilter(name: string): void {

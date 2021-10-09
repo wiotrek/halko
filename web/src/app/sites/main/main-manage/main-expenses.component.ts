@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MainService } from '../main.service';
 import { CategoryItemExpensesArray } from '../_array/category-item-expenses.array';
 import { EmployeesInitialArray } from '../_array/employees-initial.array';
-import { Employees } from '../../../shared/models/employees.model';
+import { Employees } from 'src/app/shared/models/employees.model';
 import { ItemStructureAdd } from '../_models/item-structure-add.model';
 import { ItemStructureEdit } from '../_models/item-structure-edit.model';
-import { ItemStructure } from '../../../shared/models/item-structure.model';
+import { ItemStructure } from 'src/app/shared/models/item-structure.model';
 
 @Component({
   selector: 'app-main-expenses',
@@ -15,6 +15,9 @@ import { ItemStructure } from '../../../shared/models/item-structure.model';
 })
 
 export class MainExpensesComponent implements OnInit, OnDestroy {
+  // if choice date is equal with today, then is edit mode on
+  @Input() editModeOn = true;
+
   title = 'Wydatki';
   isSetDanger = true;
 
@@ -37,16 +40,12 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
 
   sum: number;
 
-  // if choice date is equal with today, then is edit mode on
-  editModeOn = true;
-
   constructor(private mainService: MainService) {}
 
   ngOnInit(): void {
     this.getEmployees();
     this.getElements();
     this.displaySum();
-    this.checkChoiceDate();
   }
 
   editElementModeToggleFunc = (ind: number) =>
@@ -89,12 +88,6 @@ export class MainExpensesComponent implements OnInit, OnDestroy {
     this.mainService.displayExpensesSum().subscribe(
       res => this.sum = res
     );
-  }
-
-  private checkChoiceDate(): void {
-    this.mainService.editModeOn.subscribe(res => {
-      this.editModeOn = res;
-    });
   }
 
   ngOnDestroy(): void {

@@ -56,6 +56,7 @@
     class="addition-item__confirm"
     [ngClass]="{'addition-item__confirm--danger': setDanger}"
     type="submit"
+    [disabled]="!editModeOn"
   >
     <fa-icon
       class="addition-item__confirm__icon"

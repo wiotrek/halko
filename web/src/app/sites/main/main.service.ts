@@ -15,6 +15,8 @@ import { ItemStructureAddBackend } from './_models/item-structure-add-backend.mo
 import { ItemStructureAdd } from './_models/item-structure-add.model';
 import { ItemStructureEdit } from './_models/item-structure-edit.model';
 import { ItemStructure } from '../../shared/models/item-structure.model';
+import { CloseDayModel } from 'src/app/sites/main/_models/close-day.model';
+import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionary';
 
 @Injectable({providedIn: 'root'})
 export class MainService {
@@ -182,9 +184,8 @@ export class MainService {
 
   getStartCash(): Observable<number> {
     const params = new HttpParams().set('point', this.pointName);
-
     return this.http.get<number>(
-      this.apiUrl + 'api/settlement', {params}
+      this.apiUrl + 'api/settlement', { params }
     );
   }
 
@@ -210,6 +211,17 @@ export class MainService {
         this.expensesItems = res.filter(x => x.type === 'Zakup').reverse();
         this.expensesItemsChanged.next(this.expensesItems);
       },
+      () => this.toastr.error(ErrorsDictionary.server)
+    );
+  }
+
+  closeDay(closeDay: CloseDayModel): void {
+    closeDay.point.name = this.pointName;
+
+    this.http.post(
+      this.apiUrl + 'api/settlement', closeDay
+    ).subscribe(
+      () => this.toastr.success(ResponseDictionary.closeDay),
       () => this.toastr.error(ErrorsDictionary.server)
     );
   }

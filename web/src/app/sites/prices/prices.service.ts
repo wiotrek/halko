@@ -10,17 +10,25 @@ import { ResponseDictionary } from 'src/app/shared/dictionary/response.dictionar
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorsDictionary } from 'src/app/shared/dictionary/errors.dictionary';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class PricesService {
   apiUrl = environment.api;
 
+  isLoggedAdmin = false;
+
   constructor(
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private authService: AuthService
+  ) {
+    this.authService.user.subscribe(
+      a => this.isLoggedAdmin = a.showRole === 'Admin'
+    );
+  }
 
   // repairs-list component
   getPrices(searcher: SearcherModel): Observable<PricesApiGetPagModel> {

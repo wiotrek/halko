@@ -1,0 +1,23 @@
+version: "3"
+
+volumes:
+  db-data:
+
+services:
+
+  web:
+    image: wiotrek/web:v1
+    ports:
+     - "8080:80"
+
+  server:
+    image: backend:v3
+    depends_on:
+      - db
+    ports:
+      - "5000:5000"
+
+  db:  
+    image: nouchka/sqlite3:latest
+    volumes:
+      - ./db/:/root/db/

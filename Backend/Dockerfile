@@ -22,5 +22,8 @@ RUN dotnet publish "Api.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
+
+VOLUME /db-data
+
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "Api.dll"]

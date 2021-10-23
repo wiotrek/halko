@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Core.Async;
 using Core.IoC.Interfaces;
+using Core.Logging;
 
 namespace Core.File
 {
@@ -33,6 +36,38 @@ namespace Core.File
                     
                 } );
 
+            } );
+        }
+
+        /// <summary>
+        /// Copy file from source to destination
+        /// </summary>
+        /// <param name="sourcePath">Absolute source path</param>
+        /// <param name="destinationPath">Absolute destination path</param>
+        public async Task CopyFileAsync( string sourcePath, string destinationPath )
+        {
+            sourcePath = NormalizePath ( sourcePath );
+            sourcePath = ResolvePath ( sourcePath );
+            
+            await AsyncAwaiter.AwaitAsync ( nameof(FileManager) + sourcePath, async () =>
+            {
+                await IoC.Base.IoC.Task.Run ( () =>
+                {
+                    try
+                    {
+                        System.IO.File.Copy ( sourcePath, destinationPath );
+                    }
+                    catch ( Exception ex )
+                    {
+                        var error = ex.Message;
+
+                        IoC.Base. IoC.Logger.Log ( $"Kopiowanie pliku się nie powiodło. {nameof(FileManager)} {error}", LogLevel.Error );
+
+                        Debugger.Break();
+
+                        throw;
+                    }
+                } );
             } );
         }
 

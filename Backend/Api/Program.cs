@@ -29,7 +29,7 @@ namespace Api
             using ( var scope = host.Services.CreateScope() )
             {
                 var services = scope.ServiceProvider;
-                
+
                 // Collect log information
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
                 IoC.Kernel.Bind<ILogFactory>().ToConstant ( new BaseLogFactory ( new ILogger[]
@@ -57,6 +57,8 @@ namespace Api
                     var unitOfWork = services.GetRequiredService<IUnitOfWork>();
                     
                     await InitializeDataExtensions.FirstUsingApplicationAsync ( roleManager, userManager, unitOfWork  );
+                    
+                    services.DbBackupService();
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

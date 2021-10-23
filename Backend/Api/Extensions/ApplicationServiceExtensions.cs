@@ -1,4 +1,8 @@
-﻿using Core.Interfaces;
+﻿using System;
+using System.Configuration;
+using Api.Processes;
+using Coravel;
+using Core.Interfaces;
 using Infrastructure.Repositories;
 using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +22,18 @@ namespace Api.Extensions
             services.AddScoped<IParticipantService, ParticipantService>();
             services.AddScoped<IDeviceService, DeviceService>();
             services.AddScoped<ISettlementService, SettlementService>();
+            services.AddScheduler();
+            services.AddTransient<DbBackupProcess>();
+        }
+        
+        public static void DbBackupService( this IServiceProvider services )
+        {
+            var hour = int.Parse(ConfigurationManager.AppSettings["backup time"] ?? "20");
+            services.UseScheduler ( scheduler =>
+            {
+                var jobSchedule = scheduler.Schedule<DbBackupProcess>();
+                jobSchedule.DailyAtHour ( hour ).Weekday();
+            } );
         }
     }
 }

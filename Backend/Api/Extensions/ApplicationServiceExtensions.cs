@@ -28,11 +28,13 @@ namespace Api.Extensions
         
         public static void DbBackupService( this IServiceProvider services )
         {
-            var hour = int.Parse(ConfigurationManager.AppSettings["backup time"] ?? "20");
+            
             services.UseScheduler ( scheduler =>
             {
+                var hour = int.Parse(ConfigurationManager.AppSettings["backup time"] ?? "20");
                 var jobSchedule = scheduler.Schedule<DbBackupProcess>();
-                jobSchedule.DailyAtHour ( hour ).Weekday();
+                jobSchedule.DailyAtHour ( hour )
+                    .Zoned ( TimeZoneInfo.Local );
             } );
         }
     }

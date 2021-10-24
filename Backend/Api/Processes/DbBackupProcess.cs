@@ -8,6 +8,7 @@ namespace Api.Processes
 {
     /// <summary>
     /// Copy database files from source specific in appsettings.json to destination specific in app.config
+    /// NOTE: Coravel documentation: https://docs.coravel.net/
     /// </summary>
     public class DbBackupProcess : IInvocable
     {

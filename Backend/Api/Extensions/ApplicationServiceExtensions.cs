@@ -34,6 +34,7 @@ namespace Api.Extensions
                 var hour = int.Parse(ConfigurationManager.AppSettings["backup time"] ?? "20");
                 var jobSchedule = scheduler.Schedule<DbBackupProcess>();
                 jobSchedule.DailyAtHour ( hour )
+                    .Weekday()
                     .Zoned ( TimeZoneInfo.Local );
             } );
         }

@@ -58,7 +58,7 @@ namespace Api
                     
                     await InitializeDataExtensions.FirstUsingApplicationAsync ( roleManager, userManager, unitOfWork  );
                     
-                    services.DbBackupService();
+                    //services.DbBackupService();
                 }
                 // Something was wrong like migration file not exist, missing nugget package, ...
                 catch ( Exception ex )

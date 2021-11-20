@@ -7,14 +7,16 @@ COPY package.json /app
 
 RUN npm install
 
-COPY . .
+COPY ./ /app/
 
-RUN npm run build --prod
+ARG configuration=production
+
+RUN npm run build -- --output-path=./dist/out --configuration $configuration
 
 # Stage 2
 
 FROM nginx:alpine
 
-COPY --from=build-step /app/dist/* /usr/share/nginx/html
+COPY --from=build-step /app/dist/out/ /usr/share/nginx/html
 
 EXPOSE 80

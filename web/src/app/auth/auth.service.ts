@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { User } from './_models/user.model';
 import { catchError, tap } from 'rxjs/operators';
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import { AuthResponseData } from './_models/auth-response-data.model';
 import { JwtHelperService } from '@auth0/angular-jwt';
 

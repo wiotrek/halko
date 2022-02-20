@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams, } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';

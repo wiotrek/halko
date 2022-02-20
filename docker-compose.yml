@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  web:
+    image: wiotrek/web:0.14
+    ports:
+      - "4200:80"
+
+  server:
+    image: wiotrek/backend:v0.4
+    volumes:
+      - ./:/app/db
+    ports:
+      - "5000:80"

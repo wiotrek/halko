@@ -30,7 +30,7 @@ Projekt aplikacji internetowej do zarządzania pozycjami produktów sprzedaży n
 * Korzystając z aplikacji administratorzy danych punktów, są w stanie zoptymalizować swój budżet pod kątem dalszego działania firmy.
 * Szybki wgląd do dziennego/miesięcznego utargu danego punktu.
 
-## Technologies :octocat:
+## Technologie :octocat:
 * Angular 2+/11
 * Typescript
 * .NET 5.0

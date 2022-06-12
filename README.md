@@ -2,11 +2,11 @@
 Projekt aplikacji internetowej do zarządzania pozycjami produktów sprzedaży na wyspie z telefonami.
 
 ## List :door:
-* [Wymagania funkcjonalne]
-* [Wymagania pozafunkcjonalne]
-* [Docelowi odbiorcy]
-* [Korzyści]
-* [Technologie](#technologies)
+* Wymagania funkcjonalne
+* Wymagania pozafunkcjonalne
+* Docelowi odbiorcy
+* Korzyści
+* Technologie
 * [Contributors](#Contributors)
 
 ## Wymagania funkcjonalne :eight_pointed_black_star:

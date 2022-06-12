@@ -2,14 +2,14 @@
 Projekt aplikacji internetowej do zarządzania pozycjami produktów sprzedaży na wyspie z telefonami.
 
 ## List :door:
-* [Wymagania funkcjonalne
+* [Wymagania funkcjonalne]
 * [Wymagania pozafunkcjonalne]
 * [Docelowi odbiorcy]
 * [Korzyści]
 * [Technologie](#technologies)
-* * [Contributors](#Contributors)
+* [Contributors](#Contributors)
 
-## Wymagania funkcjonalne :eight_spoked_asterisk:
+## Wymagania funkcjonalne :eight_pointed_black_star:
 * Możliwość tworzenia i zarządzania kilkoma instancjami punktów, znajdujących się w obrębie jednego systemu (czyt. firmy).
 * System skupu, sprzedaży produktów - każdy produkt przydzielany jest do odpowiedniej kategori (telefon, akcesoria, usługa), oraz określana jest cena transakcji.
 * Możliwość wyszukiwania, dodawania, edytowania i usuwania kupionych telefonów, znajdujących się na danym punkcie.

@@ -47,10 +47,14 @@ namespace Api
             {
                 opt.AddPolicy ( "CorsPolicy", policy =>
                 {
+<<<<<<< HEAD
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins (
                         "http://localhost:4200",
                         "https://halko-gsm.netlify.app"
                     );
+=======
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+>>>>>>> 74484771add7c25ebf00a08ce112523fb95fab08
                 } );
             } );
         }

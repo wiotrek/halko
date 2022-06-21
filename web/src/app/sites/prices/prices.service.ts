@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { ParamsCreatorHelper } from 'src/app/shared/helpers/params-creator.helper';
 import { SearcherModel } from 'src/app/shared/models/searcher.model';

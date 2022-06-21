@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { ItemStructure } from '../../shared/models/item-structure.model';
-import { environment } from 'environments/environment';
+import { environment } from 'src/environments/environment';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ItemOperationEnum } from './_enums/item-operation.enum';
